@@ -109,7 +109,7 @@ val schemaDoc: Document = docParser.parse(new File("/path/to/HelloWorld.xsd"))
 
 <p>Typical yaidom client code does not abstract over multiple element implementations, but it is done here to show that the exact same query API works for multiple element implementations. In the function signature above, "E" is the type of the element implementation itself. We imported all members of the ElemApi companion object, to have the "withEName" element predicate builder in scope. Note that the query is not very robust, because it filters substitution groups on the qualified name, and not on the expanded name. We'll fix that later, with loss of genericity.</p>
 
-<p>Given the 2 documents above, we can query the item declarations as follows:</p>
+<p>Given the schema document above, we can query the item declarations as follows:</p>
 
 <pre><code>val itemDecls = findAllItemDeclarations(schemaDoc.documentElement)
 </code></pre>
@@ -122,8 +122,9 @@ val itemDeclsByTargetENames: Map[EName, Elem] = {
     itemDecls.map(e => (EName(tns, e.attribute(EName("name"))) -> e)).toMap
 }
 
-val factElems =
-    instanceDoc.documentElement \ (e => e.resolvedName.namespaceUriOption == Some(helloWorldNamespace))
+val factElems = instanceDoc.documentElement \ { e =>
+    e.resolvedName.namespaceUriOption == Some(helloWorldNamespace)
+}
 
 require(factElems.map(e => e.resolvedName).toSet.subsetOf(
     itemDeclsByTargetENames.keySet))
@@ -160,6 +161,20 @@ val d = db.parse(new File("/path/to/HelloWorld.xsd"))
 val wrapperDoc = dom.DomDocument(d)
 
 val itemDecls = findAllItemDeclarations(wrapperDoc.documentElement)
+</code></pre>
+
+<p>Sometimes we want to use immutable elements, and still have access to the ancestry of each element. For example, when querying for item declarations, we need to inspect the document element for the target namespace. With so-called "indexed" elements, each element has indeed access to its ancestry.</p>
+
+<p>This time using "indexed" elements, we again query for item declarations, but this time we need no separate query for the target namespace:</p>
+
+<pre><code>val indexedSchemaDoc = indexed.Document(schemaDoc)
+
+val indexedItemDecls = findAllItemDeclarations(indexedSchemaDoc.documentElement)
+
+val targetENames: Set[EName] =
+    indexedItemDecls.map(e => e.toGlobalElementDeclaration.targetEName).toSet
+
+require(factElems.map(e => e.resolvedName).toSet.subsetOf(targetENames))
 </code></pre>
 
 <h3>
