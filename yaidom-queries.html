@@ -26,9 +26,9 @@
         <h3>
 <a name="why-yet-another-scala-xml-library" class="anchor" href="#why-yet-another-scala-xml-library"><span class="octicon octicon-link"></span></a>Why yet another Scala XML library?</h3>
 
-<p>XML processing in Java has never been easy. Arguably, the simplest way to manipulate XML in Java is through XML data binding solutions, such as JAXB. Such solutions hide the XML, making the XML look like normal Java objects. In non-trivial mapping scenarios one easily ends up having to keep 2 perspectives on the same XML data in sync: the "Java object view" and the "XML view".</p>
+<p>XML processing in Java has never been easy. Arguably, the simplest way to manipulate XML in Java is through XML data binding solutions, such as JAXB. Such solutions try to hide the XML, making the XML look like normal Java objects. In non-trivial mapping scenarios one easily ends up having to keep 2 perspectives on the same XML data in sync: the "Java object view" and the "XML view".</p>
 
-<p>Hence, O-X mapping is not the best answer to XML processing. On the other hand, directly manipulating XML should not be that hard in the first place.</p>
+<p>Hence, O-X mapping may not be the best answer to XML processing. On the other hand, directly manipulating XML should not be that hard in the first place.</p>
 
 <p>Scala could help make direct XML manipulation easy, by leveraging the Scala Collections API. The standard Scala XML API should have been the obvious choice. It predates Scala 2.8, however, and its namespace support is not as precise and clear as I would like it to be. Anti-XML aimed at being a better alternative, but that project seems abandoned. The third well-known Scala XML library is Scales XML, but this is not a DOM-like API.</p>
 
@@ -48,50 +48,46 @@
 
 <p>Let's get started with some basic yaidom element queries. The HelloWorld.xml XBRL instance has some units, contexts and (top-level) facts. We can query for the units (as yaidom elements) as follows:</p>
 
-<pre><code>
-val unitElems = doc.documentElement.filterChildElems(e => e.localName == "unit")
+<pre><code>val unitElems = doc.documentElement.filterChildElems(e => e.localName == "unit")
 </code></pre>
 
 <p>In this query, we queried only for (some) child elements of the document element, knowing that the single unit is a child element of the document element. We also used no namespace in the query, knowing that in this case no fact has the (local) name unit, but then in another namespace.</p>
 
 <p>Analogously, we can query for the (2) contexts (as yaidom elements) as follows:</p>
 
-<pre><code>
-val contextElems = doc.documentElement.filterChildElems(e => e.localName == "context")
+<pre><code>val contextElems = doc.documentElement.filterChildElems(e => e.localName == "context")
 </code></pre>
 
 <p>Above, we queried for child elements with local name context. We could have queried for all descendant elements with local name context instead. Not surprisingly, the same elements would be returned:</p>
 
-<pre><code>
-val contextElems = doc.documentElement.filterElems(e => e.localName == "context")
+<pre><code>val contextElems = doc.documentElement.filterElems(e => e.localName == "context")
 </code></pre>
 
 <p>We could also query for all descendant-or-self elements with local name context. Again, the result would be the same:</p>
 
-<pre><code>
-val contextElems = doc.documentElement.filterElemsOrSelf(e => e.localName == "context")
+<pre><code>val contextElems = doc.documentElement.filterElemsOrSelf(e => e.localName == "context")
 </code></pre>
 
 <p>Now we know how to query for child elements, descendant elements or descendant-or-self elements, given an element predicate. Instead of writing "filterChildElems" we can write "\", and instead of writing "filterElemsOrSelf" we can write "\\", however.  This would give us:</p>
 
-<pre><code>
-val contextElems = doc.documentElement \ (e => e.localName == "context")
+<pre><code>val contextElems = doc.documentElement \ (e => e.localName == "context")
 </code></pre>
 
-<pre><code>
-val contextElems = doc.documentElement \\ (e => e.localName == "context")
+<pre><code>val contextElems = doc.documentElement \\ (e => e.localName == "context")
 </code></pre>
 
 <p>Let's query for the 12 top-level facts, knowing that their element names are in the namespace "http://xbrl.squarespace.com/HelloWorld":</p>
 
-<pre><code>
-val factElems = doc.documentElement filterChildElems (e => e.resolvedName.namespaceUriOption == Some(helloWorldNamespace))
+<pre><code>val factElems = doc.documentElement filterChildElems { e =>
+  e.resolvedName.namespaceUriOption == Some(helloWorldNamespace)
+}
 </code></pre>
 
 <p>More briefly, we could instead write:</p>
 
-<pre><code>
-val factElems = doc.documentElement \ (e => e.resolvedName.namespaceUriOption == Some(helloWorldNamespace))
+<pre><code>val factElems = doc.documentElement \ { e =>
+  e.resolvedName.namespaceUriOption == Some(helloWorldNamespace)
+}
 </code></pre>
 
 <h3>
