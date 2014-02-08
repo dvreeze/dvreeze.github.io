@@ -125,7 +125,41 @@ val itemDeclsByTargetENames: Map[EName, Elem] = {
 val factElems =
     instanceDoc.documentElement \ (e => e.resolvedName.namespaceUriOption == Some(helloWorldNamespace))
 
-require(factElems.map(e => e.resolvedName).toSet.subsetOf(itemDeclsByTargetENames.keySet))
+require(factElems.map(e => e.resolvedName).toSet.subsetOf(
+    itemDeclsByTargetENames.keySet))
+</code></pre>
+
+<p>Prefixes are insignificant in XML. Let HelloWorld2.xml be equivalent to HelloWorld.xml, except that the default namespace has been replaced by prefix "xs":<p>
+
+<pre><code>val schemaDoc2: Document = docParser.parse(new File("/path/to/HelloWorld2.xsd"))
+</code></pre>
+
+<p>How can we easily assert that these documents are equivalent XML documents? To that end, yaidom offers so-called "resolved" elements, which contain only expanded (element and attribute) names, and no qualified names. Indeed:</p>
+
+<pre><code>
+val rootElem = schemaDoc.documentElement
+val rootElem2 = schemaDoc2.documentElement
+
+resolved.Elem(rootElem).removeAllInterElementWhitespace) ==
+    resolved.Elem(rootElem2).removeAllInterElementWhitespace
+</code></pre>
+
+<p>To show that the yaidom query API is uniform, let's now query the schema document element as "resolved" element for its item declarations:</p>
+
+<pre><code>val resolvedSchemaDocElem = resolved.Elem(schemaDoc.documentElement)
+
+val resolvedItemDecls = findAllItemDeclarations(resolvedSchemaDocElem)
+</code></pre>
+
+<p>Sometimes we have a (mutable) JAXP DOM tree, and do not want to convert it to a yaidom immutable Elem tree. We can still use the yaidom query API to query those DOM elements. Function 'findAllItemDeclarations" can still be called:</p>
+
+<pre><code>val dbf = DocumentBuilderFactory.newInstance
+val db = dbf.newDocumentBuilder
+val d = db.parse(new File("/path/to/HelloWorld.xsd"))
+
+val wrapperDoc = dom.DomDocument(d)
+
+val itemDecls = findAllItemDeclarations(wrapperDoc.documentElement)
 </code></pre>
 
 <h3>
