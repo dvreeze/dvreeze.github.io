@@ -26,13 +26,13 @@
         <h3>
 <a name="why-yet-another-scala-xml-library" class="anchor" href="#why-yet-another-scala-xml-library"><span class="octicon octicon-link"></span></a>Why yet another Scala XML library?</h3>
 
-<p>XML processing in Java has never been easy. Arguably, the simplest way to manipulate XML in Java is through XML data binding solutions, such as JAXB. Such solutions try to hide the XML, making the XML look like normal Java objects. In non-trivial mapping scenarios one easily ends up having to keep 2 perspectives on the same XML data in sync: the "Java object view" and the "XML view".</p>
+<p>XML processing in Java has never been easy. Arguably, the simplest way to manipulate XML in Java is through XML data binding solutions, such as JAXB. Such solutions try to hide the XML, making the XML look like normal Java objects. Unfortunately, in non-trivial mapping scenarios one easily ends up having to keep 2 perspectives on the same XML data in sync: the "Java object view" and the "XML view".</p>
 
-<p>Hence, O-X mapping may not be the best answer to XML processing. On the other hand, directly manipulating XML should not be that hard in the first place.</p>
+<p>Hence, O-X mapping may not be the best answer to XML processing. On the other hand, directly manipulating XML should not have been that hard in the first place.</p>
 
 <p>Scala could help make direct XML manipulation easy, by leveraging the Scala Collections API. The standard Scala XML API should have been the obvious choice. It predates Scala 2.8, however, and its namespace support is not as precise and clear as I would like it to be. Anti-XML aimed at being a better alternative, but that project seems abandoned. The third well-known Scala XML library is Scales XML, but this is not a DOM-like API.</p>
 
-<p>It seems hard to find a Scala XML library having first-class namespace support, and offering precise and clear namespace handling. The best explanation of XML namespaces that I have come across is <a href="http://www.lenzconsulting.com/namespaces/">Understanding XML Namespaces</a>. It distinguishes between qualified names (such as my:foo) and expanded names (such as {http://my}foo, in James Clark notation). Many XML libraries blur this distinction, and therefore offer sub-par namespace support.</p>
+<p>It seems hard to find a Scala XML library having first-class namespace support, and offering precise and clear namespace handling. The best explanation of XML namespaces that I have come across is <a href="http://www.lenzconsulting.com/namespaces/">Understanding XML Namespaces</a>. It distinguishes between <em>qualified names</em> (such as my:foo) and <em>expanded names</em> (such as {http://my}foo, in James Clark notation). Many XML libraries blur this distinction, and therefore offer sub-par namespace support.</p>
 
 <p>This was the most important reason to come up with an alternative Scala XML DOM-like library, called <em>yaidom</em>.</p>
 
@@ -46,39 +46,56 @@
 <h3>
 <a name="introduction-to-yaidom-element-queries" class="anchor" href="#introduction-to-yaidom-element-queries"><span class="octicon octicon-link"></span></a>Introduction to yaidom element queries</h3>
 
+<p>Before showing some basic yaidom element queries, assume the following code to have executed:</p>
+
+<pre><code>import java.io.File
+import javax.xml.parsers._
+import scala.collection.immutable
+import eu.cdevreeze.yaidom._
+
+val xsNamespace = "http://www.w3.org/2001/XMLSchema"
+val xbrliNamespace = "http://www.xbrl.org/2003/instance"
+val helloWorldNamespace = "http://xbrl.squarespace.com/HelloWorld"
+
+val docParser = parse.DocumentParserUsingDom.newInstance
+
+val instanceDoc: Document = docParser.parse(new File("/path/to/HelloWorld.xml"))
+val schemaDoc: Document = docParser.parse(new File("/path/to/HelloWorld.xsd"))
+</code></pre>
+
 <p>Let's get started with some basic yaidom element queries. The HelloWorld.xml XBRL instance has some units, contexts and (top-level) facts. We can query for the units (as yaidom elements) as follows:</p>
 
-<pre><code>val unitElems = doc.documentElement.filterChildElems(e => e.localName == "unit")
+<pre><code>val unitElems = instanceDoc.documentElement.filterChildElems(e => e.localName == "unit")
 </code></pre>
 
 <p>In this query, we queried only for (some) <em>child elements</em> of the document element, knowing that the single unit is a child element of the document element. We also used no namespace in the query, knowing that in this case no fact has the (local) name unit, but then in another namespace.</p>
 
 <p>Analogously, we can query for the (2) contexts (as yaidom elements) as follows:</p>
 
-<pre><code>val contextElems = doc.documentElement.filterChildElems(e => e.localName == "context")
+<pre><code>val contextElems = instanceDoc.documentElement.filterChildElems(e => e.localName == "context")
 </code></pre>
 
 <p>Above, we queried for child elements with local name context. We could have queried for all <em>descendant elements</em> with local name context instead. Not surprisingly, the same elements would be returned:</p>
 
-<pre><code>val contextElems = doc.documentElement.filterElems(e => e.localName == "context")
+<pre><code>val contextElems = instanceDoc.documentElement.filterElems(e => e.localName == "context")
 </code></pre>
 
 <p>We could also query for all <em>descendant-or-self elements</em> with local name context. Again, the result would be the same:</p>
 
-<pre><code>val contextElems = doc.documentElement.filterElemsOrSelf(e => e.localName == "context")
+<pre><code>val contextElems = instanceDoc.documentElement.filterElemsOrSelf(e => e.localName == "context")
 </code></pre>
 
 <p>Now we know how to query for child elements, descendant elements or descendant-or-self elements, given an element predicate. Instead of writing "filterChildElems" we can write "\", and instead of writing "filterElemsOrSelf" we can write "\\", however.  This would give us:</p>
 
-<pre><code>val contextElems = doc.documentElement \ (e => e.localName == "context")
+<pre><code>val contextElems = instanceDoc.documentElement \ (e => e.localName == "context")
 </code></pre>
 
-<pre><code>val contextElems = doc.documentElement \\ (e => e.localName == "context")
+<pre><code>val contextElems = instanceDoc.documentElement \\ (e => e.localName == "context")
 </code></pre>
 
 <p>Let's query for the 12 top-level facts, knowing that their element names are in the namespace "http://xbrl.squarespace.com/HelloWorld":</p>
 
-<pre><code>val factElems = doc.documentElement filterChildElems { e =>
+<pre><code>val factElems = instanceDoc.documentElement filterChildElems { e =>
     e.resolvedName.namespaceUriOption == Some(helloWorldNamespace)
 }
 </code></pre>
@@ -90,7 +107,7 @@
 
 <p>The yaidom element query API plays very well with the Scala Collections API. The yaidom query API only turns elements into collections of elements, and the Scala Collections API can be used seamlessly to manipulate those collections of elements. Put differently, the yaidom element query API is a <em>uniform</em> element query API, and the Scala Collections API plays the role of <em>universal</em> query API.</p>
 
-<p>Below we show yaidom as uniform query API. Start with the following parsed documents:</p>
+<p>Below we show yaidom as uniform query API. Again start with the following parsed documents:</p>
 
 <pre><code>val instanceDoc: Document = docParser.parse(new File("/path/to/HelloWorld.xml"))
 val schemaDoc: Document = docParser.parse(new File("/path/to/HelloWorld.xsd"))
