@@ -34,7 +34,7 @@
 
 <p>It seems hard to find a Scala XML library having first-class namespace support, and offering precise and clear namespace handling. The best explanation of XML namespaces that I have come across is <a href="http://www.lenzconsulting.com/namespaces/">Understanding XML Namespaces</a>. It distinguishes between qualified names (such as my:foo) and expanded names (such as {http://my}foo, in James Clark notation). Many XML libraries blur this distinction, and therefore offer sub-par namespace support.</p>
 
-<p>This was the most important reason to come up with an alternative Scala XML DOM-like library, called yaidom.</p>
+<p>This was the most important reason to come up with an alternative Scala XML DOM-like library, called <em>yaidom</em>.</p>
 
 <p>This is the first in a series of articles about yaidom. It introduces basic XML querying in yaidom.</p>
 
@@ -51,19 +51,19 @@
 <pre><code>val unitElems = doc.documentElement.filterChildElems(e => e.localName == "unit")
 </code></pre>
 
-<p>In this query, we queried only for (some) child elements of the document element, knowing that the single unit is a child element of the document element. We also used no namespace in the query, knowing that in this case no fact has the (local) name unit, but then in another namespace.</p>
+<p>In this query, we queried only for (some) <em>child elements</em> of the document element, knowing that the single unit is a child element of the document element. We also used no namespace in the query, knowing that in this case no fact has the (local) name unit, but then in another namespace.</p>
 
 <p>Analogously, we can query for the (2) contexts (as yaidom elements) as follows:</p>
 
 <pre><code>val contextElems = doc.documentElement.filterChildElems(e => e.localName == "context")
 </code></pre>
 
-<p>Above, we queried for child elements with local name context. We could have queried for all descendant elements with local name context instead. Not surprisingly, the same elements would be returned:</p>
+<p>Above, we queried for child elements with local name context. We could have queried for all <em>descendant elements</em> with local name context instead. Not surprisingly, the same elements would be returned:</p>
 
 <pre><code>val contextElems = doc.documentElement.filterElems(e => e.localName == "context")
 </code></pre>
 
-<p>We could also query for all descendant-or-self elements with local name context. Again, the result would be the same:</p>
+<p>We could also query for all <em>descendant-or-self elements</em> with local name context. Again, the result would be the same:</p>
 
 <pre><code>val contextElems = doc.documentElement.filterElemsOrSelf(e => e.localName == "context")
 </code></pre>
@@ -79,13 +79,6 @@
 <p>Let's query for the 12 top-level facts, knowing that their element names are in the namespace "http://xbrl.squarespace.com/HelloWorld":</p>
 
 <pre><code>val factElems = doc.documentElement filterChildElems { e =>
-  e.resolvedName.namespaceUriOption == Some(helloWorldNamespace)
-}
-</code></pre>
-
-<p>More briefly, we could instead write:</p>
-
-<pre><code>val factElems = doc.documentElement \ { e =>
   e.resolvedName.namespaceUriOption == Some(helloWorldNamespace)
 }
 </code></pre>
