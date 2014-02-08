@@ -79,14 +79,54 @@
 <p>Let's query for the 12 top-level facts, knowing that their element names are in the namespace "http://xbrl.squarespace.com/HelloWorld":</p>
 
 <pre><code>val factElems = doc.documentElement filterChildElems { e =>
-  e.resolvedName.namespaceUriOption == Some(helloWorldNamespace)
+    e.resolvedName.namespaceUriOption == Some(helloWorldNamespace)
 }
 </code></pre>
 
 <h3>
 <a name="uniform-element-query-api" class="anchor" href="#uniform-element-query-api"><span class="octicon octicon-link"></span></a>Uniform element query API</h3>
 
-<p>... the content of this section ...</p>
+<p>Above, we introduced basic element querying in yaidom, using the "standard" element implementation. Yaidom does not conform to the view that there is a one-size-fits-all element implementation, as we will see. Fortunately, this does not mean that there are as many yaidom element query APIs as there are element implementations. On the contrary, most element implementations mix in the ElemApi trait, which is the most important part of the query API.</p>
+
+<p>The yaidom element query API plays very well with the Scala Collections API. The yaidom query API only turns elements into collections of elements, and the Scala Collections API can be used seamlessly to manipulate those collections of elements. Put differently, the yaidom element query API is a <em>uniform</em> element query API, and the Scala Collections API plays the role of <em>universal</em> query API.</p>
+
+<p>Below we show yaidom as uniform query API. Start with the following parsed documents:</p>
+
+<pre><code>val instanceDoc: Document = docParser.parse(new File("/path/to/HelloWorld.xml"))
+val schemaDoc: Document = docParser.parse(new File("/path/to/HelloWorld.xsd"))
+</code></pre>
+
+<p>The item declarations (which are top-level element declarations with the xbrli:item substitution group) in the schema document can be found uniformly across element implementations as follows:</p>
+
+<pre><code>def findAllItemDeclarations[E <: ElemApi[E]](docElem: E): immutable.IndexedSeq[E] = {
+    import ElemApi._
+    for {
+        elemDecl <- docElem \ withEName(xsNamespace, "element")
+        if (elemDecl \@ EName("substitutionGroup")) == Some("xbrli:item")
+    } yield elemDecl
+}
+</code></pre>
+
+<p>Typical yaidom client code does not abstract over multiple element implementations, but it is done here to show that the exact same query API works for multiple element implementations. In the function signature above, "E" is the type of the element implementation itself. We imported all members of the ElemApi companion object, to have the "withEName" element predicate builder in scope. Note that the query is not very robust, because it filters substitution groups on the qualified name, and not on the expanded name. We'll fix that later, with loss of genericity.</p>
+
+<p>Given the 2 documents above, we can query the item declarations as follows:</p>
+
+<pre><code>val itemDecls = findAllItemDeclarations(schemaDoc.documentElement)
+</code></pre>
+
+<p>We can now check if all facts in the XBRL instance correspond to item declarations in the schema document as follows:</p>
+
+<pre><code>val tns = schemaDoc.documentElement.attribute(EName("targetNamespace"))
+
+val itemDeclsByTargetENames: Map[EName, Elem] = {
+    itemDecls.map(e => (EName(tns, e.attribute(EName("name"))) -> e)).toMap
+}
+
+val factElems =
+    instanceDoc.documentElement \ (e => e.resolvedName.namespaceUriOption == Some(helloWorldNamespace))
+
+require(factElems.map(e => e.resolvedName).toSet.subsetOf(itemDeclsByTargetENames.keySet))
+</code></pre>
 
 <h3>
 <a name="conclusion" class="anchor" href="#conclusion"><span class="octicon octicon-link"></span></a>Conclusion</h3>
