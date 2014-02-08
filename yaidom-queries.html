@@ -72,17 +72,20 @@ val schemaDoc: Document = docParser.parse(new File("/path/to/HelloWorld.xsd"))
 
 <p>Analogously, we can query for the (2) contexts (as yaidom elements) as follows:</p>
 
-<pre><code>val contextElems = instanceDoc.documentElement.filterChildElems(e => e.localName == "context")
+<pre><code>val contextElems =
+    instanceDoc.documentElement.filterChildElems(e => e.localName == "context")
 </code></pre>
 
 <p>Above, we queried for child elements with local name context. We could have queried for all <em>descendant elements</em> with local name context instead. Not surprisingly, the same elements would be returned:</p>
 
-<pre><code>val contextElems = instanceDoc.documentElement.filterElems(e => e.localName == "context")
+<pre><code>val contextElems =
+    instanceDoc.documentElement.filterElems(e => e.localName == "context")
 </code></pre>
 
 <p>We could also query for all <em>descendant-or-self elements</em> with local name context. Again, the result would be the same:</p>
 
-<pre><code>val contextElems = instanceDoc.documentElement.filterElemsOrSelf(e => e.localName == "context")
+<pre><code>val contextElems =
+    instanceDoc.documentElement.filterElemsOrSelf(e => e.localName == "context")
 </code></pre>
 
 <p>Now we know how to query for child elements, descendant elements or descendant-or-self elements, given an element predicate. Instead of writing "filterChildElems" we can write "\", and instead of writing "filterElemsOrSelf" we can write "\\", however.  This would give us:</p>
@@ -107,13 +110,7 @@ val schemaDoc: Document = docParser.parse(new File("/path/to/HelloWorld.xsd"))
 
 <p>The yaidom element query API plays very well with the Scala Collections API. The yaidom query API only turns elements into collections of elements, and the Scala Collections API can be used seamlessly to manipulate those collections of elements. Put differently, the yaidom element query API is a <em>uniform</em> element query API, and the Scala Collections API plays the role of <em>universal</em> query API.</p>
 
-<p>Below we show yaidom as uniform query API. Again start with the following parsed documents:</p>
-
-<pre><code>val instanceDoc: Document = docParser.parse(new File("/path/to/HelloWorld.xml"))
-val schemaDoc: Document = docParser.parse(new File("/path/to/HelloWorld.xsd"))
-</code></pre>
-
-<p>The item declarations (which are top-level element declarations with the xbrli:item substitution group) in the schema document can be found uniformly across element implementations as follows:</p>
+<p>Below we show yaidom as uniform query API. Again start with the following same documents used above. The item declarations (which are top-level element declarations with the xbrli:item substitution group) in the schema document can be found uniformly across element implementations as follows:</p>
 
 <pre><code>def findAllItemDeclarations[E <: ElemApi[E]](docElem: E): immutable.IndexedSeq[E] = {
     import ElemApi._
@@ -158,8 +155,8 @@ require(factElems.map(e => e.resolvedName).toSet.subsetOf(
 val rootElem = schemaDoc.documentElement
 val rootElem2 = schemaDoc2.documentElement
 
-resolved.Elem(rootElem).removeAllInterElementWhitespace) ==
-    resolved.Elem(rootElem2).removeAllInterElementWhitespace
+require(resolved.Elem(rootElem).removeAllInterElementWhitespace ==
+    resolved.Elem(rootElem2).removeAllInterElementWhitespace)
 </code></pre>
 
 <p>To show that the yaidom query API is uniform, let's now query the schema document element as "resolved" element for its item declarations:</p>
@@ -177,7 +174,7 @@ val d = db.parse(new File("/path/to/HelloWorld.xsd"))
 
 val wrapperDoc = dom.DomDocument(d)
 
-val itemDecls = findAllItemDeclarations(wrapperDoc.documentElement)
+val domItemDecls = findAllItemDeclarations(wrapperDoc.documentElement)
 </code></pre>
 
 <p>Sometimes we want to use immutable elements, and still have access to the ancestry of each element. For example, when querying for item declarations, we need to inspect the document element for the target namespace. With so-called "indexed" elements, each element has indeed access to its ancestry.</p>
@@ -189,7 +186,11 @@ val itemDecls = findAllItemDeclarations(wrapperDoc.documentElement)
 val indexedItemDecls = findAllItemDeclarations(indexedSchemaDoc.documentElement)
 
 val targetENames: Set[EName] =
-    indexedItemDecls.map(e => e.toGlobalElementDeclaration.targetEName).toSet
+    (indexedItemDecls map { e =>
+        val tnsOption = e.rootElem \@ EName("targetNamespace")
+        val name = e.attribute(EName("name"))
+        EName(tnsOption, name)
+    }).toSet
 
 require(factElems.map(e => e.resolvedName).toSet.subsetOf(targetENames))
 </code></pre>
