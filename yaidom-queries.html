@@ -242,7 +242,8 @@ require(
     import ElemApi._
     for {
         elemDecl <- docElem \ withEName(xsNamespace, "element")
-        if elemDecl.attributeAsResolvedQNameOption(EName("substitutionGroup")) == Some("xbrli:item")
+        if elemDecl.attributeAsResolvedQNameOption(EName("substitutionGroup")) ==
+            Some(EName(xbrliNamespace, "item"))
     } yield elemDecl
 }
 </code></pre>
