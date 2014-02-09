@@ -33,7 +33,7 @@
 <p>This article only treats basic element querying in yaidom. The remainder of this article is organized as follows:</p>
 <ol>
 <li>Why yet another Scala XML library?</li>
-<li>Introducing the examples. The examples use XBRL, but no XBRL knowledge is assumed on the part of the reader.</li>
+<li>Introducing the examples. The examples use XBRL, but no prior XBRL knowledge is assumed on the part of the reader.</li>
 <li>Introducing basic yaidom element queries</li>
 <li>Showing that yaidom offers a uniform element query API</li>
 <li>Conclusion of this first article about yaidom</li>
@@ -42,13 +42,13 @@
         <h3>
 <a name="why-yet-another-scala-xml-library" class="anchor" href="#why-yet-another-scala-xml-library"><span class="octicon octicon-link"></span></a>Why yet another Scala XML library?</h3>
 
-<p>Let's for a moment think back about Java's XML story. XML processing in Java has never been easy. Arguably, the simplest way to manipulate XML in Java is through XML data binding solutions, such as JAXB. Such solutions try to hide the XML, making the XML look like normal Java objects. Unfortunately, in non-trivial mapping scenarios one easily ends up having to keep 2 perspectives on the same XML data in sync: the "Java object view" and the "XML view".</p>
+<p>Let's for a moment think (back) about XML manipulation in Java. XML processing in Java has never been easy. Arguably, the simplest way to manipulate XML in Java is through XML data binding solutions, such as JAXB. Such solutions try to hide the XML, making the XML look like normal Java objects. Unfortunately, in non-trivial mapping scenarios one easily ends up having to keep 2 perspectives on the same XML data in sync: the "Java object view" and the "XML view", thus creating more instead of less work.</p>
 
-<p>Hence, O-X mapping may not be the best answer to XML processing. On the other hand, directly manipulating XML should not have been that hard in the first place.</p>
+<p>Hence, O-X mapping may not be the best answer for most XML processing scenarios. On the other hand, directly manipulating XML should not have been that hard in the first place.</p>
 
 <p>Scala could help make direct XML manipulation easy, by leveraging the Scala Collections API. The standard Scala XML API should have been the obvious choice. It predates Scala 2.8, however, and its namespace support is not as precise and clear as I would like it to be. Anti-XML aimed at being a better alternative, but that project seems abandoned. The third well-known Scala XML library is Scales XML, but this is not a DOM-like API.</p>
 
-<p>It seems hard to find a Scala XML library having first-class namespace support, and offering precise and clear namespace handling. The best explanation of XML namespaces that I have come across is <a href="http://www.lenzconsulting.com/namespaces/">Understanding XML Namespaces</a>. It distinguishes between <em>qualified names</em> (such as my:foo) and <em>expanded names</em> (such as {http://my}foo, in James Clark notation). Many XML libraries blur this distinction, and therefore offer sub-par namespace support. This was the most important reason to come up with <em>yaidom</em>.</p>
+<p>It seems hard to find a Scala XML library having first-class namespace support, and offering precise and clear namespace handling. The best explanation of XML namespaces that I have come across is <a href="http://www.lenzconsulting.com/namespaces/">Understanding XML Namespaces</a>. It distinguishes between <em>qualified names</em> (such as my:foo) and <em>expanded names</em> (such as {http://my}foo, in James Clark notation). Many XML libraries blur this fundamental distinction. That is somewhat understandable, because expanded names do not occur syntactically in XML. Still, ignoring this distinction makes it hard to talk precisely about namespaces, thus leading to sub-par namespace support. The quest for first-class namespace support was the most important reason to come up with <em>yaidom</em>.</p>
 
 <p>The core design principles behind yaidom are:</p>
 <ul>
@@ -95,7 +95,7 @@ val schemaDocElem = schemaDoc.documentElement
     instanceDocElem.filterChildElems(e => e.localName == "unit")
 </code></pre>
 
-<p>In this query, we queried only for (some) <em>child elements</em> of the document element, knowing that the single unit is a child element of the document element. We also used no namespace in the query, knowing that in this case no fact has the (local) name unit, but then in another namespace.</p>
+<p>In this query, we queried only for (some) <em>child elements</em> of the document element, knowing that the single unit is a child element of the document element. We also used no namespace in the query, knowing that in this case no fact has the (local) name unit, be it in another namespace.</p>
 
 <p>Analogously, we can query for the (2) contexts (as yaidom elements) as follows:</p>
 
@@ -120,24 +120,28 @@ val schemaDocElem = schemaDoc.documentElement
 <pre><code>val contextElems = instanceDocElem \ (e => e.localName == "context")
 </code></pre>
 
+<p>and:</p>
+
 <pre><code>val contextElems = instanceDocElem \\ (e => e.localName == "context")
 </code></pre>
 
-<p>Let's query for the 12 top-level facts, knowing that their element names are in the namespace "http://xbrl.squarespace.com/HelloWorld":</p>
+<p>Let's now query for the 12 top-level facts, knowing that their element names are in the namespace "http://xbrl.squarespace.com/HelloWorld":</p>
 
 <pre><code>val factElems = instanceDocElem filterChildElems { e =>
     e.resolvedName.namespaceUriOption == Some(helloWorldNamespace)
 }
 </code></pre>
 
+<p>Most of yaidom's query API is easy to guess knowing the methods presented above. For example, method "findAllElems" returns all descendant elements (excluding self), and method "findAllElemsOrSelf" returns all descendant-or-self elements.</p>
+
 <h3>
 <a name="uniform-element-query-api" class="anchor" href="#uniform-element-query-api"><span class="octicon octicon-link"></span></a>Uniform element query API</h3>
 
 <p>Above, we introduced basic element querying in yaidom, using the "standard" element implementation. Yaidom does not conform to the view that there is a one-size-fits-all element implementation, as we will see. Fortunately, this does not mean that there are as many yaidom element query APIs as there are element implementations. On the contrary, most element implementations mix in the ElemApi trait, which is the most important part of the query API.</p>
 
-<p>The yaidom element query API plays very well with the Scala Collections API. The yaidom query API only turns elements into collections of elements, and the Scala Collections API can be used seamlessly to manipulate those collections of elements. Put differently, the yaidom element query API is a <em>uniform</em> element query API, and the Scala Collections API plays the role of <em>universal</em> query API.</p>
+<p>The yaidom element query API plays very well with the Scala Collections API. Typical non-trivial queries are written as for-expressions, combining Scala collections with yaidom query API methods. In a sense, the yaidom element query API is a <em>uniform</em> element query API, and the Scala Collections API plays the role of <em>universal</em> (collection) query API.</p>
 
-<p>Below we show yaidom as uniform query API. Again start with the following same documents used above. The item declarations (which are top-level element declarations with the xbrli:item substitution group) in the schema document can be found uniformly across element implementations as follows:</p>
+<p>Below we show yaidom as uniform query API. Again start with the same documents used above. The item declarations (which are top-level element declarations with the xbrli:item substitution group) in the schema document can be found uniformly across element implementations as follows:</p>
 
 <pre><code>def findAllItemDeclarations[E <: ElemApi[E]](docElem: E): immutable.IndexedSeq[E] = {
     import ElemApi._
@@ -148,7 +152,7 @@ val schemaDocElem = schemaDoc.documentElement
 }
 </code></pre>
 
-<p>Typical yaidom client code does not abstract over multiple element implementations, but it is done here to show that the exact same query API works for multiple element implementations. In the function signature above, "E" is the type of the element implementation itself. We imported all members of the ElemApi companion object, to have the "withEName" element predicate builder in scope. Note that the query is not very robust, because it filters substitution groups on the qualified name, and not on the expanded name. We'll fix that later, with loss of genericity.</p>
+<p>Typical yaidom client code does not abstract over multiple element implementations, but generics are used here to show that the exact same query API works for multiple element implementations. In the function signature above, "E" is the type of the element implementation itself. We imported all members of the ElemApi companion object, to have the "withEName" element predicate builder in scope. Note that the query is not very robust, because it filters substitution groups on the qualified name, and not on the expanded name. We'll fix that later, paying the price of losing genericity.</p>
 
 <p>Given the schema document above, we can query the item declarations as follows:</p>
 
@@ -197,7 +201,7 @@ require(resolved.Elem(rootElem).removeAllInterElementWhitespace ==
 val resolvedItemDecls = findAllItemDeclarations(resolvedSchemaDocElem)
 </code></pre>
 
-<p>Sometimes we have a (mutable) JAXP DOM tree, and do not want to convert it to a yaidom immutable Elem tree. We can still use the yaidom query API to query those DOM elements. Function 'findAllItemDeclarations" can still be called:</p>
+<p>Sometimes we have a (mutable) JAXP DOM tree, and do not want to convert it to a yaidom immutable Elem tree. We can still use the yaidom query API to query those DOM elements. Function "findAllItemDeclarations" can still be called:</p>
 
 <pre><code>val dbf = DocumentBuilderFactory.newInstance
 val db = dbf.newDocumentBuilder
