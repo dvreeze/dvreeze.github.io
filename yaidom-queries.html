@@ -166,8 +166,7 @@ val schemaDocElem = schemaDoc.documentElement
     schemaDoc.documentElement.attribute(EName("targetNamespace"))
 
 val itemDeclsByTargetENames: Map[EName, Elem] = {
-    val name = e.attribute(EName("name"))
-    itemDecls.map(e => (EName(tns, name) -> e)).toMap
+    itemDecls.map(e => (EName(tns, e.attribute(EName("name"))) -> e)).toMap
 }
 
 val factElems = instanceDoc.documentElement \ { e =>
