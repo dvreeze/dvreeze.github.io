@@ -186,8 +186,7 @@ require(factElems.map(e => e.resolvedName).toSet.subsetOf(
 
 <p>How can we easily assert that these documents are equivalent XML documents? To that end, yaidom offers so-called "resolved" elements, which contain only expanded (element and attribute) names, and no qualified names. Indeed:</p>
 
-<pre><code>
-val rootElem = schemaDoc.documentElement
+<pre><code>val rootElem = schemaDoc.documentElement
 val rootElem2 = schemaDoc2.documentElement
 
 require(resolved.Elem(rootElem).removeAllInterElementWhitespace ==
@@ -196,9 +195,11 @@ require(resolved.Elem(rootElem).removeAllInterElementWhitespace ==
 
 <p>To show that the yaidom query API is uniform, let's now query the schema document element as "resolved" element for its item declarations:</p>
 
-<pre><code>val resolvedSchemaDocElem = resolved.Elem(schemaDoc.documentElement)
+<pre><code>val resolvedSchemaDocElem =
+    resolved.Elem(schemaDoc.documentElement)
 
-val resolvedItemDecls = findAllItemDeclarations(resolvedSchemaDocElem)
+val resolvedItemDecls =
+    findAllItemDeclarations(resolvedSchemaDocElem)
 </code></pre>
 
 <p>Sometimes we have a (mutable) JAXP DOM tree, and do not want to convert it to a yaidom immutable Elem tree. We can still use the yaidom query API to query those DOM elements. Function "findAllItemDeclarations" can still be called:</p>
@@ -229,9 +230,22 @@ val targetENames: Set[EName] =
         EName(tnsOption, name)
     }).toSet
 
-require(factElems.map(e => e.resolvedName).toSet.subsetOf(targetENames))
+require(
+    factElems.map(e => e.resolvedName).toSet.subsetOf(targetENames))
 </code></pre>
 
+<p>There are more element implementations offering the same query API, such as wrappers for Scala XML Elems. Yaidom is extensible in this regard, since more element implementations can easily be created by mixing in some yaidom traits like ElemApi, and by implementing the methods that are abstract in those traits.</p>
+
+<p>It was promised earlier to come up with a more robust "findAllItemDeclarations" method. This one only works for the "default" yaidom element implementation:</p>
+
+<pre><code>def findAllItemDeclarations(docElem: Elem): immutable.IndexedSeq[Elem] = {
+    import ElemApi._
+    for {
+        elemDecl <- docElem \ withEName(xsNamespace, "element")
+        if elemDecl.attributeAsResolvedQNameOption(EName("substitutionGroup")) == Some("xbrli:item")
+    } yield elemDecl
+}
+</code></pre>
 <h3>
 <a name="conclusion" class="anchor" href="#conclusion"><span class="octicon octicon-link"></span></a>Conclusion</h3>
 
