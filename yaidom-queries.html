@@ -24,9 +24,25 @@
       </header>
       <section>
         <h3>
+<a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h3>
+
+<p>This article is the first in a series of articles introducing a Scala DOM-like XML library, called <em>yaidom</em> ("yet another immutable DOM").</p>
+
+<p>It is assumed that the reader knows the basics of XML, including XML namespaces, and preferably to some extent XML Schema as well. Some experience with XML processing in Java (e.g. JAXP) is also helpful. Finally, the reader is expected to have some familiarity with the Scala programming language, and with the Scala Collections API in particular.</p>
+
+<p>This article only treats basic element querying in yaidom. The remainder of this article is organized as follows:</p>
+<ol>
+<li>Why yet another Scala XML library?</li>
+<li>Introducing the examples. The examples use XBRL, but no XBRL knowledge is assumed on the part of the reader.</li>
+<li>Introducing basic yaidom element queries</li>
+<li>Showing that yaidom offers a uniform element query API</li>
+<li>Conclusion of this first article about yaidom</li>
+</ol>
+
+        <h3>
 <a name="why-yet-another-scala-xml-library" class="anchor" href="#why-yet-another-scala-xml-library"><span class="octicon octicon-link"></span></a>Why yet another Scala XML library?</h3>
 
-<p>XML processing in Java has never been easy. Arguably, the simplest way to manipulate XML in Java is through XML data binding solutions, such as JAXB. Such solutions try to hide the XML, making the XML look like normal Java objects. Unfortunately, in non-trivial mapping scenarios one easily ends up having to keep 2 perspectives on the same XML data in sync: the "Java object view" and the "XML view".</p>
+<p>Let's for a moment think back about Java's XML story. XML processing in Java has never been easy. Arguably, the simplest way to manipulate XML in Java is through XML data binding solutions, such as JAXB. Such solutions try to hide the XML, making the XML look like normal Java objects. Unfortunately, in non-trivial mapping scenarios one easily ends up having to keep 2 perspectives on the same XML data in sync: the "Java object view" and the "XML view".</p>
 
 <p>Hence, O-X mapping may not be the best answer to XML processing. On the other hand, directly manipulating XML should not have been that hard in the first place.</p>
 
