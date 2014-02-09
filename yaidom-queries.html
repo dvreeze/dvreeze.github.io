@@ -48,11 +48,15 @@
 
 <p>Scala could help make direct XML manipulation easy, by leveraging the Scala Collections API. The standard Scala XML API should have been the obvious choice. It predates Scala 2.8, however, and its namespace support is not as precise and clear as I would like it to be. Anti-XML aimed at being a better alternative, but that project seems abandoned. The third well-known Scala XML library is Scales XML, but this is not a DOM-like API.</p>
 
-<p>It seems hard to find a Scala XML library having first-class namespace support, and offering precise and clear namespace handling. The best explanation of XML namespaces that I have come across is <a href="http://www.lenzconsulting.com/namespaces/">Understanding XML Namespaces</a>. It distinguishes between <em>qualified names</em> (such as my:foo) and <em>expanded names</em> (such as {http://my}foo, in James Clark notation). Many XML libraries blur this distinction, and therefore offer sub-par namespace support.</p>
+<p>It seems hard to find a Scala XML library having first-class namespace support, and offering precise and clear namespace handling. The best explanation of XML namespaces that I have come across is <a href="http://www.lenzconsulting.com/namespaces/">Understanding XML Namespaces</a>. It distinguishes between <em>qualified names</em> (such as my:foo) and <em>expanded names</em> (such as {http://my}foo, in James Clark notation). Many XML libraries blur this distinction, and therefore offer sub-par namespace support. This was the most important reason to come up with <em>yaidom</em>.</p>
 
-<p>This was the most important reason to come up with an alternative Scala XML DOM-like library, called <em>yaidom</em>.</p>
-
-<p>This is the first in a series of articles about yaidom. It introduces basic XML querying in yaidom.</p>
+<p>The core design principles behind yaidom are:</p>
+<ul>
+<li>Yaidom wants to offer first class support for XML namespaces.</li>
+<li>Yaidom leverages Scala and its Collections API for expressiveness, precision and clarity. No XPath-like query support is offered, even if that means a little less conciseness.</li>
+<li>Yaidom leverages Java (and JAXP in particular) to deal with the gory details of XML parsing and serialization, without trying to hide JAXP behind any leaky abstraction.</li>
+<li>There is no one-size-fits-all element representation, but it is still desirable to have multiple element implementation share the same yaidom element query API.</li>
+</ul>
 
 <h3>
 <a name="using-xbrl-examples" class="anchor" href="#using-xbrl-examples"><span class="octicon octicon-link"></span></a>Using XBRL examples</h3>
@@ -76,8 +80,10 @@ val helloWorldNamespace = "http://xbrl.squarespace.com/HelloWorld"
 // Using a yaidom DocumentParser that used DOM internally
 val docParser = parse.DocumentParserUsingDom.newInstance
 
-val instanceDoc: Document = docParser.parse(new File("/path/to/HelloWorld.xml"))
-val schemaDoc: Document = docParser.parse(new File("/path/to/HelloWorld.xsd"))
+val instanceDoc: Document =
+    docParser.parse(new File("/path/to/HelloWorld.xml"))
+val schemaDoc: Document =
+    docParser.parse(new File("/path/to/HelloWorld.xsd"))
 
 val instanceDocElem = instanceDoc.documentElement
 val schemaDocElem = schemaDoc.documentElement
@@ -85,7 +91,8 @@ val schemaDocElem = schemaDoc.documentElement
 
 <p>Let's get started with some basic yaidom element queries. The HelloWorld.xml XBRL instance has some units, contexts and (top-level) facts. We can query for the units (as yaidom elements) as follows:</p>
 
-<pre><code>val unitElems = instanceDocElem.filterChildElems(e => e.localName == "unit")
+<pre><code>val unitElems =
+    instanceDocElem.filterChildElems(e => e.localName == "unit")
 </code></pre>
 
 <p>In this query, we queried only for (some) <em>child elements</em> of the document element, knowing that the single unit is a child element of the document element. We also used no namespace in the query, knowing that in this case no fact has the (local) name unit, but then in another namespace.</p>
@@ -151,10 +158,12 @@ val schemaDocElem = schemaDoc.documentElement
 
 <p>We can now check if all facts in the XBRL instance correspond to item declarations in the schema document as follows:</p>
 
-<pre><code>val tns = schemaDoc.documentElement.attribute(EName("targetNamespace"))
+<pre><code>val tns =
+    schemaDoc.documentElement.attribute(EName("targetNamespace"))
 
 val itemDeclsByTargetENames: Map[EName, Elem] = {
-    itemDecls.map(e => (EName(tns, e.attribute(EName("name"))) -> e)).toMap
+    val name = e.attribute(EName("name"))
+    itemDecls.map(e => (EName(tns, name) -> e)).toMap
 }
 
 val factElems = instanceDoc.documentElement \ { e =>
