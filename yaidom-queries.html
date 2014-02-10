@@ -78,7 +78,7 @@
 
 <p>XBRL instances are described by so-called XBRL taxonomies. These are collections of taxonomy schemas (and so-called "linkbases", which we can safely ignore here). Taxonomy schemas are like normal XML Schemas, but with additional XBRL-specific data. The example taxonomy schema document referred to from the XBRL instance is <a href="examples/HelloWorld.xsd" target="_blank">HelloWorld.xsd</a>. For all facts in the instance, it has corresponding top-level element declarations. These element declarations all have substitution group {http://www.xbrl.org/2003/instance}item, which makes them XBRL item declarations that can be used for facts in the XBRL instance. Also note that the target namespace of the schema file indeed matches the namespace of the facts in the instance, which is necessary, because the instance must be schema-valid w.r.t. the schema. This is all the XBRL background that is needed to start explaining yaidom querying using these XBRL example files.</p>
 
-<p>All code examples below can be tried out in the Scala REPL (if the paths to the example files are replaced). Scala 2.10.X is required, and yaidom 0.8.0 (or later) must be on the classpath.</p>
+<p>All code examples below can be tried out in the Scala REPL (if the parent directory path of the example files is replaced). Scala 2.10.X is required, and yaidom 0.8.0 (or later) must be on the classpath.</p>
 
 <h3>
 <a name="introduction-to-yaidom-element-queries" class="anchor" href="#introduction-to-yaidom-element-queries"><span class="octicon octicon-link"></span></a>Introduction to yaidom element queries</h3>
@@ -97,10 +97,13 @@ val helloWorldNamespace = "http://xbrl.squarespace.com/HelloWorld"
 // Using a yaidom DocumentParser that used DOM internally
 val docParser = parse.DocumentParserUsingDom.newInstance
 
+// Replace the following path!
+val parentDir = new File("path/to/parentdir")
+
 val instanceDoc: Document =
-    docParser.parse(new File("/path/to/HelloWorld.xml"))
+    docParser.parse(new File(parentDir, "HelloWorld.xml"))
 val schemaDoc: Document =
-    docParser.parse(new File("/path/to/HelloWorld.xsd"))
+    docParser.parse(new File(parentDir, "HelloWorld.xsd"))
 
 val instanceDocElem = instanceDoc.documentElement
 val schemaDocElem = schemaDoc.documentElement
@@ -203,7 +206,7 @@ require(factElems.map(e => e.resolvedName).toSet.subsetOf(
 <p>Prefixes are insignificant in XML. Consider schema file <a href="examples/HelloWorld2.xsd" target="_blank">HelloWorld2.xml</a>, which is equivalent to HelloWorld.xml, except that the default namespace has been replaced by prefix "xs":<p>
 
 <pre><code>val schemaDoc2: Document =
-    docParser.parse(new File("/path/to/HelloWorld2.xsd"))
+    docParser.parse(new File(parentDir, "HelloWorld2.xsd"))
 </code></pre>
 
 <p>How can we easily assert that these documents are equivalent XML documents? To that end, yaidom offers so-called "resolved" elements, which contain only expanded (element and attribute) names, and no qualified names. Indeed:</p>
@@ -228,7 +231,7 @@ val resolvedItemDecls =
 
 <pre><code>val dbf = DocumentBuilderFactory.newInstance
 val db = dbf.newDocumentBuilder
-val d = db.parse(new File("/path/to/HelloWorld.xsd"))
+val d = db.parse(new File(parentDir, "HelloWorld.xsd"))
 
 val wrapperDoc = dom.DomDocument(d)
 
@@ -256,7 +259,7 @@ require(
     factElems.map(e => e.resolvedName).toSet.subsetOf(targetENames))
 </code></pre>
 
-<p>There are more element implementations offering the same query API, such as wrappers for Scala XML Elems. Yaidom is extensible in this regard, since more element implementations can easily be created by mixing in some yaidom traits like ElemApi, and by implementing the methods that are abstract in those traits.</p>
+<p>There are more element implementations offering the same query API, such as wrappers for Scala XML Elems. Yaidom is extensible in this regard, since more element implementations can easily be created by mixing in some yaidom traits like ElemLike, and by implementing the methods that are abstract in those traits.</p>
 
 <p>It was promised earlier to come up with a more robust "findAllItemDeclarations" method. This one only works for the "default" yaidom element implementation:</p>
 
@@ -278,7 +281,7 @@ require(
 
 <p>Succeeding articles on yaidom will treat more advanced querying, functional updates, and configuration of yaidom.</p>
 
-<p>As a concluding remark, yaidom is used in production code developed at <a href="http://www.ebpi.nl" target="_blank">www.ebpi.nl</a>. Its usage in several projects has certainly helped it mature. I want to thank my colleagues Jan-Paul van der Velden, Andrea Desole, Johan Walters and Nicholas Evans for their feedback on earlier versions of yaidom.</p>
+<p>As a concluding remark, yaidom is used in production code developed at <a href="http://www.ebpi.nl" target="_blank">www.ebpi.nl</a>. Its usage in several projects has certainly helped it mature. I want to thank my colleagues Jan-Paul van der Velden, Andrea Desole, Johan Walters and Nicholas Evans for their valuable feedback on earlier versions of yaidom.</p>
       </section>
       <footer>
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
