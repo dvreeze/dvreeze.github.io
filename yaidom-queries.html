@@ -36,7 +36,7 @@
 <li>Using XBRL examples. (See below.)</li>
 <li>Introduction to yaidom element queries.</li>
 <li>Uniform element query API.</li>
-<li>Conclusion (of this first article about yaidom)</li>
+<li>Conclusion (of this first article about yaidom).</li>
 </ol>
 
 <p>Although the examples use XBRL (which stands for eXtensible Business Reporting Language), no prior XBRL knowledge is assumed on the part of the reader. With only a minimal explanation the examples are quite easy to understand.</p>
@@ -44,20 +44,29 @@
         <h3>
 <a name="why-yet-another-scala-xml-library" class="anchor" href="#why-yet-another-scala-xml-library"><span class="octicon octicon-link"></span></a>Why yet another Scala XML library?</h3>
 
-<p>Let's for a moment think (back) about XML manipulation in Java. XML processing in Java has never been easy. Arguably, the simplest way to manipulate XML in Java is through XML data binding solutions, such as JAXB. Such solutions try to hide the XML, making the XML look like normal Java objects. Unfortunately, in non-trivial mapping scenarios one easily ends up having to keep 2 perspectives on the same XML data in sync: the "Java object view" and the "XML view", thus creating more instead of less work.</p>
+<p>XML processing in Java has never been easy. Direct use of SAX, DOM or StAX is low-level and cumbersome. Use of XPath may be low-level in the handling of returned DOM nodes or node lists, and performance issues quickly arise. Several other (DOM-like) libraries may improve on JAXP DOM, but still do not make XML processing significantly easier. The use of O-X mapping (such as JAXB) just for XML manipulation seems the wrong tool for the job, since that would turn an XML manipulation problem into a bigger O-X mapping problem between 2 different perspectives ("Java object" and "XML") that must be kept in sync. (I'm not criticizing O-X mapping, but I'm criticizing the use of O-X mapping if there is inherently no O-X mapping problem in the first place.)</p>
 
-<p>Hence, O-X mapping may not be the best answer for most XML processing scenarios. On the other hand, directly manipulating XML should not have been that hard in the first place.</p>
+<p>Direct manipulation of XML should not be that hard. In Java (at least before version 8) not only XML processing, but data processing in general is hard (all the time explicitly iterating instead of just transforming collections). Scala and its expressive Collections API have a far more appealing data processing story, as most Scala programmers would agree. Shouldn't XML processing in Scala then be easier than in Java, as a consequence?</p>
 
-<p>Scala could help make direct XML manipulation easy, by leveraging the Scala Collections API. The standard Scala XML API should have been the obvious choice. It predates Scala 2.8, however, and its namespace support is not as precise and clear as I would like it to be. Anti-XML aimed at being a better alternative, but that project seems abandoned. The third well-known Scala XML library is Scales XML, but this is not a DOM-like API.</p>
+<p>There are 3 Scala XML libraries that are currently often mentioned. There is Scales XML, which is not a DOM-like API. (It probably shines in "streaming scenarios".) Then there is Anti-XML, which seems abandoned, and which aimed to be an improvement on the third library, viz. the standard Scala XML library. Unfortunately, the standard Scala XML library has some (rather fundamental) issues that I find hard to accept. For example:</p>
 
-<p>It seems hard to find a Scala XML library having first-class namespace support, and offering precise and clear namespace handling. The best explanation of XML namespaces that I have come across is <a href="http://www.lenzconsulting.com/namespaces/">Understanding XML Namespaces</a>. It distinguishes between <em>qualified names</em> (such as my:foo) and <em>expanded names</em> (such as {http://my}foo, in James Clark notation). Many XML libraries blur this fundamental distinction. That is somewhat understandable, because expanded names do not occur syntactically in XML. Still, ignoring this distinction makes it hard to talk precisely about namespaces, thus leading to sub-par namespace support. The quest for first-class namespace support was the most important reason to come up with <em>yaidom</em>.</p>
-
-<p>The core design principles behind yaidom are:</p>
 <ul>
-<li>Yaidom wants to offer first class support for XML namespaces.</li>
-<li>Yaidom leverages Scala and its Collections API for expressiveness, precision and clarity. No XPath-like query support is offered, even if that means a little less conciseness.</li>
-<li>Yaidom leverages Java (and JAXP in particular) to deal with the gory details of XML parsing and serialization, without trying to hide JAXP behind any leaky abstraction.</li>
-<li>There is no one-size-fits-all element representation, but it is still desirable to have multiple element implementation share the same yaidom element query API.</li>
+<li>Strange classes and class hierarchies, such as class Node indirectly extending Seq[Node], and class MetaData representing both an attribute and a linked list of attributes.</li>
+<li>API inconsistencies, such methods "\" and "\\" offering namespace-aware attribute querying but only local-name-aware element querying.</li>
+<li>Methods "\" and "\\" each meaning different things, depending on the string argument passed: element querying or attribute querying.</li>
+<li>The library feeling outdated, and clearly predating Scala 2.8.</li>
+</ul>
+
+<p>Yes, I do realize that the standard XML library tried to offer an XPath-like experience. On the other hand, I do think that the question is fair how badly one should want to have an XPath-like experience (including concise chaining of operators), and what price one is willing to pay (in clarity, precision etc.). Anyway, a well-known critique of the Scala XML library (by the creator of Anti-XML) can be found <a href="http://www.codecommit.com/blog/scala/working-with-scalas-xml-support">here</a>.</p>
+
+<p>It seems hard to find a Scala XML library having first-class namespace support. As an aside, the best explanation of XML namespaces that I have come across is <a href="http://www.lenzconsulting.com/namespaces/">Understanding XML Namespaces</a>. It distinguishes between <em>qualified names</em> (such as my:foo) and <em>expanded names</em> (such as {http://my}foo, in James Clark notation). Admittedly, qualified names occur in XML, and expanded names do not. Still, many XML libraries blur this fundamental distinction. Unfortunately, ignoring this distinction makes it hard to talk precisely about namespaces. In my view that leads to subpar namespace support. The quest for first-class namespace support was the most important reason to come up with <em>yaidom</em>.</p>
+
+<p>Yaidom has been influenced by all of the 3 Scala XML libraries mentioned above, be it in very different ways. It has its own underlying design choices, however. The core design principles behind yaidom are:</p>
+<ul>
+<li>It offers precise and clear support for XML namespaces.</li>
+<li>It leverages Scala and its Collections API for their expressiveness, precision and clarity. No XPath-like query support is offered, even if that means a little less conciseness.</li>
+<li>It leverages Java (and JAXP in particular) to deal with the gory details of XML parsing and serialization, without trying to hide JAXP behind any leaky abstraction.</li>
+<li>It has no single one-size-fits-all element representation, but offers multiple element implementations with different characteristics. These different element implementations still share the same yaidom element query API, to the extent possible.</li>
 </ul>
 
 <h3>
