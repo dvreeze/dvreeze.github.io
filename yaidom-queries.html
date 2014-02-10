@@ -28,16 +28,18 @@
 
 <p>This article is the first in a series of articles introducing a Scala DOM-like XML library, called <em>yaidom</em> ("yet another immutable DOM").</p>
 
-<p>It is assumed that the reader knows the basics of XML, including XML namespaces, and preferably to some extent XML Schema as well. Some experience with XML processing in Java (e.g. JAXP) is also helpful. Finally, the reader is expected to have some familiarity with the Scala programming language, and with the Scala Collections API in particular.</p>
+<p>It is assumed that the reader knows the basics of XML, in particular XML namespaces. Preferably the reader knows a little bit about XML Schema as well, to make sense of the examples. Some experience with XML processing in Java (e.g. JAXP) is also helpful. Finally, the reader is expected to have some familiarity with the Scala programming language, and with the Scala Collections API in particular.</p>
 
 <p>This article only treats basic element querying in yaidom. The remainder of this article is organized as follows:</p>
 <ol>
 <li>Why yet another Scala XML library?</li>
-<li>Introducing the examples. The examples use XBRL, but no prior XBRL knowledge is assumed on the part of the reader.</li>
-<li>Introducing basic yaidom element queries</li>
-<li>Showing that yaidom offers a uniform element query API</li>
-<li>Conclusion of this first article about yaidom</li>
+<li>Using XBRL examples. (See below.)</li>
+<li>Introduction to yaidom element queries.</li>
+<li>Uniform element query API.</li>
+<li>Conclusion (of this first article about yaidom)</li>
 </ol>
+
+<p>Although the examples use XBRL (which stands for eXtensible Business Reporting Language), no prior XBRL knowledge is assumed on the part of the reader. With only a minimal explanation the examples are quite easy to understand.</p>
 
         <h3>
 <a name="why-yet-another-scala-xml-library" class="anchor" href="#why-yet-another-scala-xml-library"><span class="octicon octicon-link"></span></a>Why yet another Scala XML library?</h3>
