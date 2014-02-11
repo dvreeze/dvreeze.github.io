@@ -117,7 +117,7 @@ val schemaDocElem = schemaDoc.documentElement
     instanceDocElem.filterChildElems(e => e.localName == "unit")
 </code></pre>
 
-<p>In this query, we queried only for (some) <em>child elements</em> of the document element, knowing that the single unit is a child element of the document element. We also used no namespace in the query, knowing that in this case no fact has the (local) name unit, be it in another namespace. The query result (stripping some unused namespace declarations) is:</p>
+<p>In this query, we queried only for (some) <em>child elements</em> of the document element, knowing that the single unit is a child element of the document element. We also used no namespace in the query, knowing that in this case no fact has the (local) name unit, be it in another namespace. The query result (stripping some unused namespace declarations) is the following XML element:</p>
 
 <pre><code>&lt;unit id="U-Monetary"  xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns="http://www.xbrl.org/2003/instance"&gt;
     &lt;measure&gt;iso4217:USD&lt;/measure&gt;
@@ -130,7 +130,7 @@ val schemaDocElem = schemaDoc.documentElement
     instanceDocElem.filterChildElems(e => e.localName == "context")
 </code></pre>
 
-<p>The query result (again stripping some unused namespace declarations) is the following 2 elements:</p>
+<p>The query result (again stripping some unused namespace declarations) consists of the following 2 XML elements:</p>
 
 <pre><code>&lt;context id="I-2007" xmlns="http://www.xbrl.org/2003/instance"&gt;
     &lt;entity&gt;
@@ -206,6 +206,21 @@ val schemaDocElem = schemaDoc.documentElement
 
 <pre><code>val itemDecls =
     findAllItemDeclarations(schemaDoc.documentElement)
+</code></pre>
+
+<p>The query result (again stripping unused namespace declarations) has the following XML elements:</p>
+
+<pre><code>&lt;element type="xbrli:monetaryItemType" name="Land" substitutionGroup="xbrli:item" xbrli:periodType="instant" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns="http://www.w3.org/2001/XMLSchema"/&gt;
+
+&lt;element type="xbrli:monetaryItemType" name="BuildingsNet" substitutionGroup="xbrli:item" xbrli:periodType="instant" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns="http://www.w3.org/2001/XMLSchema"/&gt;
+
+&lt;element type="xbrli:monetaryItemType" name="FurnitureAndFixturesNet" substitutionGroup="xbrli:item" xbrli:periodType="instant" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns="http://www.w3.org/2001/XMLSchema"/&gt;
+
+&lt;element type="xbrli:monetaryItemType" name="ComputerEquipmentNet" substitutionGroup="xbrli:item" xbrli:periodType="instant" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns="http://www.w3.org/2001/XMLSchema"/&gt;
+
+&lt;element type="xbrli:monetaryItemType" name="OtherPropertyPlantAndEquipmentNet" substitutionGroup="xbrli:item" xbrli:periodType="instant" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns="http://www.w3.org/2001/XMLSchema"/&gt;
+
+&lt;element type="xbrli:monetaryItemType" name="PropertyPlantAndEquipmentNet" substitutionGroup="xbrli:item" xbrli:periodType="instant" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns="http://www.w3.org/2001/XMLSchema"/&gt;
 </code></pre>
 
 <p>We can now check if all facts in the XBRL instance correspond to item declarations in the schema document as follows:</p>
