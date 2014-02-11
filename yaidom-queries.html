@@ -208,7 +208,7 @@ val schemaDocElem = schemaDoc.documentElement
     findAllItemDeclarations(schemaDoc.documentElement)
 </code></pre>
 
-<p>The query result (again stripping unused namespace declarations) has the following XML elements:</p>
+<p>The query result (again stripping unused namespace declarations) consists of the following XML elements:</p>
 
 <pre><code>&lt;element type="xbrli:monetaryItemType" name="Land" substitutionGroup="xbrli:item" xbrli:periodType="instant" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns="http://www.w3.org/2001/XMLSchema"/&gt;
 
@@ -255,6 +255,9 @@ require(factElems.map(e => e.resolvedName).toSet.subsetOf(
 <pre><code>val rootElem = schemaDoc.documentElement
 val rootElem2 = schemaDoc2.documentElement
 
+// Method removeAllInterElementWhitespace makes the equality comparison
+// more robust, because it removes whitespace used for formatting
+
 require(resolved.Elem(rootElem).removeAllInterElementWhitespace ==
     resolved.Elem(rootElem2).removeAllInterElementWhitespace)
 </code></pre>
@@ -270,7 +273,8 @@ val resolvedItemDecls =
 
 <p>Sometimes we have a (mutable) JAXP DOM tree, and do not want to convert it to a yaidom immutable Elem tree. We can still use the yaidom query API to query those DOM elements. Function "findAllItemDeclarations" can still be called:</p>
 
-<pre><code>val dbf = DocumentBuilderFactory.newInstance
+<pre><code>// Using a JAXP (DOM) DocumentBuilderFactory
+val dbf = DocumentBuilderFactory.newInstance
 val db = dbf.newDocumentBuilder
 val d = db.parse(new File(parentDir, "HelloWorld.xsd"))
 
