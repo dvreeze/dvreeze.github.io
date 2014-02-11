@@ -119,10 +119,10 @@ val schemaDocElem = schemaDoc.documentElement
 
 <p>In this query, we queried only for (some) <em>child elements</em> of the document element, knowing that the single unit is a child element of the document element. We also used no namespace in the query, knowing that in this case no fact has the (local) name unit, be it in another namespace. The query result (stripping some unused namespace declarations) is:</p>
 
-<pre><unit id="U-Monetary"  xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns="http://www.xbrl.org/2003/instance">
-    <measure>iso4217:USD</measure>
-</unit>
-</pre>
+<pre><code>&lt;unit id="U-Monetary"  xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns="http://www.xbrl.org/2003/instance"&gt;
+    &lt;measure&gt;iso4217:USD&lt;/measure&gt;
+&lt;/unit&gt;
+</code></pre>
 
 <p>Analogously, we can query for the (2) contexts (as yaidom elements) as follows:</p>
 
@@ -132,24 +132,24 @@ val schemaDocElem = schemaDoc.documentElement
 
 <p>The query result (again stripping some unused namespace declarations) is the following 2 elements:</p>
 
-<pre><context id="I-2007" xmlns="http://www.xbrl.org/2003/instance">
-    <entity>
-        <identifier scheme="http://www.ExampleCompany.com">Example Company</identifier>
-    </entity>
-    <period>
-        <instant>2007-12-31</instant>
-    </period>
-</context>
+<pre><code>&lt;context id="I-2007" xmlns="http://www.xbrl.org/2003/instance"&gt;
+    &lt;entity&gt;
+        &lt;identifier scheme="http://www.ExampleCompany.com"&gt;Example Company&lt;/identifier&gt;
+    &lt;/entity&gt;
+    &lt;period&gt;
+        &lt;instant&gt;2007-12-31&lt;/instant&gt;
+    &lt;/period&gt;
+&lt;/context&gt;
 
-<context id="I-2006" xmlns="http://www.xbrl.org/2003/instance">
-    <entity>
-        <identifier scheme="http://www.ExampleCompany.com">Example Company</identifier>
-    </entity>
-    <period>
-        <instant>2006-12-31</instant>
-    </period>
-</context>
-</pre>
+&lt;context id="I-2006" xmlns="http://www.xbrl.org/2003/instance"&gt;
+    &lt;entity&gt;
+        &lt;identifier scheme="http://www.ExampleCompany.com"&gt;Example Company&lt;/identifier&gt;
+    &lt;/entity&gt;
+    &lt;period&gt;
+        &lt;instant&gt;2006-12-31&lt;/instant&gt;
+    &lt;/period&gt;
+&lt;/context&gt;
+</code></pre>
 
 <p>Above, we queried for child elements with local name context. We could have queried for all <em>descendant elements</em> with local name context instead. Not surprisingly, the same elements would be returned:</p>
 
