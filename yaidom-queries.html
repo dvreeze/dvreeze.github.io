@@ -45,7 +45,19 @@
         <h3>
 <a name="introductory-example" class="anchor" href="#introductory-example"><span class="octicon octicon-link"></span></a>Introductory example</h3>
 
-<p>First we give an introductory example. ... </p>
+<p>First we give an introductory example. Consider the following schema file: <a href="examples/HelloWorld.xsd" target="_blank">HelloWorld.xsd</a>. This is not a regular schema file, but let's ignore that for the moment. Obviously, the schema file is an XML document, so we can treat it as such, and query it like any XML. Suppose we have parsed this document, and that the parsed document has been stored into variable "schemaDoc". Then we can query for the name attributes of all top-level element declarations with a substitutionGroup attribute having value "xbrli:item" as follows:</p>
+
+<pre><code>val xsNs = "http://www.w3.org/2001/XMLSchema"
+
+for {
+    elemDeclElem <- schemaDoc.documentElement \ EName(xsNs, "element")
+    substGroup <- elemDeclElem \@ EName("substitutionGroup")
+    if substGroup == "xbrli:item"
+    name <- elemDeclElem \@ EName("name")
+} yield name
+</code></pre>
+
+<p>No explanation is given here, but all will become clear below in this article.</p>
 
         <h3>
 <a name="why-yet-another-scala-xml-library" class="anchor" href="#why-yet-another-scala-xml-library"><span class="octicon octicon-link"></span></a>Why yet another Scala XML library?</h3>
