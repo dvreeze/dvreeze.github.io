@@ -208,6 +208,9 @@ val schemaDocElem = schemaDoc.documentElement
 
 <p>Typical yaidom client code does not abstract over multiple element implementations, but generics are used here to show that the exact same query API works for multiple element implementations. In the function signature above, "E" is the type of the element implementation itself. We imported all members of the ElemApi companion object, to have the "withEName" element predicate builder in scope. Note that the query is not very robust, because it filters substitution groups on the qualified name, and not on the expanded name. We'll fix that later, paying the price of losing genericity.</p>
 
+<h4>
+<a name="default-yaidom-elements" class="anchor" href="#default-yaidom-elements"><span class="octicon octicon-link"></span></a>"Default" yaidom elements</h4>
+
 <p>Given the schema document above, we can query the item declarations as follows:</p>
 
 <pre><code>val itemDecls =
@@ -268,6 +271,9 @@ require(resolved.Elem(rootElem).removeAllInterElementWhitespace ==
     resolved.Elem(rootElem2).removeAllInterElementWhitespace)
 </code></pre>
 
+<h4>
+<a name="resolved-elements" class="anchor" href="#resolved-elements"><span class="octicon octicon-link"></span></a>"Resolved" elements</h4>
+
 <p>To show that the yaidom query API is uniform, let's now query the schema document element as "resolved" element for its item declarations:</p>
 
 <pre><code>val resolvedSchemaDocElem =
@@ -276,6 +282,9 @@ require(resolved.Elem(rootElem).removeAllInterElementWhitespace ==
 val resolvedItemDecls =
     findAllItemDeclarations(resolvedSchemaDocElem)
 </code></pre>
+
+<h4>
+<a name="dom-wrapper-elements" class="anchor" href="#dom-wrapper-elements"><span class="octicon octicon-link"></span></a>"DOM wrapper" elements</h4>
 
 <p>Sometimes we have a (mutable) JAXP DOM tree, and do not want to convert it to a yaidom immutable Elem tree. We can still use the yaidom query API to query those DOM elements. Function "findAllItemDeclarations" can still be called:</p>
 
@@ -289,6 +298,9 @@ val wrapperDoc = dom.DomDocument(d)
 val domItemDecls =
     findAllItemDeclarations(wrapperDoc.documentElement)
 </code></pre>
+
+<h4>
+<a name="indexed-elements" class="anchor" href="#indexed-elements"><span class="octicon octicon-link"></span></a>"Indexed" elements</h4>
 
 <p>Sometimes we want to use immutable elements, and still have access to the ancestry of each element. For example, when querying for item declarations, we need to inspect the document element for the target namespace. With so-called "indexed" elements, each element has indeed access to its ancestry.</p>
 
@@ -310,6 +322,9 @@ require(
     factElems.map(e => e.resolvedName).toSet.subsetOf(targetENames))
 </code></pre>
 
+<h4>
+<a name="uniform-query-api-wrap-up" class="anchor" href="#uniform-query-api-wrap-up"><span class="octicon octicon-link"></span></a>Uniform query API wrap up</h4>
+
 <p>There are more element implementations offering the same query API, such as wrappers for Scala XML Elems. Yaidom is extensible in this regard, since more element implementations can easily be created by mixing in some yaidom traits like ElemLike, and by implementing the methods that are abstract in those traits.</p>
 
 <p>It was promised earlier to come up with a more robust "findAllItemDeclarations" method. This one only works for the "default" yaidom element implementation:</p>
@@ -323,6 +338,7 @@ require(
     } yield elemDecl
 }
 </code></pre>
+
 <h3>
 <a name="conclusion" class="anchor" href="#conclusion"><span class="octicon octicon-link"></span></a>Conclusion</h3>
 
