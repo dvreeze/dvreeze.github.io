@@ -28,36 +28,31 @@
 
 <p>This article is the first in a series of articles introducing a Scala DOM-like XML library, called <em>yaidom</em> ("yet another immutable DOM").</p>
 
-<p>It is assumed that the reader knows the basics of XML, in particular XML namespaces. Preferably the reader knows a little bit about XML Schema as well, to make sense of the examples. Some experience with XML processing in Java (e.g. JAXP) is also helpful. Finally, the reader is expected to have some familiarity with the Scala programming language, and with the Scala Collections API in particular.</p>
+<p>It is assumed that the reader knows the basics of XML, in particular XML namespaces. Some experience with XML processing in Java (e.g. JAXP) is also helpful. Finally, the reader is expected to have some familiarity with the Scala programming language, and with the Scala Collections API in particular.</p>
 
 <p>This article only treats basic element querying in yaidom. The remainder of this article is organized as follows:</p>
 <ol>
 <li>Introductory example</li>
 <li>Why yet another Scala XML library?</li>
-<li>Using XBRL examples. (See below.)</li>
 <li>Introduction to yaidom element queries.</li>
 <li>Uniform element query API.</li>
 <li>Conclusion (of this first article about yaidom).</li>
 </ol>
 
-<p>Although the examples use XBRL (which stands for eXtensible Business Reporting Language), no prior XBRL knowledge is assumed on the part of the reader. With only a minimal explanation the examples are quite easy to understand.</p>
+<p>The examples use the ubiquitous bookstore. The specific sample XML is from the (coursera) course Introduction to Databases, by Jennifer Widom (with permission).</p>
 
         <h3>
 <a name="introductory-example" class="anchor" href="#introductory-example"><span class="octicon octicon-link"></span></a>Introductory example</h3>
 
-<p>First we give an introductory example. Consider the following schema file: <a href="examples/HelloWorld.xsd" target="_blank">HelloWorld.xsd</a>. This is not a regular schema file, but let's ignore that for the moment. Obviously, the schema file is an XML document, so we can treat it as such, and query it like any XML. Suppose we have parsed this document, and that the parsed document has been stored into variable "schemaDoc". Then we can query for the name attributes of all top-level element declarations with a substitutionGroup attribute having value "xbrli:item" as follows:</p>
+<p>First we give an introductory example to querying in yaidom. Consider the following XML file: <a href="examples/books.xml" target="_blank">books.xml</a>. Suppose we have parsed this document, and that the parsed document has been stored into variable "doc". Then we can query for all book author last names as follows (without removing duplicates):</p>
 
-<pre><code>val xsNs = "http://www.w3.org/2001/XMLSchema"
-
-for {
-    elemDeclElem <- schemaDoc.documentElement \ EName(xsNs, "element")
-    substGroup <- elemDeclElem \@ EName("substitutionGroup")
-    if substGroup == "xbrli:item"
-    name <- elemDeclElem \@ EName("name")
-} yield name
+<pre><code>for {
+    bookElem <- doc.documentElement \ withLocalName("Book")
+    lastNameElem <- bookElem \\ withLocalName("Last_Name")
+} yield lastNameElem.text
 </code></pre>
 
-<p>No explanation is given here, but all will become clear below in this article.</p>
+<p>Unlike querying with the standard Scala XML library, we cannot chain "\" and "\\" operators. It will become clear in this article why yaidom sacrifices a little bit of conciseness compared to a more XPath-like experience.</p>
 
         <h3>
 <a name="why-yet-another-scala-xml-library" class="anchor" href="#why-yet-another-scala-xml-library"><span class="octicon octicon-link"></span></a>Why yet another Scala XML library?</h3>
@@ -88,18 +83,9 @@ for {
 </ul>
 
 <h3>
-<a name="using-xbrl-examples" class="anchor" href="#using-xbrl-examples"><span class="octicon octicon-link"></span></a>Using XBRL examples</h3>
-
-<p>To illustrate yaidom, we use examples in the domain of <a href="http://xbrl.org" target="_blank">XBRL</a>. This is a commonly used standard for business reporting. For good introductory material to XBRL, see <a href="http://xbrl.squarespace.com/" target="_blank">xbrl.squarespace.com</a>. The examples used in this article originate from that site. All credits for the examples go to the "father of XBRL", Charles Hoffman. To understand the examples in the context of this article (explaining yaidom querying), the small explanation below suffices.</p>
-
-<p>XBRL business reports are called XBRL instances. The sample XBRL instance used in this article is <a href="examples/HelloWorld.xml" target="_blank">HelloWorld.xml</a>. The 2 elements with local name "context" refer to contexts Example Company at 2007-12-31, and Example Company at 2006-12-31, respectively. The element with local name "unit" refers to unit USD. Below the unit element are the facts of the report. In this example, the facts are all in the http://xbrl.squarespace.com/HelloWorld namespace. The facts all refer to one of the 2 contexts, and, since they are numeric, they also refer to a unit (in this case only unit USD). Now the facts start to make sense. The topmost fact gives the Land of Example Company in 2007, in USD. The next fact gives the Land of Example Company in 2006, in USD. The 10 remaining (numeric) facts can be understood analogously, by relating the fact to its context and unit.</p>
-
-<p>XBRL instances are described by so-called XBRL taxonomies. These are collections of taxonomy schemas (and so-called "linkbases", which we can safely ignore here). Taxonomy schemas are like normal XML Schemas, but with additional XBRL-specific data. The example taxonomy schema document referred to from the XBRL instance is <a href="examples/HelloWorld.xsd" target="_blank">HelloWorld.xsd</a>. For all facts in the instance, it has corresponding top-level element declarations. These element declarations all have substitution group {http://www.xbrl.org/2003/instance}item, which makes them XBRL item declarations that can be used for facts in the XBRL instance. Also note that the target namespace of the schema file indeed matches the namespace of the facts in the instance, which is necessary, because the instance must be schema-valid w.r.t. the schema. This is all the XBRL background that is needed to start explaining yaidom querying using these XBRL example files.</p>
+<a name="introduction-to-yaidom-element-queries" class="anchor" href="#introduction-to-yaidom-element-queries"><span class="octicon octicon-link"></span></a>Introduction to yaidom element queries</h3>
 
 <p>All code examples below can be tried out in the Scala REPL (if the parent directory path of the example files is replaced). Scala 2.10.X is required, and yaidom 0.8.0 (or later) must be on the classpath.</p>
-
-<h3>
-<a name="introduction-to-yaidom-element-queries" class="anchor" href="#introduction-to-yaidom-element-queries"><span class="octicon octicon-link"></span></a>Introduction to yaidom element queries</h3>
 
 <p>Before showing some basic yaidom element queries, assume the following code to have executed:</p>
 
@@ -108,9 +94,7 @@ import javax.xml.parsers._
 import scala.collection.immutable
 import eu.cdevreeze.yaidom._
 
-val xsNamespace = "http://www.w3.org/2001/XMLSchema"
-val xbrliNamespace = "http://www.xbrl.org/2003/instance"
-val helloWorldNamespace = "http://xbrl.squarespace.com/HelloWorld"
+val bookNamespace = "http://bookstore"
 
 // Using a yaidom DocumentParser that used DOM internally
 val docParser = parse.DocumentParserUsingDom.newInstance
@@ -118,84 +102,65 @@ val docParser = parse.DocumentParserUsingDom.newInstance
 // Replace the following path!
 val parentDir = new File("path/to/parentdir")
 
-val instanceDoc: Document =
-    docParser.parse(new File(parentDir, "HelloWorld.xml"))
-val schemaDoc: Document =
-    docParser.parse(new File(parentDir, "HelloWorld.xsd"))
+val doc: Document =
+    docParser.parse(new File(parentDir, "books.xml"))
 
-val instanceDocElem = instanceDoc.documentElement
-val schemaDocElem = schemaDoc.documentElement
+val docElem = doc.documentElement
 </code></pre>
 
-<p>Here we instantiated a yaidom parser (using DOM internally), and parsed the XBRL instance and schema file. The document elements are stored in variables instanceDocElem and schemaDocElem, respectively, as "default" (immutable) yaidom elements.</p>
+<p>Here we instantiated a yaidom parser (using DOM internally), and parsed the XML file. The document element is stored in variable docElem, as "default" (immutable) yaidom element.</p>
 
-<p>Let's get started with some basic yaidom element queries. The HelloWorld.xml XBRL instance has some units, contexts and (top-level) facts, as explained above. We can query for the units (as yaidom elements) as follows:</p>
+<p>Let's get started with some basic yaidom element queries. The books.xml XML has some magazines and books. We can query for the magazines (as yaidom elements) as follows:</p>
 
-<pre><code>val unitElems =
-    instanceDocElem.filterChildElems(e => e.localName == "unit")
+<pre><code>val magazineElems =
+    docElem.filterChildElems(e => e.localName == "Magazine")
 </code></pre>
 
-<p>In this query, we queried only for (some) <em>child elements</em> of the document element, knowing that the single unit is a child element of the document element. We also used no namespace in the query, knowing that in this case no fact has the (local) name unit, be it in another namespace. The query result (stripping some unused namespace declarations) is the following XML element:</p>
+<p>In this query, we queried only for (some) <em>child elements</em> of the document element, knowing that all magazines are child elements of the document element. We also used no namespace in the query, knowing that in this case no ambiguity can arise. The query result (stripping some unused namespace declarations) consists of the following 4 XML elements:</p>
 
-<pre><code>&lt;unit id="U-Monetary"  xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns="http://www.xbrl.org/2003/instance"&gt;
-    &lt;measure&gt;iso4217:USD&lt;/measure&gt;
-&lt;/unit&gt;
+<pre><code>&lt;Magazine Month="January" Year="2009" xmlns="http://bookstore"&gt;
+    &lt;Title&gt;National Geographic&lt;/Title&gt;
+&lt;/Magazine&gt;
+
+&lt;Magazine Month="Februari" Year="2009" xmlns="http://bookstore"&gt;
+    &lt;Title&gt;National Geographic&lt;/Title&gt;
+&lt;/Magazine&gt;
+
+&lt;Magazine Month="Februari" Year="2009" xmlns="http://bookstore"&gt;
+    &lt;Title&gt;Newsweek&lt;/Title&gt;
+&lt;/Magazine&gt;
+
+&lt;Magazine Month="March" Year="2009" xmlns="http://bookstore"&gt;
+    &lt;Title&gt;Hector and Jeff's Database Hints&lt;/Title&gt;
+&lt;/Magazine&gt;
 </code></pre>
 
-<p>Analogously, we can query for the (2) contexts (as yaidom elements) as follows:</p>
+<p>Analogously, we can query for the 4 books (as yaidom elements) as follows:</p>
 
-<pre><code>val contextElems =
-    instanceDocElem.filterChildElems(e => e.localName == "context")
+<pre><code>val bookElems =
+    docElem.filterChildElems(e => e.localName == "Book")
 </code></pre>
 
-<p>The query result (again stripping some unused namespace declarations) consists of the following 2 XML elements:</p>
+<p>Above, we queried for child elements with local name Book. We could have queried for all <em>descendant elements</em> with local name Book instead. Not surprisingly, the same elements would be returned:</p>
 
-<pre><code>&lt;context id="I-2007" xmlns="http://www.xbrl.org/2003/instance"&gt;
-    &lt;entity&gt;
-        &lt;identifier scheme="http://www.ExampleCompany.com"&gt;Example Company&lt;/identifier&gt;
-    &lt;/entity&gt;
-    &lt;period&gt;
-        &lt;instant&gt;2007-12-31&lt;/instant&gt;
-    &lt;/period&gt;
-&lt;/context&gt;
-
-&lt;context id="I-2006" xmlns="http://www.xbrl.org/2003/instance"&gt;
-    &lt;entity&gt;
-        &lt;identifier scheme="http://www.ExampleCompany.com"&gt;Example Company&lt;/identifier&gt;
-    &lt;/entity&gt;
-    &lt;period&gt;
-        &lt;instant&gt;2006-12-31&lt;/instant&gt;
-    &lt;/period&gt;
-&lt;/context&gt;
+<pre><code>val bookElems =
+    docElem.filterElems(e => e.localName == "Book")
 </code></pre>
 
-<p>Above, we queried for child elements with local name context. We could have queried for all <em>descendant elements</em> with local name context instead. Not surprisingly, the same elements would be returned:</p>
+<p>We could also query for all <em>descendant-or-self elements</em> with local name Book. Again, the result would be the same:</p>
 
-<pre><code>val contextElems =
-    instanceDocElem.filterElems(e => e.localName == "context")
-</code></pre>
-
-<p>We could also query for all <em>descendant-or-self elements</em> with local name context. Again, the result would be the same:</p>
-
-<pre><code>val contextElems =
-    instanceDocElem.filterElemsOrSelf(e => e.localName == "context")
+<pre><code>val bookElems =
+    docElem.filterElemsOrSelf(e => e.localName == "Book")
 </code></pre>
 
 <p>Now we know how to query for child elements, descendant elements or descendant-or-self elements, given an element predicate. Instead of writing "filterChildElems" we can write "\", and instead of writing "filterElemsOrSelf" we can write "\\", however.  This would give us:</p>
 
-<pre><code>val contextElems = instanceDocElem \ (e => e.localName == "context")
+<pre><code>val bookElems = docElem \ (e => e.localName == "Book")
 </code></pre>
 
 <p>and:</p>
 
-<pre><code>val contextElems = instanceDocElem \\ (e => e.localName == "context")
-</code></pre>
-
-<p>Let's now query for the 12 top-level facts, knowing that their element names are in the namespace "http://xbrl.squarespace.com/HelloWorld":</p>
-
-<pre><code>val factElems = instanceDocElem filterChildElems { e =>
-    e.resolvedName.namespaceUriOption == Some(helloWorldNamespace)
-}
+<pre><code>val bookElems = docElem \\ (e => e.localName == "Book")
 </code></pre>
 
 <p>Most of yaidom's query API is easy to guess knowing the methods presented above. For example, method "findAllElems" returns all descendant elements (excluding self), and method "findAllElemsOrSelf" returns all descendant-or-self elements.</p>
@@ -210,74 +175,47 @@ val schemaDocElem = schemaDoc.documentElement
 
 <p>The yaidom element query API plays very well with the Scala Collections API. Typical non-trivial queries are written as for-expressions, combining Scala collections with yaidom query API methods. In a sense, the yaidom element query API is a <em>uniform</em> element query API, and the Scala Collections API plays the role of <em>universal</em> (collection) query API.</p>
 
-<p>Below we show yaidom as uniform query API. Again start with the same documents used above. The item declarations (which are top-level element declarations with the xbrli:item substitution group) in the schema document can be found uniformly across element implementations as follows:</p>
+<p>Below we show yaidom as uniform query API. Again start with the same document used above. The book authors (separating first and last name by a space) can be found uniformly across element implementations as follows:</p>
 
-<pre><code>def findAllItemDeclarations[E <: ElemApi[E]](docElem: E): immutable.IndexedSeq[E] = {
+<pre><code>def findAllBookAuthors[E <: ElemApi[E] with HasText](docElem: E): immutable.IndexedSeq[String] = {
     import ElemApi._
-    for {
-        elemDecl <- docElem \ withEName(xsNamespace, "element")
-        if (elemDecl \@ EName("substitutionGroup")) == Some("xbrli:item")
-    } yield elemDecl
+    val result =
+        for {
+            bookElem <- docElem \ withEName(bookNamespace, "Book")
+            authorElem <- bookElem \\ withEName(bookNamespace, "Author")
+            firstNameElem <- authorElem \ withEName(bookNamespace, "First_Name")
+            lastNameElem <- authorElem \ withEName(bookNamespace, "Last_Name")
+        } yield s"${firstNameElem.text} ${lastNameElem.text}"
+    result.distinct.sorted
 }
 </code></pre>
 
-<p>Typical yaidom client code does not abstract over multiple element implementations, but generics are used here to show that the exact same query API works for multiple element implementations. In the function signature above, "E" is the type of the element implementation itself. We imported all members of the ElemApi companion object, to have the "withEName" element predicate builder in scope. Note that the query is not very robust, because it filters substitution groups on the qualified name, and not on the expanded name. We'll fix that later, paying the price of losing genericity.</p>
+<p>Typical yaidom client code does not abstract over multiple element implementations, but generics are used here to show that the exact same query API works for multiple element implementations. In the function signature above, "E" is the type of the element implementation itself. We imported all members of the ElemApi companion object, to have the "withEName" element predicate builder in scope.</p>
 
 <h4>
 <a name="default-yaidom-elements" class="anchor" href="#default-yaidom-elements"><span class="octicon octicon-link"></span></a>"Default" yaidom elements</h4>
 
-<p>Given the schema document above, we can query the item declarations as follows:</p>
+<p>Given the schema document above, we can query the book authors as follows:</p>
 
-<pre><code>val itemDecls =
-    findAllItemDeclarations(schemaDoc.documentElement)
+<pre><code>val bookAuthors =
+    findAllBookAuthors(doc.documentElement)
 </code></pre>
 
-<p>The query result (again stripping unused namespace declarations) consists of the following XML elements:</p>
+<p>The query result (again stripping unused namespace declarations) consists of the following Strings:</p>
 
-<pre><code>&lt;element type="xbrli:monetaryItemType" name="Land" substitutionGroup="xbrli:item" xbrli:periodType="instant" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns="http://www.w3.org/2001/XMLSchema"/&gt;
-
-&lt;element type="xbrli:monetaryItemType" name="BuildingsNet" substitutionGroup="xbrli:item" xbrli:periodType="instant" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns="http://www.w3.org/2001/XMLSchema"/&gt;
-
-&lt;element type="xbrli:monetaryItemType" name="FurnitureAndFixturesNet" substitutionGroup="xbrli:item" xbrli:periodType="instant" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns="http://www.w3.org/2001/XMLSchema"/&gt;
-
-&lt;element type="xbrli:monetaryItemType" name="ComputerEquipmentNet" substitutionGroup="xbrli:item" xbrli:periodType="instant" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns="http://www.w3.org/2001/XMLSchema"/&gt;
-
-&lt;element type="xbrli:monetaryItemType" name="OtherPropertyPlantAndEquipmentNet" substitutionGroup="xbrli:item" xbrli:periodType="instant" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns="http://www.w3.org/2001/XMLSchema"/&gt;
-
-&lt;element type="xbrli:monetaryItemType" name="PropertyPlantAndEquipmentNet" substitutionGroup="xbrli:item" xbrli:periodType="instant" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns="http://www.w3.org/2001/XMLSchema"/&gt;
+<pre><code>Hector Garcia-Molina, Jeffrey Ullman, Jennifer Widom
 </code></pre>
 
-<p>We can now check if all facts in the XBRL instance correspond to item declarations in the schema document as follows:</p>
+<p>Prefixes are insignificant in XML. Consider schema file <a href="examples/books2.xml" target="_blank">books2.xml</a>, which is equivalent to books.xml, except that the default namespace has been replaced by prefix "books":<p>
 
-<pre><code>val tns =
-    schemaDoc.documentElement.attribute(EName("targetNamespace"))
-
-val itemDeclsByTargetENames: Map[EName, Elem] = {
-    val result = itemDecls map { e =>
-        val name = e.attribute(EName("name"))
-        EName(tns, name) -> e
-    }
-    result.toMap
-}
-
-val factElems = instanceDoc.documentElement \ { e =>
-    e.resolvedName.namespaceUriOption == Some(helloWorldNamespace)
-}
-
-require(factElems.map(e => e.resolvedName).toSet.subsetOf(
-    itemDeclsByTargetENames.keySet))
-</code></pre>
-
-<p>Prefixes are insignificant in XML. Consider schema file <a href="examples/HelloWorld2.xsd" target="_blank">HelloWorld2.xml</a>, which is equivalent to HelloWorld.xml, except that the default namespace has been replaced by prefix "xs":<p>
-
-<pre><code>val schemaDoc2: Document =
-    docParser.parse(new File(parentDir, "HelloWorld2.xsd"))
+<pre><code>val doc2: Document =
+    docParser.parse(new File(parentDir, "books2.xml"))
 </code></pre>
 
 <p>How can we easily assert that these documents are equivalent XML documents? To that end, yaidom offers so-called "resolved" elements, which contain only expanded (element and attribute) names, and no qualified names. Indeed:</p>
 
-<pre><code>val rootElem = schemaDoc.documentElement
-val rootElem2 = schemaDoc2.documentElement
+<pre><code>val rootElem = doc.documentElement
+val rootElem2 = doc2.documentElement
 
 // Method removeAllInterElementWhitespace makes the equality comparison
 // more robust, because it removes whitespace used for formatting
@@ -291,68 +229,46 @@ require(resolved.Elem(rootElem).removeAllInterElementWhitespace ==
 
 <p>To show that the yaidom query API is uniform, let's now query the schema document element as "resolved" element for its item declarations:</p>
 
-<pre><code>val resolvedSchemaDocElem =
-    resolved.Elem(schemaDoc.documentElement)
+<pre><code>val resolvedDocElem =
+    resolved.Elem(doc.documentElement)
 
-val resolvedItemDecls =
-    findAllItemDeclarations(resolvedSchemaDocElem)
+val bookAuthorsUsingResolvedElems =
+    findAllBookAuthors(resolvedDocElem)
 </code></pre>
 
 <h4>
 <a name="dom-wrapper-elements" class="anchor" href="#dom-wrapper-elements"><span class="octicon octicon-link"></span></a>"DOM wrapper" elements</h4>
 
-<p>Sometimes we have a (mutable) JAXP DOM tree, and do not want to convert it to a yaidom immutable Elem tree. We can still use the yaidom query API to query those DOM elements. Function "findAllItemDeclarations" can still be called:</p>
+<p>Sometimes we have a (mutable) JAXP DOM tree, and do not want to convert it to a yaidom immutable Elem tree. We can still use the yaidom query API to query those DOM elements. Function "findAllBookAuthors" can still be called:</p>
 
 <pre><code>// Using a JAXP (DOM) DocumentBuilderFactory
 val dbf = DocumentBuilderFactory.newInstance
 val db = dbf.newDocumentBuilder
-val d = db.parse(new File(parentDir, "HelloWorld.xsd"))
+val d = db.parse(new File(parentDir, "books.xml"))
 
 val wrapperDoc = dom.DomDocument(d)
 
-val domItemDecls =
-    findAllItemDeclarations(wrapperDoc.documentElement)
+val bookAuthorsUsingDomElems =
+    findAllBookAuthors(wrapperDoc.documentElement)
 </code></pre>
 
 <h4>
 <a name="indexed-elements" class="anchor" href="#indexed-elements"><span class="octicon octicon-link"></span></a>"Indexed" elements</h4>
 
-<p>Sometimes we want to use immutable elements, and still have access to the ancestry of each element. For example, when querying for item declarations, we need to inspect the document element for the target namespace. With so-called "indexed" elements, each element has indeed access to its ancestry.</p>
+<p>Sometimes we want to use immutable elements, and still have access to the ancestry of each element. For example, when querying for book authors, we can alternatively query for all authors, and then check in the ancestry if the author is for a book or a magazine. With so-called "indexed" elements, each element has indeed access to its ancestry.</p>
 
-<p>This time using "indexed" elements, we again query for item declarations, but here we need no separate query for the target namespace:</p>
+<p>This time using "indexed" elements, we again query for book authors:</p>
 
-<pre><code>val indexedSchemaDoc = indexed.Document(schemaDoc)
+<pre><code>val indexedDoc = indexed.Document(doc)
 
-val indexedItemDecls =
-    findAllItemDeclarations(indexedSchemaDoc.documentElement)
-
-val targetENames: Set[EName] =
-    (indexedItemDecls map { e =>
-        val tnsOption = e.rootElem \@ EName("targetNamespace")
-        val name = e.attribute(EName("name"))
-        EName(tnsOption, name)
-    }).toSet
-
-require(
-    factElems.map(e => e.resolvedName).toSet.subsetOf(targetENames))
+val bookAuthorsUsingIndexedElems =
+    findAllBookAuthors(indexedDoc.documentElement)
 </code></pre>
 
 <h4>
 <a name="uniform-query-api-wrap-up" class="anchor" href="#uniform-query-api-wrap-up"><span class="octicon octicon-link"></span></a>Uniform query API wrap up</h4>
 
 <p>There are more element implementations offering the same query API, such as wrappers for Scala XML Elems. Yaidom is extensible in this regard, since more element implementations can easily be created by mixing in some yaidom traits like ElemLike, and by implementing the methods that are abstract in those traits.</p>
-
-<p>It was promised earlier to come up with a more robust "findAllItemDeclarations" method. This one only works for the "default" yaidom element implementation:</p>
-
-<pre><code>def findAllItemDeclarations(docElem: Elem): immutable.IndexedSeq[Elem] = {
-    import ElemApi._
-    for {
-        elemDecl <- docElem \ withEName(xsNamespace, "element")
-        if elemDecl.attributeAsResolvedQNameOption(EName("substitutionGroup")) ==
-            Some(EName(xbrliNamespace, "item"))
-    } yield elemDecl
-}
-</code></pre>
 
 <h3>
 <a name="conclusion" class="anchor" href="#conclusion"><span class="octicon octicon-link"></span></a>Conclusion</h3>
