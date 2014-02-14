@@ -39,17 +39,21 @@
 <li>Conclusion (of this first article about yaidom).</li>
 </ol>
 
-<p>The examples use the ubiquitous bookstore. The specific sample XML is from the (coursera) course Introduction to Databases, by Jennifer Widom (with permission).</p>
+<p>The queries use the ubiquitous bookstore as example XML. The specific sample XML is from the (coursera) course Introduction to Databases, by Jennifer Widom (with permission).</p>
 
         <h3>
 <a name="introductory-example" class="anchor" href="#introductory-example"><span class="octicon octicon-link"></span></a>Introductory example</h3>
 
 <p>First we give an introductory example to querying in yaidom. Consider the following XML file: <a href="examples/books.xml" target="_blank">books.xml</a>. Suppose we have parsed this document, and that the parsed document has been stored into variable "doc". Then we can query for all book author last names as follows (without removing duplicates):</p>
 
-<pre><code>for {
-    bookElem <- doc.documentElement \ withLocalName("Book")
-    lastNameElem <- bookElem \\ withLocalName("Last_Name")
-} yield lastNameElem.text
+<pre><code>import ElemApi._
+
+val authorLastNames =
+    for {
+        bookElem <- doc.documentElement \ withLocalName("Book")
+        authorElem <- bookElem \\ withLocalName("Author")
+        lastNameElem <- authorElem \ withLocalName("Last_Name")
+    } yield lastNameElem.text
 </code></pre>
 
 <p>Unlike querying with the standard Scala XML library, we cannot chain "\" and "\\" operators. It will become clear in this article why yaidom sacrifices a little bit of conciseness compared to a more XPath-like experience.</p>
@@ -94,13 +98,13 @@ import javax.xml.parsers._
 import scala.collection.immutable
 import eu.cdevreeze.yaidom._
 
-val bookNamespace = "http://bookstore"
+val ns = "http://bookstore"
 
 // Using a yaidom DocumentParser that used DOM internally
 val docParser = parse.DocumentParserUsingDom.newInstance
 
 // Replace the following path!
-val parentDir = new File("path/to/parentdir")
+val parentDir = new File("/path/to/parentdir")
 
 val doc: Document =
     docParser.parse(new File(parentDir, "books.xml"))
@@ -137,30 +141,30 @@ val docElem = doc.documentElement
 
 <p>Analogously, we can query for the 4 books (as yaidom elements) as follows:</p>
 
-<pre><code>val bookElems =
+<pre><code>val bookElems1 =
     docElem.filterChildElems(e => e.localName == "Book")
 </code></pre>
 
 <p>Above, we queried for child elements with local name Book. We could have queried for all <em>descendant elements</em> with local name Book instead. Not surprisingly, the same elements would be returned:</p>
 
-<pre><code>val bookElems =
+<pre><code>val bookElems2 =
     docElem.filterElems(e => e.localName == "Book")
 </code></pre>
 
 <p>We could also query for all <em>descendant-or-self elements</em> with local name Book. Again, the result would be the same:</p>
 
-<pre><code>val bookElems =
+<pre><code>val bookElems3 =
     docElem.filterElemsOrSelf(e => e.localName == "Book")
 </code></pre>
 
 <p>Now we know how to query for child elements, descendant elements or descendant-or-self elements, given an element predicate. Instead of writing "filterChildElems" we can write "\", and instead of writing "filterElemsOrSelf" we can write "\\", however.  This would give us:</p>
 
-<pre><code>val bookElems = docElem \ (e => e.localName == "Book")
+<pre><code>val bookElems4 = docElem \ (e => e.localName == "Book")
 </code></pre>
 
 <p>and:</p>
 
-<pre><code>val bookElems = docElem \\ (e => e.localName == "Book")
+<pre><code>val bookElems5 = docElem \\ (e => e.localName == "Book")
 </code></pre>
 
 <p>Most of yaidom's query API is easy to guess knowing the methods presented above. For example, method "findAllElems" returns all descendant elements (excluding self), and method "findAllElemsOrSelf" returns all descendant-or-self elements.</p>
@@ -181,10 +185,10 @@ val docElem = doc.documentElement
     import ElemApi._
     val result =
         for {
-            bookElem <- docElem \ withEName(bookNamespace, "Book")
-            authorElem <- bookElem \\ withEName(bookNamespace, "Author")
-            firstNameElem <- authorElem \ withEName(bookNamespace, "First_Name")
-            lastNameElem <- authorElem \ withEName(bookNamespace, "Last_Name")
+            bookElem <- docElem \ withEName(ns, "Book")
+            authorElem <- bookElem \\ withEName(ns, "Author")
+            firstNameElem <- authorElem \ withEName(ns, "First_Name")
+            lastNameElem <- authorElem \ withEName(ns, "Last_Name")
         } yield s"${firstNameElem.text} ${lastNameElem.text}"
     result.distinct.sorted
 }
@@ -197,7 +201,7 @@ val docElem = doc.documentElement
 
 <p>Given the schema document above, we can query the book authors as follows:</p>
 
-<pre><code>val bookAuthors =
+<pre><code>val bookAuthors1 =
     findAllBookAuthors(doc.documentElement)
 </code></pre>
 
@@ -232,7 +236,7 @@ require(resolved.Elem(rootElem).removeAllInterElementWhitespace ==
 <pre><code>val resolvedDocElem =
     resolved.Elem(doc.documentElement)
 
-val bookAuthorsUsingResolvedElems =
+val bookAuthors2 =
     findAllBookAuthors(resolvedDocElem)
 </code></pre>
 
@@ -248,7 +252,7 @@ val d = db.parse(new File(parentDir, "books.xml"))
 
 val wrapperDoc = dom.DomDocument(d)
 
-val bookAuthorsUsingDomElems =
+val bookAuthors3 =
     findAllBookAuthors(wrapperDoc.documentElement)
 </code></pre>
 
@@ -261,7 +265,7 @@ val bookAuthorsUsingDomElems =
 
 <pre><code>val indexedDoc = indexed.Document(doc)
 
-val bookAuthorsUsingIndexedElems =
+val bookAuthors4 =
     findAllBookAuthors(indexedDoc.documentElement)
 </code></pre>
 
@@ -275,7 +279,7 @@ val bookAuthorsUsingIndexedElems =
 
 <p>In this article a case was made for yet another Scala XML library, called yaidom. Its precise support for XML namespaces may be its strongest asset. The API plays very well with the Scala Collections API, and it trades a little bit of conciseness for clarity and precision.</p>
 
-<p>The basics of querying in yaidom were explained in this article. The examples used are XBRL examples originating from <a href="http://xbrl.squarespace.com/" target="_blank">xbrl.squarespace.com</a>.</p>
+<p>The basics of querying in yaidom were explained in this article. It was shown that different element implementations share the same element query API (the ElemApi trait in particular). It was also shown why yaidom has different element implementations in the first place.</p>
 
 <p>Succeeding articles on yaidom will treat more advanced querying, functional updates, and configuration of yaidom.</p>
 
