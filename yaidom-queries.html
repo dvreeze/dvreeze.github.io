@@ -122,7 +122,7 @@ val docElem = doc.documentElement
     docElem.filterChildElems(e => e.localName == "Magazine")
 </code></pre>
 
-<p>In this query, we queried only for (some) <em>child elements</em> of the document element, knowing that all magazines are child elements of the document element. We also used no namespace in the query, knowing that in this case no ambiguity can arise. The query result (stripping some unused namespace declarations) consists of the following 4 XML elements:</p>
+<p>In this query, we queried only for (some) <em>child elements</em> of the document element, knowing that all magazines are child elements of the document element. We also used no namespace in the query, knowing that in this case no ambiguity can arise. The query result consists of the following 4 XML elements:</p>
 
 <pre><code>&lt;Magazine Month="January" Year="2009" xmlns="http://bookstore"&gt;
     &lt;Title&gt;National Geographic&lt;/Title&gt;
