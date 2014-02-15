@@ -204,7 +204,7 @@ val bookElems4 =
 }
 </code></pre>
 
-<p>Don't worry: typical yaidom client code does not abstract over multiple element implementations, so does not look this intimidating in the use of generics and F-bounded type polymorphism. Generics are used here to show that the exact same query API works for multiple element implementations. In the function signature above, <code>E</code> is the type of the element implementation itself. We also imported all members of the <code>ElemApi</code> companion object, to have the <code>withEName</code> element predicate builder in scope.</p>
+<p>Don't worry: typical yaidom client code does not abstract over multiple element implementations, so does not look this intimidating in the use of generics and F-bounded polymorphism. Generics are used here to show that the exact same query API works for multiple element implementations. In the function signature above, <code>E</code> is the type of the element implementation itself. We also imported all members of the <code>ElemApi</code> companion object, to have the <code>withEName</code> element predicate builder in scope.</p>
 
 <h4>
 <a name="default-yaidom-elements" class="anchor" href="#default-yaidom-elements"><span class="octicon octicon-link"></span></a>"Default" yaidom elements</h4>
