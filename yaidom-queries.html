@@ -68,7 +68,7 @@ val authorLastNames =
 <p>There are 3 Scala XML libraries that are currently often mentioned. There is Scales XML, which is not a DOM-like API. (It probably shines in "streaming scenarios".) Then there is Anti-XML, which seems abandoned, and which aimed to be an improvement on the third library, viz. the standard Scala XML library. Unfortunately, the standard Scala XML library has some (rather fundamental) issues that I find hard to accept. For example:</p>
 
 <ul>
-<li>Strange classes and class hierarchies, such as class Node indirectly extending Seq[Node], and class MetaData representing both an attribute and a linked list of attributes.</li>
+<li>Strange classes and class hierarchies, such as class <code>Node</code> indirectly extending <code>Seq[Node]</code>, and class <code>MetaData</code> representing both an attribute and a linked list of attributes.</li>
 <li>API inconsistencies, such methods <code>\</code> and <code>\\</code> offering namespace-aware attribute querying but only local-name-aware element querying.</li>
 <li>Methods <code>\</code> and <code>\\</code> each meaning different things, depending on the string argument passed: element querying or attribute querying.</li>
 <li>The library feeling outdated, and clearly predating Scala 2.8.</li>
@@ -112,7 +112,7 @@ val doc: Document =
 val docElem = doc.documentElement
 </code></pre>
 
-<p>Here we instantiated a yaidom parser (using DOM internally), and parsed the XML file. The document element is stored in variable docElem, as "default" (immutable) yaidom element.</p>
+<p>Here we instantiated a yaidom parser (using DOM internally), and parsed the XML file. The document element is stored in variable <code>docElem</code>, as "default" (immutable) yaidom element.</p>
 
 <p>Let's get started with some basic yaidom element queries. The books.xml XML has some magazines and books. We can query for the magazines (as yaidom elements) as follows:</p>
 
@@ -145,19 +145,19 @@ val docElem = doc.documentElement
     docElem.filterChildElems(e => e.localName == "Book")
 </code></pre>
 
-<p>Above, we queried for child elements with local name Book. We could have queried for all <em>descendant elements</em> with local name Book instead. Not surprisingly, the same elements would be returned:</p>
+<p>Above, we queried for child elements with local name <code>Book</code>. We could have queried for all <em>descendant elements</em> with local name <code>Book</code> instead. Not surprisingly, the same elements would be returned:</p>
 
 <pre><code>val bookElems2 =
     docElem.filterElems(e => e.localName == "Book")
 </code></pre>
 
-<p>We could also query for all <em>descendant-or-self elements</em> with local name Book. Again, the result would be the same:</p>
+<p>We could also query for all <em>descendant-or-self elements</em> with local name <code>Book</code>. Again, the result would be the same:</p>
 
 <pre><code>val bookElems3 =
     docElem.filterElemsOrSelf(e => e.localName == "Book")
 </code></pre>
 
-<p>If we import the ElemApi companion object members, then we can write the element predicate more briefly using (element predicate factory) method <code>withLocalName</code>, like this:</p>
+<p>If we import the <code>ElemApi</code> companion object members, then we can write the element predicate more briefly using (element predicate factory) method <code>withLocalName</code>, like this:</p>
 
 <pre><code>import ElemApi._
 
@@ -183,7 +183,7 @@ val bookElems4 =
 <h4>
 <a name="elemapi-trait" class="anchor" href="#elemapi-trait"><span class="octicon octicon-link"></span></a>ElemApi trait</h4>
 
-<p>Above, we introduced basic element querying in yaidom, using the "standard" element implementation. Yaidom does not conform to the view that there is a one-size-fits-all element implementation, as we will see. Fortunately, this does not mean that there are as many yaidom element query APIs as there are element implementations. On the contrary, most element implementations mix in the ElemApi trait, which is the most important part of the query API.</p>
+<p>Above, we introduced basic element querying in yaidom, using the "standard" element implementation. Yaidom does not conform to the view that there is a one-size-fits-all element implementation, as we will see. Fortunately, this does not mean that there are as many yaidom element query APIs as there are element implementations. On the contrary, most element implementations mix in the <code>ElemApi</code> trait, which is the most important part of the query API.</p>
 
 <p>The yaidom element query API plays very well with the Scala Collections API. Typical non-trivial queries are written as for-expressions, combining Scala collections with yaidom query API methods. In a sense, the yaidom element query API is a <em>uniform</em> element query API, and the Scala Collections API plays the role of <em>universal</em> (collection) query API.</p>
 
@@ -251,7 +251,7 @@ val bookAuthors2 =
 <h4>
 <a name="dom-wrapper-elements" class="anchor" href="#dom-wrapper-elements"><span class="octicon octicon-link"></span></a>"DOM wrapper" elements</h4>
 
-<p>Sometimes we have a (mutable) JAXP DOM tree, and do not want to convert it to a yaidom immutable Elem tree. We can still use the yaidom query API to query those DOM elements. Function <code>findAllBookAuthors</code> can still be called:</p>
+<p>Sometimes we have a (mutable) JAXP DOM tree, and do not want to convert it to a yaidom immutable <code>Elem</code> tree. We can still use the yaidom query API to query those DOM elements. Function <code>findAllBookAuthors</code> can still be called:</p>
 
 <pre><code>// Using a JAXP (DOM) DocumentBuilderFactory
 val dbf = DocumentBuilderFactory.newInstance
@@ -280,14 +280,14 @@ val bookAuthors4 =
 <h4>
 <a name="uniform-query-api-wrap-up" class="anchor" href="#uniform-query-api-wrap-up"><span class="octicon octicon-link"></span></a>Uniform query API wrap up</h4>
 
-<p>There are more element implementations offering the same query API, such as wrappers for Scala XML Elems. Yaidom is extensible in this regard, since more element implementations can easily be created by mixing in some yaidom traits like ElemLike, and by implementing the methods that are abstract in those traits.</p>
+<p>There are more element implementations offering the same query API, such as wrappers for Scala XML <code>Elem</code> instances. Yaidom is extensible in this regard, since more element implementations can easily be created by mixing in some yaidom traits like <code>ElemLike</code> (which conforms to the <code>ElemApi</code> contract), and by implementing the methods that are abstract in those traits.</p>
 
 <h3>
 <a name="conclusion" class="anchor" href="#conclusion"><span class="octicon octicon-link"></span></a>Conclusion</h3>
 
 <p>In this article a case was made for yet another Scala XML library, called yaidom. Its precise support for XML namespaces may be its strongest asset. The API plays very well with the Scala Collections API, and it trades a little bit of conciseness for clarity and precision.</p>
 
-<p>The basics of querying in yaidom were explained in this article. It was shown that different element implementations share the same element query API (the ElemApi trait in particular). It was also shown why yaidom has different element implementations in the first place.</p>
+<p>The basics of querying in yaidom were explained in this article. It was shown that different element implementations share the same element query API (the <code>ElemApi</code> trait in particular). It was also shown why yaidom has different element implementations in the first place.</p>
 
 <p>Succeeding articles on yaidom will treat more advanced querying, functional updates, and configuration of yaidom.</p>
 
