@@ -32,7 +32,7 @@
 
 <p>This article only treats basic element querying in yaidom. The remainder of this article is organized as follows:</p>
 <ol>
-<li>Introductory example</li>
+<li>Introductory example.</li>
 <li>Why yet another Scala XML library?</li>
 <li>Introduction to yaidom element queries.</li>
 <li>Uniform element query API.</li>
@@ -56,16 +56,16 @@ val authorLastNames =
     } yield lastNameElem.text
 </code></pre>
 
-<p>Unlike querying with the standard Scala XML library, we cannot chain <code>\</code> and <code>\\</code> operators. It will become clear in this article why yaidom sacrifices a little bit of conciseness compared to a more XPath-like experience.</p>
+<p>Unlike querying with the standard Scala XML library, we cannot chain <code>\</code> and <code>\\</code> operators. It will become clear below why yaidom sacrifices a little bit of conciseness compared to XML libraries that offer a more XPath-like experience.</p>
 
         <h3>
 <a name="why-yet-another-scala-xml-library" class="anchor" href="#why-yet-another-scala-xml-library"><span class="octicon octicon-link"></span></a>Why yet another Scala XML library?</h3>
 
-<p>XML processing in Java has never been easy. Direct use of SAX, DOM or StAX is low-level and cumbersome. Use of XPath may be low-level in the handling of returned DOM nodes or node lists, and performance issues quickly arise. Several other (DOM-like) libraries may improve on JAXP DOM, but still do not make XML processing significantly easier. The use of O-X mapping (such as JAXB) just for XML manipulation seems the wrong tool for the job, since that would turn an XML manipulation problem into a bigger O-X mapping problem between 2 different perspectives ("Java object" and "XML") that must be kept in sync. (I'm not criticizing O-X mapping, but I'm criticizing the use of O-X mapping if there is inherently no O-X mapping problem in the first place.)</p>
+<p>XML processing in Java has never been easy. Direct use of SAX, DOM or StAX is low-level and cumbersome. Use of XPath may be low-level in the handling of returned DOM nodes or node lists, and performance issues quickly arise. Several other (DOM-like) libraries may improve on JAXP DOM, but still do not make XML processing significantly easier. The use of O-X mapping (such as JAXB) just for XML manipulation seems the wrong tool for the job, since that would turn an XML manipulation problem into a bigger O-X mapping problem between 2 different perspectives ("Java object" and "XML") that must be kept in sync. (I'm not against O-X mapping, but I would like to stay away from O-X mapping if there is inherently no O-X mapping problem in the first place.)</p>
 
-<p>Direct manipulation of XML should not be that hard. In Java (at least before version 8) not only XML processing, but data processing in general is hard (all the time explicitly iterating instead of just transforming collections). Scala and its expressive Collections API have a far more appealing data processing story, as most Scala programmers would agree. Shouldn't XML processing in Scala then be easier than in Java, as a consequence?</p>
+<p>Direct manipulation of XML should not be that hard. In Java (at least before version 8) not only XML processing, but data processing in general is hard (writing low level loops instead of functionally transforming collections). Scala and its expressive Collections API have a far more appealing data processing story, as most Scala programmers would agree. Shouldn't then XML processing in Scala be easier than in Java, as a consequence?</p>
 
-<p>There are 3 Scala XML libraries that are currently often mentioned. There is Scales XML, which is not a DOM-like API. (It probably shines in "streaming scenarios".) Then there is Anti-XML, which seems abandoned, and which aimed to be an improvement on the third library, viz. the standard Scala XML library. Unfortunately, the standard Scala XML library has some (rather fundamental) issues that I find hard to accept. For example:</p>
+<p>There are 3 Scala XML libraries that currently often get mentioned. There is Scales XML, which is not a DOM-like API. Then there is Anti-XML, which seems abandoned, and which aimed to be an improvement on the third library, viz. the standard Scala XML library. Unfortunately, the standard Scala XML library has some (rather annoying) issues that I find hard to accept. For example:</p>
 
 <ul>
 <li>Strange classes and class hierarchies, such as class <code>Node</code> indirectly extending <code>Seq[Node]</code>, and class <code>MetaData</code> representing both an attribute and a linked list of attributes.</li>
