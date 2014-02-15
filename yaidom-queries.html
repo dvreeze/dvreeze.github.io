@@ -204,7 +204,7 @@ val bookElems4 =
 }
 </code></pre>
 
-<p>Typical yaidom client code does not abstract over multiple element implementations, but generics are used here to show that the exact same query API works for multiple element implementations. In the function signature above, <code>E</code> is the type of the element implementation itself. We imported all members of the <code>ElemApi</code> companion object, to have the <code>withEName</code> element predicate builder in scope.</p>
+<p>Don't worry: typical yaidom client code does not abstract over multiple element implementations, so does not look this intimidating in the use of generics and F-bounded type polymorphism. Generics are used here to show that the exact same query API works for multiple element implementations. In the function signature above, <code>E</code> is the type of the element implementation itself. We also imported all members of the <code>ElemApi</code> companion object, to have the <code>withEName</code> element predicate builder in scope.</p>
 
 <h4>
 <a name="default-yaidom-elements" class="anchor" href="#default-yaidom-elements"><span class="octicon octicon-link"></span></a>"Default" yaidom elements</h4>
@@ -241,7 +241,7 @@ require(resolved.Elem(rootElem).removeAllInterElementWhitespace ==
 <h4>
 <a name="resolved-elements" class="anchor" href="#resolved-elements"><span class="octicon octicon-link"></span></a>"Resolved" elements</h4>
 
-<p>To show that the yaidom query API is uniform, let's now query the schema document element as "resolved" element for its item declarations:</p>
+<p>To show that the yaidom query API is uniform, let's now perform the same query, but passing it a "resolved" element instead of "default" element:</p>
 
 <pre><code>val resolvedDocElem =
     resolved.Elem(doc.documentElement)
@@ -269,7 +269,7 @@ val bookAuthors3 =
 <h4>
 <a name="indexed-elements" class="anchor" href="#indexed-elements"><span class="octicon octicon-link"></span></a>"Indexed" elements</h4>
 
-<p>Sometimes we want to use immutable elements, and still have access to the ancestry of each element. For example, when querying for book authors, we can alternatively query for all authors, and then check in the ancestry if the author is for a book or a magazine. With so-called "indexed" elements, each element has indeed access to its ancestry.</p>
+<p>Sometimes we want to use immutable elements, and still have access to the ancestry of each element. For example, when querying for book authors, we can alternatively implement this by querying for all authors, followed by checking in the ancestry if the author is for a book or a magazine. With so-called "indexed" elements, each element has indeed access to its ancestry. It is beyond the scope of this first yaidom article to go into the specifics, however.</p>
 
 <p>This time using "indexed" elements, we again query for book authors:</p>
 
@@ -287,9 +287,9 @@ val bookAuthors4 =
 <h3>
 <a name="conclusion" class="anchor" href="#conclusion"><span class="octicon octicon-link"></span></a>Conclusion</h3>
 
-<p>In this article a case was made for yet another Scala XML library, called yaidom. Its precise support for XML namespaces may be its strongest asset. The API plays very well with the Scala Collections API, and it trades a little bit of conciseness for clarity and precision.</p>
+<p>In this article a case was made for yet another Scala XML library, called <em>yaidom</em>. Its precise support for XML namespaces and its precise element query API may be its strongest assets. The API plays very well with the Scala Collections API, and it trades a little bit of conciseness for clarity and precision.</p>
 
-<p>The basics of querying in yaidom were explained in this article. It was shown that different element implementations share the same element query API (the <code>ElemApi</code> trait in particular). It was also shown why yaidom has different element implementations in the first place.</p>
+<p>The basics of querying in yaidom were explained in this article. It was shown that different element implementations share the same element query API (the <code>ElemApi</code> trait in particular). It was also hinted at why yaidom has different element implementations in the first place.</p>
 
 <p>Succeeding articles on yaidom will treat more advanced querying, functional updates, and configuration of yaidom.</p>
 
