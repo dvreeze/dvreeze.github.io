@@ -74,16 +74,18 @@ val authorLastNames =
 <li>The library feeling outdated, and clearly predating Scala 2.8.</li>
 </ul>
 
-<p>Yes, I do realize that the standard XML library tried to offer an XPath-like experience. On the other hand, I do think that the question is fair how badly one should want to have an XPath-like experience (including concise chaining of operators), and what price one is willing to pay (in clarity, precision etc.). Anyway, a well-known critique of the Scala XML library (by the creator of Anti-XML) can be found <a href="http://www.codecommit.com/blog/scala/working-with-scalas-xml-support" target="_blank">here</a>.</p>
+<p>Yes, I do realize that the standard XML library tried to offer an XPath-like experience. On the other hand, this implies blurring the distinction between individual nodes and node collections. Arguably, this also means less precision and clarity (e.g., what is the type of an expression?), in the name of conciseness and XPath-like query support.</p>
 
-<p>It seems hard to find a Scala XML library having first-class namespace support. As an aside, the best explanation of XML namespaces that I have come across is <a href="http://www.lenzconsulting.com/namespaces/" target="_blank">Understanding XML Namespaces</a>. It distinguishes between <em>qualified names</em> (such as <code>my:foo</code>) and <em>expanded names</em> (such as <code>{http://my}foo</code>, in James Clark notation). Admittedly, qualified names occur in XML, and expanded names do not. Still, many XML libraries blur this fundamental distinction. Unfortunately, ignoring this distinction makes it hard to talk precisely about namespaces. In my view that leads to subpar namespace support. The quest for first-class namespace support was the most important reason to come up with <em>yaidom</em>.</p>
+<p>Anyway, a well-known (but somewhat old) critique of the Scala XML library (by the creator of Anti-XML) can be found <a href="http://www.codecommit.com/blog/scala/working-with-scalas-xml-support" target="_blank">here</a>.</p>
+
+<p>It seems hard to find a Scala XML library having first-class namespace support. As an aside, the best explanation of XML namespaces that I have come across is <a href="http://www.lenzconsulting.com/namespaces/" target="_blank">Understanding XML Namespaces</a>. It distinguishes between <em>qualified names</em> (such as <code>my:foo</code>) and <em>expanded names</em> (such as <code>{http://my}foo</code>, in James Clark notation). Admittedly, qualified names occur in XML, and expanded names do not. Still, both concepts are important, and many XML libraries blur this fundamental distinction. Unfortunately, ignoring this distinction makes it hard to talk precisely about namespaces. In my view that leads to subpar namespace support. The quest for first-class namespace support, along with precise (Scala-esque) element querying, were the most important reasons to come up with <em>yaidom</em>.</p>
 
 <p>Yaidom has been influenced by all of the 3 Scala XML libraries mentioned above, be it in very different ways. It has its own underlying design choices, however. In particular:</p>
 <ul>
-<li>It offers precise and clear support for XML namespaces.</li>
-<li>It leverages Scala and its Collections API for their expressiveness. Nodes and collections of nodes are clearly distinguished. Hence, no XPath-like query support is offered, even if that means a little less conciseness.</li>
-<li>It leverages Java (and JAXP in particular) to deal with the gory details of XML parsing and serialization, without trying to hide JAXP behind any leaky abstraction.</li>
-<li>It has no single one-size-fits-all element representation, but offers multiple element implementations with different characteristics. These different element implementations still share the same yaidom element query API, to the extent possible.</li>
+<li>It offers precise and clear support for <em>XML namespaces</em>.</li>
+<li>It leverages <em>Scala and its Collections API</em> for their <em>expressiveness</em>. Nodes are clearly distinguished from collections of nodes. Hence, no XPath-like query support is offered, even if that means a little less conciseness. Yaidom querying has <em>clear semantics</em>.</li>
+<li>It leverages Java (and <em>JAXP</em> in particular) to deal with the gory details of XML parsing and serialization, without trying to hide JAXP behind any leaky abstraction.</li>
+<li>It has no single one-size-fits-all element representation, but offers <em>multiple element implementations</em> with different characteristics. These different element implementations still share the <em>same yaidom element query API</em>, to the extent possible.</li>
 </ul>
 
 <h3>
