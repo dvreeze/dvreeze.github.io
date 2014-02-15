@@ -44,7 +44,7 @@
         <h3>
 <a name="introductory-example" class="anchor" href="#introductory-example"><span class="octicon octicon-link"></span></a>Introductory example</h3>
 
-<p>First we give an introductory example to querying in yaidom. Consider the following XML file: <a href="examples/books.xml" target="_blank">books.xml</a>. Suppose we have parsed this document, and that the parsed document has been stored into variable "doc". Then we can query for all book author last names as follows (without removing duplicates):</p>
+<p>First we give an introductory example to querying in yaidom. Consider the following XML file: <a href="examples/books.xml" target="_blank">books.xml</a>. Suppose we have parsed this document, and that the parsed document has been stored into variable <code>doc</code>. Then we can query for all book author last names as follows (without removing duplicates):</p>
 
 <pre><code>import ElemApi._
 
@@ -56,7 +56,7 @@ val authorLastNames =
     } yield lastNameElem.text
 </code></pre>
 
-<p>Unlike querying with the standard Scala XML library, we cannot chain "\" and "\\" operators. It will become clear in this article why yaidom sacrifices a little bit of conciseness compared to a more XPath-like experience.</p>
+<p>Unlike querying with the standard Scala XML library, we cannot chain <code>\</code> and <code>\\</code> operators. It will become clear in this article why yaidom sacrifices a little bit of conciseness compared to a more XPath-like experience.</p>
 
         <h3>
 <a name="why-yet-another-scala-xml-library" class="anchor" href="#why-yet-another-scala-xml-library"><span class="octicon octicon-link"></span></a>Why yet another Scala XML library?</h3>
@@ -69,14 +69,14 @@ val authorLastNames =
 
 <ul>
 <li>Strange classes and class hierarchies, such as class Node indirectly extending Seq[Node], and class MetaData representing both an attribute and a linked list of attributes.</li>
-<li>API inconsistencies, such methods "\" and "\\" offering namespace-aware attribute querying but only local-name-aware element querying.</li>
-<li>Methods "\" and "\\" each meaning different things, depending on the string argument passed: element querying or attribute querying.</li>
+<li>API inconsistencies, such methods <code>\</code> and <code>\\</code> offering namespace-aware attribute querying but only local-name-aware element querying.</li>
+<li>Methods <code>\</code> and <code>\\</code> each meaning different things, depending on the string argument passed: element querying or attribute querying.</li>
 <li>The library feeling outdated, and clearly predating Scala 2.8.</li>
 </ul>
 
 <p>Yes, I do realize that the standard XML library tried to offer an XPath-like experience. On the other hand, I do think that the question is fair how badly one should want to have an XPath-like experience (including concise chaining of operators), and what price one is willing to pay (in clarity, precision etc.). Anyway, a well-known critique of the Scala XML library (by the creator of Anti-XML) can be found <a href="http://www.codecommit.com/blog/scala/working-with-scalas-xml-support" target="_blank">here</a>.</p>
 
-<p>It seems hard to find a Scala XML library having first-class namespace support. As an aside, the best explanation of XML namespaces that I have come across is <a href="http://www.lenzconsulting.com/namespaces/" target="_blank">Understanding XML Namespaces</a>. It distinguishes between <em>qualified names</em> (such as my:foo) and <em>expanded names</em> (such as {http://my}foo, in James Clark notation). Admittedly, qualified names occur in XML, and expanded names do not. Still, many XML libraries blur this fundamental distinction. Unfortunately, ignoring this distinction makes it hard to talk precisely about namespaces. In my view that leads to subpar namespace support. The quest for first-class namespace support was the most important reason to come up with <em>yaidom</em>.</p>
+<p>It seems hard to find a Scala XML library having first-class namespace support. As an aside, the best explanation of XML namespaces that I have come across is <a href="http://www.lenzconsulting.com/namespaces/" target="_blank">Understanding XML Namespaces</a>. It distinguishes between <em>qualified names</em> (such as <code>my:foo</code>) and <em>expanded names</em> (such as <code>{http://my}foo</code>, in James Clark notation). Admittedly, qualified names occur in XML, and expanded names do not. Still, many XML libraries blur this fundamental distinction. Unfortunately, ignoring this distinction makes it hard to talk precisely about namespaces. In my view that leads to subpar namespace support. The quest for first-class namespace support was the most important reason to come up with <em>yaidom</em>.</p>
 
 <p>Yaidom has been influenced by all of the 3 Scala XML libraries mentioned above, be it in very different ways. It has its own underlying design choices, however. In particular:</p>
 <ul>
@@ -157,7 +157,7 @@ val docElem = doc.documentElement
     docElem.filterElemsOrSelf(e => e.localName == "Book")
 </code></pre>
 
-<p>If we import the ElemApi companion object members, then we can write the element predicate more briefly using (element predicate factory) method "withLocalName", like this:</p>
+<p>If we import the ElemApi companion object members, then we can write the element predicate more briefly using (element predicate factory) method <code>withLocalName</code>, like this:</p>
 
 <pre><code>import ElemApi._
 
@@ -165,7 +165,7 @@ val bookElems4 =
     docElem filterElemsOrSelf withLocalName("Book")
 </code></pre>
 
-<p>Now we know how to query for child elements, descendant elements or descendant-or-self elements, given an element predicate. Instead of writing "filterChildElems" we can write "\", and instead of writing "filterElemsOrSelf" we can write "\\", however.  This would give us:</p>
+<p>Now we know how to query for child elements, descendant elements or descendant-or-self elements, given an element predicate. Instead of writing <code>filterChildElems</code> we can write <code>\</code>, and instead of writing <code>filterElemsOrSelf</code> we can write <code>\\</code>, however.  This would give us:</p>
 
 <pre><code>val bookElems5 = docElem \ (e => e.localName == "Book")
 </code></pre>
@@ -175,7 +175,7 @@ val bookElems4 =
 <pre><code>val bookElems6 = docElem \\ (e => e.localName == "Book")
 </code></pre>
 
-<p>Most of yaidom's query API is easy to guess knowing the methods presented above. For example, method "findAllElems" returns all descendant elements (excluding self), and method "findAllElemsOrSelf" returns all descendant-or-self elements.</p>
+<p>Most of yaidom's query API is easy to guess knowing the methods presented above. For example, method <code>findAllElems</code> returns all descendant elements (excluding self), and method <code>findAllElemsOrSelf</code> returns all descendant-or-self elements.</p>
 
 <h3>
 <a name="uniform-element-query-api" class="anchor" href="#uniform-element-query-api"><span class="octicon octicon-link"></span></a>Uniform element query API</h3>
@@ -202,7 +202,7 @@ val bookElems4 =
 }
 </code></pre>
 
-<p>Typical yaidom client code does not abstract over multiple element implementations, but generics are used here to show that the exact same query API works for multiple element implementations. In the function signature above, "E" is the type of the element implementation itself. We imported all members of the ElemApi companion object, to have the "withEName" element predicate builder in scope.</p>
+<p>Typical yaidom client code does not abstract over multiple element implementations, but generics are used here to show that the exact same query API works for multiple element implementations. In the function signature above, <code>E</code> is the type of the element implementation itself. We imported all members of the <code>ElemApi</code> companion object, to have the <code>withEName</code> element predicate builder in scope.</p>
 
 <h4>
 <a name="default-yaidom-elements" class="anchor" href="#default-yaidom-elements"><span class="octicon octicon-link"></span></a>"Default" yaidom elements</h4>
@@ -218,7 +218,7 @@ val bookElems4 =
 <pre><code>Hector Garcia-Molina, Jeffrey Ullman, Jennifer Widom
 </code></pre>
 
-<p>Prefixes are insignificant in XML. Consider schema file <a href="examples/books2.xml" target="_blank">books2.xml</a>, which is equivalent to books.xml, except that the default namespace has been replaced by prefix "books":<p>
+<p>Prefixes are insignificant in XML. Consider schema file <a href="examples/books2.xml" target="_blank">books2.xml</a>, which is equivalent to books.xml, except that the default namespace has been replaced by prefix <code>books</code>:<p>
 
 <pre><code>val doc2: Document =
     docParser.parse(new File(parentDir, "books2.xml"))
@@ -251,7 +251,7 @@ val bookAuthors2 =
 <h4>
 <a name="dom-wrapper-elements" class="anchor" href="#dom-wrapper-elements"><span class="octicon octicon-link"></span></a>"DOM wrapper" elements</h4>
 
-<p>Sometimes we have a (mutable) JAXP DOM tree, and do not want to convert it to a yaidom immutable Elem tree. We can still use the yaidom query API to query those DOM elements. Function "findAllBookAuthors" can still be called:</p>
+<p>Sometimes we have a (mutable) JAXP DOM tree, and do not want to convert it to a yaidom immutable Elem tree. We can still use the yaidom query API to query those DOM elements. Function <code>findAllBookAuthors</code> can still be called:</p>
 
 <pre><code>// Using a JAXP (DOM) DocumentBuilderFactory
 val dbf = DocumentBuilderFactory.newInstance
