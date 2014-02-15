@@ -116,7 +116,7 @@ val docElem = doc.documentElement
 
 <p>Here we instantiated a yaidom parser (using DOM internally), and parsed the XML file. The document element is stored in variable <code>docElem</code>, as "default" (immutable) yaidom element.</p>
 
-<p>Let's get started with some basic yaidom element queries. The books.xml XML has some magazines and books. We can query for the magazines (as yaidom elements) as follows:</p>
+<p>Let's get started with some basic yaidom element queries. The <a href="examples/books.xml" target="_blank">books.xml</a> XML has some magazines and books. We can query for the magazines (as yaidom elements) as follows:</p>
 
 <pre><code>val magazineElems =
     docElem.filterChildElems(e => e.localName == "Magazine")
