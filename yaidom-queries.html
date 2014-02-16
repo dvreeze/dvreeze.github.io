@@ -197,7 +197,7 @@ val bookElems4 =
 
 <p>Above, we introduced basic element querying in yaidom, using the "standard" element implementation. Yaidom does not conform to the view that there is a one-size-fits-all element implementation, as we will see. Fortunately, this does not mean that there are as many yaidom element query APIs as there are element implementations. On the contrary, most element implementations mix in the <code>ElemApi</code> trait, which is the most important part of the query API.</p>
 
-<p>The yaidom element query API plays very well with the Scala Collections API. Typical non-trivial queries are written as for-expressions, combining Scala collections with yaidom query API methods. In a sense, the yaidom element query API is a <em>uniform</em> element query API, and the Scala Collections API plays the role of <em>universal</em> (collection) query API.</p>
+<p>The yaidom element query API plays very well with the Scala Collections API. Typical non-trivial queries are written as for-expressions, combining Scala collections with yaidom query API methods. In a sense, the yaidom element query API is a <em>uniform</em> element query API, and the Scala Collections API plays the role of <em>universal</em> (collection) query API. Put differently, yaidom query methods turn elements into collections of elements, and the Collections API turns collections (of elements) into other collections.</p>
 
 <p>Below we show yaidom as uniform query API. Again start with the same document used above. The book authors (separating first and last name by a space) can be found uniformly across element implementations as follows:</p>
 
