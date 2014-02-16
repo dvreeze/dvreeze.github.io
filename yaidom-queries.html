@@ -175,10 +175,6 @@ require(
 
 val bookElems4 =
     docElem filterElemsOrSelf withLocalName("Book")
-
-require(
-    bookElems4 == bookElems1,
-    "Expected the same books as in bookElems1")
 </code></pre>
 
 <p>Now we know how to query for child elements, descendant elements or descendant-or-self elements, given an element predicate. Instead of writing <code>filterChildElems</code> we can write <code>\</code>, and instead of writing <code>filterElemsOrSelf</code> we can write <code>\\</code>, however.  This would give us:</p>
