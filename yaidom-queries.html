@@ -145,18 +145,28 @@ val docElem = doc.documentElement
 
 <pre><code>val bookElems1 =
     docElem.filterChildElems(e => e.localName == "Book")
+
+require(bookElems1.size == 4, "Expected 4 books")
 </code></pre>
 
-<p>Above, we queried for child elements with local name <code>Book</code>. We could have queried for all <em>descendant elements</em> with local name <code>Book</code> instead. Not surprisingly, the same elements would be returned:</p>
+<p>Above, we queried for child elements with local name <code>Book</code>, using method <code>filterChildElems</code>. We could have queried for all <em>descendant elements</em> with local name <code>Book</code> instead, using method <code>filterElems</code>. Not surprisingly, the same elements would be returned:</p>
 
 <pre><code>val bookElems2 =
     docElem.filterElems(e => e.localName == "Book")
+
+require(
+    bookElems2 == bookElems1,
+    "Expected the same books as in bookElems1")
 </code></pre>
 
-<p>We could also query for all <em>descendant-or-self elements</em> with local name <code>Book</code>. Again, the result would be the same:</p>
+<p>We could also query for all <em>descendant-or-self elements</em> with local name <code>Book</code>, using method <code>filterElemsOrSelf</code>. Again, the result would be the same:</p>
 
 <pre><code>val bookElems3 =
     docElem.filterElemsOrSelf(e => e.localName == "Book")
+
+require(
+    bookElems3 == bookElems1,
+    "Expected the same books as in bookElems1")
 </code></pre>
 
 <p>If we import the <code>ElemApi</code> companion object members, then we can write the element predicate more briefly using (element predicate factory) method <code>withLocalName</code>, like this:</p>
@@ -165,16 +175,20 @@ val docElem = doc.documentElement
 
 val bookElems4 =
     docElem filterElemsOrSelf withLocalName("Book")
+
+require(
+    bookElems4 == bookElems1,
+    "Expected the same books as in bookElems1")
 </code></pre>
 
 <p>Now we know how to query for child elements, descendant elements or descendant-or-self elements, given an element predicate. Instead of writing <code>filterChildElems</code> we can write <code>\</code>, and instead of writing <code>filterElemsOrSelf</code> we can write <code>\\</code>, however.  This would give us:</p>
 
-<pre><code>val bookElems5 = docElem \ (e => e.localName == "Book")
+<pre><code>val bookElems5 = docElem \ withLocalName("Book")
 </code></pre>
 
 <p>and:</p>
 
-<pre><code>val bookElems6 = docElem \\ (e => e.localName == "Book")
+<pre><code>val bookElems6 = docElem \\ withLocalName("Book")
 </code></pre>
 
 <p>Most of yaidom's query API is easy to guess knowing the methods presented above. For example, method <code>findAllElems</code> returns all descendant elements (excluding self), and method <code>findAllElemsOrSelf</code> returns all descendant-or-self elements.</p>
@@ -248,6 +262,10 @@ require(resolved.Elem(rootElem).removeAllInterElementWhitespace ==
 
 val bookAuthors2 =
     findAllBookAuthors(resolvedDocElem)
+
+require(
+    bookAuthors2 == bookAuthors1,
+    "Expected the same authors as bookAuthors1")
 </code></pre>
 
 <h4>
@@ -264,12 +282,16 @@ val wrapperDoc = dom.DomDocument(d)
 
 val bookAuthors3 =
     findAllBookAuthors(wrapperDoc.documentElement)
+
+require(
+    bookAuthors3 == bookAuthors1,
+    "Expected the same authors as bookAuthors1")
 </code></pre>
 
 <h4>
 <a name="indexed-elements" class="anchor" href="#indexed-elements"><span class="octicon octicon-link"></span></a>"Indexed" elements</h4>
 
-<p>Sometimes we want to use immutable elements, and still have access to the ancestry of each element. For example, when querying for book authors, we can alternatively implement this by querying for all authors, followed by checking in the ancestry if the author is for a book or a magazine. With so-called "indexed" elements, each element has indeed access to its ancestry. It is beyond the scope of this first yaidom article to go into the specifics, however.</p>
+<p>Sometimes we want to use immutable elements, and still have access to the ancestry of each element. For example, when querying for book authors, we could then alternatively implement this by querying for all authors, followed by checking in the ancestry if the author is for a book or a magazine. With so-called "indexed" elements, each element has indeed access to its ancestry. It is beyond the scope of this first yaidom article to go into the specifics, however.</p>
 
 <p>This time using "indexed" elements, we again query for book authors:</p>
 
@@ -277,6 +299,10 @@ val bookAuthors3 =
 
 val bookAuthors4 =
     findAllBookAuthors(indexedDoc.documentElement)
+
+require(
+    bookAuthors4 == bookAuthors1,
+    "Expected the same authors as bookAuthors1")
 </code></pre>
 
 <h4>
