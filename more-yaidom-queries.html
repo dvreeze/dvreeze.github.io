@@ -40,12 +40,54 @@
 <li>Conclusion (of this second article about yaidom).</li>
 </ol>
 
-<p>The queries again use the same sample XML as in the first yaidom article.</p>
+<p>The queries again use the same sample XML as in the first yaidom article, viz. <a href="examples/books.xml" target="_blank"></a>.</p>
 
         <h3>
 <a name="introductory-example" class="anchor" href="#introductory-example"><span class="octicon octicon-link"></span></a>Introductory example</h3>
 
-<p>... introductory example, showing querying for elements and attributes, and using paths and XML literals ...</p>
+<p>Like in the preceding article on yaidom, we start with an introductory example. First assume the following code to have executed:</p>
+
+<pre><code>import java.io.File
+import javax.xml.parsers._
+import scala.collection.immutable
+import eu.cdevreeze.yaidom._
+
+val ns = "http://bookstore"
+
+// Using a yaidom DocumentParser that used SAX internally
+val docParser = parse.DocumentParserUsingSax.newInstance
+
+// Replace the following path!
+val parentDir = new File("/path/to/parentdir")
+
+val doc: Document =
+    docParser.parse(new File(parentDir, "books.xml"))
+
+val docElem = doc.documentElement
+</code></pre>
+
+<p>The following example code shows querying for elements (like in the preceding article), but also for attributes (@ISBN in this case) and "paths to elements". The query is bottom-up, starting with (paths to) authors, and returning the ISBNs of the (ancestor) book elements. Without any further explanation (for now), the query is as follows:</p>
+
+<pre><code>import ElemApi._
+
+def findIsbnsOfBooksBy(firstName: String, lastName: String): immutable.IndexedSeq[String] = {
+    for {
+        authorPath <- docElem filterElemPaths withEName(ns, "Author")
+        authorElem = docElem.getElemOrSelfByPath(authorPath)
+        if authorElem.getChildElem(EName(ns, "First_Name")).text == firstName &&
+            authorElem.getChildElem(EName(ns, "Last_Name")).text == lastName
+        bookPath <- authorPath findAncestorPath (path => path.endsWithName(EName(ns, "Book")))
+        bookElem = docElem.getElemOrSelfByPath(bookPath)
+        isbn <- bookElem \@ EName("ISBN")
+    } yield isbn
+}
+
+assertResult(List("ISBN-0-13-713526-2", "ISBN-0-13-815504-6", "ISBN-0-11-222222-3")) {
+    findIsbnsOfBooksBy("Jeffrey", "Ullman")
+}
+</code></pre>
+
+<p>Note that the query methods returning "paths" are easy to guess. For example, method <code>filterElemPaths</code> is the equivalent of <code>filterElems</code>, except that it returns "paths" instead of elements. More will be explained below.</p>
 
         <h3>
 <a name="elems-versus-elembuilders" class="anchor" href="#elems-versus-elembuilders"><span class="octicon octicon-link"></span></a>Elems versus ElemBuilders</h3>
