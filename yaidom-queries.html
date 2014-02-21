@@ -100,8 +100,6 @@ import javax.xml.parsers._
 import scala.collection.immutable
 import eu.cdevreeze.yaidom._
 
-val ns = "http://bookstore"
-
 // Using a yaidom DocumentParser that used DOM internally
 val docParser = parse.DocumentParserUsingDom.newInstance
 
@@ -201,7 +199,9 @@ val bookElems4 =
 
 <p>Below we show yaidom as uniform query API. Again start with the same document used above. The book authors (separating first and last name by a space) can be found uniformly across element implementations as follows:</p>
 
-<pre><code>def findAllBookAuthors[E <: ElemApi[E] with HasText](docElem: E): immutable.IndexedSeq[String] = {
+<pre><code>val ns = "http://bookstore"
+
+def findAllBookAuthors[E <: ElemApi[E] with HasText](docElem: E): immutable.IndexedSeq[String] = {
     import ElemApi._
     val result =
         for {
