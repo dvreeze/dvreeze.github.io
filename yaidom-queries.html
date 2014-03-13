@@ -63,9 +63,9 @@ val authorLastNames =
 <p>Still, we can write the query above in a less verbose manner, much like how the Scala compiler rewrites the for-comprehension. This is already more XPath-like, but not necessarily more readable:</p>
 
 <pre><code>val authorLastNames2 =
-  doc.documentElement \ withLocalName("Book") flatMap
-    (_ \\ withLocalName("Author")) flatMap
-    (_ \\ withLocalName("Last_Name")) map (_.text)
+    doc.documentElement \ withLocalName("Book") flatMap
+        (_ \\ withLocalName("Author")) flatMap
+        (_ \\ withLocalName("Last_Name")) map (_.text)
 </code></pre>
 
         <h3>
