@@ -60,6 +60,14 @@ val authorLastNames =
 
 <p>Unlike querying with the standard Scala XML library, we cannot chain <code>\</code> and <code>\\</code> operators. It will become clear below why yaidom sacrifices a little bit of conciseness compared to XML libraries that offer a more XPath-like experience.</p>
 
+<p>Still, we can write the query above in a less verbose manner, much like how the Scala compiler rewrites the for-comprehension. This is already more XPath-like, but not necessarily more readable:</p>
+
+<pre><code>val authorLastNames2 =
+  doc.documentElement \ withLocalName("Book") flatMap
+    (_ \\ withLocalName("Author")) flatMap
+    (_ \\ withLocalName("Last_Name")) map (_.text)
+</code></pre>
+
         <h3>
 <a name="why-yet-another-scala-xml-library" class="anchor" href="#why-yet-another-scala-xml-library"><span class="octicon octicon-link"></span></a>Why yet another Scala XML library?</h3>
 
