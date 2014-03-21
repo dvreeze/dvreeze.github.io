@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Yaidom and namespaces by dvreeze</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Yaidom and namespaces</h1>
+        <p>Yaidom is a uniform XML query API, written in Scala. Moreover, yaidom provides several specific-purpose DOM-like tree implementations adhering to this XML query API.</p>
+
+<p>This article treats namespaces in yaidom.</p>
+
+
+        <p class="view"><a href="https://github.com/dvreeze">View My GitHub Profile</a></p>
+
+      </header>
+      <section>
+        <h3>
+<a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h3>
+
+<p>This article is the second one in a series of articles introducing the <em>yaidom</em> library. This article treats namespaces in yaidom. Like in the first article, basic XML querying in yaidom is shown, but this time paying special attention to qualified names, expanded names, namespace declarations and in-scope namespaces. It is shown that yaidom is an API that values precision, clarity and minimality (not to be confused with conciseness).</p>
+
+<p>This article is too a large part based on the article <a href="http://www.lenzconsulting.com/namespaces/" target="_blank">Understanding XML Namespaces</a>, which in my view offers an excellent explanation of XML namespaces. Much of the message of that article can be expressed in yaidom. This 2nd yaidom article shows that.</p>
+
+<p>It is assumed that the reader has first read the <a href="yaidom-queries.html" target="_blank">first article about yaidom</a>, which introduced the basics of element querying in yaidom. Like in the preceding article on yaidom, it is assumed that the reader knows the basics of XML (including namespaces), Java XML processing, and Scala with its Collections API.</p>
+
+<p>The remainder of this article is organized as follows:</p>
+<ol>
+<li>Qualified and expanded names.</li>
+<li>Namespace declarations and in-scope namespaces.</li>
+<li>Equivalent XML documents.</li>
+<li>Conclusion (of this second article about yaidom).</li>
+</ol>
+
+        <h3>
+<a name="qualified-and-expanded-names" class="anchor" href="#qualified-and-expanded-names"><span class="octicon octicon-link"></span></a>Qualified and expanded names</h3>
+
+<p>Like in the preceding article on yaidom, all code examples below can be tried out in the Scala REPL (if the parent directory path of the example files is replaced). Scala 2.10.X is required, and yaidom 0.8.0 (or later) must be on the classpath. Before showing some basic yaidom element queries, assume the following code to have executed:</p>
+
+<pre><code>import java.io.File
+import javax.xml.parsers._
+import scala.collection.immutable
+import eu.cdevreeze.yaidom._
+
+// Using a yaidom DocumentParser that used SAX internally
+val docParser = parse.DocumentParserUsingSax.newInstance
+
+// Replace the following path!
+val parentDir = new File("/path/to/parentdir")
+
+val doc: Document =
+    docParser.parse(new File(parentDir, "feed1.xml"))
+
+val docElem = doc.documentElement
+</code></pre>
+
+<p>... encourage reading Lenz article; use his examples; explain QNames and ENames; query for all element QNames and ENames in feed1.xml; mention that ElemApi does not know about QNames ...</p>
+
+<h3>
+<a name="namespace-declarations-and-in-scope-namespaces" class="anchor" href="#namespace-declarations-and-in-scope-namespaces"><span class="octicon octicon-link"></span></a>Namespace declarations and in-scope namespaces</h3>
+
+<p>... querying for individual elements, and show how they get their scopes, and how their scopes resolve QNames as ENames ...</p>
+<p>... same for attribute querying (not shown in first article) ...</p>
+<p>... show general properties on "default" elements, for element QNames and ENames, and for attributes ...</p>
+
+<h3>
+<a name="equivalent-xml-documents" class="anchor" href="#equivalent-xml-documents"><span class="octicon octicon-link"></span></a>Equivalent XML documents</h3>
+
+<p>... show equivalent XML (feed2.xml), also from Lenz article; query for individual elements (again), this time leading to different QNames but the same ENames ...</p>
+<p>... again, calculate with Declarations and Scopes ...</p>
+<p>... show resolved.Elem equivalence (and why) ...</p>
+<p>... now show feed3.xml, and again show equivalence ...</p>
+
+<h3>
+<a name="conclusion" class="anchor" href="#conclusion"><span class="octicon octicon-link"></span></a>Conclusion</h3>
+
+<p>... conclusion (of this second article on yaidom); precise namespace support; calculating with namespaces; what have we learned about yaidom so far? ...</p>
+      </section>
+      <footer>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
