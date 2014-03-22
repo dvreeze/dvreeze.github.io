@@ -28,9 +28,9 @@
         <h3>
 <a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h3>
 
-<p>This article is the second one in a series of articles introducing the <em>yaidom</em> library. This article treats namespaces in yaidom. Like in the first article, basic XML querying in yaidom is shown, but this time paying special attention to qualified names, expanded names, namespace declarations and in-scope namespaces. It is shown that yaidom is an API that values precision, clarity and minimality (not to be confused with conciseness).</p>
+<p>This article is the second one in a series of articles introducing the <em>yaidom</em> library. The topic is namespaces in yaidom. Like in the first article, basic XML queries in yaidom are shown, but this time paying special attention to qualified names, expanded names, namespace declarations and in-scope namespaces. It becomes clear that yaidom is an API that values precision, clarity, and, to a large extent, minimality (not to be confused with conciseness).</p>
 
-<p>This article is to a large part based on the article <a href="http://www.lenzconsulting.com/namespaces/" target="_blank">Understanding XML Namespaces</a>, which in my view offers an excellent explanation of XML namespaces. Much of the message of that article can be expressed in yaidom. This 2nd yaidom article shows that.</p>
+<p>This article is based on <a href="http://www.lenzconsulting.com/namespaces/" target="_blank">Understanding XML Namespaces</a>, which offers an excellent explanation of XML namespaces. Much of the content of that article can be expressed in yaidom. This second yaidom article indeed shows that.</p>
 
 <p>It is assumed that the reader has first read the <a href="yaidom-queries.html" target="_blank">first article about yaidom</a>, which introduced the basics of element querying in yaidom. Like in the preceding article on yaidom, it is assumed that the reader knows the basics of XML (including namespaces), Java XML processing, and Scala with its Collections API.</p>
 
@@ -45,9 +45,9 @@
         <h3>
 <a name="qualified-and-expanded-names" class="anchor" href="#qualified-and-expanded-names"><span class="octicon octicon-link"></span></a>Qualified and expanded names</h3>
 
-<p>Like in the preceding article on yaidom, all code examples below can be tried out in the Scala REPL (if the parent directory path of the example files is replaced). Scala 2.10.X is required, and yaidom 0.8.0 (or later) must be on the classpath. Before showing some basic yaidom element queries, assume the following code to have executed:</p>
+<p>Like in the preceding article on yaidom, all code examples below can be tried out in the Scala REPL. Scala 2.10.X is required, and yaidom 0.8.0 (or later) must be on the classpath. The sample XML file (from the article by Evan Lenz) is <a href="http://dvreeze.github.io/examples/feed1.xml" target="_blank">feed1.xml</a>. First assume the following code to have executed:</p>
 
-<pre><code>import java.io.File
+<pre><code>import java.net.URI
 import javax.xml.parsers._
 import scala.collection.immutable
 import eu.cdevreeze.yaidom._
@@ -55,16 +55,80 @@ import eu.cdevreeze.yaidom._
 // Using a yaidom DocumentParser that used SAX internally
 val docParser = parse.DocumentParserUsingSax.newInstance
 
-// Replace the following path!
-val parentDir = new File("/path/to/parentdir")
-
 val doc: Document =
-    docParser.parse(new File(parentDir, "feed1.xml"))
+    docParser.parse(new URI("http://devreeze.github.io/examples/feed1.xml"))
 
 val docElem = doc.documentElement
 </code></pre>
 
-<p>... encourage reading Lenz article; use his examples; explain QNames and ENames; query for all element QNames and ENames in feed1.xml; mention that ElemApi does not know about QNames ...</p>
+<p>In <a href="http://www.lenzconsulting.com/namespaces/" target="_blank">Understanding XML Namespaces</a>, Evan Lenz distinguishes between <em>qualified names</em> and <em>expanded names</em>. As he puts it, qualified names (or QNames) are the syntactic constructs that represent expanded names. Qualified names have an optional colon, so <code>foo</code> and <code>my:foo</code> are QNames. Expanded names, which do not syntactically occur in XML, have an optional namespace URI. Using James Clark notation, <code>foo</code> and <code>{http://xmlportfolio.com/xmlguild-examples}foo</code> are expanded names (or ENames).</p>
+
+<p>Let's now query for the qualified names and expanded names of all elements in the document parsed above. The qualified names of all descendant-or-self elements are found as follows:</p>
+
+<pre><code>val elemQNames = docElem.findAllElemsOrSelf.map(_.qname).toSet
+</code></pre>
+
+<p>The resulting QNames are as follows:</p>
+
+<pre><code>require(elemQNames ==
+    Set(
+        QName("feed"),
+        QName("title"),
+        QName("rights"),
+        QName("xhtml", "div"),
+        QName("xhtml", "strong"),
+        QName("xhtml", "em")))
+
+// Writing the QNames differently, corresponding to the string representations:
+
+require(elemQNames ==
+    Set(
+        QName("feed"),
+        QName("title"),
+        QName("rights"),
+        QName("xhtml:div"),
+        QName("xhtml:strong"),
+        QName("xhtml:em")))
+</code></pre>
+
+<p>The <code>qname</code> method is not part of the yaidom "uniform query API" (<code>ElemApi</code> and friends), but belongs to the "default" element implementation. Expanded names, on the other hand, are far more central in the query API. The expanded names (or resolved names) of all descendant-or-self elements are found as follows:</p>
+
+<pre><code>val elemENames = docElem.findAllElemsOrSelf.map(_.resolvedName).toSet
+</code></pre>
+
+<p>The resulting ENames are as follows:</p>
+
+<pre><code>val atomNs = "http://www.w3.org/2005/Atom"
+val xhtmlNs = "http://www.w3.org/1999/xhtml"
+
+require(elemENames ==
+    Set(
+        EName(atomNs, "feed"),
+        EName(atomNs, "title"),
+        EName(atomNs, "rights"),
+        EName(xhtmlNs, "div"),
+        EName(xhtmlNs, "strong"),
+        EName(xhtmlNs, "em")))
+
+// Writing the ENames differently, using James Clark notation:
+
+require(elemENames ==
+    Set(
+        EName("{http://www.w3.org/2005/Atom}feed"),
+        EName("{http://www.w3.org/2005/Atom}title"),
+        EName("{http://www.w3.org/2005/Atom}rights"),
+        EName("{http://www.w3.org/1999/xhtml}div"),
+        EName("{http://www.w3.org/1999/xhtml}strong"),
+        EName("{http://www.w3.org/1999/xhtml}em")))
+</code></pre>
+
+<p>Unlike the query for qualified names, the query for expanded names would have worked for most yaidom element implementations.</p>
+
+<p>As Evan Lenz points out, it is important to be careful when someone uses the term "qualified name". Often the term "qualified name" is used for what we call EName, and often it means the same as what we call an EName, but keeping the optional prefix as well (for example <code>javax.xml.namespace.QName</code>). Like Evan Lenz does in his article, yaidom clearly distinguishes between the two concepts of QNames and ENames, because without such a distinction it is impossible to talk about namespaces in precise terms. It is not very helpful that namespace-related terminology is not used consistenly across different XML specifications. The <a href="http://www.w3.org/TR/REC-xml-names/" target="_blank">Namespaces specification</a> uses the terms <em>qualified name</em> and <em>expanded name</em> like Evan Lenz does (and like yaidom does), while the XML Schema Part 2, XPath 2.0 and XQuery 1.0 specifications blur this distinction. According to the XML Schema Part 2 specification, the <code>xs:QName</code> data type has a "lexical space" reminding of what we call QNames and a "value space" reminding of what we call ENames.</p>
+
+<p>While yaidom claims to offer precision, clarity and (to a large extent) minimality, it should become clear now why yaidom does not claim to be "correct". After all, what is correctness if different XML specifications have the same term mean different things? Moreover, what is correctness if some definitions are problematic in that they mutually depend on each other? For example, namespace declarations are considered to be attributes by the Namespaces specification, while the resolution of (prefixed) attributes depends on in-scope namespaces and therefore on namespace declarations. To retain precision and clarity, yaidom (like several other XML libraries) therefore does not consider namespace declarations to be attributes.</p>
+
+<p>We have not paid any attention to how qualified names are resolved to expanded names. That's the topic of the next section.</p>
 
 <h3>
 <a name="namespace-declarations-and-in-scope-namespaces" class="anchor" href="#namespace-declarations-and-in-scope-namespaces"><span class="octicon octicon-link"></span></a>Namespace declarations and in-scope namespaces</h3>
