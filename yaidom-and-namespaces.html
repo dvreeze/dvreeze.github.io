@@ -58,17 +58,17 @@ import ElemApi._
 // Using a yaidom DocumentParser that used SAX internally
 val docParser = parse.DocumentParserUsingSax.newInstance
 
-val doc: Document =
-    docParser.parse(new URI("http://devreeze.github.io/examples/feed1.xml"))
+val feed1Doc: Document =
+    docParser.parse(new URI("http://dvreeze.github.io/examples/feed1.xml"))
 
-val docElem = doc.documentElement
+val feed1DocElem = feed1Doc.documentElement
 </code></pre>
 
 <p>In <a href="http://www.lenzconsulting.com/namespaces/" target="_blank">Understanding XML Namespaces</a>, Evan Lenz distinguishes between <em>qualified names</em> and <em>expanded names</em>. As he puts it, qualified names (or QNames) are the syntactic constructs that represent expanded names. Qualified names have an optional colon, so <code>foo</code> and <code>my:foo</code> are QNames. Expanded names, which do not syntactically occur in XML, have an optional namespace URI. Using James Clark notation, <code>foo</code> and <code>{http://xmlportfolio.com/xmlguild-examples}foo</code> are expanded names (or ENames).</p>
 
 <p>Let's now query for the qualified names and expanded names of all elements in the document parsed above. The qualified names of all descendant-or-self elements are found as follows:</p>
 
-<pre><code>val elemQNames = docElem.findAllElemsOrSelf.map(_.qname).toSet
+<pre><code>val elemQNames = feed1DocElem.findAllElemsOrSelf.map(_.qname).toSet
 </code></pre>
 
 <p>The resulting QNames are as follows:</p>
@@ -96,7 +96,7 @@ require(elemQNames ==
 
 <p>The <code>qname</code> method is not part of the yaidom "uniform query API" (<code>ElemApi</code> and friends), but belongs to the "default" element implementation. Expanded names, on the other hand, are far more central in the query API. The expanded names (or resolved names) of all descendant-or-self elements are found as follows:</p>
 
-<pre><code>val elemENames = docElem.findAllElemsOrSelf.map(_.resolvedName).toSet
+<pre><code>val elemENames = feed1DocElem.findAllElemsOrSelf.map(_.resolvedName).toSet
 </code></pre>
 
 <p>The resulting ENames are as follows:</p>
@@ -138,7 +138,7 @@ require(elemENames ==
 
 <p>In the example XML document above, only the document element contains some namespace declarations. The atom namespace (with namespace URI "http://www.w3.org/2005/Atom") is the default namespace. The xhtml namespace (with namespace URI "http://www.w3.org/1999/xhtml") is declared with prefix "xhtml". Another namespace (with namespace URI "http://xmlportfolio.com/xmlguild-examples") is declared with prefix "my". These namespace declarations are written in yaidom as follows:</p>
 
-<pre><code>val feedElemDecls = Declarations.from(
+<pre><code>val feed1ElemDecls = Declarations.from(
     "" -> "http://www.w3.org/2005/Atom",
     "xhtml" -> "http://www.w3.org/1999/xhtml",
     "my" -> "http://xmlportfolio.com/xmlguild-examples")
@@ -146,24 +146,24 @@ require(elemENames ==
 
 <p>Note that the default namespace was declared with the empty string as prefix. The in-scope namespaces of the document element are the same as the namespaces declared in the document element, because it has no parent element (and therefore no in-scope namespaces of the parent element). Indeed:</p>
 
-<pre><code>val feedElemScope = Scope.from(
+<pre><code>val feed1ElemScope = Scope.from(
     "" -> "http://www.w3.org/2005/Atom",
     "xhtml" -> "http://www.w3.org/1999/xhtml",
     "my" -> "http://xmlportfolio.com/xmlguild-examples")
 
-val expectedFeedElemScope = Scope.Empty.resolve(feedElemDecls)
+val expectedFeed1ElemScope = Scope.Empty.resolve(feed1ElemDecls)
 
-require(feedElemScope == expectedFeedElemScope)
+require(feed1ElemScope == expectedFeed1ElemScope)
 </code></pre>
 
 <p>There are no namespace declarations elsewhere in the XML document, so all descendant-or-self elements have the same scope:</p>
 
-<pre><code>require(docElem.findAllElemsOrSelf.forall(e => e.scope == feedElemScope))
+<pre><code>require(feed1DocElem.findAllElemsOrSelf.forall(e => e.scope == feed1ElemScope))
 </code></pre>
 
 <p>Like the <code>qname</code> method earlier, the <code>scope</code> method is not part of the yaidom "uniform query API" (<code>ElemApi</code> and friends), but belongs to the "default" element implementation. It is now shown that for each element in the atom namespace the scope is used to resolve the QName as EName:</p>
 
-<pre><code>val allElems = docElem.findAllElemsOrSelf
+<pre><code>val allElems = feed1DocElem.findAllElemsOrSelf
 
 // The default namespace is the atom namespace
 val allAtomElems = allElems.filter(e => e.qname.prefixOption.isEmpty)
@@ -190,16 +190,16 @@ require(allXhtmlElems.forall(e =>
 
 <p>Generalizing resolution of QNames as ENames, the following check succeeds for all descendant-or-self elements:</p>
 
-<pre><code>require(docElem.findAllElemsOrSelf.forall(e =>
+<pre><code>require(feed1DocElem.findAllElemsOrSelf.forall(e =>
     e.scope.resolveQNameOption(e.qname) == Some(e.resolvedName)))
 </code></pre>
 
 <p>The correspondence between element QNames and ENames can also be expressed as follows:</p>
 
-<pre><code>require(docElem.findAllElemsOrSelf.forall(e =>
+<pre><code>require(feed1DocElem.findAllElemsOrSelf.forall(e =>
     e.resolvedName.localPart == e.qname.localPart))
 
-require(docElem.findAllElemsOrSelf.forall(e =>
+require(feed1DocElem.findAllElemsOrSelf.forall(e =>
     e.resolvedName.namespaceUriOption ==
         e.scope.prefixNamespaceMap.get(e.qname.prefixOption.getOrElse(""))))
 </code></pre>
@@ -212,37 +212,37 @@ require(docElem.findAllElemsOrSelf.forall(e =>
 <p>Up to now, we have only queried for elements, and not for attributes. Typically we query for attributes using method <code>attributeOption</code> or its alias <code>\@</code>, which returns the string value of the attribute, if any, wrapped in an Option. If we are sure that an attribute exists, we can use method <code>attribute</code> instead, which returns the string value of the attribute, but throws an exception if the attribute does not exists. Namespace declarations are not considered attributes in yaidom, as mentioned earlier. For example:</p>
 
 <pre><code>// First get the <code>rights</code> child element of the root element
-val rightsElem: Elem = docElem.getChildElem(withEName(atomNs, "rights"))
+val rights1Elem: Elem = feed1DocElem.getChildElem(withEName(atomNs, "rights"))
 
-require(rightsElem \@ EName("type") == Some("xhtml"))
+require(rights1Elem \@ EName("type") == Some("xhtml"))
 
 val examplesNs = "http://xmlportfolio.com/xmlguild-examples"
 
-require(rightsElem \@ EName(examplesNs, "type") == Some("silly"))
+require(rights1Elem \@ EName(examplesNs, "type") == Some("silly"))
 </code></pre>
 
 <p>As shown above, the <code>rights</code> element (in the default atom namespace) has 2 attributes with local name <code>type</code>, one unprefixed and one with prefix <code>my</code>. As Evan Lenz points out, the default namespaces does not affect unprefixed attributes. Therefore the expanded names of these 2 attributes are <code>EName("type")</code> and <code>EName(exampleNs, "type")</code>, respectively.</p>
 
-<p>To get all attributes of <code>rightsElem</code>, as a mapping from QNames to their string values, we write:</p>
+<p>To get all attributes of <code>rights1Elem</code>, as a mapping from QNames to their string values, we write:</p>
 
-<pre><code>val rightsElemAttrs = rightsElem.attributes
+<pre><code>val rights1ElemAttrs = rights1Elem.attributes
 
-require(rightsElemAttrs.toMap.keySet ==
+require(rights1ElemAttrs.toMap.keySet ==
     Set(QName("type"), QName("my", "type")))
 </code></pre>
 
 <p>To get the "resolved" attributes, as mappings from EName to their string values, we write:</p>
 
-<pre><code>val rightsElemResolvedAttrs = rightsElem.resolvedAttributes
+<pre><code>val rights1ElemResolvedAttrs = rights1Elem.resolvedAttributes
 
-require(rightsElemResolvedAttrs.toMap.keySet ==
+require(rights1ElemResolvedAttrs.toMap.keySet ==
     Set(EName("type"), EName(examplesNs, "type")))
 </code></pre>
 
 <p>The correspondence between the qualified and expanded names of attributes can be expressed as follows:</p>
 
 <pre><code>require {
-    docElem.findAllElemsOrSelf forall { elem =>
+    feed1DocElem.findAllElemsOrSelf forall { elem =>
         val attrs = elem.attributes
         val resolvedAttrs = attrs map {
             case (attrQName, attrValue) =>
@@ -257,7 +257,7 @@ require(rightsElemResolvedAttrs.toMap.keySet ==
 
 <p>Above, the "attribute scope" is the scope excluding the default namespace:</p>
 
-<pre><code>require(docElem.findAllElemsOrSelf.forall(e =>
+<pre><code>require(feed1DocElem.findAllElemsOrSelf.forall(e =>
     e.attributeScope == e.scope.withoutDefaultNamespace))
 </code></pre>
 
@@ -267,28 +267,28 @@ require(rightsElemResolvedAttrs.toMap.keySet ==
 <p>Now consider the XML document <a href="http://dvreeze.github.io/examples/feed2.xml" target="_blank">feed2.xml</a>. It is equivalent to the preceding XML document, in that it has the same elements with the same expanded names and "resolved attributes". Still, it does not have all of its namespace declarations only in the document element, uses a different prefix for one of the namespaces, and overrides the default namespace. First assume the following code to have executed:</p>
 
 <pre><code>val feed2Doc: Document =
-    docParser.parse(new URI("http://devreeze.github.io/examples/feed2.xml"))
+    docParser.parse(new URI("http://dvreeze.github.io/examples/feed2.xml"))
 
 val feed2DocElem = feed2Doc.documentElement
 </code></pre>
 
 <p>Consider the element with local name <code>div</code>. What are the in-scope namespaces of that element? That scope is determined by the namespace declarations in the ancestor-or-self elements. So it is the "concatenation" of the namespace declarations in the document element, the <code>rights</code> element, and the <code>div</code> element itself. Written as yaidom code:</p>
 
-<pre><code>val divElem = feed2DocElem.findElem(withEName(xhtmlNs, "div")).get
+<pre><code>val div2Elem = feed2DocElem.findElem(withEName(xhtmlNs, "div")).get
 
-val feedElemDecls = Declarations.from("" -> atomNs)
-val rightsElemDecls = Declarations.from("example" -> examplesNs)
-val divElemDecls = Declarations.from("" -> xhtmlNs)
+val feed2ElemDecls = Declarations.from("" -> atomNs)
+val rights2ElemDecls = Declarations.from("example" -> examplesNs)
+val div2ElemDecls = Declarations.from("" -> xhtmlNs)
 
-val divElemScope =
-    Scope.Empty.resolve(feedElemDecls).resolve(rightsElemDecls).resolve(divElemDecls)
+val div2ElemScope =
+    Scope.Empty.resolve(feed2ElemDecls).resolve(rights2ElemDecls).resolve(div2ElemDecls)
 
-require(divElemScope == Scope.from("" -> xhtmlNs, "example" -> examplesNs))
+require(div2ElemScope == Scope.from("" -> xhtmlNs, "example" -> examplesNs))
 </code></pre>
 
 <p>Given the scope of the <code>div</code> element, it is clear that the <code>div</code> element has the same resolved name as in the preceding XML document, namely <code>EName(xhtmlNs, "div")</code>. Similarly, we can assert that <code>feed1.xml</code> and <code>feed2.xml</code> have the same elements, with the same expanded names and "resolved attributes". So, if we compare both XML documents without prefixes, they turn out to be equivalent:</p>
 
-<pre><code>val feed1ResolvedElem = resolved.Elem(docElem)
+<pre><code>val feed1ResolvedElem = resolved.Elem(feed1DocElem)
 val feed2ResolvedElem = resolved.Elem(feed2DocElem)
 
 require(feed1ResolvedElem.removeAllInterElementWhitespace ==
@@ -297,17 +297,17 @@ require(feed1ResolvedElem.removeAllInterElementWhitespace ==
 
 <p>Indeed, both XML documents have the same elements with the same resolved names and resolved attributes:</p>
 
-<pre><code>require(docElem.findAllElemsOrSelf.map(_.resolvedName) ==
+<pre><code>require(feed1DocElem.findAllElemsOrSelf.map(_.resolvedName) ==
     feed2DocElem.findAllElemsOrSelf.map(_.resolvedName))
 
-require(docElem.findAllElemsOrSelf.map(_.resolvedAttributes) ==
+require(feed1DocElem.findAllElemsOrSelf.map(_.resolvedAttributes) ==
     feed2DocElem.findAllElemsOrSelf.map(_.resolvedAttributes))
 </code></pre>
 
 <p>Finally, consider the XML document <a href="http://dvreeze.github.io/examples/feed3.xml" target="_blank">feed3.xml</a>. It is also equivalent to the preceding XML documents, in that it has the same elements with the same expanded names and "resolved attributes". This time, the <code>feed</code>, <code>title</code>, <code>rights</code> and <code>div</code> elements have namespace declarations that partly repeat the same namespace bindings as their ancestry. Such namespace bindings obviuosly do not affect the scope of the element in question. Assume the following code to have executed:</p>
 
 <pre><code>val feed3Doc: Document =
-    docParser.parse(new URI("http://devreeze.github.io/examples/feed3.xml"))
+    docParser.parse(new URI("http://dvreeze.github.io/examples/feed3.xml"))
 
 val feed3DocElem = feed3Doc.documentElement
 </code></pre>
@@ -325,7 +325,7 @@ val div3ElemScope =
     Scope.Empty.resolve(feed3ElemDecls).resolve(rights3ElemDecls).resolve(div3ElemDecls)
 
 require(div3ElemScope ==
-    Scope.from("" -> xhtmlNs, "xhtml" -> xhtmlNs, "my" -> examplesNs))
+    Scope.from("" -> atomNs, "xhtml" -> xhtmlNs, "my" -> examplesNs))
 
 // The namespace declarations in the rights and div elements added no information
 require(
@@ -336,8 +336,7 @@ require(div3Elem.scope == feed3DocElem.scope)
 
 <p>Again, <code>feed3.xml</code> and <code>feed1.xml</code> are equivalent:</p>
 
-<pre><code>val feed1ResolvedElem = resolved.Elem(docElem)
-val feed3ResolvedElem = resolved.Elem(feed3DocElem)
+<pre><code>val feed3ResolvedElem = resolved.Elem(feed3DocElem)
 
 require(feed1ResolvedElem.removeAllInterElementWhitespace ==
     feed3ResolvedElem.removeAllInterElementWhitespace)
