@@ -225,11 +225,19 @@ require(rightsElem \@ EName(examplesNs, "type") == Some("silly"))
 
 <p>To get all attributes of <code>rightsElem</code>, as a mapping from QNames to their string values, we write:</p>
 
-<pre><code>rightsElem.attributes</code></pre>
+<pre><code>val rightsElemAttrs = rightsElem.attributes
+
+require(rightsElemAttrs.toMap.keySet ==
+    Set(QName("type"), QName("my", "type")))
+</code></pre>
 
 <p>To get the "resolved" attributes, as mappings from EName to their string values, we write:</p>
 
-<pre><code>rightsElem.resolvedAttributes</code></pre>
+<pre><code>val rightsElemResolvedAttrs = rightsElem.resolvedAttributes
+
+require(rightsElemResolvedAttrs.toMap.keySet ==
+    Set(EName("type"), EName(examplesNs, "type")))
+</code></pre>
 
 <p>The correspondence between the qualified and expanded names of attributes can be expressed as follows:</p>
 
@@ -256,15 +264,52 @@ require(rightsElem \@ EName(examplesNs, "type") == Some("silly"))
 <h3>
 <a name="equivalent-xml-documents" class="anchor" href="#equivalent-xml-documents"><span class="octicon octicon-link"></span></a>Equivalent XML documents</h3>
 
-<p>... show equivalent XML (feed2.xml), also from Lenz article; query for individual elements (again), this time leading to different QNames but the same ENames ...</p>
-<p>... again, calculate with Declarations and Scopes ...</p>
-<p>... show resolved.Elem equivalence (and why) ...</p>
-<p>... now show feed3.xml, and again show equivalence ...</p>
+<p>Now consider the XML document <a href="http://dvreeze.github.io/examples/feed2.xml" target="_blank">feed2.xml</a>. It is equivalent to the preceding XML document, in that it has the same elements with the same expanded names and "resolved attributes". Still, it does not have all of its namespace declarations only in the document element, uses a different prefix for one of the namespaces, and overrides the default namespace. First assume the following code to have executed:</p>
+
+<pre><code>val feed2Doc: Document =
+    docParser.parse(new URI("http://devreeze.github.io/examples/feed2.xml"))
+
+val feed2DocElem = feed2Doc.documentElement
+</code></pre>
+
+<p>Consider the element with local name <code>div</code>. What are the in-scope namespaces of that element? That scope is determined by the namespace declarations in the ancestor-or-self elements. So it is the "concatenation" of the namespace declarations in the document element, the <code>rights</code> element, and the <code>div</code> element itself. Written as yaidom code:</p>
+
+<pre><code>val divElem = feed2DocElem.findElem(withEName(xhtmlNs, "div")).get
+
+val feedElemDecls = Declarations.from("" -> atomNs)
+val rightsElemDecls = Declarations.from("example" -> examplesNs)
+val divElemDecls = Declarations.from("" -> xhtmlNs)
+
+val divElemScope =
+    Scope.Empty.resolve(feedElemDecls).resolve(rightsElemDecls).resolve(divElemDecls)
+
+require(divElemScope == Scope.from("" -> xhtmlNs, "example" -> examplesNs))
+</code></pre>
+
+<p>Given the scope of the <code>div</code> element, it is clear that the <code>div</code> element has the same resolved name as in the preceding XML document, namely <code>EName(xhtmlNs, "div")</code>. Similarly, we can assert that <code>feed1.xml</code> and <code>feed2.xml</code> have the same elements, with the same expanded names and "resolved attributes". So, if we compare both XML documents without prefixes, they turn out to be equivalent:</p>
+
+<pre><code>val feed1ResolvedElem = resolved.Elem(docElem)
+val feed2ResolvedElem = resolved.Elem(feed2DocElem)
+
+require(feed1ResolvedElem.removeAllInterElementWhitespace ==
+    feed2ResolvedElem.removeAllInterElementWhitespace)
+</code></pre>
+
+<p>Indeed, both XML documents have the same elements with the same resolved names and resolved attributes:</p>
+
+<pre><code>require(docElem.findAllElemsOrSelf.map(_.resolvedName) ==
+    feed2DocElem.findAllElemsOrSelf.map(_.resolvedName))
+
+require(docElem.findAllElemsOrSelf.map(_.resolvedAttributes) ==
+    feed2DocElem.findAllElemsOrSelf.map(_.resolvedAttributes))
+</code></pre>
 
 <h3>
 <a name="conclusion" class="anchor" href="#conclusion"><span class="octicon octicon-link"></span></a>Conclusion</h3>
 
-<p>... conclusion (of this second article on yaidom); precise namespace support; calculating with namespaces; what have we learned about yaidom so far? ...</p>
+<p>In this article, we concentrated on yaidom's support for namespaces. Following the article <a href="http://www.lenzconsulting.com/namespaces/" target="_blank">Understanding XML Namespaces</a>, yaidom clearly distinguishes the concepts of qualified names, expanded names, namespace declarations and in-scope namespaces. It therefore turns out that we can talk about namespaces, using yaidom code, with almost mathematical precision.</p>
+
+<p>The preceding yaidom article and this one laid the groundwork for more interesting articles on yaidom, that will follow shortly.</p>
       </section>
       <footer>
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
