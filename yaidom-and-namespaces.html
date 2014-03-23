@@ -286,7 +286,7 @@ val div2ElemScope =
 require(div2ElemScope == Scope.from("" -> xhtmlNs, "example" -> examplesNs))
 </code></pre>
 
-<p>Given the scope of the <code>div</code> element, it is clear that the <code>div</code> element has the same resolved name as in the preceding XML document, namely <code>EName(xhtmlNs, "div")</code>. Similarly, we can assert that <code>feed1.txt</code> and <code>feed2.txt</code> have the same elements, with the same expanded names and "resolved attributes". So, if we compare both XML documents without prefixes, they turn out to be equivalent:</p>
+<p>Given the scope of the <code>div</code> element, it is clear that the <code>div</code> element has the same resolved name as in the preceding XML document, namely <code>EName(xhtmlNs, "div")</code>, because the QName is <code>QName("div")</code> and the default namespace is the xhtml namespace. Looking at the entire XML documents, we can assert that <code>feed1.txt</code> and <code>feed2.txt</code> have the same elements, with the same expanded names and "resolved attributes". So, if we compare both XML documents without considering prefixes, they turn out to be equivalent:</p>
 
 <pre><code>val feed1ResolvedElem = resolved.Elem(feed1DocElem)
 val feed2ResolvedElem = resolved.Elem(feed2DocElem)
