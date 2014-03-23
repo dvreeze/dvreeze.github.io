@@ -304,6 +304,45 @@ require(docElem.findAllElemsOrSelf.map(_.resolvedAttributes) ==
     feed2DocElem.findAllElemsOrSelf.map(_.resolvedAttributes))
 </code></pre>
 
+<p>Finally, consider the XML document <a href="http://dvreeze.github.io/examples/feed3.xml" target="_blank">feed3.xml</a>. It is also equivalent to the preceding XML documents, in that it has the same elements with the same expanded names and "resolved attributes". This time, the <code>feed</code>, <code>title</code>, <code>rights</code> and <code>div</code> elements have namespace declarations that partly repeat the same namespace bindings as their ancestry. Such namespace bindings obviuosly do not affect the scope of the element in question. Assume the following code to have executed:</p>
+
+<pre><code>val feed3Doc: Document =
+    docParser.parse(new URI("http://devreeze.github.io/examples/feed3.xml"))
+
+val feed3DocElem = feed3Doc.documentElement
+</code></pre>
+
+<p>Let's again compute the scope of the <code>div</code> element by hand:</p>
+
+<pre><code>val div3Elem = feed3DocElem.findElem(withEName(xhtmlNs, "div")).get
+
+val feed3ElemDecls =
+    Declarations.from("" -> atomNs, "xhtml" -> xhtmlNs, "my" -> examplesNs)
+val rights3ElemDecls = feed3ElemDecls
+val div3ElemDecls = Declarations.from("xhtml" -> xhtmlNs)
+
+val div3ElemScope =
+    Scope.Empty.resolve(feed3ElemDecls).resolve(rights3ElemDecls).resolve(div3ElemDecls)
+
+require(div3ElemScope ==
+    Scope.from("" -> xhtmlNs, "xhtml" -> xhtmlNs, "my" -> examplesNs))
+
+// The namespace declarations in the rights and div elements added no information
+require(
+    feed3DocElem.getChildElem(withEName(atomNs, "rights")).scope ==
+        feed3DocElem.scope)
+require(div3Elem.scope == feed3DocElem.scope)
+</code></pre>
+
+<p>Again, <code>feed3.xml</code> and <code>feed1.xml</code> are equivalent:</p>
+
+<pre><code>val feed1ResolvedElem = resolved.Elem(docElem)
+val feed3ResolvedElem = resolved.Elem(feed3DocElem)
+
+require(feed1ResolvedElem.removeAllInterElementWhitespace ==
+    feed3ResolvedElem.removeAllInterElementWhitespace)
+</code></pre>
+
 <h3>
 <a name="conclusion" class="anchor" href="#conclusion"><span class="octicon octicon-link"></span></a>Conclusion</h3>
 
