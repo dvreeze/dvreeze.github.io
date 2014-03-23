@@ -46,7 +46,7 @@
         <h3>
 <a name="qualified-and-expanded-names" class="anchor" href="#qualified-and-expanded-names"><span class="octicon octicon-link"></span></a>Qualified and expanded names</h3>
 
-<p>Like in the preceding article on yaidom, all code examples below can be tried out in the Scala REPL. Scala 2.10.X is required, and yaidom 0.8.0 (or later) must be on the classpath. The sample XML file (from the article by Evan Lenz) is <a href="http://dvreeze.github.io/examples/feed1.xml" target="_blank">feed1.xml</a>. First assume the following code to have executed:</p>
+<p>Like in the preceding article on yaidom, all code examples below can be tried out in the Scala REPL. Scala 2.10.X is required, and yaidom 0.8.0 (or later) must be on the classpath. The sample XML file (from the article by Evan Lenz) is <a href="http://dvreeze.github.io/examples/feed1.txt" target="_blank">feed1.txt</a>. First assume the following code to have executed:</p>
 
 <pre><code>import java.net.URI
 import javax.xml.parsers._
@@ -59,7 +59,7 @@ import ElemApi._
 val docParser = parse.DocumentParserUsingSax.newInstance
 
 val feed1Doc: Document =
-    docParser.parse(new URI("http://dvreeze.github.io/examples/feed1.xml"))
+    docParser.parse(new URI("http://dvreeze.github.io/examples/feed1.txt"))
 
 val feed1DocElem = feed1Doc.documentElement
 </code></pre>
@@ -264,10 +264,10 @@ require(rights1ElemResolvedAttrs.toMap.keySet ==
 <h3>
 <a name="equivalent-xml-documents" class="anchor" href="#equivalent-xml-documents"><span class="octicon octicon-link"></span></a>Equivalent XML documents</h3>
 
-<p>Now consider the XML document <a href="http://dvreeze.github.io/examples/feed2.xml" target="_blank">feed2.xml</a>. It is equivalent to the preceding XML document, in that it has the same elements with the same expanded names and "resolved attributes". Still, its namespace declarations occur not only in the document element, it uses a different prefix for one of the namespaces, and it overrides the default namespace. First assume the following code to have executed:</p>
+<p>Now consider the XML document <a href="http://dvreeze.github.io/examples/feed2.txt" target="_blank">feed2.txt</a>. It is equivalent to the preceding XML document, in that it has the same elements with the same expanded names and "resolved attributes". Still, its namespace declarations occur not only in the document element, it uses a different prefix for one of the namespaces, and it overrides the default namespace. First assume the following code to have executed:</p>
 
 <pre><code>val feed2Doc: Document =
-    docParser.parse(new URI("http://dvreeze.github.io/examples/feed2.xml"))
+    docParser.parse(new URI("http://dvreeze.github.io/examples/feed2.txt"))
 
 val feed2DocElem = feed2Doc.documentElement
 </code></pre>
@@ -286,7 +286,7 @@ val div2ElemScope =
 require(div2ElemScope == Scope.from("" -> xhtmlNs, "example" -> examplesNs))
 </code></pre>
 
-<p>Given the scope of the <code>div</code> element, it is clear that the <code>div</code> element has the same resolved name as in the preceding XML document, namely <code>EName(xhtmlNs, "div")</code>. Similarly, we can assert that <code>feed1.xml</code> and <code>feed2.xml</code> have the same elements, with the same expanded names and "resolved attributes". So, if we compare both XML documents without prefixes, they turn out to be equivalent:</p>
+<p>Given the scope of the <code>div</code> element, it is clear that the <code>div</code> element has the same resolved name as in the preceding XML document, namely <code>EName(xhtmlNs, "div")</code>. Similarly, we can assert that <code>feed1.txt</code> and <code>feed2.txt</code> have the same elements, with the same expanded names and "resolved attributes". So, if we compare both XML documents without prefixes, they turn out to be equivalent:</p>
 
 <pre><code>val feed1ResolvedElem = resolved.Elem(feed1DocElem)
 val feed2ResolvedElem = resolved.Elem(feed2DocElem)
@@ -304,10 +304,10 @@ require(feed1DocElem.findAllElemsOrSelf.map(_.resolvedAttributes) ==
     feed2DocElem.findAllElemsOrSelf.map(_.resolvedAttributes))
 </code></pre>
 
-<p>Finally, consider the XML document <a href="http://dvreeze.github.io/examples/feed3.xml" target="_blank">feed3.xml</a>. It is also equivalent to the preceding XML documents, in that it has the same elements with the same expanded names and "resolved attributes". This time, the <code>title</code>, <code>rights</code> and <code>div</code> elements have (some of) the same namespace declarations as the <code>feed</code> element. Such duplicate namespace declarations obviously do not affect the scope of the element in question. Assume the following code to have executed:</p>
+<p>Finally, consider the XML document <a href="http://dvreeze.github.io/examples/feed3.txt" target="_blank">feed3.txt</a>. It is also equivalent to the preceding XML documents, in that it has the same elements with the same expanded names and "resolved attributes". This time, the <code>title</code>, <code>rights</code> and <code>div</code> elements have (some of) the same namespace declarations as the <code>feed</code> element. Such duplicate namespace declarations obviously do not affect the scope of the element in question. Assume the following code to have executed:</p>
 
 <pre><code>val feed3Doc: Document =
-    docParser.parse(new URI("http://dvreeze.github.io/examples/feed3.xml"))
+    docParser.parse(new URI("http://dvreeze.github.io/examples/feed3.txt"))
 
 val feed3DocElem = feed3Doc.documentElement
 </code></pre>
@@ -334,7 +334,7 @@ require(
 require(div3Elem.scope == feed3DocElem.scope)
 </code></pre>
 
-<p>Again, <code>feed3.xml</code> and <code>feed1.xml</code> are equivalent:</p>
+<p>Again, <code>feed3.txt</code> and <code>feed1.txt</code> are equivalent:</p>
 
 <pre><code>val feed3ResolvedElem = resolved.Elem(feed3DocElem)
 
