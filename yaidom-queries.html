@@ -48,7 +48,7 @@
 
 <p>First we give an introductory example to querying in yaidom. Consider the following XML file: <a href="examples/books.xml" target="_blank">books.xml</a>. Suppose we have parsed this document, and that the parsed document has been stored into variable <code>doc</code>. Then we can query for all book author last names as follows (without removing duplicates):</p>
 
-<pre><code>import ElemApi._
+<pre><code>import HasENameApi._
 
 val authorLastNames =
     for {
@@ -103,7 +103,7 @@ val authorLastNames =
 <h3>
 <a name="introduction-to-yaidom-element-queries" class="anchor" href="#introduction-to-yaidom-element-queries"><span class="octicon octicon-link"></span></a>Introduction to yaidom element queries</h3>
 
-<p>All code examples below can be tried out in the Scala REPL (if the parent directory path of the example files is replaced). Scala 2.10.X is required, and yaidom 0.8.0 (or later) must be on the classpath.</p>
+<p>All code examples below can be tried out in the Scala REPL (if the parent directory path of the example files is replaced). Scala 2.11.X is required, and yaidom 1.3.2 (or later) must be on the classpath.</p>
 
 <p>Before showing some basic yaidom element queries, assume the following code to have executed:</p>
 
@@ -118,7 +118,7 @@ val docParser = parse.DocumentParserUsingDom.newInstance
 // Replace the following path!
 val parentDir = new File("/path/to/parentdir")
 
-val doc: Document =
+val doc: simple.Document =
     docParser.parse(new File(parentDir, "books.xml"))
 
 val docElem = doc.documentElement
@@ -179,9 +179,9 @@ require(
     "Expected the same books as in bookElems1")
 </code></pre>
 
-<p>If we import the <code>ElemApi</code> companion object members, then we can write the element predicate more briefly using (element predicate factory) method <code>withLocalName</code>, like this:</p>
+<p>If we import the <code>HasENameApi</code> companion object members, then we can write the element predicate more briefly using (element predicate factory) method <code>withLocalName</code>, like this:</p>
 
-<pre><code>import ElemApi._
+<pre><code>import queryapi.HasENameApi._
 
 val bookElems4 =
     docElem filterElemsOrSelf withLocalName("Book")
@@ -213,8 +213,10 @@ val bookElems4 =
 
 <pre><code>val ns = "http://bookstore"
 
+import queryapi._
+
 def findAllBookAuthors[E <: ElemApi[E] with HasText](docElem: E): immutable.IndexedSeq[String] = {
-    import ElemApi._
+    import HasENameApi._
     val result =
         for {
             bookElem <- docElem \ withEName(ns, "Book")
@@ -226,7 +228,7 @@ def findAllBookAuthors[E <: ElemApi[E] with HasText](docElem: E): immutable.Inde
 }
 </code></pre>
 
-<p>Don't worry: typical yaidom client code does not abstract over multiple element implementations, so does not look this intimidating in the use of generics and F-bounded polymorphism. Generics are used here to show that the exact same query API works for multiple element implementations. In the function signature above, <code>E</code> is the type of the element implementation itself. We also imported all members of the <code>ElemApi</code> companion object, to have the <code>withEName</code> element predicate builder in scope.</p>
+<p>Don't worry: typical yaidom client code does not abstract over multiple element implementations, so does not look this intimidating in the use of generics and F-bounded polymorphism. Generics are used here to show that the exact same query API works for multiple element implementations. In the function signature above, <code>E</code> is the type of the element implementation itself. We also imported all members of the <code>HasENameApi</code> companion object, to have the <code>withEName</code> element predicate builder in scope.</p>
 
 <h4>
 <a name="default-yaidom-elements" class="anchor" href="#default-yaidom-elements"><span class="octicon octicon-link"></span></a>"Default" yaidom elements</h4>
