@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>XML processing with Scala and yaidom</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>XML processing with Scala and yaidom</h1>
+        <p>Yaidom is a uniform XML query API, written in Scala and leveraging its Collections API. Moreover, yaidom provides several specific-purpose DOM-like tree implementations offering this XML query API.</p>
+
+<p>In this article, the yaidom library is introduced, using examples from XBRL (eXtensible Business Reporting Language).</p>
+
+
+        <p class="view"><a href="https://github.com/dvreeze">View My GitHub Profile</a></p>
+
+      </header>
+      <section>
+        <h3>
+<a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h3>
+
+<p>This article introduces the <em>yaidom</em> library with examples taken from the domain of XBRL.</p>
+
+<p>It is assumed that the reader knows the basics of XML, in particular XML namespaces. Some experience with XML processing in Java (e.g. JAXP) is also helpful. Finally, the reader is expected to have
+some familiarity with an OO programming language, such as Java (or Scala).</p>
+
+<p>This article introduces yaidom (with Scala) as an alternative approach to XML querying, as opposed to standardized querying using XSLT, XQuery and XPath.
+The remainder of this article is organized as follows:</p>
+<ol>
+<li>Brief introduction to Scala and Scala Collections.</li>
+<li>Brief introduction to yaidom.</li>
+<li>Brief introduction to XBRL.</li>
+<li>Simple yaidom query examples.</li>
+<li>Namespace examples.</li>
+<li>Extending yaidom for custom XML dialects.</li>
+<li>Conclusion.</li>
+</ol>
+
+<p>After introducing Scala, Scala Collections and yaidom, a brief explanation of XBRL follows. As a business reporting standard, XBRL standardizes business reports in XBRL format, as so-called
+XBRL instances, which are XML documents. In order to be valid, XBRL instances have to obey many requirements. The remainder of this paper shows how many of those rules are easily expressed
+using yaidom and Scala. Hence yaidom is introduced in this article for expressing some rules on XBRL instances. It will be shown that using Scala and yaidom instead of standard XML query and
+transformation languages actually makes sense.</p>
+
+        <h3>
+<a name="brief-scala-introduction" class="anchor" href="#brief-scala-introduction"><span class="octicon octicon-link"></span></a>Brief introduction to Scala and Scala Collections</h3>
+
+<p>Scala ...</p>
+<p>Scala Collections ...</p>
+
+        <h3>
+<a name="brief-yaidom-introduction" class="anchor" href="#brief-yaidom-introduction"><span class="octicon octicon-link"></span></a>Brief introduction to yaidom</h3>
+
+<p>Why yaidom ...</p>
+<p>Yaidom queries ...</p>
+
+<h3>
+<a name="brief-xbrl-introduction" class="anchor" href="#brief-xbrl-introduction"><span class="octicon octicon-link"></span></a>Brief introduction to XBRL</h3>
+
+<p>What is XBRL ...</p>
+<p>What is an XBRL instance ...</p>
+<p>What are the examples going to show ...</p>
+
+<h3>
+<a name="simple-yaidom-queries" class="anchor" href="#simple-yaidom-queries"><span class="octicon octicon-link"></span></a>Simple yaidom queries</h3>
+
+<p>Simple yaidom queries using uniform query API ...</p>
+<p>Simple yaidom queries using specific DOM-like tree implementation ...</p>
+
+<h3>
+<a name="namespace-examples" class="anchor" href="#namespace-examples"><span class="octicon octicon-link"></span></a>Namespace examples</h3>
+
+<p>Yaidom and namespaces ...</p>
+<p>Checking used namespaces ...</p>
+<p>Finding unused namespaces ...</p>
+
+<h3>
+<a name="extending-yaidom" class="anchor" href="#extending-yaidom"><span class="octicon octicon-link"></span></a>Extending yaidom for custom XML dialects</h3>
+
+<p>Extending yaidom ...</p>
+<p>Example validating order in XBRL instance ...</p>
+<p>Example validating contexts in XBRL instance ...</p>
+<p>Example validating facts in XBRL instance ...</p>
+
+<h3>
+<a name="conclusion" class="anchor" href="#conclusion"><span class="octicon octicon-link"></span></a>Conclusion</h3>
+
+<p>The point of yaidom ...</p>
+<p>Yaidom and XBRL taxonomies ...</p>
+
+<p>As a concluding remark, yaidom is used in production code developed at <a href="http://www.ebpi.nl" target="_blank">www.ebpi.nl</a>. Its usage in several projects has certainly helped it mature. I want to thank my colleagues Jan-Paul van der Velden, Andrea Desole, Johan Walters and Nicholas Evans for their valuable feedback on earlier versions of yaidom.</p>
+      </section>
+      <footer>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
