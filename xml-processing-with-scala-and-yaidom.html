@@ -65,9 +65,69 @@ transformation languages actually makes sense.</p>
 <h3>
 <a name="brief-xbrl-introduction" class="anchor" href="#brief-xbrl-introduction"><span class="octicon octicon-link"></span></a>Brief introduction to XBRL</h3>
 
-<p>What is XBRL ...</p>
-<p>What is an XBRL instance ...</p>
-<p>What are the examples going to show ...</p>
+<p>XBRL (eXtensible Business Reporting Language) is a standard for business reporting. Many XBRL reports are financial statements, but they can also be something entirely different.
+XBRL reports ("XBRL instances") are XML documents, having a specified structure.</p>
+
+<p>Suppose we want to report that for a given organization the average number of employees in 2003 was 220, and that the corresponding numbers for 2004 and 2005 were 240 and 250, respectively.
+More precisely, <em>concept</em> <code>gaap:AverageNumberEmployees</code> (described by the so-called US-GAAP XBRL taxonomy) has the <em>value</em> <code>220</code> in the <em>context</em>
+of the year 2003, for the given organization. Then we can report the 3 <em>facts</em> above in XBRL format as follows:</p>
+
+<pre><code>
+&lt;xbrl xmlns="http://www.xbrl.org/2003/instance" xmlns:gaap="http://xasb.org/gaap"&gt;
+
+   &lt;context id="D-2003"&gt;
+      &lt;entity&gt;
+         &lt;identifier scheme="http://www.sec.gov/CIK"&gt;1234567890&lt;/identifier&gt;
+         &lt;segment&gt;
+         &lt;/segment&gt;
+      &lt;/entity&gt;
+      &lt;period&gt;
+         &lt;startDate&gt;2003-01-01&lt;/startDate&gt;
+         &lt;endDate&gt;2003-12-31&lt;/endDate&gt;
+      &lt;/period&gt;
+   &lt;/context&gt;
+
+   &lt;context id="D-2004"&gt;
+      &lt;entity&gt;
+         &lt;identifier scheme="http://www.sec.gov/CIK"&gt;1234567890&lt;/identifier&gt;
+         &lt;segment&gt;
+         &lt;/segment&gt;
+      &lt;/entity&gt;
+      &lt;period&gt;
+         &lt;startDate&gt;2004-01-01&lt;/startDate&gt;
+         &lt;endDate&gt;2004-12-31&lt;/endDate&gt;
+      &lt;/period&gt;
+   &lt;/context&gt;
+
+   &lt;context id="D-2005"&gt;
+      &lt;entity&gt;
+         &lt;identifier scheme="http://www.sec.gov/CIK"&gt;1234567890&lt;/identifier&gt;
+         &lt;segment&gt;
+         &lt;/segment&gt;
+      &lt;/entity&gt;
+      &lt;period&gt;
+         &lt;startDate&gt;2005-01-01&lt;/startDate&gt;
+         &lt;endDate&gt;2005-12-31&lt;/endDate&gt;
+      &lt;/period&gt;
+   &lt;/context&gt;
+
+   &lt;unit id="U-Pure"&gt;
+     &lt;measure&gt;pure&lt;/measure&gt;
+   &lt;/unit&gt;
+
+  &lt;gaap:AverageNumberEmployees contextRef="D-2003" unitRef="U-Pure" decimals="INF"&gt;220&lt;/gaap:AverageNumberEmployees&gt;
+  &lt;gaap:AverageNumberEmployees contextRef="D-2004" unitRef="U-Pure" decimals="INF"&gt;240&lt;/gaap:AverageNumberEmployees&gt;
+  &lt;gaap:AverageNumberEmployees contextRef="D-2005" unitRef="U-Pure" decimals="INF"&gt;250&lt;/gaap:AverageNumberEmployees&gt;
+
+&lt;/xbrl&gt;
+</code></pre>
+
+<p>There are many requirements that have to be met in order for an XBRL instance to be valid. The XBRL Core specification (as well as other XBRL specifications)
+describes many of these requirements. There are also many common best practices that have been formalized as complementary "rules". For example, the international
+FRIS standard (http://www.xbrl.org/technical/guidance/FRIS-PWD-2004-11-14.htm).</p>
+
+<p>The remainder of this article will show how many of those FRIS rules can be written naturally as Scala expressions using yaidom (as opposed to XSLT or XQuery
+expressions).</p>
 
 <h3>
 <a name="simple-yaidom-queries" class="anchor" href="#simple-yaidom-queries"><span class="octicon octicon-link"></span></a>Simple yaidom queries</h3>
