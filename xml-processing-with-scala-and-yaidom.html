@@ -53,8 +53,65 @@ transformation languages actually makes sense.</p>
         <h3>
 <a name="brief-scala-introduction" class="anchor" href="#brief-scala-introduction"><span class="octicon octicon-link"></span></a>Brief introduction to Scala and Scala Collections</h3>
 
-<p>Scala ...</p>
-<p>Scala Collections ...</p>
+<p>The Scala programming language is the most popular alternative to Java on the Java platform. It is object-oriented (more so than Java), and also functional (in that functions are first-class
+objects). It is statically typed, but feels like a dynamically typed language (because of features like type inference).</p>
+
+<p>Scala is a <em>safe</em> and <em>expressive</em> language, often leading to good team productity and low bug counts. Its rich <em>Collections API</em>, strong support for
+<em>immutable</em> data structures, and focus on <em>expressions</em> rather than statements enables programmers to work at a higher level of abstraction than Java programmers.
+The Collections API of a programming language (as part of the standard library of the language, in the cases of Java, Scala, C# etc.) says a lot about the language. So below follows some
+Scala code that manipulates collections.</p>
+
+<p>Consider a book store and some queries about books. The Scala code is as follows:</p>
+
+<pre><code>
+case class Author(firstName: String, lastName: String)
+case class Book(isbn: String, title: String, authors: List[Author], price: Int)
+
+val someBooks = List(
+  Book(
+    "ISBN-0-13-713526-2",
+    "A First Course in Database Systems",
+    List(Author("Jeffrey", "Ullman"), Author("Jennifer", "Widom")),
+    85),
+  Book(
+    "ISBN-0-13-815504-6",
+    "Database Systems: The Complete Book",
+    List(Author("Hector", "Garcia-Molina"), Author("Jeffrey", "Ullman"), Author("Jennifer", "Widom")),
+    100),
+  Book(
+    "ISBN-0-11-222222-3",
+    "Hector and Jeff's Database Hints",
+    List(Author("Jeffrey", "Ullman"), Author("Hector", "Garcia-Molina")),
+    50),
+  Book(
+    "ISBN-9-88-777777-6",
+    "Jennifer's Economical Database Hints",
+    List(Author("Jennifer", "Widom")),
+    25)
+)
+
+// Return all books that are no more expensive than 50 dollars
+// Returns the last 2 of the 4 books
+
+val cheapBooks = someBooks.filter(book => book.price <= 50)
+
+// Return all books having Jeffrey Ullman as one of its authors
+// Returns the first 3 of the 4 books
+
+val booksByUllman = someBooks.filter(book => book.authors.exists(author => author.lastName == "Ullman"))
+
+// Return all book authors, without duplicates
+
+val allAuthors = someBooks.flatMap(book => book.authors).distinct
+
+// Return all titles of books having Jeffrey Ullman as one of its authors
+
+val bookTitlesByUllman =
+  someBooks.filter(book => book.authors.exists(author => author.lastName == "Ullman")).map(book => book.title)
+</code></pre>
+
+<p>Note how the queries in prose naturally map to their counterparts in Scala code. The code shows the "what" more than the "how".
+In that respect, the Scala code looks more XQuery than Java (before version 8).</p>
 
         <h3>
 <a name="brief-yaidom-introduction" class="anchor" href="#brief-yaidom-introduction"><span class="octicon octicon-link"></span></a>Brief introduction to yaidom</h3>
