@@ -28,13 +28,14 @@
         <h3>
 <a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h3>
 
-<p>This article introduces the <em>yaidom</em> library with examples taken from the domain of XBRL.</p>
+<p>This article introduces the <em>yaidom</em> XML query library, using examples taken from the domain of <a href="https://www.xbrl.org" target="_blank">XBRL</a>
+(eXtensible Business Reporting Language).</p>
 
-<p>It is assumed that the reader knows the basics of XML, in particular XML namespaces. Some experience with XML processing in Java (e.g. JAXP) is also helpful. Finally, the reader is expected to have
-some familiarity with an OO programming language, such as Java (or Scala).</p>
+<p>It is assumed that the reader knows the basics of XML, in particular XML namespaces. Some experience with XML processing in Java (e.g. JAXP) or another OO programming language
+(such as Scala or C#) is also helpful.</p>
 
-<p>This article introduces yaidom (with Scala) as an alternative approach to XML querying, as opposed to standardized querying using XSLT, XQuery and XPath.
-The remainder of this article is organized as follows:</p>
+<p>XSLT, XQuery and XPath are standard XML transformation/query languages. In this article yaidom (with Scala) is introduced as an alternative approach to XML querying/transformation (although it can
+also be used in a meaningful way together with XQuery). The remainder of this article is organized as follows:</p>
 <ol>
 <li>Brief introduction to Scala and Scala Collections.</li>
 <li>Brief introduction to yaidom.</li>
@@ -45,10 +46,10 @@ The remainder of this article is organized as follows:</p>
 <li>Conclusion.</li>
 </ol>
 
-<p>After introducing Scala, Scala Collections and yaidom, a brief explanation of XBRL follows. As a business reporting standard, XBRL standardizes business reports in XBRL format, as so-called
-XBRL instances, which are XML documents. In order to be valid, XBRL instances have to obey many requirements. The remainder of this paper shows how many of those rules are easily expressed
-using yaidom and Scala. Hence yaidom is introduced in this article for expressing some rules on XBRL instances. It will be shown that using Scala and yaidom instead of standard XML query and
-transformation languages actually makes sense.</p>
+<p>After introducing Scala, Scala Collections and yaidom, a brief explanation of XBRL follows. XBRL is a business reporting standard. Business reports in XBRL format are called <em>XBRL instances</em>.
+These XBRL instances are XML documents. In order to be valid, XBRL instances have to obey many requirements. The remainder of this paper shows how many of those rules are easily expressed
+using yaidom and Scala. Hence yaidom is introduced in this article for expressing some rules for XBRL instances. It will be shown that using Scala and yaidom instead of standard XML query and
+transformation languages actually makes sense for these examples.</p>
 
         <h3>
 <a name="brief-scala-introduction" class="anchor" href="#brief-scala-introduction"><span class="octicon octicon-link"></span></a>Brief introduction to Scala and Scala Collections</h3>
@@ -56,10 +57,10 @@ transformation languages actually makes sense.</p>
 <p>The Scala programming language is the most popular alternative to Java on the Java platform. It is object-oriented (more so than Java), and also functional (in that functions are first-class
 objects). It is statically typed, but feels like a dynamically typed language (because of features like type inference).</p>
 
-<p>Scala is a <em>safe</em> and <em>expressive</em> language, often leading to good team productity and low bug counts. Its rich <em>Collections API</em>, strong support for
-<em>immutable</em> data structures, and focus on <em>expressions</em> rather than statements enables programmers to work at a higher level of abstraction than Java programmers.
-The Collections API of a programming language (as part of the standard library of the language, in the cases of Java, Scala, C# etc.) says a lot about the language. So below follows some
-Scala code that manipulates collections.</p>
+<p>Scala is a <em>safe</em> and <em>expressive</em> language, very often leading to good team productity and low bug counts. Its rich <em>Collections API</em>, strong support for
+<em>immutable</em> data structures, and focus on <em>expressions</em> rather than statements enables programmers to work at a higher level of abstraction than the Java language offers.
+The Collections API of a programming language (which in the case of Scala, C# and Java is a part of the standard library of the language, not of the core language) often says a lot about the language.
+Hence, below follows some Scala code that manipulates collections.</p>
 
 <p>Consider a book store and some queries about books. The Scala code is as follows:</p>
 
@@ -76,7 +77,10 @@ val someBooks = List(
   Book(
     "ISBN-0-13-815504-6",
     "Database Systems: The Complete Book",
-    List(Author("Hector", "Garcia-Molina"), Author("Jeffrey", "Ullman"), Author("Jennifer", "Widom")),
+    List(
+      Author("Hector", "Garcia-Molina"),
+      Author("Jeffrey", "Ullman"),
+      Author("Jennifer", "Widom")),
     100),
   Book(
     "ISBN-0-11-222222-3",
@@ -90,15 +94,18 @@ val someBooks = List(
     25)
 )
 
-// Return all books that are no more expensive than 50 dollars
-// Returns the last 2 of the 4 books
+// Return all books that are no more expensive than 50 dollars (the last 2 books)
 
 val cheapBooks = someBooks.filter(book => book.price <= 50)
 
-// Return all books having Jeffrey Ullman as one of its authors
-// Returns the first 3 of the 4 books
+// Return all books having Jeffrey Ullman as one of its authors (the first 3 books)
 
-val booksByUllman = someBooks.filter(book => book.authors.exists(author => author.lastName == "Ullman"))
+def hasAuthor(book: Book, authorLastName: String): Boolean = {
+  book.authors.exists(author => author.lastName == authorLastName)
+}
+
+val booksByUllman =
+  someBooks.filter(book => hasAuthor(book, "Ullman"))
 
 // Return all book authors, without duplicates
 
@@ -107,10 +114,10 @@ val allAuthors = someBooks.flatMap(book => book.authors).distinct
 // Return all titles of books having Jeffrey Ullman as one of its authors
 
 val bookTitlesByUllman =
-  someBooks.filter(book => book.authors.exists(author => author.lastName == "Ullman")).map(book => book.title)
+  someBooks.filter(book => hasAuthor(book, "Ullman")).map(book => book.title)
 </code></pre>
 
-<p>Note how the queries in prose naturally map to their counterparts in Scala code. The code shows the "what" more than the "how".
+<p>Note how the queries in prose naturally map to their counterparts in Scala code. The code shows the <em>"what"</em> more than the <em>"how"</em>.
 In that respect, the Scala code looks more XQuery than Java (before version 8).</p>
 
         <h3>
