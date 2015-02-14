@@ -34,8 +34,8 @@
 <p>It is assumed that the reader knows the basics of XML, in particular XML namespaces. Some experience with XML processing in Java (e.g. JAXP) or another OO programming language
 (such as Scala or C#) is also helpful.</p>
 
-<p>XSLT, XQuery and XPath are standard XML transformation/query languages. In this article yaidom (with Scala) is introduced as an alternative approach to XML querying/transformation (although it can
-also be used in a meaningful way together with XQuery). The remainder of this article is organized as follows:</p>
+<p>XSLT, XQuery and XPath are standard XML transformation/query languages, yet in this article yaidom (with Scala) is introduced as an <em>alternative</em> approach to XML querying/transformation.
+Still, yaidom can also be used in a meaningful way together with XQuery. The remainder of this article is organized as follows:</p>
 <ol>
 <li>Brief introduction to Scala and Scala Collections.</li>
 <li>Brief introduction to yaidom.</li>
@@ -46,10 +46,9 @@ also be used in a meaningful way together with XQuery). The remainder of this ar
 <li>Conclusion.</li>
 </ol>
 
-<p>After introducing Scala, Scala Collections and yaidom, a brief explanation of XBRL follows. XBRL is a business reporting standard. Business reports in XBRL format are called <em>XBRL instances</em>.
-These XBRL instances are XML documents. In order to be valid, XBRL instances have to obey many requirements. The remainder of this paper shows how many of those rules are easily expressed
-using yaidom and Scala. Hence yaidom is introduced in this article for expressing some rules for XBRL instances. It will be shown that using Scala and yaidom instead of standard XML query and
-transformation languages actually makes sense for these examples.</p>
+<p>After introducing Scala, Scala Collections and yaidom, a brief introduction to XBRL follows. XBRL is an XML-based business reporting standard. Business reports in XBRL format are called
+<em>XBRL instances</em>. In order to be valid, XBRL instances have to obey many requirements. The remainder of this paper shows that many of those rules are easily expressed
+using yaidom and Scala. It will be shown that using Scala and yaidom instead of standard XML query and transformation languages actually makes sense for these examples.</p>
 
         <h3>
 <a name="brief-scala-introduction" class="anchor" href="#brief-scala-introduction"><span class="octicon octicon-link"></span></a>Brief introduction to Scala and Scala Collections</h3>
@@ -94,11 +93,11 @@ val someBooks = List(
     25)
 )
 
-// Return all books that are no more expensive than 50 dollars (the last 2 books)
+// Return all books that cost no more than 50 dollars (i.e., the last 2 books)
 
 val cheapBooks = someBooks.filter(book => book.price <= 50)
 
-// Return all books having Jeffrey Ullman as one of its authors (the first 3 books)
+// Return all books having Jeffrey Ullman as one of its authors (i.e., the first 3 books)
 
 def hasAuthor(book: Book, authorLastName: String): Boolean = {
   book.authors.exists(author => author.lastName == authorLastName)
@@ -118,16 +117,130 @@ val bookTitlesByUllman =
 </code></pre>
 
 <p>Note how the queries in prose naturally map to their counterparts in Scala code. The code shows the <em>"what"</em> more than the <em>"how"</em>.
-In that respect, the Scala code looks more XQuery than Java (before version 8).</p>
+In that respect, the Scala code looks more like XQuery than Java (before version 8).</p>
 
         <h3>
 <a name="brief-yaidom-introduction" class="anchor" href="#brief-yaidom-introduction"><span class="octicon octicon-link"></span></a>Brief introduction to yaidom</h3>
 
-<p>Why yaidom ...</p>
-<p>Why not use standards such as XSLT or XQuery? (too much bridging between languages; equality semantics; etc.) ...</p>
-<p>And why not use Scala XML? (poor namespace support; no uniform query API backed by multiple DOM-like implementations; etc.) ...</p>
-<p>Still, you can mix technologies (XQuery and yaidom, for example) ...</p>
-<p>Yaidom queries ...</p>
+<p>The <em>yaidom</em> library can be used for querying XML in Scala. It interoperates very well with the Scala Collections API.</p>
+
+<p>Using the bookstore example above, some simple yaidom XML queries are shown below. The XML is as follows:</p>
+
+<pre><code>
+// The book store XML
+
+&lt;Bookstore&gt;
+	&lt;Book ISBN="ISBN-0-13-713526-2" Price="85" Edition="3rd"&gt;
+		&lt;Title&gt;A First Course in Database Systems&lt;/Title&gt;
+		&lt;Authors&gt;
+			&lt;Author&gt;
+				&lt;First_Name&gt;Jeffrey&lt;/First_Name&gt;
+				&lt;Last_Name&gt;Ullman&lt;/Last_Name&gt;
+			&lt;/Author&gt;
+			&lt;Author&gt;
+				&lt;First_Name&gt;Jennifer&lt;/First_Name&gt;
+				&lt;Last_Name&gt;Widom&lt;/Last_Name&gt;
+			&lt;/Author&gt;
+		&lt;/Authors&gt;
+	&lt;/Book&gt;
+	&lt;Book ISBN="ISBN-0-13-815504-6" Price="100"&gt;
+		&lt;Title&gt;Database Systems: The Complete Book&lt;/Title&gt;
+		&lt;Authors&gt;
+			&lt;Author&gt;
+				&lt;First_Name&gt;Hector&lt;/First_Name&gt;
+				&lt;Last_Name&gt;Garcia-Molina&lt;/Last_Name&gt;
+			&lt;/Author&gt;
+			&lt;Author&gt;
+				&lt;First_Name&gt;Jeffrey&lt;/First_Name&gt;
+				&lt;Last_Name&gt;Ullman&lt;/Last_Name&gt;
+			&lt;/Author&gt;
+			&lt;Author&gt;
+				&lt;First_Name&gt;Jennifer&lt;/First_Name&gt;
+				&lt;Last_Name&gt;Widom&lt;/Last_Name&gt;
+			&lt;/Author&gt;
+		&lt;/Authors&gt;
+		&lt;Remark&gt;Buy this book bundled with "A First Course" - a great deal!
+		&lt;/Remark&gt;
+	&lt;/Book&gt;
+	&lt;Book ISBN="ISBN-0-11-222222-3" Price="50"&gt;
+		&lt;Title&gt;Hector and Jeff's Database Hints&lt;/Title&gt;
+		&lt;Authors&gt;
+			&lt;Author&gt;
+				&lt;First_Name&gt;Jeffrey&lt;/First_Name&gt;
+				&lt;Last_Name&gt;Ullman&lt;/Last_Name&gt;
+			&lt;/Author&gt;
+			&lt;Author&gt;
+				&lt;First_Name&gt;Hector&lt;/First_Name&gt;
+				&lt;Last_Name&gt;Garcia-Molina&lt;/Last_Name&gt;
+			&lt;/Author&gt;
+		&lt;/Authors&gt;
+		&lt;Remark&gt;An indispensable companion to your textbook&lt;/Remark&gt;
+	&lt;/Book&gt;
+	&lt;Book ISBN="ISBN-9-88-777777-6" Price="25"&gt;
+		&lt;Title&gt;Jennifer's Economical Database Hints&lt;/Title&gt;
+		&lt;Authors&gt;
+			&lt;Author&gt;
+				&lt;First_Name&gt;Jennifer&lt;/First_Name&gt;
+				&lt;Last_Name&gt;Widom&lt;/Last_Name&gt;
+			&lt;/Author&gt;
+		&lt;/Authors&gt;
+	&lt;/Book&gt;
+&lt;/Bookstore&gt;
+</code></pre>
+
+<p>The yaidom queries, here written in a rather verbose way, are as follows:</p>
+
+<pre><code>
+// Assume a root element called bookstore.
+
+val someBooks = bookstore.filterChildElems(book => book.localName == "Book")
+
+// Return all books that cost no more than 50 dollars (i.e., the last 2 books)
+
+val cheapBooks =
+  someBooks.filter(book => book.attribute(EName("price")).toInt <= 50)
+
+// Return all books having Jeffrey Ullman as one of its authors (i.e., the first 3 books)
+
+def hasAuthor(book: Elem, authorLastName: String): Boolean = {
+  require(book.localName == "Book")
+
+  book.filterElems(e =>
+    e.localName == "Author" &&
+      e.getChildElem(che => che.localName == "Last_Name").text == authorLastName)
+}
+
+val booksByUllman =
+  someBooks.filter(book => hasAuthor(book, "Ullman"))
+
+// Return all book author elements (with duplicates, this time)
+
+val allAuthors =
+  someBooks.flatMap(book => book.filterElems(e => e.localName == "Author"))
+
+// Return all titles of books having Jeffrey Ullman as one of its authors
+
+val bookTitlesByUllman =
+  someBooks.filter(book => hasAuthor(book, "Ullman")).
+    map(book => book.getChildElem(e => e.localName == "Title").text)
+</code></pre>
+
+<p>Above, for clarity the queries were written more verbosely than needed. The <code>EName</code> type stands for "expanded name",
+and corresponds to Java's <code>javax.lang.namespace.QName</code>, except that it does not retain the prefix, if any.</p>
+
+<p>Why use yaidom and not Scala's own XML library? As will become apparent in this article, yaidom has very precise support for
+XML namespaces, more so than Scala XML. Moreover, yaidom has a precise uniform XML query API that is offered by multiple "XML backend"
+implementations. Not only does yaidom offer own native DOM-like tree implementations with different strengths and weaknesses, but
+it is also possible to wrap existing XML library tree implementations (DOM, JDOM, XOM, Saxon etc.), offering the same yaidom query API.
+For example, yaidom wrappers around Saxon-EE NodeInfo trees offers the best of both worlds: maturity, completeness and type-awareness
+of Saxon-EE, and a Scala Collections API querying experience, using yaidom as the natural bridge. Unlike yaidom, the Scala XML library
+does not offer multiple tree implementations backing the same query API.</p>
+
+<p>Why not just use standards such as XSLT or XQuery? In many cases, your XQuery queries or XSLT transformations require a lot of
+custom functions. That comes with the costs of bridging between the 2 "worlds": the XPath data model and the programming language.
+There are also substantial semantical differences, for example because XPath equality is quite different from equality in
+programming languages such as Scala or Java. To put it differently, it may be desirable to use Scala and its Collections API
+as <em>universal query API></em>, and use yaidom for querying collections of XML elements, as the simplest solution that works.</p>
 
 <h3>
 <a name="brief-xbrl-introduction" class="anchor" href="#brief-xbrl-introduction"><span class="octicon octicon-link"></span></a>Brief introduction to XBRL</h3>
