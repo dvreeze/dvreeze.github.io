@@ -386,9 +386,116 @@ println(facts.flatMap(e => e.textChildren.filter(_.isCData)).size >= 1) // print
 <h3>
 <a name="namespace-examples" class="anchor" href="#namespace-examples"><span class="octicon octicon-link"></span></a>Namespace examples</h3>
 
-<p>Yaidom and namespaces ...</p>
-<p>Checking used namespaces ...</p>
-<p>Finding unused namespaces ...</p>
+<p>Yaidom has very precise namespace support. Like the article <a href="http://www.lenzconsulting.com/namespaces/" target="_blank">Understanding Namespaces</a>,
+yaidom distinguishes qualified names from expanded names, and namespace declarations from in-scope namespaces. Their yaidom counterparts are immutable
+classes <code>QName</code>, <code>EName</code>, <code>Declarations</code> and <code>Scope</code>. Having these 4 distinct concepts, their
+relationships can be expressed very precisely, even in yaidom code, and even outside of the context of any particular XML tree!</p>
+
+<p>In the example XBRL instance above, all namespace declarations are in the root element, and therefore all descendant-or-self elements have the
+same in-scope namespaces. In code:</p>
+
+<pre><code>
+val rootScope = doc.documentElement.scope
+
+val sameScopeEverywhere =
+  doc.documentElement.findAllElemsOrSelf.forall(e => e.scope == rootScope)
+
+println(sameScopeEverywhere) // prints true
+</code></pre>
+
+<p>Let's consider the first FRIS rule taken from the <a href="http://www.xbrl.org/technical/guidance/FRIS-PWD-2004-11-14.htm" target="_blank">international FRIS standard</a>, expressed in yaidom.
+Rule 2.1.5 states that some commonly used namespaces should use their "preferred" namespace prefixes in XBRL instances. The rule can be expressed in yaidom as follows:</p>
+
+<pre><code>
+val standardScope = Scope.from(
+  "xbrli" -> "http://www.xbrl.org/2003/instance",
+  "xlink" -> "http://www.w3.org/1999/xlink",
+  "link" -> "http://www.xbrl.org/2003/linkbase",
+  "xsi" -> "http://www.w3.org/2001/XMLSchema-instance",
+  "iso4217" -> "http://www.xbrl.org/2003/iso4217")
+
+val standardPrefixes = standardScope.keySet
+val standardNamespaceUris = standardScope.inverse.keySet
+
+// Naive implementation: expects only namespace declarations in root element
+
+def usesExpectedNamespacePrefixes(xbrlInstance: simple.Elem): Boolean = {
+  val rootScope = xbrlInstance.scope
+  require(xbrlInstance.findAllElemsOrSelf.forall(e => e.scope == rootScope))
+
+  val subscope = xbrlInstance.scope.withoutDefaultNamespace filter {
+    case (pref, ns) =>
+      standardPrefixes.contains(pref) || standardNamespaceUris.contains(ns)
+  }
+  subscope.subScopeOf(standardScope)
+}
+</code></pre>
+
+<p>Above, there is no useful error reporting, but that is easy to add, because the implementation is entirely in the rich Scala programming language.
+In prose, method <code>usesExpectedNamespacePrefixes</code> checks that if some of the 5 namespace prefixes above are used, that they all map to the expected namespace URIs.
+The method also checks the other side: if some of the namespace URIs are in-scope, that the corresponding namespace prefixes are the expected ones, with the exception that
+they may be the default namespace.</p>
+
+<p>The example above illustrates yaidom's precise support for namespaces in the uniform query API, and therefore offered by diverse element tree implementations.
+Yet the namespace support goes further than that. As article <a href="http://www.lenzconsulting.com/namespaces/" target="_blank">Understanding Namespaces</a> makes clear,
+namespaces are not only used in element and attribute names, but can also be used in text content and attribute values.</p>
+
+<p>FRIS rule 2.1.7 must taken namespaces in text content and attribute values into account, because it states that XBRL instances should not have any unused namespace declarations.
+Yet how do we detect the use of namespaces in text content or attribute values? We know this from the XML schema(s) describing XBRL instances. For example, the <code>xbrli:measure</code>
+element has type <code>xs:QName</code>. So the text content of an <code>xbrli:measure</code> should be interpreted as an "expanded name". The namespace of that expanded name is therefore
+one of the namespaces used in the XBRL instance.</p>
+
+<p>Yaidom makes it possible to code a <code>DocumentENameExtractor</code> strategy, holding information about ENames and therefore namespaces occurring in text content or attribute values.
+So, looking at the XML schema(s), we can easily code such a strategy ourselves (yaidom itself has no XML Schema awareness). Then, using method <code>NamespaceUtils.findAllNamespaces</code>,
+all namespaces used in the XBRL instance can be found.</p>
+
+<p>Method <code>NamespaceUtils.findAllNamespaces</code> does not work on the default "simple" elements, however, because "simple" elements do not know their ancestry. To that extent, yaidom
+offers so-called "indexed" elements, that do know their ancestry. Like "simple" elements, "indexed" elements are immutable, because they are just wrappers around a root as "simple" element along
+with an "index" into that element tree. The "indexed" and "simple" elements also share most of the query API, in particular the <code>ScopedElemApi</code> query API trait.</p>
+
+<p>Let's now implement FRIS rule 2.1.7, but only for the sample XBRL instance:</p>
+
+<pre><code>
+val xbrliDocumentENameExtractor: DocumentENameExtractor = {
+  // Not complete, but good enough for this example!
+
+  new DocumentENameExtractor {
+
+    def findElemTextENameExtractor(elem: indexed.Elem): Option[TextENameExtractor] = elem.resolvedName match {
+      case EName(Some(xbrliNs), "measure") if elem.path.containsName(EName(xbrliNs, "unit")) =>
+        Some(SimpleTextENameExtractor)
+      case EName(Some(xbrldiNs), "explicitMember") =>
+        Some(SimpleTextENameExtractor)
+      case _ => None
+    }
+
+    def findAttributeValueENameExtractor(elem: indexed.Elem, attributeEName: EName): Option[TextENameExtractor] = elem.resolvedName match {
+      case EName(Some(xbrldiNs), "explicitMember") if attributeEName == EName("dimension") =>
+        Some(SimpleTextENameExtractor)
+      case _ => None
+    }
+  }
+}
+
+val indexedDoc = indexed.Document(doc)
+
+val namespaceUrisDeclared = indexedDoc.documentElement.scope.inverse.keySet
+
+import NamespaceUtils._
+
+// Check that the used namespaces are almost exactly those declared in the root element (approximately rule 2.1.7)
+
+val companyNs = "http://www.example.com/company"
+
+val usedNamespaes =
+  findAllNamespaces(indexedDoc.documentElement, xbrliDocumentENameExtractor).diff(Set(XmlNs))
+
+// The "company namespace" is an unused namespace in our sample XBRL instance
+require(usedNamespaces == namespaceUrisDeclared.diff(Set(companyNs)))
+</code></pre>
+
+<p>Although yaidom itself has no XML Schema awareness, yaidom can still be useful in a context where schema-awareness is needed. For example, Saxon-EE NodeInfo objects can
+be wrapped as yaidom trees, thus getting the best of Scala Collections processing and Saxon-EE XML and XML Schema support.</p>
 
 <h3>
 <a name="extending-yaidom" class="anchor" href="#extending-yaidom"><span class="octicon octicon-link"></span></a>Extending yaidom for custom XML dialects</h3>
