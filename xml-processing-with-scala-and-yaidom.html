@@ -195,16 +195,16 @@ val someBooks = bookstore.filterChildElems(book => book.localName == "Book")
 // Return all books that cost no more than 50 dollars (i.e., the last 2 books)
 
 val cheapBooks =
-  someBooks.filter(book => book.attribute(EName("price")).toInt <= 50)
+  someBooks.filter(book => book.attribute(EName("Price")).toInt <= 50)
 
 // Return all books having Jeffrey Ullman as one of its authors (i.e., the first 3 books)
 
-def hasAuthor(book: Elem, authorLastName: String): Boolean = {
+def hasAuthor(book: simple.Elem, authorLastName: String): Boolean = {
   require(book.localName == "Book")
 
-  book.filterElems(e =>
+  book.findElem(e =>
     e.localName == "Author" &&
-      e.getChildElem(che => che.localName == "Last_Name").text == authorLastName)
+      e.getChildElem(che => che.localName == "Last_Name").text == authorLastName).isDefined
 }
 
 val booksByUllman =
@@ -323,7 +323,8 @@ val doc = docParser.parse(sampleXbrlInstanceFile)
 
 // Check that all gaap:AverageNumberEmployees facts have unit U-Pure.
 
-val XbrliNs = "http://www.xbrl.org/2003/instance"
+val xmlNs = "http://www.w3.org/XML/1998/namespace"
+val xbrliNs = "http://www.xbrl.org/2003/instance"
 val gaapNs = "http://xasb.org/gaap"
 
 val avgNumEmployeesFacts =
@@ -339,13 +340,13 @@ println(onlyUPure) // prints true
 
 val uPureUnit =
   doc.documentElement.getChildElem(e =>
-    e.resolvedName == EName(XbrliNs, "unit") && (e \@ EName("id")) == Some("U-Pure"))
+    e.resolvedName == EName(xbrliNs, "unit") && (e \@ EName("id")) == Some("U-Pure"))
 
-println(uPureUnit.getChildElem(withEName(XbrliNs, "measure")).text) // prints "pure"
+println(uPureUnit.getChildElem(withEName(xbrliNs, "measure")).text) // prints "pure"
 
 // Now we get the measure element text, as QName, resolving it to an EName (expanded name)
-println(uPureUnit.getChildElem(withEName(XbrliNs, "measure")).textAsResolvedQName)
-// prints EName(XbrliNs, "pure")
+println(uPureUnit.getChildElem(withEName(xbrliNs, "measure")).textAsResolvedQName)
+// prints EName(xbrliNs, "pure")
 
 // Knowing the units are the same, the gaap:AverageNumberEmployees facts are uniquely identified by contexts.
 
@@ -374,7 +375,7 @@ knows about comments and processing instructions. For example:</p>
 <pre><code>println(doc.comments.map(_.text.trim).mkString)
 // prints "Created by Charles Hoffman, CPA, 2008-03-27"
 
-val contexts = doc.documentElement.filterChildElems(withEName(XbrliNs, "context"))
+val contexts = doc.documentElement.filterChildElems(withEName(xbrliNs, "context"))
 println(contexts forall (e => !e.commentChildren.isEmpty)) // prints true: all contexts have comments
 
 // Being lazy, and forgetting about the namespace here
@@ -394,8 +395,7 @@ relationships can be expressed very precisely, even in yaidom code, and even out
 <p>In the example XBRL instance above, all namespace declarations are in the root element, and therefore all descendant-or-self elements have the
 same in-scope namespaces. In code:</p>
 
-<pre><code>
-val rootScope = doc.documentElement.scope
+<pre><code>val rootScope = doc.documentElement.scope
 
 val sameScopeEverywhere =
   doc.documentElement.findAllElemsOrSelf.forall(e => e.scope == rootScope)
@@ -406,8 +406,7 @@ println(sameScopeEverywhere) // prints true
 <p>Let's consider the first FRIS rule taken from the <a href="http://www.xbrl.org/technical/guidance/FRIS-PWD-2004-11-14.htm" target="_blank">international FRIS standard</a>, expressed in yaidom.
 Rule 2.1.5 states that some commonly used namespaces should use their "preferred" namespace prefixes in XBRL instances. The rule can be expressed in yaidom as follows:</p>
 
-<pre><code>
-val standardScope = Scope.from(
+<pre><code>val standardScope = Scope.from(
   "xbrli" -> "http://www.xbrl.org/2003/instance",
   "xlink" -> "http://www.w3.org/1999/xlink",
   "link" -> "http://www.xbrl.org/2003/linkbase",
@@ -433,7 +432,7 @@ def usesExpectedNamespacePrefixes(xbrlInstance: simple.Elem): Boolean = {
 
 <p>Above, there is no useful error reporting, but that is easy to add, because the implementation is entirely in the rich Scala programming language.
 In prose, method <code>usesExpectedNamespacePrefixes</code> checks that if some of the 5 namespace prefixes above are used, that they all map to the expected namespace URIs.
-The method also checks the other side: if some of the namespace URIs are in-scope, that the corresponding namespace prefixes are the expected ones, with the exception that
+The method also checks the other side: if some of the namespace URIs are in-scope, then the corresponding namespace prefixes are the expected ones, with the exception that
 they may be the default namespace.</p>
 
 <p>The example above illustrates yaidom's precise support for namespaces in the uniform query API, and therefore offered by diverse element tree implementations.
@@ -455,8 +454,7 @@ with an "index" into that element tree. The "indexed" and "simple" elements also
 
 <p>Let's now implement FRIS rule 2.1.7, but only for the sample XBRL instance:</p>
 
-<pre><code>
-val xbrliDocumentENameExtractor: DocumentENameExtractor = {
+<pre><code>val xbrliDocumentENameExtractor: DocumentENameExtractor = {
   // Not complete, but good enough for this example!
 
   new DocumentENameExtractor {
@@ -487,8 +485,8 @@ import NamespaceUtils._
 
 val companyNs = "http://www.example.com/company"
 
-val usedNamespaes =
-  findAllNamespaces(indexedDoc.documentElement, xbrliDocumentENameExtractor).diff(Set(XmlNs))
+val usedNamespaces =
+  findAllNamespaces(indexedDoc.documentElement, xbrliDocumentENameExtractor).diff(Set(xmlNs))
 
 // The "company namespace" is an unused namespace in our sample XBRL instance
 require(usedNamespaces == namespaceUrisDeclared.diff(Set(companyNs)))
@@ -496,6 +494,25 @@ require(usedNamespaces == namespaceUrisDeclared.diff(Set(companyNs)))
 
 <p>Although yaidom itself has no XML Schema awareness, yaidom can still be useful in a context where schema-awareness is needed. For example, Saxon-EE NodeInfo objects can
 be wrapped as yaidom trees, thus getting the best of Scala Collections processing and Saxon-EE XML and XML Schema support.</p>
+
+<p>Let's now remove the unused namespaces (the "company" namespace in this example), and compare the result with the original XBRL instance. Yet how do we compare
+two XML trees (as "simple" elements) for equality? In order to do so, note that namespace prefixes are irrelevant to equality comparisons, but namespace URIs do count.
+(Be careful with prefixes in text content and attribute values!) Yaidom offers an XML element implementation in which namespace prefixes do not occur. These elements are
+called "resolved" elements. They share much of the same query API with "simple" and "indexed" elements, but not all of it. After all, "resolved" elements do not know
+about namespace prefixes, so they do not know about qualified names. Therefore they do not mix in the <code>ScopedElemApi</code> trait, but they do mix in traits like
+<code>ElemApi</code> and <code>HasTextApi</code>, that is, all traits extended by <code>ScopedElemApi</code> that do not know about qualified names. Hence, "resolved"
+elements still have much of the yaidom query API in common with "simple" and "indexed" elements.</p>
+
+<p>The following code strips unused namespaces, and shows that the result is the same, when comparing the trees as "resolved" elements.</p>
+
+<pre><code>val editedRootElem =
+  stripUnusedNamespaces(indexedDoc.documentElement, xbrliDocumentENameExtractor)
+
+val areEqual =
+  resolved.Elem(indexedDoc.document.documentElement) == resolved.Elem(editedRootElem)
+
+println(areEqual) // prints true
+</code></pre>
 
 <h3>
 <a name="extending-yaidom" class="anchor" href="#extending-yaidom"><span class="octicon octicon-link"></span></a>Extending yaidom for custom XML dialects</h3>
@@ -521,3 +538,4 @@ be wrapped as yaidom trees, thus getting the best of Scala Collections processin
     
   </body>
 </html>
+
