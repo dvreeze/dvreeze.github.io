@@ -63,7 +63,7 @@ object XbrlInstanceSupport {
    *
    * @author Chris de Vreeze
    */
-  sealed class XbrliElem private[blogcode] (
+  sealed class XbrliElem private[XbrlInstanceSupport] (
     val indexedElem: indexed.Elem,
     childElems: immutable.IndexedSeq[XbrliElem]) extends ScopedElemLike[XbrliElem] with IsNavigable[XbrliElem] with SubtypeAwareElemLike[XbrliElem] {
 
@@ -109,7 +109,7 @@ object XbrlInstanceSupport {
    *
    * @author Chris de Vreeze
    */
-  final class XbrlInstance private[blogcode] (
+  final class XbrlInstance private[XbrlInstanceSupport] (
     override val indexedElem: indexed.Elem,
     childElems: immutable.IndexedSeq[XbrliElem]) extends XbrliElem(indexedElem, childElems) {
 
@@ -207,7 +207,7 @@ object XbrlInstanceSupport {
    *
    * @author Chris de Vreeze
    */
-  final class SchemaRef private[blogcode] (
+  final class SchemaRef private[XbrlInstanceSupport] (
     override val indexedElem: indexed.Elem,
     childElems: immutable.IndexedSeq[XbrliElem]) extends XbrliElem(indexedElem, childElems) {
 
@@ -219,7 +219,7 @@ object XbrlInstanceSupport {
    *
    * @author Chris de Vreeze
    */
-  final class LinkbaseRef private[blogcode] (
+  final class LinkbaseRef private[XbrlInstanceSupport] (
     override val indexedElem: indexed.Elem,
     childElems: immutable.IndexedSeq[XbrliElem]) extends XbrliElem(indexedElem, childElems) {
 
@@ -231,7 +231,7 @@ object XbrlInstanceSupport {
    *
    * @author Chris de Vreeze
    */
-  final class RoleRef private[blogcode] (
+  final class RoleRef private[XbrlInstanceSupport] (
     override val indexedElem: indexed.Elem,
     childElems: immutable.IndexedSeq[XbrliElem]) extends XbrliElem(indexedElem, childElems) {
 
@@ -243,7 +243,7 @@ object XbrlInstanceSupport {
    *
    * @author Chris de Vreeze
    */
-  final class ArcroleRef private[blogcode] (
+  final class ArcroleRef private[XbrlInstanceSupport] (
     override val indexedElem: indexed.Elem,
     childElems: immutable.IndexedSeq[XbrliElem]) extends XbrliElem(indexedElem, childElems) {
 
@@ -255,7 +255,7 @@ object XbrlInstanceSupport {
    *
    * @author Chris de Vreeze
    */
-  final class XbrliContext private[blogcode] (
+  final class XbrliContext private[XbrlInstanceSupport] (
     override val indexedElem: indexed.Elem,
     childElems: immutable.IndexedSeq[XbrliElem]) extends XbrliElem(indexedElem, childElems) {
 
@@ -281,7 +281,7 @@ object XbrlInstanceSupport {
    *
    * @author Chris de Vreeze
    */
-  final class XbrliUnit private[blogcode] (
+  final class XbrliUnit private[XbrlInstanceSupport] (
     override val indexedElem: indexed.Elem,
     childElems: immutable.IndexedSeq[XbrliElem]) extends XbrliElem(indexedElem, childElems) {
 
@@ -303,7 +303,7 @@ object XbrlInstanceSupport {
    *
    * @author Chris de Vreeze
    */
-  abstract class Fact private[blogcode] (
+  abstract class Fact private[XbrlInstanceSupport] (
     override val indexedElem: indexed.Elem,
     childElems: immutable.IndexedSeq[XbrliElem]) extends XbrliElem(indexedElem, childElems) {
 
@@ -317,7 +317,7 @@ object XbrlInstanceSupport {
    *
    * @author Chris de Vreeze
    */
-  abstract class ItemFact private[blogcode] (
+  abstract class ItemFact private[XbrlInstanceSupport] (
     override val indexedElem: indexed.Elem,
     childElems: immutable.IndexedSeq[XbrliElem]) extends Fact(indexedElem, childElems) {
 
@@ -331,7 +331,7 @@ object XbrlInstanceSupport {
    *
    * @author Chris de Vreeze
    */
-  final class NonNumericItemFact private[blogcode] (
+  final class NonNumericItemFact private[XbrlInstanceSupport] (
     override val indexedElem: indexed.Elem,
     childElems: immutable.IndexedSeq[XbrliElem]) extends ItemFact(indexedElem, childElems) {
 
@@ -343,7 +343,7 @@ object XbrlInstanceSupport {
    *
    * @author Chris de Vreeze
    */
-  abstract class NumericItemFact private[blogcode] (
+  abstract class NumericItemFact private[XbrlInstanceSupport] (
     override val indexedElem: indexed.Elem,
     childElems: immutable.IndexedSeq[XbrliElem]) extends ItemFact(indexedElem, childElems) {
 
@@ -357,7 +357,7 @@ object XbrlInstanceSupport {
    *
    * @author Chris de Vreeze
    */
-  final class NilNumericItemFact private[blogcode] (
+  final class NilNumericItemFact private[XbrlInstanceSupport] (
     override val indexedElem: indexed.Elem,
     childElems: immutable.IndexedSeq[XbrliElem]) extends NumericItemFact(indexedElem, childElems) {
 
@@ -369,7 +369,7 @@ object XbrlInstanceSupport {
    *
    * @author Chris de Vreeze
    */
-  final class NonNilNonFractionNumericItemFact private[blogcode] (
+  final class NonNilNonFractionNumericItemFact private[XbrlInstanceSupport] (
     override val indexedElem: indexed.Elem,
     childElems: immutable.IndexedSeq[XbrliElem]) extends NumericItemFact(indexedElem, childElems) {
 
@@ -385,7 +385,7 @@ object XbrlInstanceSupport {
    *
    * @author Chris de Vreeze
    */
-  final class NonNilFractionItemFact private[blogcode] (
+  final class NonNilFractionItemFact private[XbrlInstanceSupport] (
     override val indexedElem: indexed.Elem,
     childElems: immutable.IndexedSeq[XbrliElem]) extends NumericItemFact(indexedElem, childElems) {
 
@@ -409,7 +409,7 @@ object XbrlInstanceSupport {
    *
    * @author Chris de Vreeze
    */
-  final class TupleFact private[blogcode] (
+  final class TupleFact private[XbrlInstanceSupport] (
     override val indexedElem: indexed.Elem,
     childElems: immutable.IndexedSeq[XbrliElem]) extends Fact(indexedElem, childElems) {
 
@@ -435,7 +435,7 @@ object XbrlInstanceSupport {
    *
    * @author Chris de Vreeze
    */
-  final class FootnoteLink private[blogcode] (
+  final class FootnoteLink private[XbrlInstanceSupport] (
     override val indexedElem: indexed.Elem,
     childElems: immutable.IndexedSeq[XbrliElem]) extends XbrliElem(indexedElem, childElems) {
 
@@ -447,7 +447,7 @@ object XbrlInstanceSupport {
    *
    * @author Chris de Vreeze
    */
-  final class Entity private[blogcode] (
+  final class Entity private[XbrlInstanceSupport] (
     override val indexedElem: indexed.Elem,
     childElems: immutable.IndexedSeq[XbrliElem]) extends XbrliElem(indexedElem, childElems) {
 
@@ -469,7 +469,7 @@ object XbrlInstanceSupport {
    *
    * @author Chris de Vreeze
    */
-  final class Period private[blogcode] (
+  final class Period private[XbrlInstanceSupport] (
     override val indexedElem: indexed.Elem,
     childElems: immutable.IndexedSeq[XbrliElem]) extends XbrliElem(indexedElem, childElems) {
 
@@ -493,7 +493,7 @@ object XbrlInstanceSupport {
    *
    * @author Chris de Vreeze
    */
-  final class Scenario private[blogcode] (
+  final class Scenario private[XbrlInstanceSupport] (
     override val indexedElem: indexed.Elem,
     childElems: immutable.IndexedSeq[XbrliElem]) extends XbrliElem(indexedElem, childElems) {
 
@@ -505,7 +505,7 @@ object XbrlInstanceSupport {
    *
    * @author Chris de Vreeze
    */
-  final class Segment private[blogcode] (
+  final class Segment private[XbrlInstanceSupport] (
     override val indexedElem: indexed.Elem,
     childElems: immutable.IndexedSeq[XbrliElem]) extends XbrliElem(indexedElem, childElems) {
 
@@ -517,7 +517,7 @@ object XbrlInstanceSupport {
    *
    * @author Chris de Vreeze
    */
-  final class Identifier private[blogcode] (
+  final class Identifier private[XbrlInstanceSupport] (
     override val indexedElem: indexed.Elem,
     childElems: immutable.IndexedSeq[XbrliElem]) extends XbrliElem(indexedElem, childElems) {
 
@@ -529,7 +529,7 @@ object XbrlInstanceSupport {
    *
    * @author Chris de Vreeze
    */
-  final class Divide private[blogcode] (
+  final class Divide private[XbrlInstanceSupport] (
     override val indexedElem: indexed.Elem,
     childElems: immutable.IndexedSeq[XbrliElem]) extends XbrliElem(indexedElem, childElems) {
 
@@ -559,7 +559,7 @@ object XbrlInstanceSupport {
       apply(elem, childElems)
     }
 
-    private[blogcode] def apply(elem: indexed.Elem, childElems: immutable.IndexedSeq[XbrliElem]): XbrliElem = elem.resolvedName match {
+    private[XbrlInstanceSupport] def apply(elem: indexed.Elem, childElems: immutable.IndexedSeq[XbrliElem]): XbrliElem = elem.resolvedName match {
       case XbrliXbrlEName => new XbrlInstance(elem, childElems)
       case LinkSchemaRefEName => new SchemaRef(elem, childElems)
       case LinkLinkbaseRefEName => new LinkbaseRef(elem, childElems)
@@ -591,7 +591,7 @@ object XbrlInstanceSupport {
 
     def accepts(elem: indexed.Elem): Boolean = ItemFact.accepts(elem) || TupleFact.accepts(elem)
 
-    private[blogcode] def apply(elem: indexed.Elem, childElems: immutable.IndexedSeq[XbrliElem]): Fact =
+    private[XbrlInstanceSupport] def apply(elem: indexed.Elem, childElems: immutable.IndexedSeq[XbrliElem]): Fact =
       if (ItemFact.accepts(elem)) ItemFact(elem, childElems) else TupleFact(elem, childElems)
 
     def isFactPath(path: Path): Boolean = {
@@ -607,7 +607,7 @@ object XbrlInstanceSupport {
         elem.attributeOption(ContextRefEName).isDefined
     }
 
-    private[blogcode] def apply(elem: indexed.Elem, childElems: immutable.IndexedSeq[XbrliElem]): ItemFact = {
+    private[XbrlInstanceSupport] def apply(elem: indexed.Elem, childElems: immutable.IndexedSeq[XbrliElem]): ItemFact = {
       require(Fact.isFactPath(elem.path))
       require(elem.attributeOption(ContextRefEName).isDefined)
 
@@ -632,7 +632,7 @@ object XbrlInstanceSupport {
         elem.attributeOption(ContextRefEName).isEmpty
     }
 
-    private[blogcode] def apply(elem: indexed.Elem, childElems: immutable.IndexedSeq[XbrliElem]): TupleFact = {
+    private[XbrlInstanceSupport] def apply(elem: indexed.Elem, childElems: immutable.IndexedSeq[XbrliElem]): TupleFact = {
       require(Fact.isFactPath(elem.path))
       require(elem.attributeOption(ContextRefEName).isEmpty)
 
