@@ -63,8 +63,7 @@ Hence, below follows some Scala code that manipulates collections.</p>
 
 <p>Consider a book store and some queries about books. The Scala code is as follows:</p>
 
-<pre><code>
-case class Author(firstName: String, lastName: String)
+<pre><code>case class Author(firstName: String, lastName: String)
 case class Book(isbn: String, title: String, authors: List[Author], price: Int)
 
 val someBooks = List(
@@ -126,8 +125,7 @@ In that respect, the Scala code looks more like XQuery than Java (before version
 
 <p>Using the bookstore example above, some simple yaidom XML queries are shown below. The XML is as follows:</p>
 
-<pre><code>
-// The book store XML
+<pre><code>// The book store XML
 
 &lt;Bookstore&gt;
 	&lt;Book ISBN="ISBN-0-13-713526-2" Price="85" Edition="3rd"&gt;
@@ -190,8 +188,7 @@ In that respect, the Scala code looks more like XQuery than Java (before version
 
 <p>The yaidom queries, here written in a rather verbose way, are as follows:</p>
 
-<pre><code>
-// Assume a root element called bookstore.
+<pre><code>// Assume a root element called bookstore.
 
 val someBooks = bookstore.filterChildElems(book => book.localName == "Book")
 
@@ -252,8 +249,7 @@ XML documents, following a specified structure.</p>
 More precisely, <em>concept</em> <code>gaap:AverageNumberEmployees</code> (described by the so-called US-GAAP XBRL <em>taxonomy</em>) has the <em>value</em> <code>220</code> in the given
 <em>context</em> (organization "CIK", year 2003). Then we can report the 3 <em>facts</em> above in XBRL format as follows:</p>
 
-<pre><code>
-&lt;xbrl xmlns="http://www.xbrl.org/2003/instance" xmlns:gaap="http://xasb.org/gaap"&gt;
+<pre><code>&lt;xbrl xmlns="http://www.xbrl.org/2003/instance" xmlns:gaap="http://xasb.org/gaap"&gt;
 
    &lt;context id="D-2003"&gt;
       &lt;entity&gt;
@@ -306,8 +302,86 @@ but XBRL validations are good XML processing examples where Scala and yaidom rea
 <h3>
 <a name="simple-yaidom-queries" class="anchor" href="#simple-yaidom-queries"><span class="octicon octicon-link"></span></a>Simple yaidom queries</h3>
 
-<p>Simple yaidom queries using uniform query API ...</p>
-<p>Simple yaidom queries using specific DOM-like tree implementation ...</p>
+<p>The XBRL snippet above is part of <a href="http://www.xbrlsite.com/examples/comprehensiveexample/2008-04-18/sample-Instance-Proof.xml" target="_blank">this sample instance.</a></p>
+
+<p>Before showing some queries on this XBRL instances, it should be noted that knowing only 3 yaidom query API methods to some extent means knowing them all. These 3 methods are
+<code>filterChildElems</code>, <code>filterElems</code> and <code>filterElemsOrSelf</code>. They all filter elements, based on the passed element predicate function. The difference
+is that they filter <em>child</em> elements, <em>descendant</em> elements, and <em>descendant-or-self</em> elements, respectively. The word "descendant" is left out from the
+method names.</p>
+
+<p>It should also be noted that methods <code>filterChildElems</code> and <code>filterElemsOrSelf</code> have shorthands <code>\</code> and <code>\\</code>, respectively.
+Method <code>attributeOption</code> has shorthand <code>\@</code>. Moreover, some element predicate functions have names, such as <code>withLocalName</code> and
+<code>withEName</code>.</p>
+
+<p>Some yaidom queries on the sample XBRL instance are as follows:</p>
+
+<pre><code>// Let's first parse the XBRL instance document
+
+val docParser = DocumentParserUsingSax.newInstance
+
+val doc = docParser.parse(sampleXbrlInstanceFile)
+
+// Check that all gaap:AverageNumberEmployees facts have unit U-Pure.
+
+val XbrliNs = "http://www.xbrl.org/2003/instance"
+val gaapNs = "http://xasb.org/gaap"
+
+val avgNumEmployeesFacts =
+  doc.documentElement.filterChildElems(withEName(gaapNs, "AverageNumberEmployees"))
+
+println(avgNumEmployeesFacts.size) // prints 7
+
+val onlyUPure =
+  avgNumEmployeesFacts.forall(fact => fact.attributeOption(EName("unitRef")) == Some("U-Pure"))
+println(onlyUPure) // prints true
+
+// Check the unit itself, minding the default namespace
+
+val uPureUnit =
+  doc.documentElement.getChildElem(e =>
+    e.resolvedName == EName(XbrliNs, "unit") && (e \@ EName("id")) == Some("U-Pure"))
+
+println(uPureUnit.getChildElem(withEName(XbrliNs, "measure")).text) // prints "pure"
+
+// Now we get the measure element text, as QName, resolving it to an EName (expanded name)
+println(uPureUnit.getChildElem(withEName(XbrliNs, "measure")).textAsResolvedQName)
+// prints EName(XbrliNs, "pure")
+
+// Knowing the units are the same, the gaap:AverageNumberEmployees facts are uniquely identified by contexts.
+
+val avgNumEmployeesFactsByContext: Map[String, simple.Elem] =
+  avgNumEmployeesFacts.groupBy(_.attribute(EName("contextRef"))).mapValues(_.head)
+
+println(avgNumEmployeesFactsByContext.keySet)
+// prints Set("D-2003", "D-2004", "D-2005", "D-2007-BS1", "D-2007-BS2", "D-2006", "D-2007")
+
+println(avgNumEmployeesFactsByContext("D-2003").text) // prints 220
+</code></pre>
+
+<p>The uniform query API of yaidom consists of query API traits that can be combined as LEGO blocks.
+Yaidom element tree implementations all mix in some or most of these query API traits. The example queries
+above are not bound to any particular element implementation, but use a common query API trait, namely
+<code>ScopedElemApi</code>, which is itself a combination of query API traits. This trait offers
+methods like <code>filterElemsOrSelf</code>, <code>filterChildElems</code> (from trait <code>ElemApi</code>),
+as well as methods to get text content, qualified names, expanded names, attributes etc. In other words,
+it offers a query API abstraction that is valid for almost all element implementations.</p>
+
+<p>Sometimes we want to use methods that are offered by specific element implementations.
+The default native yaidom element implementation is <code>simple.Elem</code>. It knows about
+elements and text content (as per the mixed-in <code>ScopedElemApi</code> trait), but it also
+knows about comments and processing instructions. For example:</p>
+
+<pre><code>println(doc.comments.map(_.text.trim).mkString)
+// prints "Created by Charles Hoffman, CPA, 2008-03-27"
+
+val contexts = doc.documentElement.filterChildElems(withEName(XbrliNs, "context"))
+println(contexts forall (e => !e.commentChildren.isEmpty)) // prints true: all contexts have comments
+
+// Being lazy, and forgetting about the namespace here
+val facts =
+  doc.documentElement.filterChildElems(withLocalName("ManagementDiscussionAndAnalysisTextBlock"))
+println(facts.flatMap(e => e.textChildren.filter(_.isCData)).size >= 1) // prints true
+</code></pre>
 
 <h3>
 <a name="namespace-examples" class="anchor" href="#namespace-examples"><span class="octicon octicon-link"></span></a>Namespace examples</h3>
