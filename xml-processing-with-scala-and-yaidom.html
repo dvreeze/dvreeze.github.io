@@ -517,16 +517,115 @@ println(areEqual) // prints true
 <h3>
 <a name="extending-yaidom" class="anchor" href="#extending-yaidom"><span class="octicon octicon-link"></span></a>Extending yaidom for custom XML dialects</h3>
 
-<p>Extending yaidom ...</p>
-<p>Example validating order in XBRL instance ...</p>
-<p>Example validating contexts in XBRL instance ...</p>
-<p>Example validating facts in XBRL instance ...</p>
+<p>Above, all XBRL instance processing was coded as normal XML processing, mostly using yaidom "simple" and "indexed" elements. That's not very convenient. It would
+be nice if we could talk about contexts, units, facts etc., instead of just XML elements that happen to be contexts, units, facts, etc. Indeed that is possible in
+yaidom. We already knew that yaidom is <em>extensible</em>, in that new element implementations offering the same yaidom query API can easily be added. Yet, what's more,
+yaidom can also offer support for <em>custom XML dialects</em>, such as XBRL instances (or DocBook files, or Maven POM files, or any other XML dialect described by schemas).</p>
+
+<p>To that end, yaidom offers the <code>SubtypeAwareElemApi</code> query API trait. Whereas the <code>ElemApi</code> trait offers querying for child/descendant/descendant-or-self
+elements, trait <code>SubtypeAwareElemApi</code> extends this to class hierarchies (for XML dialects), offering querying for child/descendant/descendant-or-self elements of specific
+sub-types of the root class of the class hierarchy.</p>
+
+<p>In <a href="http://dvreeze.github.io/code-snippets/xbrl-instances.html" target="_blank">this XBRL instance class hierarchy</a> we can see this action. Each part of an XBRL
+instance is of type <code>XbrliElem</code> or a sub-type. Common sub-types are those for contexts, units, item facts, tuple facts, and, of course, XBRL instances themselves.
+Super-type <code>XbrliElem</code> mixes in traits <code>ScopedElemApi</code> and <code>SubtypeAwareElemApi</code>. Trait <code>ScopedElemApi</code> offers the most common
+yaidom element query API, as we know, and trait <code>SubtypeAwareElemApi</code> makes it easy to query for elements of specific types, with little boilerplate. The latter is used
+internally in the code of the <code>XbrliElem</code> class hierarchy, but can also be used in client code, if need be.</p>
+
+<p>For the remaining FRIS validations in this article, we will use the <code>XbrliElem</code> class hierarchy.</p>
+
+<p>Consider FRIS rule 2.1.10. It states that there is a specific expected order of the child elements of the root element. One way to code that is as follows:</p>
+
+<pre><code>// Assume xbrlInstance variable of type XbrlInstance
+
+val remainingChildElems =
+  xbrlInstance.findAllChildElems dropWhile {
+    case e: SchemaRef => true
+    case e => false
+  } dropWhile {
+    case e: LinkbaseRef => true
+    case e => false
+  } dropWhile {
+    case e: RoleRef => true
+    case e => false
+  } dropWhile {
+    case e: ArcroleRef => true
+    case e => false
+  } dropWhile {
+    case e: XbrliContext => true
+    case e => false
+  } dropWhile {
+    case e: XbrliUnit => true
+    case e => false
+  } dropWhile {
+    case e: Fact => true
+    case e => false
+  } dropWhile {
+    case e: FootnoteLink => true
+    case e => false
+  }
+
+require(remainingChildElems.isEmpty)
+</code></pre>
+
+<p>Now consider FRIS rule 2.4.2 stating that all contexts must be used. It is also checked that all context references indeed refer to existing contexts.
+Note in this case how friendly the XBRL instance model is compared to raw XML elements:</p>
+
+<pre><code>val contextIds = xbrlInstance.allContextsById.keySet
+
+val usedContextIds = xbrlInstance.findAllItems.map(_.contextRef).toSet
+
+require(usedContextIds.subsetOf(contextIds))
+
+// Oops, some contexts are not used, namely I-2004, D-2007-LI-ALL and I-2003
+println(contextIds.diff(usedContextIds))
+</code></pre>
+
+<p>The next rule is more complex. FRIS rule 2.4.1 states that S-equal contexts should not occur. S-equality ("structural equality") is defined in the
+Core XBRL specification. A good implementation of S-equality requires type information. Therefore Saxon-EE backed yaidom wrappers would be a good choice.
+A very naive approximation is given below:</p>
+
+<pre><code>def transformContextForSEqualityComparison(context: XbrliContext): resolved.Elem = {
+  // Ignoring "normalization" of dates and QNames, as well as order of dimensions etc.
+  val elem = context.indexedElem.elem.copy(attributes = Vector())
+  resolved.Elem(elem).coalesceAndNormalizeAllText.removeAllInterElementWhitespace
+}
+</code></pre>
+
+<p>Then rule 2.4.1 applied to our XBRL instance is as follows:</p>
+
+<pre><code>val contextsBySEqualityGroup =
+  xbrlInstance.allContexts.groupBy(e => transformContextForSEqualityComparison(e))
+
+require(contextsBySEqualityGroup.size == xbrlInstance.allContexts.size)
+</code></pre>
+
+<p>As we can see, the more complex the rules, the more we profit from the fact that all code is Scala code, and there is no needed effort in bridging
+between Scala and XSLT, for example. The Scala language, its Collections API, and yaidom form a powerful combination.</p>
+
+<p>Finally, consider FRIS rule 2.8.3, stating that concepts are either top-level or nested in tuples, but not both. Using the XBRL instance model, the code is simple:</p>
+
+<pre><code>val topLevelConceptNames = xbrlInstance.allTopLevelFactsByEName.keySet
+
+val nestedConceptNames =
+  xbrlInstance.allTopLevelTuples.flatMap(_.findAllFacts).map(_.resolvedName).toSet
+
+require(topLevelConceptNames.intersect(nestedConceptNames).isEmpty)
+</code></pre>
 
 <h3>
 <a name="conclusion" class="anchor" href="#conclusion"><span class="octicon octicon-link"></span></a>Conclusion</h3>
 
-<p>The point of yaidom ...</p>
-<p>Yaidom and XBRL taxonomies ...</p>
+<p>In this article, the yaidom Scala XML query library was introduced. We used examples from XBRL. It turned out that Scala, its Collections API, and the yaidom library form a powerful precise
+XML processing "stack". This is even more true when using custom yaidom "backends", such as Saxon-EE. It also turned out that yaidom makes it easy to support custom XML dialects (such as XBRL
+instances), offering more type-safety and leading to less boilerplate. The extensibility of yaidom is one of its strengths, along with its precise namespace support and uniform precise element
+query API (offered by numerous XML "backends").</p>
+
+<p>The FRIS rule examples show that a programming language like Scala is a natural fit for implementing those rules. Using standards like XSLT or XQuery would require the use of many custom
+functions, leading to less productivity.</p>
+
+<p>The examples only used XBRL instances. Yet instances are described by XBRL taxonomies. These taxonomies have to obey many rules as well. Taxonomies typically span many files, and their validation
+is mostly much more complex than instance validation. The advantages of using a "Scala yaidom XML stack" would even be greater than for XBRL instances.</p>
 
 <p>As a concluding remark, yaidom is used in production code developed at <a href="http://www.ebpi.nl" target="_blank">www.ebpi.nl</a>. Its usage in several projects has certainly helped it mature. I want to thank my colleagues Jan-Paul van der Velden, Andrea Desole, Johan Walters and Nicholas Evans for their valuable feedback on earlier versions of yaidom.</p>
       </section>
