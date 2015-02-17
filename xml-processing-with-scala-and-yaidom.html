@@ -53,11 +53,11 @@ using yaidom and Scala. It will be shown that using Scala and yaidom instead of 
         <h3>
 <a name="brief-scala-introduction" class="anchor" href="#brief-scala-introduction"><span class="octicon octicon-link"></span></a>Brief introduction to Scala and Scala Collections</h3>
 
-<p>The Scala programming language is the most popular alternative to Java on the Java platform. It is object-oriented (more so than Java), and also functional (in that functions are first-class
-objects). It is statically typed, but feels like a dynamically typed language (because of features like type inference).</p>
+<p>The Scala programming language is the most popular alternative to Java on the Java platform. It is <em>object-oriented</em> (more so than Java), and also <em>functional</em>
+(in that functions are first-class objects). It is <em>statically typed</em>, but feels like a dynamically typed language (because of features like type inference).</p>
 
-<p>Scala is a <em>safe</em> and <em>expressive</em> language, very often leading to good team productity and low bug counts. Its rich <em>Collections API</em>, strong support for
-<em>immutable</em> data structures, and focus on <em>expressions</em> rather than statements enables programmers to work at a higher level of abstraction than the Java language offers.
+<p>Scala is a <em>safe</em> and <em>expressive</em> language, very often leading to good team productivity and low bug counts. Its rich <em>Collections API</em>, strong support for
+<em>immutable</em> data structures, and focus on <em>expressions</em> rather than statements enables programmers to work at a higher level of abstraction in Scala than in Java.
 The Collections API of a programming language (which in the case of Scala, C# and Java is a part of the standard library of the language, not of the core language) often says a lot about the language.
 Hence, below follows some Scala code that manipulates collections.</p>
 
@@ -116,12 +116,18 @@ val bookTitlesByUllman =
 </code></pre>
 
 <p>Note how the queries in prose naturally map to their counterparts in Scala code. The code shows the <em>"what"</em> more than the <em>"how"</em>.
-In that respect, the Scala code looks more like XQuery than Java (before version 8).</p>
+In that respect, the Scala code is more like XQuery than Java (before version 8). In a sense, <em>the Scala core language along with its Collections API</em> form
+a <em>universal query (and transformation) language</em>. Of course, Scala is a lot more, but for our purposes, this is a fitting description.</p>
 
         <h3>
 <a name="brief-yaidom-introduction" class="anchor" href="#brief-yaidom-introduction"><span class="octicon octicon-link"></span></a>Brief introduction to yaidom</h3>
 
 <p>The <em>yaidom</em> library can be used for querying XML in Scala. It interoperates very well with the Scala Collections API.</p>
+
+<p>If Scala and its Collections API can be seen as a universal query and transformation language, then yaidom offers an <em>XML element query API</em>
+that turns elements into Scala collections of elements. So yaidom can be said to turn a universal query and transformation language into an <em>XML querying and transformation
+language</em>. In other words, <em>Scala + its Collections API + yaidom</em> can be seen as an "XML querying/transformation stack". Below it will become clear that yaidom can
+plug in different "XML backends", thus making the "XML stack" more powerful.</p>
 
 <p>Using the bookstore example above, some simple yaidom XML queries are shown below. The XML is as follows:</p>
 
@@ -236,8 +242,8 @@ does not offer multiple tree implementations backing the same query API.</p>
 <p>Why not just use standards such as XSLT or XQuery? In many cases, your XQuery queries or XSLT transformations require a lot of
 custom functions. That comes with the costs of bridging between the 2 "worlds": the XPath data model and the programming language.
 There are also substantial semantical differences, for example because XPath equality is quite different from equality in
-programming languages such as Scala or Java. To put it differently, it may be desirable to use Scala and its Collections API
-as <em>universal query API</em>, and use yaidom for querying collections of XML elements, as the simplest solution that works.</p>
+programming languages such as Scala or Java. Summarized, it may be desirable to use Scala and its Collections API as
+<em>universal query API</em>, and use yaidom for querying collections of XML elements, as the simplest XML querying solution that works.</p>
 
 <h3>
 <a name="brief-xbrl-introduction" class="anchor" href="#brief-xbrl-introduction"><span class="octicon octicon-link"></span></a>Brief introduction to XBRL</h3>
@@ -439,7 +445,7 @@ they may be the default namespace.</p>
 Yet the namespace support goes further than that. As article <a href="http://www.lenzconsulting.com/namespaces/" target="_blank">Understanding Namespaces</a> makes clear,
 namespaces are not only used in element and attribute names, but can also be used in text content and attribute values.</p>
 
-<p>FRIS rule 2.1.7 must taken namespaces in text content and attribute values into account, because it states that XBRL instances should not have any unused namespace declarations.
+<p>FRIS rule 2.1.7 must take namespaces in text content and attribute values into account, because it states that XBRL instances should not have any unused namespace declarations.
 Yet how do we detect the use of namespaces in text content or attribute values? We know this from the XML schema(s) describing XBRL instances. For example, the <code>xbrli:measure</code>
 element has type <code>xs:QName</code>. So the text content of an <code>xbrli:measure</code> should be interpreted as an "expanded name". The namespace of that expanded name is therefore
 one of the namespaces used in the XBRL instance.</p>
