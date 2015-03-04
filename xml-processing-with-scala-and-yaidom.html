@@ -31,11 +31,11 @@
 <p>This article introduces the <em>yaidom</em> XML query library, using examples taken from the domain of <a href="https://www.xbrl.org" target="_blank">XBRL</a>
 (eXtensible Business Reporting Language).</p>
 
-<p>It is assumed that the reader knows the basics of XML, in particular XML namespaces. Some experience with XML processing in Java (e.g. JAXP) or another OO programming language
-(such as Scala or C#) is also helpful.</p>
+<p>It is assumed that the reader has some experience with XML processing in Java (e.g. JAXP) or another OO programming language
+(such as Scala or C#).</p>
 
-<p>XSLT, XQuery and XPath are standard XML transformation/query languages, yet in this article yaidom (with Scala) is introduced as an <em>alternative</em> approach to XML querying/transformation.
-Still, yaidom can also be used in a meaningful way together with XQuery. The remainder of this article is organized as follows:</p>
+<p>XSLT, XQuery and XPath are standard XML transformation/query languages, yet in this article yaidom (with Scala) is introduced as an <em>alternative</em> approach to XML querying/transformation, leveraging the Scala programming language.
+Still, yaidom can also be used in a meaningful way together with XQuery, for example when using an XML database. The remainder of this article is organized as follows:</p>
 <ol>
 <li>Brief introduction to Scala and Scala Collections.</li>
 <li>Brief introduction to yaidom.</li>
@@ -48,7 +48,7 @@ Still, yaidom can also be used in a meaningful way together with XQuery. The rem
 
 <p>After introducing Scala, Scala Collections and yaidom, a brief introduction to XBRL follows. XBRL is an XML-based business reporting standard. Business reports in XBRL format are called
 <em>XBRL instances</em>. In order to be valid, XBRL instances have to obey many requirements. The remainder of this paper shows that many of those rules are easily expressed
-using yaidom and Scala. It will be shown that using Scala and yaidom instead of standard XML query and transformation languages actually makes sense for these examples.</p>
+using yaidom and Scala. It will be shown that using Scala and yaidom instead of standard XML query and transformation languages actually makes expressing these rules relatively easy.</p>
 
         <h3>
 <a name="brief-scala-introduction" class="anchor" href="#brief-scala-introduction"><span class="octicon octicon-link"></span></a>Brief introduction to Scala and Scala Collections</h3>
@@ -56,7 +56,7 @@ using yaidom and Scala. It will be shown that using Scala and yaidom instead of 
 <p>The Scala programming language is the most popular alternative to Java on the Java platform. It is <em>object-oriented</em> (more so than Java), and also <em>functional</em>
 (in that functions are first-class objects). It is <em>statically typed</em>, but feels like a dynamically typed language (because of features like type inference).</p>
 
-<p>Scala is a <em>safe</em> and <em>expressive</em> language, very often leading to good team productivity and low bug counts. Its rich <em>Collections API</em>, strong support for
+<p>Scala is a <em>safe</em> and <em>expressive</em> language, typically leading to good productivity and low bug counts in skilled disciplined teams. Its rich <em>Collections API</em>, strong support for
 <em>immutable</em> data structures, and focus on <em>expressions</em> rather than statements enables programmers to work at a higher level of abstraction in Scala than in Java.
 The Collections API of a programming language (which in the case of Scala, C# and Java is a part of the standard library of the language, not of the core language) often says a lot about the language.
 Hence, below follows some Scala code that manipulates collections.</p>
@@ -239,7 +239,7 @@ For example, yaidom wrappers around Saxon-EE NodeInfo trees offers the best of b
 of Saxon-EE, and a Scala Collections API querying experience, using yaidom as the natural bridge. Unlike yaidom, the Scala XML library
 does not offer multiple tree implementations backing the same query API.</p>
 
-<p>Why not just use standards such as XSLT or XQuery? In many cases, your XQuery queries or XSLT transformations require a lot of
+<p>Why not just use standards such as XSLT or XQuery? In many cases, advanced XQuery queries or XSLT transformations require a lot of
 custom functions. That comes with the costs of bridging between the 2 "worlds": the XPath data model and the programming language.
 There are also substantial semantical differences, for example because XPath equality is quite different from equality in
 programming languages such as Scala or Java. Summarized, it may be desirable to use Scala and its Collections API as
