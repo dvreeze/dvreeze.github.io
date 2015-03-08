@@ -251,7 +251,7 @@ support in yaidom even goes as far as the ability to express a simple <em>theory
 <em>multiple "XML backend"</em> implementations. Not only does yaidom offer own native DOM-like tree ("XML backend") implementations with different strengths and weaknesses, but
 it is also possible to wrap existing XML library tree implementations (DOM, JDOM, XOM, Saxon etc.) in yaidom, offering the same yaidom query API.
 For example, yaidom wrappers around Saxon-EE <code>NodeInfo</code> trees offer the best of Saxon and the <em>Scala-yaidom</em> combination: on the one hand the completeness and
-type-awareness of Saxon-EE, and on the other hand a Scala Collections API querying experience, using yaidom as the natural bridge between Saxon "nodes" and Scala collections processing.
+type-awareness of Saxon-EE, and on the other hand a "Scala Collections API querying experience", using yaidom as the natural bridge between Saxon "nodes" and Scala collections processing.
 Unlike yaidom, the Scala XML library does not offer multiple tree implementations backing the same query API.</p>
 
 <p>Why not just use standards such as XSLT or XQuery? XBRL processing is a good example where yaidom shines, as will become clear below. After all, XBRL is a lot more than "just" XML,
@@ -563,9 +563,10 @@ println(areEqual) // prints true
 <a name="extending-yaidom" class="anchor" href="#extending-yaidom"><span class="octicon octicon-link"></span></a>Extending yaidom for custom XML dialects</h3>
 
 <p>Above, all XBRL instance processing was coded as normal XML processing, mostly using yaidom "simple" and "indexed" elements. That's not very convenient. It would
-be nice if we could talk about contexts, units, facts etc., instead of just XML elements that happen to be contexts, units, facts, etc. Indeed that is possible in
-yaidom. We already knew that yaidom is <em>extensible</em>, in that new element implementations offering the same yaidom query API can easily be added. Yet, what's more,
-yaidom can also offer support for <em>custom XML dialects</em>, such as XBRL instances (or DocBook files, or Maven POM files, or any other XML dialect described by schemas).</p>
+be nice if we could talk about contexts, units, facts etc., instead of just XML elements that happen to be contexts, units, facts, etc. In general, it would be nice if yaidom
+would make it easy to support custom XML dialects. That is indeed the case. We already knew that yaidom is <em>extensible</em>, in that new element implementations offering the same
+yaidom query API can easily be added. Yet, what's more, yaidom also facilitates a "yaidom querying experience" for <em>custom XML dialects</em>, such as XBRL instances (or DocBook files,
+or Maven POM files, or any other XML dialect described by schemas).</p>
 
 <p>To that end, yaidom offers the <code>SubtypeAwareElemApi</code> query API trait. Whereas the <code>ElemApi</code> trait offers querying for child/descendant/descendant-or-self
 elements, trait <code>SubtypeAwareElemApi</code> extends this to class hierarchies (for XML dialects), offering querying for child/descendant/descendant-or-self elements of specific
