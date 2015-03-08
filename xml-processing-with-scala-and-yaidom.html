@@ -235,10 +235,10 @@ val bookTitlesByUllman =
 
 <p>Above, for clarity the queries were written more verbosely than needed. The <code>EName</code> type stands for "expanded name",
 and corresponds to Java's <code>javax.lang.namespace.QName</code>, except that it does not retain the prefix, if any. Even when writing
-these queries in a less verbose way than has been done above, there is still some verbosity related to XML handling. This is intentional: yaidom is a <em>precise</em>
+these queries in a less verbose way than has been done above, there would still be some verbosity related to XML handling. This is intentional: yaidom is a <em>precise</em>
 XML query API. For example, yaidom does not abstract away the distinction between elements and attributes, or between names with a namespace and those without any namespace.
 Despite the syntax dedicated by yaidom to XML node manipulation, the yaidom query examples are not <em>that</em> much more verbose than the non-XML
-query examples presented earlier. Compared to ad-hoc XML querying in Java (using JAXP), ad-hoc XML querying in Scala using yaidom is much less verbose. Even when invoking
+query examples presented earlier. Compared to ad-hoc XML querying in Java (using JAXP), ad-hoc XML querying in Scala using yaidom is <em>much</em> less verbose, however. Even when invoking
 XPath queries (returning node sets) from Java code, the processing of the resulting node sets would add "syntactic clutter" that the use of Scala with yaidom could have prevented.</p>
 
 <p>Why use yaidom and not Scala's own XML library? As will become apparent in this article, yaidom has very precise support for
@@ -251,8 +251,8 @@ support in yaidom even goes as far as the ability to express a simple <em>theory
 <em>multiple "XML backend"</em> implementations. Not only does yaidom offer own native DOM-like tree ("XML backend") implementations with different strengths and weaknesses, but
 it is also possible to wrap existing XML library tree implementations (DOM, JDOM, XOM, Saxon etc.) in yaidom, offering the same yaidom query API.
 For example, yaidom wrappers around Saxon-EE <code>NodeInfo</code> trees offers the best of Saxon and the <em>Scala-yaidom</em> combination: on the one hand the completeness and
-type-awareness of Saxon-EE, and on the other hand a Scala Collections API querying experience, using yaidom as the natural bridge between Saxon "nodes" and Scala collections. Unlike yaidom,
-the Scala XML library does not offer multiple tree implementations backing the same query API.</p>
+type-awareness of Saxon-EE, and on the other hand a Scala Collections API querying experience, using yaidom as the natural bridge between Saxon "nodes" and Scala collections processing.
+Unlike yaidom, the Scala XML library does not offer multiple tree implementations backing the same query API.</p>
 
 <p>Why not just use standards such as XSLT or XQuery? XBRL processing is a good example where yaidom shines, as will become clear below. After all, XBRL is a lot more than "just" XML,
 so XBRL processing is a lot more than "just" XML processing. Performing most or all of this processing in Scala using yaidom offers the following advantages:</p>
@@ -265,7 +265,7 @@ over XML standard languages, which have no (specified) native or near native run
 XQuery enforce a <em>functional programming</em> style, Scala strongly encourages such a programming style, yet without sacrificing ease of use.</li>
 <li>A large <em>ecosystem</em> around Scala (and Java), offering many high quality libraries.</li>
 <li>Familiar <em>semantics</em> of "equality" (as an equivalence relation) and collection processing. The XPath Data Model does not distinguish between individual items (nodes and atomic items)
-on the one hand, and singleton sequences of items on the other hand, but this can be quite confusing. By contrast, in Scala Collections API (and yaidom) an object is not the same as a singleton
+on the one hand, and singleton sequences of items on the other hand, but this can be quite confusing. By contrast, in Scala's Collections API (and yaidom) an object is not the same as a singleton
 collection containing that object.</li>
 <li>Yaidom does not sacrifice any XML processing power. Not only are "XML backends" pluggable, but they also remain accessible, and are not hidden behind any "broken abstractions".</li>
 </ul>
