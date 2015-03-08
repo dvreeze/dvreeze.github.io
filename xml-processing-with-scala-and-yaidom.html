@@ -341,9 +341,10 @@ but XBRL validations are good XML processing examples where Scala and yaidom rea
 <h3>
 <a name="simple-yaidom-queries" class="anchor" href="#simple-yaidom-queries"><span class="octicon octicon-link"></span></a>Simple yaidom query examples</h3>
 
-<p>The XBRL snippet above is part of <a href="http://www.xbrlsite.com/examples/comprehensiveexample/2008-04-18/sample-Instance-Proof.xml" target="_blank">this sample instance.</a></p>
+<p>The XBRL snippet above is part of <a href="http://www.xbrlsite.com/examples/comprehensiveexample/2008-04-18/sample-Instance-Proof.xml" target="_blank">this sample instance</a>.
+In this section, some simple yaidom XML queries are performed on the XBRL instance.</p>
 
-<p>Before showing some queries on this XBRL instance, it should be noted that knowing only 3 yaidom query API methods to some extent means knowing them all. These 3 methods are
+<p>Before showing these queries on this XBRL instance, it should be noted that knowing only 3 yaidom query API methods to some extent means knowing them all. These 3 methods are
 <code>filterChildElems</code>, <code>filterElems</code> and <code>filterElemsOrSelf</code>. They all filter elements, based on the passed element predicate function. The difference
 is that they filter <em>child</em> elements, <em>descendant</em> elements, and <em>descendant-or-self</em> elements, respectively. The word "descendant" is left out from the
 method names.</p>
@@ -398,15 +399,20 @@ println(avgNumEmployeesFactsByContext.keySet)
 println(avgNumEmployeesFactsByContext("D-2003").text) // prints 220
 </code></pre>
 
-<p>The uniform query API of yaidom consists of query API traits that can be combined as LEGO blocks.
-Yaidom element tree implementations all mix in some or most of these query API traits. The example queries
+<p>The uniform query API of yaidom consists of several query API traits. They are like LEGO blocks, that can easily be combined.
+Yaidom (native and wrapper) element tree implementations all mix in some or most of these query API traits. The example queries
 above are not bound to any particular element implementation, but use a common query API trait, namely
 <code>ScopedElemApi</code>, which is itself a combination of query API traits. This trait offers
 methods like <code>filterElemsOrSelf</code>, <code>filterChildElems</code> (from trait <code>ElemApi</code>),
 as well as methods to get text content, qualified names, expanded names, attributes etc. In other words,
 it offers a query API abstraction that is valid for almost all element implementations.</p>
 
-<p>Sometimes we want to use methods that are offered by specific element implementations.
+<p>The query API traits themselves are not visible in normal yaidom client code. They are relevant for creators of
+custom yaidom element implementations, for example wrappers around elements offered by existing XML libraries.
+Yaidom users that do not extend yaidom may still want to know which query API traits are offered by some XML tree
+implementation, of course.</p>
+
+<p>Sometimes we want to use methods that are only offered by specific element implementations, and not by any query API traits.
 The default native yaidom element implementation is <code>simple.Elem</code>. It knows about
 elements and text content (as per the mixed-in <code>ScopedElemApi</code> trait), but it also
 knows about comments, processing instructions and CDATA sections (if passed by the XML parser). For example:</p>
