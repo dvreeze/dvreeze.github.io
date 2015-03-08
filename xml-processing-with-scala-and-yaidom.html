@@ -233,12 +233,12 @@ val bookTitlesByUllman =
     map(book => book.getChildElem(e => e.localName == "Title").text)
 </code></pre>
 
-<p>Above, for clarity the queries were written more verbosely than needed. The <code>EName</code> type stands for "expanded name",
-and corresponds to Java's <code>javax.lang.namespace.QName</code>, except that it does not retain the prefix, if any. Even when writing
-these queries in a less verbose way than has been done above, there would still be some verbosity related to XML handling. This is intentional: yaidom is a <em>precise</em>
-XML query API. For example, yaidom does not abstract away the distinction between elements and attributes, or between names with a namespace and those without any namespace.
-Despite the syntax dedicated by yaidom to XML node manipulation, the yaidom query examples are not <em>that</em> much more verbose than the non-XML
-query examples presented earlier. Compared to ad-hoc XML querying in Java (using JAXP), ad-hoc XML querying in Scala using yaidom is <em>much</em> less verbose, however. Even when invoking
+<p>Above, the <code>EName</code> type stands for "expanded name". It corresponds to Java's <code>javax.lang.namespace.QName</code>, except that it does not retain the prefix, if any.</p>
+
+<p>For clarity, these XML queries were written more verbosely than needed. Even when writing these queries in a less verbose way than has been done above, there would still be some verbosity
+related to XML handling. This is intentional: yaidom is a <em>precise</em> XML query API. For example, yaidom does not abstract away the distinction between elements and attributes, or between
+names with a namespace and those without any namespace. Despite the syntax dedicated by yaidom to XML node manipulation, the yaidom query examples are not <em>that</em> much more verbose than the
+non-XML query examples presented earlier. Compared to ad-hoc XML querying in Java (using JAXP), however, ad-hoc XML querying in Scala using yaidom is <em>much</em> less verbose. Even when invoking
 XPath queries (returning node sets) from Java code, the processing of the resulting node sets would add "syntactic clutter" that the use of Scala with yaidom could have prevented.</p>
 
 <p>Why use yaidom and not Scala's own XML library? As will become apparent in this article, yaidom has very precise support for
