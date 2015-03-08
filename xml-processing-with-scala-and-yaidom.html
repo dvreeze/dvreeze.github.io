@@ -251,7 +251,7 @@ support in yaidom even goes as far as the ability to express a simple <em>theory
 <em>multiple "XML backend"</em> implementations. Not only does yaidom offer own native DOM-like tree ("XML backend") implementations with different strengths and weaknesses, but
 it is also possible to wrap existing XML library tree implementations (DOM, JDOM, XOM, Saxon etc.) in yaidom, offering the same yaidom query API.
 For example, yaidom wrappers around Saxon-EE <code>NodeInfo</code> trees offer the best of Saxon and the <em>Scala-yaidom</em> combination: on the one hand the completeness and
-type-awareness of Saxon-EE, and on the other hand a "Scala Collections API querying experience", using yaidom as the natural bridge between Saxon "nodes" and Scala collections processing.
+schema-type-awareness of Saxon-EE, and on the other hand a "Scala Collections API querying experience", using yaidom as the natural bridge between Saxon "nodes" and Scala collections processing.
 Unlike yaidom, the Scala XML library does not offer multiple tree implementations backing the same query API.</p>
 
 <p>Why not just use standards such as XSLT or XQuery? XBRL processing is a good example where yaidom shines, as will become clear below. After all, XBRL is a lot more than "just" XML,
