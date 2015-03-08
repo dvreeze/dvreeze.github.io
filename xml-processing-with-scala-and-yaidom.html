@@ -250,7 +250,7 @@ support in yaidom even goes as far as the ability to express a simple <em>theory
 <p>There are more reasons why yaidom may be preferable to Scala's own XML library. For example, yaidom has a precise <em>uniform XML query API</em> that is offered by
 <em>multiple "XML backend"</em> implementations. Not only does yaidom offer own native DOM-like tree ("XML backend") implementations with different strengths and weaknesses, but
 it is also possible to wrap existing XML library tree implementations (DOM, JDOM, XOM, Saxon etc.) in yaidom, offering the same yaidom query API.
-For example, yaidom wrappers around Saxon-EE <code>NodeInfo</code> trees offers the best of Saxon and the <em>Scala-yaidom</em> combination: on the one hand the completeness and
+For example, yaidom wrappers around Saxon-EE <code>NodeInfo</code> trees offer the best of Saxon and the <em>Scala-yaidom</em> combination: on the one hand the completeness and
 type-awareness of Saxon-EE, and on the other hand a Scala Collections API querying experience, using yaidom as the natural bridge between Saxon "nodes" and Scala collections processing.
 Unlike yaidom, the Scala XML library does not offer multiple tree implementations backing the same query API.</p>
 
@@ -271,7 +271,7 @@ collection containing that object.</li>
 </ul>
 <p>Surely yaidom can be used with XQuery when using an XML(-enabled) database, where XQuery joins and filters database XML data into "raw result sets", which are further processed using yaidom
 queries. Still, it makes sense to keep the number of boundaries between XQuery and yaidom/Scala relatively low, for each such boundary has some (syntactic and semantical) costs.
-In summary, the more some XML processing can benefit from the use of Scala, the more attractive the use of yaidom becomes.</p>
+In summary, the more some XML processing task can benefit from the use of Scala, the more attractive the use of yaidom becomes.</p>
 
 <h3>
 <a name="brief-xbrl-introduction" class="anchor" href="#brief-xbrl-introduction"><span class="octicon octicon-link"></span></a>Brief introduction to the XBRL examples</h3>
