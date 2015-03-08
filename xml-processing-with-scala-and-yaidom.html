@@ -409,7 +409,7 @@ it offers a query API abstraction that is valid for almost all element implement
 <p>Sometimes we want to use methods that are offered by specific element implementations.
 The default native yaidom element implementation is <code>simple.Elem</code>. It knows about
 elements and text content (as per the mixed-in <code>ScopedElemApi</code> trait), but it also
-knows about comments and processing instructions. For example:</p>
+knows about comments, processing instructions and CDATA sections (if passed by the XML parser). For example:</p>
 
 <pre><code>println(doc.comments.map(_.text.trim).mkString)
 // prints "Created by Charles Hoffman, CPA, 2008-03-27"
