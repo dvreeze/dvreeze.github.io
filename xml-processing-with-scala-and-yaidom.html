@@ -662,18 +662,19 @@ require(topLevelConceptNames.intersect(nestedConceptNames).isEmpty)
 <h3>
 <a name="conclusion" class="anchor" href="#conclusion"><span class="octicon octicon-link"></span></a>Conclusion</h3>
 
-<p>In this article, the yaidom Scala XML query library was introduced. We used examples from XBRL. It turned out that Scala, its Collections API, and the yaidom library form a powerful precise
-XML processing "stack". This is even more true when using custom yaidom "backends", such as Saxon-EE. It also turned out that yaidom makes it easy to support custom XML dialects (such as XBRL
-instances), offering more type-safety and leading to less boilerplate. The extensibility of yaidom is one of its strengths, along with its precise namespace support and uniform precise element
-query API (offered by numerous XML "backends").</p>
+<p>In this article, the <em>yaidom Scala XML query library</em> was introduced. We used examples from XBRL. It turned out that Scala, its Collections API, and the yaidom library form a powerful precise
+XML processing "stack". This "stack" is even more powerful when using custom mature yaidom "backends" as Saxon-EE. It also turned out that yaidom makes it easy to support custom XML dialects (such as
+XBRL instances), offering more type-safety and leading to less boilerplate. The <em>extensibility</em> of yaidom (in more than 1 way) is one of its strengths, along with its precise
+<em>namespace support</em> and <em>uniform precise element query API</em> (offered by numerous <em>XML "backends"</em>).</p>
 
-<p>The FRIS rule examples show that a programming language like Scala is a natural fit for implementing those rules. Using standards like XSLT or XQuery would require the use of many custom
-functions, leading to less productivity.</p>
+<p>The FRIS rule examples show that a programming language like Scala is a natural fit for implementing those rules. Had we used XSLT or XQuery instead, how would we easily have found unused
+namespaces, for example? Moreover, how would we have supported custom XML dialects in the same way that yaidom facilitates such support?</p>
 
-<p>The examples only used XBRL instances. Yet instances are described by XBRL taxonomies. These taxonomies have to obey many rules as well. Taxonomies typically span many files, and their validation
-is mostly much more complex than instance validation. The advantages of using a "Scala yaidom XML stack" would even be greater than for XBRL instances.</p>
+<p>The examples only used XBRL instances. These instances are described by XBRL taxonomies. Such taxonomies have to obey many rules as well. Taxonomies typically span many files, and their validation
+is usually much more complex than instance validation. The advantages of using a "Scala yaidom XML stack" would even be greater than for XBRL instances.</p>
 
-<p>As a concluding remark, yaidom is used in production code developed at <a href="http://www.ebpi.nl" target="_blank">www.ebpi.nl</a>. Its usage in several projects has certainly helped it mature. I want to thank my colleagues Jan-Paul van der Velden, Andrea Desole, Johan Walters and Nicholas Evans for their valuable feedback on earlier versions of yaidom.</p>
+<p>As a concluding remark, yaidom is used in production code developed at <a href="http://www.ebpi.nl" target="_blank">www.ebpi.nl</a>. Its usage in several projects has certainly helped it mature.
+I want to thank my colleagues Jan-Paul van der Velden, Andrea Desole, Johan Walters and Nicholas Evans for their valuable feedback on earlier versions of yaidom.</p>
       </section>
       <footer>
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
