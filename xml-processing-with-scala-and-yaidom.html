@@ -56,15 +56,15 @@ expressing these rules relatively easy.</p>
         <h3>
 <a name="brief-scala-introduction" class="anchor" href="#brief-scala-introduction"><span class="octicon octicon-link"></span></a>Brief introduction to Scala and Scala Collections</h3>
 
-<p>The Scala programming language is the most popular alternative to Java on the Java platform. It is <em>object-oriented</em> (more so than Java), and also <em>functional</em>
-(in that functions are first-class objects). It is <em>statically typed</em>, but feels like a dynamically typed language (because of features like type inference).</p>
+<p>The Scala programming language is the most popular alternative to the Java language on the Java virtual machine. It is <em>object-oriented</em> (more so than Java) and also <em>functional</em>,
+in that functions are first-class objects. It is <em>statically typed</em>, but it feels like a dynamically typed language, because of features like type inference.</p>
 
-<p>Scala is a <em>safe</em> and <em>expressive</em> language, typically leading to good productivity and low bug counts in skilled disciplined teams. Its rich <em>Collections API</em>, strong support for
-<em>immutable</em> data structures, and focus on <em>expressions</em> rather than statements enables programmers to work at a higher level of abstraction in Scala than in Java.
-The Collections API of a programming language (which in the case of Scala, C# and Java is a part of the standard library of the language, not of the core language) often says a lot about the language.
-Hence, below follows some Scala code that manipulates collections.</p>
+<p>Scala is a <em>safe</em> and <em>expressive</em> language, typically leading to good productivity and low bug counts in skilled disciplined teams. Its rich <em>Collections API</em>, its strong
+support for <em>immutable</em> data structures, and its focus on <em>expressions</em> rather than statements enables programmers to work at a higher level of abstraction in Scala than in Java.
+The Collections API of a programming language (which in the case of Scala and Java is a part of the standard library of the language, not of the core language) often says a lot about the
+expressive power of that language. Below follows some Scala code that manipulates collections, to illustrate Scala's expressiveness.</p>
 
-<p>Consider a book store and some queries about books. The Scala code is as follows:</p>
+<p>Consider a book store and some queries about books (using sample data from the Stanford University online course <em>Introduction to Databases</em>). The Scala code is as follows:</p>
 
 <pre><code>case class Author(firstName: String, lastName: String)
 case class Book(isbn: String, title: String, authors: List[Author], price: Int)
@@ -118,9 +118,10 @@ val bookTitlesByUllman =
   someBooks.filter(book => hasAuthor(book, "Ullman")).map(book => book.title)
 </code></pre>
 
-<p>Note how the queries in prose naturally map to their counterparts in Scala code. The code shows the <em>"what"</em> more than the <em>"how"</em>.
-In that respect, the Scala code is more like XQuery than Java (before version 8). In a sense, <em>the Scala core language along with its Collections API</em> form
-a <em>universal query (and transformation) language</em>. Of course, Scala is a lot more, but for our purposes, this is a fitting description.</p>
+<p>Note how the queries in prose naturally map to their counterparts in Scala code, using a small vocabulary of <em>higher-order functions</em> such as <code>map</code> and <code>filter</code>.
+The code shows the <em>"what"</em> more than the <em>"how"</em>. In that respect, the Scala code is more like XQuery than Java (especially Java before version 8). In a sense,
+<em>the Scala core language along with its Collections API</em> form a <em>universal query (and transformation) language</em>. Of course, Scala is a lot more, but for our purposes, this is a
+fitting description.</p>
 
         <h3>
 <a name="brief-yaidom-introduction" class="anchor" href="#brief-yaidom-introduction"><span class="octicon octicon-link"></span></a>Brief introduction to yaidom</h3>
