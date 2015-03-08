@@ -119,10 +119,10 @@ val bookTitlesByUllman =
   someBooks.filter(book => hasAuthor(book, "Ullman")).map(book => book.title)
 </code></pre>
 
-<p>Note how the queries in prose naturally map to their counterparts in Scala code, using a small vocabulary of <em>higher-order functions</em> such as <code>map</code> and <code>filter</code>.
-The code shows the <em>"what"</em> more than the <em>"how"</em>. In that respect, the Scala code is more like XQuery than Java (especially Java before version 8). In a sense,
-<em>the Scala core language along with its Collections API</em> form a <em>universal query (and transformation) language</em>. Of course, Scala is a lot more, but for our purposes, this is a
-fitting description.</p>
+<p>Note how the queries in prose naturally map to their counterparts in Scala code, using a small vocabulary of <em>higher-order functions</em> such as <code>map</code>,
+<code>flatMap</code> and <code>filter</code>. The code shows the <em>"what"</em> more than the <em>"how"</em>. In that respect, the Scala code is more like XQuery than Java (especially than Java before
+version 8). In a sense, <em>the Scala core language along with its Collections API</em> form a <em>universal query (and transformation) language</em>. Of course, Scala is a lot more than that, but
+for our purposes, this is a fitting description.</p>
 
         <h3>
 <a name="brief-yaidom-introduction" class="anchor" href="#brief-yaidom-introduction"><span class="octicon octicon-link"></span></a>Brief introduction to yaidom</h3>
