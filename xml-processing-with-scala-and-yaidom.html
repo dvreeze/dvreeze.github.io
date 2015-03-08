@@ -264,7 +264,7 @@ over XML standard languages, which have no (specified) native or near native run
 <li>The <em>ease of use</em> of programming languages, such as Scala, for such mundane tasks as defining variables (typically for immutable data), calling functions, etc. While XSLT and
 XQuery enforce a <em>functional programming</em> style, Scala strongly encourages such a programming style, yet without sacrificing ease of use.</li>
 <li>A large <em>ecosystem</em> around Scala (and Java), offering many high quality libraries.</li>
-<li>Familiar <em>semantics</em> of "equality" (as an equivalence relation) and collection processing. The XPath Data Model does not distinguish between individual items (nodes and atomic items)
+<li>Familiar <em>semantics</em> of "equality" (as an equivalence relation) and collection processing. The XPath Data Model does not distinguish between individual items (nodes and atomic values)
 on the one hand, and singleton sequences of items on the other hand, but this can be quite confusing. By contrast, in Scala's Collections API (and yaidom) an object is not the same as a singleton
 collection containing that object.</li>
 <li>Yaidom does not sacrifice any XML processing power. Not only are "XML backends" pluggable, but they also remain accessible, and are not hidden behind any "broken abstractions".</li>
@@ -275,6 +275,9 @@ In summary, the more some XML processing task can benefit from the use of Scala,
 
 <h3>
 <a name="brief-xbrl-introduction" class="anchor" href="#brief-xbrl-introduction"><span class="octicon octicon-link"></span></a>Brief introduction to the XBRL examples</h3>
+
+<p>So far, this article has introduced Scala and yaidom, using only trivial examples. In the remainder of this article, yaidom examples in the domain of <em>XBRL</em> are used. First, this section
+gives a very brief introduction to XBRL.</p>
 
 <p>XBRL (eXtensible Business Reporting Language) is a standard for business reporting. Many (but not all) XBRL reports are financial statements. XBRL reports ("XBRL instances") are
 XML documents, following a specified structure.</p>
