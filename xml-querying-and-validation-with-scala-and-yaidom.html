@@ -28,7 +28,7 @@
         <h3>
 <a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h3>
 
-<p>This article introduces the <em>yaidom</em> XML query library, using examples in the domain of <a href="https://www.xbrl.org" target="_blank">XBRL</a>
+<p>This article introduces the <em>yaidom</em> XML query library, using examples in the domains of <a href="https://www.xbrl.org" target="_blank">XBRL</a>
 (eXtensible Business Reporting Language) and <a href="http://en.wikipedia.org/wiki/XMPP" target="_blank">XMPP</a> (eXtensible Messaging and Presence Protocol). Yaidom is not coupled to any of these domains, however. Moreover, the domains of XMPP and XBRL are not in any way related, although it is quite possible to use XBRL data as "payload" in XMPP messages. Still, yaidom does make it easy to create support for specific XML domains, as will be shown later.</p>
 
 <p>It is assumed that the reader has some experience with XML processing in Java (e.g. JAXP) or another OO programming language (such as Scala or C#).</p>
@@ -535,7 +535,7 @@ println(areEqual) // prints true
 be nice if we could talk about contexts, units, facts etc., instead of just XML elements that happen to be contexts, units, facts, etc. In general, it would be nice if yaidom
 would make it easy to support custom XML dialects. That is indeed the case. We already knew that yaidom is <em>extensible</em>, in that new element implementations offering the same
 yaidom query API can easily be added. Yet, what's more, yaidom also facilitates a "yaidom querying experience" for <em>custom XML dialects</em>, such as XBRL instances (or DocBook files,
-or Maven POM files, or any other XML dialect described by schemas).</p>
+or Maven POM files, or XMPP message formats, or any other XML dialect described by schemas).</p>
 
 <p>To that end, yaidom offers the <code>SubtypeAwareElemApi</code> query API trait. Whereas the <code>ElemApi</code> trait offers querying for child/descendant/descendant-or-self
 elements, trait <code>SubtypeAwareElemApi</code> extends this to class hierarchies (for XML dialects), offering querying for child/descendant/descendant-or-self elements of specific
@@ -639,8 +639,7 @@ XBRL instances), offering more type-safety and leading to less boilerplate. The 
 <p>The FRIS rule examples show that a programming language like Scala is a natural fit for implementing those rules. Had we used XSLT or XQuery instead, how would we easily have found unused
 namespaces, for example? Moreover, how would we have supported custom XML dialects in the same way that yaidom facilitates such support?</p>
 
-<p>The examples only used XBRL instances. These instances are described by XBRL taxonomies. Such taxonomies have to obey many rules as well. Taxonomies typically span many files, and their validation
-is usually much more complex than instance validation. The advantages of using a "Scala yaidom XML stack" would even be greater than for XBRL instances.</p>
+<p>The examples only used XMPP and XBRL instances. These XBRL instances are described by XBRL taxonomies. Such taxonomies have to obey many rules as well. Taxonomies typically span many files, and their validation is usually much more complex than instance validation. The advantages of using a "Scala yaidom XML stack" would even be greater than for XBRL instances.</p>
 
 <p>As a concluding remark, yaidom is used in production code developed at <a href="http://www.ebpi.nl" target="_blank">www.ebpi.nl</a>. Its usage in several projects has certainly helped it mature.
 I want to thank my colleagues Jan-Paul van der Velden, Andrea Desole, Johan Walters and Nicholas Evans for their valuable feedback on earlier versions of yaidom.</p>
