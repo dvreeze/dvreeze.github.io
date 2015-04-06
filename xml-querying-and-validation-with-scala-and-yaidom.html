@@ -29,7 +29,7 @@
 <a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h3>
 
 <p>This article introduces the <em>yaidom</em> XML query library, using examples in the domain of <a href="https://www.xbrl.org" target="_blank">XBRL</a>
-(eXtensible Business Reporting Language) and <a href="http://en.wikipedia.org/wiki/XMPP" target="_blank">XMPP</a> (eXtensible Messaging and Presence Protocol). Yaidom is not coupled to any of these domains, however. On the other hand, yaidom does make it easy to create support for specific XML domains, as will be shown later.</p>
+(eXtensible Business Reporting Language) and <a href="http://en.wikipedia.org/wiki/XMPP" target="_blank">XMPP</a> (eXtensible Messaging and Presence Protocol). Yaidom is not coupled to any of these domains, however. Moreover, the domains of XMPP and XBRL are not in any way related, although it is quite possible to use XBRL data as "payload" in XMPP messages. Still, yaidom does make it easy to create support for specific XML domains, as will be shown later.</p>
 
 <p>It is assumed that the reader has some experience with XML processing in Java (e.g. JAXP) or another OO programming language (such as Scala or C#).</p>
 
@@ -70,33 +70,33 @@ case class Timestamp(value: DateTime, numericValues: List[NumericValue])
 val someTimestamps =
   List(
     Timestamp(
-      DateTime("2013-03-07T18:00:00"),
+      DateTime.parse("2013-03-07T18:00:00"),
       List(
         NumericValue(name = "Temperature", value = "23.4", valueUnit = "°C"),
         NumericValue(name = "Runtime", value = "12345", valueUnit = "h"))),
     Timestamp(
-      DateTime("2013-03-07T19:00:00"),
+      DateTime.parse("2013-03-07T19:00:00"),
       List(
         NumericValue(name = "Temperature, Max", value = "25.9", valueUnit = "°C"),
         NumericValue(name = "Temperature, Min", value = "18.7", valueUnit = "°C"),
         NumericValue(name = "Temperature, Mean", value = "22.5", valueUnit = "°C"))),
     Timestamp(
-      DateTime("2013-03-07T20:00:00"),
+      DateTime.parse("2013-03-07T20:00:00"),
       List(
         NumericValue(name = "Temperature", value = "24.5", valueUnit = "°C"))),
     Timestamp(
-      DateTime("2013-03-07T21:00:00"),
+      DateTime.parse("2013-03-07T21:00:00"),
       List(
         NumericValue(name = "Temperature", value = "25.1", valueUnit = "°C"))),
     Timestamp(
-      DateTime("2013-03-07T22:00:00"),
+      DateTime.parse("2013-03-07T22:00:00"),
       List(
         NumericValue(name = "Temperature", value = "25.2", valueUnit = "°C")))
   )
 
 // Return all timestamps until 2013-03-07T20:30:00 (i.e. the first 3 timestamps)
 
-val someDateTime = DateTime("2013-03-07T20:30:00")
+val someDateTime = DateTime.parse("2013-03-07T20:30:00")
 
 val oldTimestamps =
   someTimestamps.filter(timestamp => timestamp.value.isBefore(someDateTime))
@@ -104,7 +104,8 @@ val oldTimestamps =
 // Return all timestamps having a temperature over 25°C (i.e. the last 2 timestamps)
 
 def hasTemperatureExceeding(timestamp: Timestamp, minTemp: Double): Boolean = {
-  timestamp.numericValues.exists(v => v.name == "Temperature" && v.valueUnit == "°C" && v.value.toDouble > minTemp)
+  timestamp.numericValues.exists(v =>
+    v.name == "Temperature" && v.valueUnit == "°C" && v.value.toDouble > minTemp)
 }
 
 val timestampsWithHighTemperatures =
@@ -168,16 +169,16 @@ plug in different "XML backends", thus making the "XML stack" very powerful.</p>
 
 // Return all timestamps until 2013-03-07T20:30:00 (i.e. the first 3 timestamps)
 
-val someDateTime = DateTime("2013-03-07T20:30:00")
+val someDateTime = DateTime.parse("2013-03-07T20:30:00")
 
 val oldTimestamps =
   node.filterChildElems(e => e.localName == "timestamp" &&
-    DateTime(e.attribute(EName("value"))).isBefore(someDateTime))
+    DateTime.parse(e.attribute(EName("value"))).isBefore(someDateTime))
 
 // Return all timestamps having a temperature over 25°C (i.e. the last 2 timestamps)
 
 def hasTemperatureExceeding(timestamp: simple.Elem, minTemp: Double): Boolean = {
-  require(book.localName == "timestamp")
+  require(timestamp.localName == "timestamp")
 
   val temperatures =
     timestamp.filterChildElems(e => e.attribute(EName("name")) == "Temperature" &&
