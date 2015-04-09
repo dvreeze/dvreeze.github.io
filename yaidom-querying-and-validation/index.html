@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Yaidom - A Scala XML querying and validation API</title>
+
+		<meta name="description" content="Yaidom - A Scala query API">
+		<meta name="author" content="Chris de Vreeze">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/beige.css" id="theme">
+		<!-- TODO Extra style like in taxoviewer.css?? -->
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!--[if lt IE 9]>
+			{% javascript lib/html5shiv.js %}
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Yaidom</h1>
+					<h3>A Scala XML query and validation API</h3>
+					<p>
+						<small>Created by <a href="chris.de.vreeze@inology.nl">Chris de Vreeze @ EBPI</a></small>
+					</p>
+				</section>
+
+				<section>
+					<h3>What is yaidom?</h3>
+ 					<ul>
+						<li class="fragment" data-fragment-index="1">An XML query and transformation API</li>
+						<li class="fragment" data-fragment-index="2">Leverages Scala and the Scala Collections API</li>
+						<li class="fragment" data-fragment-index="3">The XML query API is small and uniform</li>
+						<li class="fragment" data-fragment-index="4">It is offered by multiple element implementations</li>
+						<li class="fragment" data-fragment-index="5">Including your own custom ones</li>
+						<li class="fragment" data-fragment-index="6">Very precise XML namespace support</li>
+						<li class="fragment" data-fragment-index="7">Full control over XML parsing and serialization</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Yaidom examples</h3>
+					<ul>
+						<li class="fragment" data-fragment-index="1">Yaidom is shown by example code</li>
+						<li class="fragment" data-fragment-index="2">Some examples use an <em>XMPP</em> message with sensor data</li>
+						<li class="fragment" data-fragment-index="3">Other examples use an <em>XBRL instance</em></li>
+						<li class="fragment" data-fragment-index="4">At a low level of abstraction, this is all "just" XML</li>
+						<li class="fragment" data-fragment-index="5">Yaidom brings a Scala Collections "experience" to XML</li>
+						<li class="fragment" data-fragment-index="6">At a higher level of abstraction, XMPP and XBRL are different "XML dialects"</li>
+						<li class="fragment" data-fragment-index="7">Yaidom also facilitates these higher abstraction levels</li>
+					</ul>
+				</section>
+
+				<section>
+					<section>
+						<h3>Yaidom examples</h3>
+						<ul>
+							<li>The first example XML is an XMPP message, containing sensor data</li>
+							<li>See XEP-0323 (sensor data) for the example</li>
+						</ul>
+					</section>
+					<section>
+						<pre style="font-size:20px;line-height:14px;padding:15px;">
+&lt;message from='device@clayster.com' to='client@clayster.com/amr'&gt;<br/>
+  &lt;fields xmlns='urn:xmpp:iot:sensordata' seqnr='4'&gt;<br/>
+    &lt;node nodeId='Device01'&gt;<br/>
+      &lt;timestamp value='2013-03-07T19:00:00'&gt;<br/>
+        &lt;numeric<br/>
+          name='Temperature, Max' peak='true'<br/>
+          automaticReadout='true'<br/>
+          value='25.9' unit='°C'/&gt; <br/>
+        &lt;numeric<br/>
+          name='Temperature, Min' peak='true'<br/>
+          automaticReadout='true'<br/>
+          value='18.7' unit='°C'/&gt; <br/>
+        &lt;numeric<br/>
+          name='Temperature, Mean' computed='true'<br/>
+          automaticReadout='true'<br/>
+          value='22.5' unit='°C'/&gt; <br/>
+      &lt;/timestamp&gt;<br/>
+    &lt;/node&gt;<br/>
+  &lt;/fields&gt;<br/>
+&lt;/message&gt;<br/>
+						</pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h3>Yaidom examples (finding child elements)</h3>
+						<ul>
+							<li>Let's (repeatedly) find child elements</li>
+							<li>Using yaidom verb <em>filterChildElems</em></li>
+						</ul>
+					</section>
+					<section>
+						<pre style="font-size:20px;line-height:14px;padding:15px;">
+&lt;message from='device@clayster.com' to='client@clayster.com/amr'&gt;<br/>
+  &lt;fields xmlns='urn:xmpp:iot:sensordata' seqnr='4'&gt;<br/>
+    &lt;node nodeId='Device01'&gt;<br/>
+      &lt;timestamp value='2013-03-07T19:00:00'&gt;<br/>
+        &lt;numeric<br/>
+          name='Temperature, Max' peak='true'<br/>
+          automaticReadout='true'<br/>
+          value='25.9' unit='°C'/&gt; <br/>
+        &lt;numeric<br/>
+          name='Temperature, Min' peak='true'<br/>
+          automaticReadout='true'<br/>
+          value='18.7' unit='°C'/&gt; <br/>
+        &lt;numeric<br/>
+          name='Temperature, Mean' computed='true'<br/>
+          automaticReadout='true'<br/>
+          value='22.5' unit='°C'/&gt; <br/>
+      &lt;/timestamp&gt;<br/>
+    &lt;/node&gt;<br/>
+  &lt;/fields&gt;<br/>
+&lt;/message&gt;<br/>
+						</pre>
+					</section>
+					<section>
+						<h3>Yaidom examples (finding child elements)</h3>
+						<p>Repeatedly finding child elements:
+							<pre><code data-trim class="scala">
+val ns = "urn:xmpp:iot:sensordata"
+val temperatures =
+  for {
+    fields <-
+      message.filterChildElems(e =>
+        e.resolvedName == EName(ns, "fields"))
+    node <-
+      fields.filterChildElems(e =>
+        e.resolvedName == EName(ns, "node"))
+    timestamp <-
+      node.filterChildElems(e =>
+        e.resolvedName == EName(ns, "timestamp"))
+    num <-
+      timestamp.filterChildElems(e =>
+        e.resolvedName == EName(ns, "numeric"))
+    if num.attribute(EName("name")).startsWith("Temperature")
+  } yield num
+							</code></pre>
+						</p>
+					</section>
+					<section>
+						<h3>Yaidom examples (finding child elements)</h3>
+						<p>Or slightly less verbose:
+							<pre><code data-trim class="scala">
+val ns = "urn:xmpp:iot:sensordata"
+
+val temperatures =
+  for {
+    fields <-
+      message.filterChildElems(withEName(ns, "fields"))
+    node <-
+      fields.filterChildElems(withEName(ns, "node"))
+    timestamp <-
+      node.filterChildElems(withEName(ns, "timestamp"))
+    num <-
+      timestamp.filterChildElems(withEName(ns, "numeric"))
+    if num.attribute(EName("name")).startsWith("Temperature")
+  } yield num
+							</code></pre>
+						</p>
+					</section>
+					<section>
+						<h3>Yaidom examples (finding child elements)</h3>
+						<p>Using "\" for filtering child elements:
+							<pre><code data-trim class="scala">
+val ns = "urn:xmpp:iot:sensordata"
+
+val temperatures =
+  for {
+    fields <- message \ withEName(ns, "fields")
+    node <- fields \ withEName(ns, "node")
+    timestamp <- node \ withEName(ns, "timestamp")
+    num <- timestamp \ withEName(ns, "numeric")
+    if (num \@ EName("name")).getOrElse("").startsWith("Temperature")
+  } yield num
+							</code></pre>
+						</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h3>Yaidom examples (finding descendant elements)</h3>
+						<ul>
+							<li>Let's find descendant (or descendant-or-self) elements</li>
+							<li>Using yaidom verbs <em>filterElems</em> and <em>filterElemsOrSelf</em></li>
+						</ul>
+					</section>
+					<section>
+						<pre style="font-size:20px;line-height:14px;padding:15px;">
+&lt;message from='device@clayster.com' to='client@clayster.com/amr'&gt;<br/>
+  &lt;fields xmlns='urn:xmpp:iot:sensordata' seqnr='4'&gt;<br/>
+    &lt;node nodeId='Device01'&gt;<br/>
+      &lt;timestamp value='2013-03-07T19:00:00'&gt;<br/>
+        &lt;numeric<br/>
+          name='Temperature, Max' peak='true'<br/>
+          automaticReadout='true'<br/>
+          value='25.9' unit='°C'/&gt; <br/>
+        &lt;numeric<br/>
+          name='Temperature, Min' peak='true'<br/>
+          automaticReadout='true'<br/>
+          value='18.7' unit='°C'/&gt; <br/>
+        &lt;numeric<br/>
+          name='Temperature, Mean' computed='true'<br/>
+          automaticReadout='true'<br/>
+          value='22.5' unit='°C'/&gt; <br/>
+      &lt;/timestamp&gt;<br/>
+    &lt;/node&gt;<br/>
+  &lt;/fields&gt;<br/>
+&lt;/message&gt;<br/>
+						</pre>
+					</section>
+					<section>
+						<h3>Yaidom examples (finding descendant elements)</h3>
+						<p>Finding descendant elements:
+							<pre><code data-trim class="scala">
+val ns = "urn:xmpp:iot:sensordata"
+
+val temperatures =
+  for {
+    num <- message.filterElems(withEName(ns, "numeric"))
+    if num.attribute(EName("name")).startsWith("Temperature")
+  } yield num
+							</code></pre>
+						</p>
+						<p>Finding descendant-or-self elements (same result):
+							<pre><code data-trim class="scala">
+val temperatures =
+  for {
+    num <- message.filterElemsOrSelf(withEName(ns, "numeric"))
+    if num.attribute(EName("name")).startsWith("Temperature")
+  } yield num
+							</code></pre>
+						</p>
+					</section>
+					<section>
+						<h3>Yaidom examples (finding descendant elements)</h3>
+						<p>Using "\\" for filtering descendant-or-self elements:
+							<pre><code data-trim class="scala">
+val ns = "urn:xmpp:iot:sensordata"
+
+val temperatures =
+  for {
+    num <- message \\ withEName(ns, "numeric")
+    if (num \@ EName("name")).getOrElse("").startsWith("Temperature")
+  } yield num
+							</code></pre>
+						</p>
+					</section>
+				</section>
+
+				<section>
+					<h3>One query API, multiple implementations</h3>
+					<ul>
+						<li class="fragment" data-fragment-index="1">Default (yaidom) immutable "simple" elements</li>
+						<li class="fragment" data-fragment-index="2">Immutable "indexed" elements, knowing their ancestry</li>
+						<li class="fragment" data-fragment-index="3">Immutable "resolved" elements, with sensible equality</li>
+						<li class="fragment" data-fragment-index="4">Yaidom wrappers for DOM</li>
+						<li class="fragment" data-fragment-index="5">Yaidom wrappers for Saxon NodeInfo</li>
+						<li class="fragment" data-fragment-index="6">etc.</li>
+					</ul>
+					<p class="fragment" data-fragment-index="7">The preceding examples work for all these implementations!</p>
+					<p class="fragment" data-fragment-index="8">And they are easy to bootstrap (little code needed)</p>
+				</section>
+
+				<section> 
+					<h3>Why yaidom? Why not XPath, Scala XML, etc.?</h3>
+					<ul>
+						<li class="fragment" data-fragment-index="1">Just Scala, not having to deal with DOM node sets</li>
+						<li class="fragment" data-fragment-index="2">Ease of use and expressive power of Scala language (intermediate results, functions, OO, etc.)</li>
+						<li class="fragment" data-fragment-index="3">Scala Collections API used as <em>universal query language</em></li>
+						<li class="fragment" data-fragment-index="4">No XDM/XPath quirks (singleton sequences, "equality" etc.)</li>
+						<li class="fragment" data-fragment-index="5">Very fast</li>
+						<li class="fragment" data-fragment-index="6">Excellent namespace support</li>
+						<li class="fragment" data-fragment-index="7">One <em>uniform</em> XML query API, <em>multiple</em> implementations</li>
+						<li class="fragment" data-fragment-index="8">None of the Scala/Java alternatives offered all of this</li>
+					</ul>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
