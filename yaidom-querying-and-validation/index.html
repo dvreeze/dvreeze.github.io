@@ -38,6 +38,9 @@
 					<p>
 						<small>Created by <a href="chris.de.vreeze@inology.nl">Chris de Vreeze @ EBPI</a></small>
 					</p>
+					<p>
+						<small>Powered by <a href="http://lab.hakim.se/reveal-js">reveal.js</a></small>
+					</p>
 				</section>
 
 				<section>
@@ -61,7 +64,7 @@
 						<li class="fragment" data-fragment-index="3">Other examples use an <em>XBRL instance</em></li>
 						<li class="fragment" data-fragment-index="4">At a low level of abstraction, this is all "just" XML</li>
 						<li class="fragment" data-fragment-index="5">Yaidom brings a Scala Collections "experience" to XML</li>
-						<li class="fragment" data-fragment-index="6">At a higher level of abstraction, XMPP and XBRL are different "XML dialects"</li>
+						<li class="fragment" data-fragment-index="6">At a higher level of abstraction, XMPP and XBRL are different (groups of) "XML dialects"</li>
 						<li class="fragment" data-fragment-index="7">Yaidom also facilitates these higher abstraction levels</li>
 					</ul>
 				</section>
@@ -72,6 +75,10 @@
 						<ul>
 							<li>The first example XML is an XMPP message, containing sensor data</li>
 							<li>See XEP-0323 (sensor data) for the example</li>
+							<li>Only the XML processing (using yaidom) is shown</li>
+							<li>An XMPP client library could handle the "protocol"</li>
+							<li>For example, <a href="http://sco0ter.bitbucket.org/babbler/">Babbler</a></li>
+							<li>Bridging between yaidom and Babbler via JAXB</li>
 						</ul>
 					</section>
 					<section>
@@ -80,15 +87,15 @@
   &lt;fields xmlns='urn:xmpp:iot:sensordata' seqnr='4'&gt;<br/>
     &lt;node nodeId='Device01'&gt;<br/>
       &lt;timestamp value='2013-03-07T19:00:00'&gt;<br/>
-        &lt;numeric<br/>
+        <span style="background-color:gold;padding:2px;">&lt;numeric</span><br/>
           name='Temperature, Max' peak='true'<br/>
           automaticReadout='true'<br/>
           value='25.9' unit='°C'/&gt; <br/>
-        &lt;numeric<br/>
+        <span style="background-color:gold;padding:2px;">&lt;numeric</span><br/>
           name='Temperature, Min' peak='true'<br/>
           automaticReadout='true'<br/>
           value='18.7' unit='°C'/&gt; <br/>
-        &lt;numeric<br/>
+        <span style="background-color:gold;padding:2px;">&lt;numeric</span><br/>
           name='Temperature, Mean' computed='true'<br/>
           automaticReadout='true'<br/>
           value='22.5' unit='°C'/&gt; <br/>
@@ -111,24 +118,24 @@
 					<section>
 						<pre style="font-size:20px;line-height:14px;padding:15px;">
 &lt;message from='device@clayster.com' to='client@clayster.com/amr'&gt;<br/>
-  &lt;fields xmlns='urn:xmpp:iot:sensordata' seqnr='4'&gt;<br/>
-    &lt;node nodeId='Device01'&gt;<br/>
-      &lt;timestamp value='2013-03-07T19:00:00'&gt;<br/>
-        &lt;numeric<br/>
+  <span style="background-color:indianred;padding:2px;">&lt;fields</span> xmlns='urn:xmpp:iot:sensordata' seqnr='4'&gt;<br/>
+    <span style="background-color:green;padding:2px;">&lt;node</span> nodeId='Device01'&gt;<br/>
+      <span style="background-color:dodgerblue;padding:2px;">&lt;timestamp</span> value='2013-03-07T19:00:00'&gt;<br/>
+        <span style="background-color:gold;padding:2px;">&lt;numeric</span><br/>
           name='Temperature, Max' peak='true'<br/>
           automaticReadout='true'<br/>
           value='25.9' unit='°C'/&gt; <br/>
-        &lt;numeric<br/>
+        <span style="background-color:gold;padding:2px;">&lt;numeric</span><br/>
           name='Temperature, Min' peak='true'<br/>
           automaticReadout='true'<br/>
           value='18.7' unit='°C'/&gt; <br/>
-        &lt;numeric<br/>
+        <span style="background-color:gold;padding:2px;">&lt;numeric</span><br/>
           name='Temperature, Mean' computed='true'<br/>
           automaticReadout='true'<br/>
           value='22.5' unit='°C'/&gt; <br/>
-      &lt;/timestamp&gt;<br/>
-    &lt;/node&gt;<br/>
-  &lt;/fields&gt;<br/>
+      <span style="background-color:dodgerblue;padding:2px;">&lt;/timestamp&gt;</span><br/>
+    <span style="background-color:green;padding:2px;">&lt;/node&gt;</span><br/>
+  <span style="background-color:indianred;padding:2px;">&lt;/fields&gt;</span><br/>
 &lt;/message&gt;<br/>
 						</pre>
 					</section>
@@ -210,15 +217,15 @@ val temperatures =
   &lt;fields xmlns='urn:xmpp:iot:sensordata' seqnr='4'&gt;<br/>
     &lt;node nodeId='Device01'&gt;<br/>
       &lt;timestamp value='2013-03-07T19:00:00'&gt;<br/>
-        &lt;numeric<br/>
+        <span style="background-color:gold;padding:2px;">&lt;numeric</span><br/>
           name='Temperature, Max' peak='true'<br/>
           automaticReadout='true'<br/>
           value='25.9' unit='°C'/&gt; <br/>
-        &lt;numeric<br/>
+        <span style="background-color:gold;padding:2px;">&lt;numeric</span><br/>
           name='Temperature, Min' peak='true'<br/>
           automaticReadout='true'<br/>
           value='18.7' unit='°C'/&gt; <br/>
-        &lt;numeric<br/>
+        <span style="background-color:gold;padding:2px;">&lt;numeric</span><br/>
           name='Temperature, Mean' computed='true'<br/>
           automaticReadout='true'<br/>
           value='22.5' unit='°C'/&gt; <br/>
