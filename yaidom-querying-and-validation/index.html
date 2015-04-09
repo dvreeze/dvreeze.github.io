@@ -361,8 +361,8 @@ val temperatures =
 						<ul>
 							<li>We can query this XBRL instance at a low level, as XML</li>
 							<li>Using <em>filterChildElems</em> to get contexts, units and top-level facts</li>
-							<li>Using <em>filterElems</em> or <em>findAllElems</em> (from top-level facts) to get nested facts</li>
-							<li>Using <em>filterElemsOrSelf</em> or <em>findAllElemsOrSelf</em> (from top-level facts) to get all facts</li>
+							<li>Using <em>filterElems</em> (from top-level facts) to get nested facts</li>
+							<li>Using <em>filterElemsOrSelf</em> (from top-level facts) to get all facts</li>
 						</ul>
 					</section>
 					<section>
@@ -400,19 +400,20 @@ val temperatures =
 val ns = "http://www.xbrl.org/2003/instance"
 val linkNs = "http://www.xbrl.org/2003/linkbase"
 
-val contexts = xbrlInstance.filterChildElems(withEName(ns, "context"))
-val units = xbrlInstance.filterChildElems(withEName(ns, "unit"))
-
-def hasCustomNamespace(e: Elem): Boolean = {
+def hasCustomNs(e: Elem): Boolean = {
   !Set(Option(ns), Option(linkNs)).contains(
     e.resolvedName.namespaceUriOption)
 }
 
-val topLevelFacts =
-  xbrlInstance.filterChildElems(e => hasCustomNamespace(e))
+val contexts = xbrlInstance.filterChildElems(withEName(ns, "context"))
+val units = xbrlInstance.filterChildElems(withEName(ns, "unit"))
 
-val nestedFacts = topLevelFacts.flatMap(e => e.findAllElems)
-val allFacts = topLevelFacts.flatMap(e => e.findAllElemsOrSelf)
+val topLevelFacts =
+  xbrlInstance.filterChildElems(e => hasCustomNs(e))
+val nestedFacts =
+  topLevelFacts.flatMap(_.filterElems(e => hasCustomNs(e)))
+val allFacts =
+  topLevelFacts.flatMap(_.filterElemsOrSelf(e => hasCustomNs(e)))
 							</code></pre>
 						</p>
 					</section>
