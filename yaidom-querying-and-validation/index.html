@@ -302,6 +302,122 @@ val temperatures =
 					</ul>
 				</section>
 
+				<section> 
+					<h3>Validations with yaidom</h3>
+					<ul>
+						<li class="fragment" data-fragment-index="1">Yaidom facilitates creation of type-safe immutable "DOM views"</li>
+						<li class="fragment" data-fragment-index="2">On top of which higher level (immutable) models can be built</li>
+						<li class="fragment" data-fragment-index="3">For specific domains, such as XMPP, XBRL, etc.</li>
+						<li class="fragment" data-fragment-index="4">These (low and high level) models support (complex) validations</li>
+						<li class="fragment" data-fragment-index="5">At EBPI we use this approach for XBRL processing, etc.</li>
+						<li class="fragment" data-fragment-index="6">Let's turn to an XBRL example</li>
+					</ul>
+				</section>
+
+				<section> 
+					<section>
+						<h3>Yaidom XBRL example</h3>
+						<ul>
+							<li>A business report in XBRL is called an <em>XBRL instance</em></li>
+							<li>It reports <em>facts</em></li>
+							<li>Having <em>contexts</em> ("who", "when" etc.)</li>
+							<li>And possibly <em>units</em> ("which currency", etc.)</li>
+						</ul>
+					</section>
+					<section>
+						<pre style="font-size:20px;line-height:14px;padding:15px;">
+&lt;xbrli:xbrl xmlns:xbrli="http://www.xbrl.org/2003/instance"<br/>
+  xmlns:bw2-i="bw2-data" xmlns:kvk-t="kvk-tuple" xmlns:nl-cd="nl-cd"&gt;<br/>
+  <span style="background-color:indianred;padding:2px;">&lt;xbrli:context</span> id="FY14d"&gt; <br/> 
+    &lt;xbrli:entity&gt;<br/>
+      &lt;xbrli:identifier scheme="http://www.kvk.nl/kvk-id"&gt;30267975<br/>
+      &lt;/xbrli:identifier&gt;<br/>
+    &lt;/xbrli:entity&gt;<br/>
+    &lt;xbrli:period&gt;<br/>
+      &lt;xbrli:startDate&gt;2014-01-01&lt;/xbrli:startDate&gt;<br/>
+      &lt;xbrli:endDate&gt;2014-12-31&lt;/xbrli:endDate&gt;<br/>
+    &lt;/xbrli:period&gt;<br/>
+  <span style="background-color:indianred;padding:2px;">&lt;/xbrli:context&gt;</span><br/>
+  <span style="background-color:green;padding:2px;">&lt;xbrli:unit</span> id="EUR"&gt;<br/>
+    &lt;xbrli:measure&gt;iso4217:EUR&lt;/xbrli:measure&gt;<br/>
+  <span style="background-color:green;padding:2px;">&lt;/xbrli:unit&gt;</span><br/>
+  <span style="background-color:gold;padding:2px;">&lt;bw2-i:Equity</span> contextRef="FY14d" unitRef="EUR"<br/>
+    decimals="INF"&gt;95000<span style="background-color:gold;padding:2px;">&lt;/bw2-i:Equity&gt;</span><br/>
+  <span style="background-color:gold;padding:2px;">&lt;kvk-t:EntityAddressPresentation&gt;</span><br/>
+    <span style="background-color:gold;padding:2px;">&lt;nl-cd:POBoxNumber</span> contextRef="FY14d"&gt;2312<span style="background-color:gold;padding:2px;">&lt;/nl-cd:POBoxNumber&gt;</span><br/>
+    <span style="background-color:gold;padding:2px;">&lt;nl-cd:PostalCodeNL</span> contextRef="FY14d"&gt;2501CD<span style="background-color:gold;padding:2px;">&lt;/nl-cd:PostalCodeNL&gt;</span><br/>
+    <span style="background-color:gold;padding:2px;">&lt;nl-cd:PlaceOfResidenceNL</span> contextRef="FY14d"&gt;Den Haag<br/>
+    <span style="background-color:gold;padding:2px;">&lt;/nl-cd:PlaceOfResidenceNL&gt;</span><br/>
+    <span style="background-color:gold;padding:2px;">&lt;nl-cd:CountryName</span> contextRef="FY14d"&gt;Nederland<span style="background-color:gold;padding:2px;">&lt;/nl-cd:CountryName&gt;</span><br/>
+  <span style="background-color:gold;padding:2px;">&lt;/kvk-t:EntityAddressPresentation&gt;</span><br/>
+&lt;/xbrli:xbrl&gt;
+						</pre>
+					</section>
+				</section>
+
+				<section> 
+					<section>
+						<h3>Yaidom XBRL example</h3>
+						<ul>
+							<li>We can query this XBRL instance at a low level, as XML</li>
+							<li>Using <em>filterChildElems</em> to get contexts, units and top-level facts</li>
+							<li>Using <em>filterElems</em> or <em>findAllElems</em> (from top-level facts) to get nested facts</li>
+							<li>Using <em>filterElemsOrSelf</em> or <em>findAllElemsOrSelf</em> (from top-level facts) to get all facts</li>
+						</ul>
+					</section>
+					<section>
+						<pre style="font-size:20px;line-height:14px;padding:15px;">
+&lt;xbrli:xbrl xmlns:xbrli="http://www.xbrl.org/2003/instance"<br/>
+  xmlns:bw2-i="bw2-data" xmlns:kvk-t="kvk-tuple" xmlns:nl-cd="nl-cd"&gt;<br/>
+  <span style="background-color:indianred;padding:2px;">&lt;xbrli:context</span> id="FY14d"&gt; <br/> 
+    &lt;xbrli:entity&gt;<br/>
+      &lt;xbrli:identifier scheme="http://www.kvk.nl/kvk-id"&gt;30267975<br/>
+      &lt;/xbrli:identifier&gt;<br/>
+    &lt;/xbrli:entity&gt;<br/>
+    &lt;xbrli:period&gt;<br/>
+      &lt;xbrli:startDate&gt;2014-01-01&lt;/xbrli:startDate&gt;<br/>
+      &lt;xbrli:endDate&gt;2014-12-31&lt;/xbrli:endDate&gt;<br/>
+    &lt;/xbrli:period&gt;<br/>
+  <span style="background-color:indianred;padding:2px;">&lt;/xbrli:context&gt;</span><br/>
+  <span style="background-color:green;padding:2px;">&lt;xbrli:unit</span> id="EUR"&gt;<br/>
+    &lt;xbrli:measure&gt;iso4217:EUR&lt;/xbrli:measure&gt;<br/>
+  <span style="background-color:green;padding:2px;">&lt;/xbrli:unit&gt;</span><br/>
+  <span style="background-color:gold;padding:2px;">&lt;bw2-i:Equity</span> contextRef="FY14d" unitRef="EUR"<br/>
+    decimals="INF"&gt;95000<span style="background-color:gold;padding:2px;">&lt;/bw2-i:Equity&gt;</span><br/>
+  <span style="background-color:gold;padding:2px;">&lt;kvk-t:EntityAddressPresentation&gt;</span><br/>
+    <span style="background-color:gold;padding:2px;">&lt;nl-cd:POBoxNumber</span> contextRef="FY14d"&gt;2312<span style="background-color:gold;padding:2px;">&lt;/nl-cd:POBoxNumber&gt;</span><br/>
+    <span style="background-color:gold;padding:2px;">&lt;nl-cd:PostalCodeNL</span> contextRef="FY14d"&gt;2501CD<span style="background-color:gold;padding:2px;">&lt;/nl-cd:PostalCodeNL&gt;</span><br/>
+    <span style="background-color:gold;padding:2px;">&lt;nl-cd:PlaceOfResidenceNL</span> contextRef="FY14d"&gt;Den Haag<br/>
+    <span style="background-color:gold;padding:2px;">&lt;/nl-cd:PlaceOfResidenceNL&gt;</span><br/>
+    <span style="background-color:gold;padding:2px;">&lt;nl-cd:CountryName</span> contextRef="FY14d"&gt;Nederland<span style="background-color:gold;padding:2px;">&lt;/nl-cd:CountryName&gt;</span><br/>
+  <span style="background-color:gold;padding:2px;">&lt;/kvk-t:EntityAddressPresentation&gt;</span><br/>
+&lt;/xbrli:xbrl&gt;
+						</pre>
+					</section>
+					<section>
+						<p>Finding facts, contexts and units (at a low level of abstraction):
+							<pre><code data-trim class="scala">
+val ns = "http://www.xbrl.org/2003/instance"
+val linkNs = "http://www.xbrl.org/2003/linkbase"
+
+val contexts = xbrlInstance.filterChildElems(withEName(ns, "context"))
+val units = xbrlInstance.filterChildElems(withEName(ns, "unit"))
+
+def hasCustomNamespace(e: Elem): Boolean = {
+  !Set(Option(ns), Option(linkNs)).contains(
+    e.resolvedName.namespaceUriOption)
+}
+
+val topLevelFacts =
+  xbrlInstance.filterChildElems(e => hasCustomNamespace(e))
+
+val nestedFacts = topLevelFacts.flatMap(e => e.findAllElems)
+val allFacts = topLevelFacts.flatMap(e => e.findAllElemsOrSelf)
+							</code></pre>
+						</p>
+					</section>
+				</section>
+
 			</div>
 
 		</div>
