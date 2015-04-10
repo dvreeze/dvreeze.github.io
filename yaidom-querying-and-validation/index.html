@@ -39,7 +39,7 @@
 						<small>Created by <a href="chris.de.vreeze@inology.nl">Chris de Vreeze @ EBPI</a></small>
 					</p>
 					<p>
-						<small>Powered by <a href="http://lab.hakim.se/reveal-js">reveal.js</a></small>
+						<small>Presentation powered by <a href="http://lab.hakim.se/reveal-js">reveal.js</a></small>
 					</p>
 				</section>
 
@@ -305,12 +305,13 @@ val temperatures =
 				<section> 
 					<h3>Validations with yaidom</h3>
 					<ul>
-						<li class="fragment" data-fragment-index="1">Yaidom facilitates creation of type-safe immutable "DOM views"</li>
-						<li class="fragment" data-fragment-index="2">On top of which higher level (immutable) models can be built</li>
-						<li class="fragment" data-fragment-index="3">For specific domains, such as XMPP, XBRL, etc.</li>
-						<li class="fragment" data-fragment-index="4">These (low and high level) models support (complex) validations</li>
+						<li class="fragment" data-fragment-index="1">Yaidom facilitates creation of type-safe immutable <em>"DOM views"</em> on wrapped elements</li>
+						<li class="fragment" data-fragment-index="2">On top of which higher level (immutable) <em>models</em> can be built, spanning multiple documents</li>
+						<li class="fragment" data-fragment-index="3">Used for specific domains, such as XMPP, XBRL, etc.</li>
+						<li class="fragment" data-fragment-index="4">These (low and high level) models support (possibly complex) validations</li>
 						<li class="fragment" data-fragment-index="5">At EBPI we use this approach for XBRL processing, etc.</li>
-						<li class="fragment" data-fragment-index="6">Let's turn to an XBRL example</li>
+						<li class="fragment" data-fragment-index="6">That's beyond the scope of this presentation</li>
+						<li class="fragment" data-fragment-index="7">Let's now turn to an XBRL example</li>
 					</ul>
 				</section>
 
@@ -325,9 +326,9 @@ val temperatures =
 						</ul>
 					</section>
 					<section>
-						<pre style="font-size:20px;line-height:14px;padding:15px;">
+						<pre style="font-size:17px;line-height:12px;padding:15px;">
 &lt;xbrli:xbrl xmlns:xbrli="http://www.xbrl.org/2003/instance"<br/>
-  xmlns:bw2-i="bw2-data" xmlns:kvk-t="kvk-tuple" xmlns:nl-cd="nl-cd"&gt;<br/>
+  xmlns:bw2-i="bw2i" xmlns:kvk-t="kvkt" xmlns:nl-cd="nlcd" xmlns:iso4217="iso4217"&gt;<br/>
   <span style="background-color:indianred;padding:2px;">&lt;xbrli:context</span> id="FY14d"&gt; <br/> 
     &lt;xbrli:entity&gt;<br/>
       &lt;xbrli:identifier scheme="http://www.kvk.nl/kvk-id"&gt;30267975<br/>
@@ -343,13 +344,13 @@ val temperatures =
   <span style="background-color:green;padding:2px;">&lt;/xbrli:unit&gt;</span><br/>
   <span style="background-color:gold;padding:2px;">&lt;bw2-i:Equity</span> contextRef="FY14d" unitRef="EUR"<br/>
     decimals="INF"&gt;95000<span style="background-color:gold;padding:2px;">&lt;/bw2-i:Equity&gt;</span><br/>
-  <span style="background-color:gold;padding:2px;">&lt;kvk-t:EntityAddressPresentation&gt;</span><br/>
+  <span style="background-color:yellow;padding:2px;">&lt;kvk-t:EntityAddressPresentation&gt;</span><br/>
     <span style="background-color:gold;padding:2px;">&lt;nl-cd:POBoxNumber</span> contextRef="FY14d"&gt;2312<span style="background-color:gold;padding:2px;">&lt;/nl-cd:POBoxNumber&gt;</span><br/>
     <span style="background-color:gold;padding:2px;">&lt;nl-cd:PostalCodeNL</span> contextRef="FY14d"&gt;2501CD<span style="background-color:gold;padding:2px;">&lt;/nl-cd:PostalCodeNL&gt;</span><br/>
     <span style="background-color:gold;padding:2px;">&lt;nl-cd:PlaceOfResidenceNL</span> contextRef="FY14d"&gt;Den Haag<br/>
     <span style="background-color:gold;padding:2px;">&lt;/nl-cd:PlaceOfResidenceNL&gt;</span><br/>
     <span style="background-color:gold;padding:2px;">&lt;nl-cd:CountryName</span> contextRef="FY14d"&gt;Nederland<span style="background-color:gold;padding:2px;">&lt;/nl-cd:CountryName&gt;</span><br/>
-  <span style="background-color:gold;padding:2px;">&lt;/kvk-t:EntityAddressPresentation&gt;</span><br/>
+  <span style="background-color:yellow;padding:2px;">&lt;/kvk-t:EntityAddressPresentation&gt;</span><br/>
 &lt;/xbrli:xbrl&gt;
 						</pre>
 					</section>
@@ -366,9 +367,9 @@ val temperatures =
 						</ul>
 					</section>
 					<section>
-						<pre style="font-size:20px;line-height:14px;padding:15px;">
+						<pre style="font-size:17px;line-height:12px;padding:15px;">
 &lt;xbrli:xbrl xmlns:xbrli="http://www.xbrl.org/2003/instance"<br/>
-  xmlns:bw2-i="bw2-data" xmlns:kvk-t="kvk-tuple" xmlns:nl-cd="nl-cd"&gt;<br/>
+  xmlns:bw2-i="bw2i" xmlns:kvk-t="kvkt" xmlns:nl-cd="nlcd" xmlns:iso4217="iso4217"&gt;<br/>
   <span style="background-color:indianred;padding:2px;">&lt;xbrli:context</span> id="FY14d"&gt; <br/> 
     &lt;xbrli:entity&gt;<br/>
       &lt;xbrli:identifier scheme="http://www.kvk.nl/kvk-id"&gt;30267975<br/>
@@ -384,13 +385,13 @@ val temperatures =
   <span style="background-color:green;padding:2px;">&lt;/xbrli:unit&gt;</span><br/>
   <span style="background-color:gold;padding:2px;">&lt;bw2-i:Equity</span> contextRef="FY14d" unitRef="EUR"<br/>
     decimals="INF"&gt;95000<span style="background-color:gold;padding:2px;">&lt;/bw2-i:Equity&gt;</span><br/>
-  <span style="background-color:gold;padding:2px;">&lt;kvk-t:EntityAddressPresentation&gt;</span><br/>
+  <span style="background-color:yellow;padding:2px;">&lt;kvk-t:EntityAddressPresentation&gt;</span><br/>
     <span style="background-color:gold;padding:2px;">&lt;nl-cd:POBoxNumber</span> contextRef="FY14d"&gt;2312<span style="background-color:gold;padding:2px;">&lt;/nl-cd:POBoxNumber&gt;</span><br/>
     <span style="background-color:gold;padding:2px;">&lt;nl-cd:PostalCodeNL</span> contextRef="FY14d"&gt;2501CD<span style="background-color:gold;padding:2px;">&lt;/nl-cd:PostalCodeNL&gt;</span><br/>
     <span style="background-color:gold;padding:2px;">&lt;nl-cd:PlaceOfResidenceNL</span> contextRef="FY14d"&gt;Den Haag<br/>
     <span style="background-color:gold;padding:2px;">&lt;/nl-cd:PlaceOfResidenceNL&gt;</span><br/>
     <span style="background-color:gold;padding:2px;">&lt;nl-cd:CountryName</span> contextRef="FY14d"&gt;Nederland<span style="background-color:gold;padding:2px;">&lt;/nl-cd:CountryName&gt;</span><br/>
-  <span style="background-color:gold;padding:2px;">&lt;/kvk-t:EntityAddressPresentation&gt;</span><br/>
+  <span style="background-color:yellow;padding:2px;">&lt;/kvk-t:EntityAddressPresentation&gt;</span><br/>
 &lt;/xbrli:xbrl&gt;
 						</pre>
 					</section>
@@ -417,6 +418,85 @@ val allFacts =
 							</code></pre>
 						</p>
 					</section>
+				</section>
+
+				<section> 
+					<section>
+						<h3>Yaidom XBRL example</h3>
+						<ul>
+							<li>To illustrate validations, let's find unused namespaces</li>
+							<li>This is very hard in general, if namespaces occur in element content or attribute values</li>
+							<li>Yaidom does not make this harder than needed</li>
+							<li>You provide a <em>DocumentENameExtractor</em></li>
+							<li>And yaidom finds the unused namespaces</li>
+						</ul>
+					</section>
+					<section>
+						<pre style="font-size:17px;line-height:12px;padding:15px;">
+&lt;xbrli:xbrl xmlns:xbrli="http://www.xbrl.org/2003/instance"<br/>
+  xmlns:bw2-i="bw2i" xmlns:kvk-t="kvkt" xmlns:nl-cd="nlcd" xmlns:iso4217="iso4217"<br/>
+  <span style="background-color:red;padding:2px;">xmlns:unused="unused"</span>&gt;<br/>
+  <span style="background-color:gold;padding:2px;">&lt;xbrli</span>:context id="FY14d"&gt; <br/> 
+    &lt;xbrli:entity&gt;<br/>
+      &lt;xbrli:identifier scheme="http://www.kvk.nl/kvk-id"&gt;30267975<br/>
+      &lt;/xbrli:identifier&gt;<br/>
+    &lt;/xbrli:entity&gt;<br/>
+    &lt;xbrli:period&gt;<br/>
+      &lt;xbrli:startDate&gt;2014-01-01&lt;/xbrli:startDate&gt;<br/>
+      &lt;xbrli:endDate&gt;2014-12-31&lt;/xbrli:endDate&gt;<br/>
+    &lt;/xbrli:period&gt;<br/>
+  &lt;/xbrli:context&gt;<br/>
+  &lt;xbrli:unit id="EUR"&gt;<br/>
+    &lt;xbrli:measure&gt;<span style="background-color:orange;padding:2px;">iso4217</span>:EUR&lt;/xbrli:measure&gt;<br/>
+  &lt;/xbrli:unit&gt;<br/>
+  <span style="background-color:gold;padding:2px;">&lt;bw2-i</span>:Equity contextRef="FY14d" unitRef="EUR"<br/>
+    decimals="INF"&gt;95000&lt;/bw2-i:Equity&gt;<br/>
+  <span style="background-color:gold;padding:2px;">&lt;kvk-t</span>:EntityAddressPresentation&gt;<br/>
+    <span style="background-color:gold;padding:2px;">&lt;nl-cd</span>:POBoxNumber contextRef="FY14d"&gt;2312&lt;/nl-cd:POBoxNumber&gt;<br/>
+    &lt;nl-cd:PostalCodeNL contextRef="FY14d"&gt;2501CD&lt;/nl-cd:PostalCodeNL&gt;<br/>
+    &lt;nl-cd:PlaceOfResidenceNL contextRef="FY14d"&gt;Den Haag<br/>
+    &lt;/nl-cd:PlaceOfResidenceNL&gt;<br/>
+    &lt;nl-cd:CountryName contextRef="FY14d"&gt;Nederland&lt;/nl-cd:CountryName&gt;<br/>
+  &lt;/kvk-t:EntityAddressPresentation&gt;<br/>
+&lt;/xbrli:xbrl&gt;
+						</pre>
+					</section>
+					<section>
+						<p>Finding unused namespaces:
+							<pre><code data-trim class="scala">
+import NamespaceUtils._
+
+// docENameExtractor must be coded in such a way that it recognizes
+// the namespace in the content of the measure element
+
+val usedNamespaces =
+  findAllNamespaces(indexed.Elem(xbrlInstance), docENameExtractor)
+
+// Knowing that all namespace declarations are in the document element
+
+val allNamespaces =
+  xbrlInstance.scope.prefixNamespaceMap.values.toSet
+
+val unusedNamespaces =
+  allNamespaces.diff(usedNamespaces)
+
+// This returns the namespace "unused"
+							</code></pre>
+						</p>
+					</section>
+				</section>
+
+				<section>
+					<h3>Conclusion</h3>
+					<ul>
+						<li>Scala and yaidom are a powerful "XML stack"</li>
+						<li>Yaidom also facilitates custom support for specific "XML dialects"</li>
+						<li>For example, XMPP and XBRL</li>
+					</ul>
+				</section>
+
+				<section>
+					<p style="font-size:70px">Any questions?</p>
 				</section>
 
 			</div>
