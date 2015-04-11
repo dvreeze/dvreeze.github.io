@@ -322,7 +322,11 @@ val temperatures =
 					<ul>
 						<li class="fragment" data-fragment-index="1">Excellent <em>namespace</em> support</li>
 						<li class="fragment" data-fragment-index="2">One <em>uniform</em> XML query API, <em>multiple</em> implementations</li>
-						<li class="fragment" data-fragment-index="3">Easy to add type-safety to yaidom elements</li>
+						<li class="fragment" data-fragment-index="3">Easy to create support for custom "XML dialects"
+							<ul>
+								<li>XMPP, XBRL etc.</li>
+							</ul>
+						</li>
 						<li class="fragment" data-fragment-index="4">None of the Scala/Java alternatives offered all of this</li>
 					</ul>
 				</section>
@@ -330,12 +334,17 @@ val temperatures =
 				<section> 
 					<h3>Validations with yaidom</h3>
 					<ul>
-						<li class="fragment" data-fragment-index="1">Yaidom facilitates creation of type-safe immutable <em>"DOM views"</em> on wrapped elements</li>
-						<li class="fragment" data-fragment-index="2">On top of which higher level (immutable) <em>models</em> can be built, spanning multiple documents</li>
-						<li class="fragment" data-fragment-index="3">Used for specific domains, such as XMPP, XBRL, etc.</li>
-						<li class="fragment" data-fragment-index="4">These (low and high level) models support (possibly complex) validations</li>
-						<li class="fragment" data-fragment-index="5">At EBPI we use this approach for XBRL processing, etc.</li>
-						<li class="fragment" data-fragment-index="6">That's beyond the scope of this presentation</li>
+						<li class="fragment" data-fragment-index="1">Yaidom facilitates creation of <em>"type-safe DOM views"</em>
+							<ul>
+								<li>For example, XEP-0323 message content can be modeled as a class hierarchy</li>
+								<li>Yet at the same time be "normal" yaidom elements</li>
+								<li>Yaidom makes it easy to query such custom elements</li>
+							</ul>
+						</li>
+						<li class="fragment" data-fragment-index="2">Higher level (multi-document) <em>models</em> are easy to create</li>
+						<li class="fragment" data-fragment-index="3">All these models support (possibly complex) validations</li>
+						<li class="fragment" data-fragment-index="4">At EBPI we use this approach for XBRL processing, etc.</li>
+						<li class="fragment" data-fragment-index="5">These models are beyond the scope of this presentation</li>
 					</ul>
 				</section>
 
