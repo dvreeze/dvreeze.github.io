@@ -36,10 +36,10 @@
 					<h1>Yaidom</h1>
 					<h3>A Scala XML query and validation API</h3>
 					<p>
-						<small>Created by <a href="chris.de.vreeze@inology.nl">Chris de Vreeze @ EBPI</a></small>
+						<small>Created by <a href="http://dvreeze.github.io/">Chris de Vreeze @ EBPI</a></small>
 					</p>
 					<p>
-						<small>Presentation powered by <a href="http://lab.hakim.se/reveal-js">reveal.js</a></small>
+						<br/><br/><small>Powered by <a href="http://lab.hakim.se/reveal-js">reveal.js</a></small>
 					</p>
 				</section>
 
@@ -141,7 +141,7 @@
 					</section>
 					<section>
 						<h3>Yaidom examples (finding child elements)</h3>
-						<p>Repeatedly finding child elements:
+						<p>Repeatedly finding child elements (verbosely):
 							<pre><code data-trim class="scala">
 val ns = "urn:xmpp:iot:sensordata"
 val temperatures =
@@ -165,7 +165,7 @@ val temperatures =
 					</section>
 					<section>
 						<h3>Yaidom examples (finding child elements)</h3>
-						<p>Or slightly less verbose:
+						<p>Or slightly less verbosely:
 							<pre><code data-trim class="scala">
 val ns = "urn:xmpp:iot:sensordata"
 
@@ -289,16 +289,38 @@ val temperatures =
 				</section>
 
 				<section> 
-					<h3>Why yaidom? Why not XPath, Scala XML, etc.?</h3>
+					<h3>Why yaidom? Why not standards like XPath, etc.?</h3>
 					<ul>
-						<li class="fragment" data-fragment-index="1">Just Scala, not having to deal with DOM node sets</li>
-						<li class="fragment" data-fragment-index="2">Ease of use and expressive power of Scala language (intermediate results, functions, OO, etc.)</li>
-						<li class="fragment" data-fragment-index="3">Scala Collections API used as <em>universal query language</em></li>
-						<li class="fragment" data-fragment-index="4">No XDM/XPath quirks (singleton sequences, "equality" etc.)</li>
-						<li class="fragment" data-fragment-index="5">Very fast</li>
-						<li class="fragment" data-fragment-index="6">Excellent namespace support</li>
-						<li class="fragment" data-fragment-index="7">One <em>uniform</em> XML query API, <em>multiple</em> implementations</li>
-						<li class="fragment" data-fragment-index="8">None of the Scala/Java alternatives offered all of this</li>
+						<li class="fragment" data-fragment-index="1">Processing Scala collections, not sequences (or node sets)</li>
+						<li class="fragment" data-fragment-index="2">Ease of use of Scala programming language
+							<ul>
+								<li>intermediate results, functions, etc.</li>
+							</ul>
+						</li>
+						<li class="fragment" data-fragment-index="3">Expressive power of object-oriented Scala language
+							<ul>
+								<li>e.g. when building layered models</li>
+							</ul>
+						</li>
+						<li class="fragment" data-fragment-index="4">Scala Collections API used as <em>universal query language</em></li>
+						<li class="fragment" data-fragment-index="5">No XDM/XPath quirks
+							<ul>
+								<li>XDM item equals singleton sequence with that item</li>
+								<li>no nested sequences in XDM</li>
+								<li>XPath "equality", etc.</li>
+							</ul>
+						</li>
+						<li class="fragment" data-fragment-index="6">Very fast</li>
+					</ul>
+				</section>
+
+				<section> 
+					<h3>Why yaidom? Why not Scala XML, etc.?</h3>
+					<ul>
+						<li class="fragment" data-fragment-index="1">Excellent <em>namespace</em> support</li>
+						<li class="fragment" data-fragment-index="2">One <em>uniform</em> XML query API, <em>multiple</em> implementations</li>
+						<li class="fragment" data-fragment-index="3">Easy to add type-safety to yaidom elements</li>
+						<li class="fragment" data-fragment-index="4">None of the Scala/Java alternatives offered all of this</li>
 					</ul>
 				</section>
 
@@ -311,7 +333,6 @@ val temperatures =
 						<li class="fragment" data-fragment-index="4">These (low and high level) models support (possibly complex) validations</li>
 						<li class="fragment" data-fragment-index="5">At EBPI we use this approach for XBRL processing, etc.</li>
 						<li class="fragment" data-fragment-index="6">That's beyond the scope of this presentation</li>
-						<li class="fragment" data-fragment-index="7">Let's now turn to an XBRL example</li>
 					</ul>
 				</section>
 
@@ -319,6 +340,8 @@ val temperatures =
 					<section>
 						<h3>Yaidom XBRL example</h3>
 						<ul>
+							<li>Let's now turn to an XBRL example</li>
+							<li>XBRL is a (financial) reporting standard</li>
 							<li>A business report in XBRL is called an <em>XBRL instance</em></li>
 							<li>It reports <em>facts</em></li>
 							<li>Having <em>contexts</em> ("who", "when" etc.)</li>
