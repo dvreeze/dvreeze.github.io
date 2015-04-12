@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Yaidom - A Scala XML querying and validation API</title>
+		<title>Yaidom - A Scala XML querying and transformation API</title>
 
 		<meta name="description" content="Yaidom - A Scala query API">
 		<meta name="author" content="Chris de Vreeze">
@@ -34,7 +34,7 @@
 			<div class="slides">
 				<section>
 					<h1>Yaidom</h1>
-					<h3>A Scala XML query and validation API</h3>
+					<h3>A Scala XML query and transformation API</h3>
 					<p>
 						<small>Shown by examples using XMPP and XBRL</a></small>
 					</p>
@@ -294,18 +294,18 @@ val temperatures =
 				<section> 
 					<h3>Why yaidom? Why not standards like XPath, etc.?</h3>
 					<ul>
-						<li class="fragment" data-fragment-index="1">Processing Scala collections, not sequences (or node sets)</li>
-						<li class="fragment" data-fragment-index="2">Ease of use of (Scala) programming language
+						<li class="fragment" data-fragment-index="1">Staying inside Scala, not processing sequences (or node sets)</li>
+						<li class="fragment" data-fragment-index="2">Ease of use of (Scala) <em>programming language</em>
 							<ul>
 								<li>intermediate results, functions, etc.</li>
 							</ul>
 						</li>
-						<li class="fragment" data-fragment-index="3">Expressive power of object-oriented Scala language
+						<li class="fragment" data-fragment-index="3">Expressive power of <em>object-oriented</em> Scala language
 							<ul>
 								<li>e.g. when building layered models</li>
 							</ul>
 						</li>
-						<li class="fragment" data-fragment-index="4">Scala Collections API used as <em>universal query language</em></li>
+						<li class="fragment" data-fragment-index="4">Scala <em>Collections API</em> used as <em>universal query language</em></li>
 						<li class="fragment" data-fragment-index="5">No XDM/XPath quirks
 							<ul>
 								<li>XDM item equals singleton sequence with that item</li>
@@ -322,7 +322,7 @@ val temperatures =
 					<ul>
 						<li class="fragment" data-fragment-index="1">Excellent <em>namespace</em> support</li>
 						<li class="fragment" data-fragment-index="2">One <em>uniform</em> XML query API, <em>multiple</em> implementations</li>
-						<li class="fragment" data-fragment-index="3">Easy to create support for custom "XML dialects"
+						<li class="fragment" data-fragment-index="3">Easy to "extend yaidom" for custom "XML dialects"
 							<ul>
 								<li>XMPP, XBRL etc.</li>
 							</ul>
@@ -332,7 +332,7 @@ val temperatures =
 				</section>
 
 				<section> 
-					<h3>Validations with yaidom</h3>
+					<h3>Modeling with and on top of yaidom</h3>
 					<ul>
 						<li class="fragment" data-fragment-index="1">Yaidom facilitates creation of <em>"type-safe DOM views"</em>
 							<ul>
@@ -341,9 +341,9 @@ val temperatures =
 								<li>Yaidom makes it easy to query such custom elements</li>
 							</ul>
 						</li>
-						<li class="fragment" data-fragment-index="2">Higher level (multi-document) <em>models</em> are easy to create</li>
+						<li class="fragment" data-fragment-index="2">Higher level (multi-document) <em>models</em> are easy to create using Scala</li>
 						<li class="fragment" data-fragment-index="3">All these models support (possibly complex) validations</li>
-						<li class="fragment" data-fragment-index="4">At EBPI we use this approach for XBRL processing, etc.</li>
+						<li class="fragment" data-fragment-index="4">At EBPI we use this layered approach for XBRL processing</li>
 						<li class="fragment" data-fragment-index="5">These models are beyond the scope of this presentation</li>
 					</ul>
 				</section>
@@ -459,7 +459,7 @@ val allFacts =
 					<section>
 						<h3>Yaidom XBRL example</h3>
 						<ul>
-							<li>To illustrate validations, let's find unused namespaces</li>
+							<li>To illustrate (low level) validations, let's find unused namespaces</li>
 							<li>This is very hard in general, if namespaces occur in element content or attribute values</li>
 							<li>Yaidom does not make this harder than needed</li>
 							<li>You provide a <em>DocumentENameExtractor</em></li>
@@ -525,7 +525,8 @@ val unusedNamespaces =
 					<h3>Conclusion</h3>
 					<ul>
 						<li>Scala and yaidom are a powerful "XML stack"</li>
-						<li>Yaidom also facilitates custom support for specific "XML dialects"</li>
+						<li>With pluggable element implementations</li>
+						<li>Yaidom is also extensible to specific "XML dialects"</li>
 						<li>For example, XMPP and XBRL</li>
 					</ul>
 				</section>
