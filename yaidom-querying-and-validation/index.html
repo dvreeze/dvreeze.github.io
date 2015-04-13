@@ -21,6 +21,15 @@
 		<!-- Code syntax highlighting -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
 
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
 		<!--[if lt IE 9]>
 			{% javascript lib/html5shiv.js %}
 		<![endif]-->
@@ -49,13 +58,14 @@
 				<section>
 					<h3>What is yaidom?</h3>
  					<ul>
-						<li class="fragment" data-fragment-index="1">An XML query and transformation API</li>
-						<li class="fragment" data-fragment-index="2">Leverages Scala and the Scala Collections API</li>
+						<li class="fragment" data-fragment-index="1">An <em>XML query</em> and transformation API</li>
+						<li class="fragment" data-fragment-index="2">Leverages <em>Scala</em> and the Scala Collections API</li>
 						<li class="fragment" data-fragment-index="3">The XML query API is small and uniform</li>
 						<li class="fragment" data-fragment-index="4">It is offered by multiple element implementations</li>
 						<li class="fragment" data-fragment-index="5">Including your own custom ones</li>
 						<li class="fragment" data-fragment-index="6">Very precise XML namespace support</li>
 						<li class="fragment" data-fragment-index="7">Full control over XML parsing and serialization</li>
+						<li class="fragment" data-fragment-index="8">In short, a useful XML library when using Scala to write complex (XML) <em>validations</em></li>
 					</ul>
 				</section>
 
@@ -64,24 +74,63 @@
 					<ul>
 						<li class="fragment" data-fragment-index="1">Yaidom is shown by example code</li>
 						<li class="fragment" data-fragment-index="2">Some examples use an <em>XMPP</em> message with sensor data</li>
-						<li class="fragment" data-fragment-index="3">Other examples use an <em>XBRL instance</em></li>
-						<li class="fragment" data-fragment-index="4">At a low level of abstraction, this is all "just" XML</li>
-						<li class="fragment" data-fragment-index="5">Yaidom brings a Scala Collections "experience" to XML</li>
-						<li class="fragment" data-fragment-index="6">At a higher level of abstraction, XMPP and XBRL are different (groups of) "XML dialects"</li>
-						<li class="fragment" data-fragment-index="7">Yaidom also facilitates these higher abstraction levels</li>
+						<li class="fragment" data-fragment-index="3">Other examples use an <em>XBRL instance</em> (financial report)</li>
+						<li class="fragment" data-fragment-index="4">At a low level of abstraction, this is all "just" XML
+							<ul>
+								<li>Yaidom brings a Scala Collections "experience" to XML</li>
+							</ul>
+						</li>
+						<li class="fragment" data-fragment-index="5">At a higher level of abstraction, XMPP and XBRL are different (groups of) "XML dialects"
+							<ul>
+								<li>Yaidom also facilitates the creation of higher level data models</li>
+								<li>By distinguishing between rich data models and (validation) behaviour, little code is spent on behaviour</li>
+							</ul>
+						</li>
 					</ul>
+				</section>
+
+				<section>
+					<h3>Introducing Scala for-comprehensions</h3>
+						<p>First a minimal "introduction to Scala":
+							<pre><code data-trim class="scala">
+val someNumbers = (0 until 10)
+
+val evenNumbers = someNumbers.filter(i => i % 2 == 0)
+
+// As for-comprehension, we get the same result
+
+val evenNumbers2 =
+  for {
+    i <- someNumbers
+    if i % 2 == 0
+  } yield i
+							</code></pre>
+							<pre><code data-trim class="scala">
+val powers = someNumbers.map(i => i * i)
+
+// As for-comprehension, we get the same result
+
+val powers2 =
+  for {
+    i <- someNumbers
+  } yield i * i
+							</code></pre>
+						</p>
 				</section>
 
 				<section>
 					<section>
 						<h3>Yaidom examples</h3>
 						<ul>
-							<li>The first example XML is an XMPP message, containing sensor data</li>
-							<li>See XEP-0323 (sensor data) for the example</li>
-							<li>Only the XML processing (using yaidom) is shown</li>
-							<li>An XMPP client library could handle the "protocol"</li>
-							<li>For example, <a href="http://sco0ter.bitbucket.org/babbler/">Babbler</a></li>
-							<li>Bridging between yaidom and Babbler via JAXB</li>
+							<li>Suppose we use an XMPP client library like <a href="http://sco0ter.bitbucket.org/babbler/">Babbler</a></li>
+							<li>And we want to add support for XEP-0323 (sensor data)</li>
+							<li>Using yaidom for parsing/creating the appropriate XML
+								<ul>
+									<li>Bridging between yaidom and Babbler via JAXB</li>
+								</ul>
+							</li>
+							<li>Then we must at least be able to query sensor data XML</li>
+							<li>So in the first example some yaidom querying of (XMPP) sensor data is shown</li>
 						</ul>
 					</section>
 					<section>
@@ -307,29 +356,37 @@ val temperatures =
 							</ul>
 						</li>
 						<li class="fragment" data-fragment-index="4">Scala <em>Collections API</em> used as <em>universal query language</em></li>
-						<li class="fragment" data-fragment-index="5">No XDM/XPath quirks
+						<li class="fragment" data-fragment-index="5">No XPath/XDM (XPath Data Model) pitfalls
 							<ul>
 								<li>XDM item equals singleton sequence with that item</li>
 								<li>no nested sequences in XDM</li>
-								<li>XPath "equality", etc.</li>
+								<li>XPath "equality" (seq1 = seq2 if "overlapping"), etc.</li>
 							</ul>
 						</li>
-						<li class="fragment" data-fragment-index="6">Very fast</li>
+						<li class="fragment" data-fragment-index="6">Very fast in querying (e.g. for "native" elements)</li>
 					</ul>
 				</section>
 
-				<section> 
-					<h3>Why yaidom? Why not Scala XML, etc.?</h3>
-					<ul>
-						<li class="fragment" data-fragment-index="1">Excellent <em>namespace</em> support</li>
-						<li class="fragment" data-fragment-index="2">One <em>uniform</em> XML query API, <em>multiple</em> implementations</li>
-						<li class="fragment" data-fragment-index="3">Easy to "extend yaidom" for custom "XML dialects"
-							<ul>
-								<li>XMPP, XBRL etc.</li>
-							</ul>
-						</li>
-						<li class="fragment" data-fragment-index="4">None of the Scala/Java alternatives offered all of this</li>
-					</ul>
+				<section>
+					<section>
+						<h3>Why yaidom? Why not one of many Java XML libraries?</h3>
+						<ul>
+							<li>Lacking Scala's Collections API</li>
+							<li>Typically either leading to verbose code, or using O-X data-binding</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Why yaidom? Why not Scala XML?</h3>
+						<ul>
+							<li>Excellent <em>namespace</em> support</li>
+							<li>One <em>uniform</em> XML query API, <em>multiple</em> implementations</li>
+							<li>Easy to "extend yaidom" for custom "XML dialects"
+								<ul>
+									<li>XMPP, XBRL etc.</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
 				</section>
 
 				<section> 
@@ -396,7 +453,9 @@ val temperatures =
 					<section>
 						<h3>Yaidom XBRL example</h3>
 						<ul>
-							<li>We can query this XBRL instance at a low level, as XML</li>
+							<li>Suppose we want to perform some (instance) validations</li>
+							<li>Then we need to query (at least) the XBRL instance</li>
+							<li>We can query the instance at a low level, as XML</li>
 							<li>Using <em>filterChildElems</em> to get contexts, units and top-level facts</li>
 							<li>Using <em>filterElems</em> (from top-level facts) to get nested facts</li>
 							<li>Using <em>filterElemsOrSelf</em> (from top-level facts) to get all facts</li>
@@ -529,7 +588,7 @@ val unusedNamespaces =
 						<li>Scala and yaidom are a powerful "XML stack"</li>
 						<li>With pluggable element implementations</li>
 						<li>Yaidom is also extensible to specific "XML dialects"</li>
-						<li>For example, XMPP and XBRL</li>
+						<li>In short, yaidom and Scala are a foundation for (complex) XML validations</li>
 					</ul>
 				</section>
 
