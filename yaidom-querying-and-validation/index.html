@@ -408,7 +408,8 @@ val temperatures =
 						<p>Pseudo-code for modeling XML Schema content:
 							<pre><code data-trim class="scala">
 // Trait ScopedElemLike promises most of yaidom's XML query API
-// Trait SubtypeAwareElemLike extends the yaidom query API to class hierarchies
+// Trait SubtypeAwareElemLike extends the yaidom query API to
+// class hierarchies
 
 trait ElemInXsd extends ScopedElemLike[ElemInXsd] with
   SubtypeAwareElemLike[ElemInXsd]
