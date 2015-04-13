@@ -399,7 +399,7 @@ val temperatures =
 							<li>Higher level (multi-document) <em>models</em> are easy to create using Scala</li>
 							<li>These models support (possibly complex) validations
 								<ul>
-									<li>The distinction between rich data models and logic makes one productive</li>
+									<li>The distinction between rich data models and behaviour makes it easy to write behaviour</li>
 								</ul>
 							</li>
 						</ul>
@@ -410,7 +410,8 @@ val temperatures =
 // Trait ScopedElemLike promises most of yaidom's XML query API
 // Trait SubtypeAwareElemLike extends the yaidom query API to class hierarchies
 
-trait ElemInXsd extends ScopedElemLike[ElemInXsd] with SubtypeAwareElemLike[ElemInXsd]
+trait ElemInXsd extends ScopedElemLike[ElemInXsd] with
+  SubtypeAwareElemLike[ElemInXsd]
 
 class XsdRootElem extends ElemInXsd
 
