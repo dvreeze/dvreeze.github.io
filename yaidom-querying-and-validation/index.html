@@ -386,20 +386,42 @@ val temperatures =
 				</section>
 
 				<section> 
-					<h3>Modeling with and on top of yaidom</h3>
-					<ul>
-						<li class="fragment" data-fragment-index="1">Yaidom facilitates creation of <em>"type-safe DOM views"</em>
-							<ul>
-								<li>For example, XEP-0323 message content can be modeled as a class hierarchy</li>
-								<li>Yet at the same time be "normal" yaidom elements</li>
-								<li>Yaidom makes it easy to query such custom elements</li>
-							</ul>
-						</li>
-						<li class="fragment" data-fragment-index="2">Higher level (multi-document) <em>models</em> are easy to create using Scala</li>
-						<li class="fragment" data-fragment-index="3">All these models support (possibly complex) validations</li>
-						<li class="fragment" data-fragment-index="4">At EBPI we use this layered approach for XBRL processing</li>
-						<li class="fragment" data-fragment-index="5">These models are beyond the scope of this presentation</li>
-					</ul>
+					<section>
+						<h3>Modeling with and on top of yaidom</h3>
+						<ul>
+							<li>Yaidom facilitates creation of <em>"type-safe DOM views"</em> for "XML dialects"
+								<ul>
+									<li>For example, XML Schema content can be modeled as a class hierarchy</li>
+									<li>Yet at the same time be "normal" yaidom elements</li>
+									<li>Yaidom makes it easy to query such custom elements</li>
+								</ul>
+							</li>
+							<li>Higher level (multi-document) <em>models</em> are easy to create using Scala</li>
+							<li>These models support (possibly complex) validations
+								<ul>
+									<li>The distinction between rich data models and logic makes one productive</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<p>Pseudo-code for modeling XML Schema content:
+							<pre><code data-trim class="scala">
+// Trait ScopedElemLike promises most of yaidom's XML query API
+// Trait SubtypeAwareElemLike extends the yaidom query API to class hierarchies
+
+trait ElemInXsd extends ScopedElemLike[ElemInXsd] with SubtypeAwareElemLike[ElemInXsd]
+
+class XsdRootElem extends ElemInXsd
+
+class ElementDeclaration extends ElemInXsd
+
+// Combining schema roots in a schema
+
+class Schema(val schemaRoots: Seq[XsdRootElem])
+							</code></pre>
+						</p>
+					</section>
 				</section>
 
 				<section> 
