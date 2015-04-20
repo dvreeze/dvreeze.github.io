@@ -53,6 +53,9 @@ format are called <em>XBRL instances</em>. XBRL instances must obey many require
 shows how many of these rules can be expressed using yaidom and Scala. It will be shown that using Scala and yaidom instead of standard XML query and transformation languages actually makes
 expressing these rules relatively easy.</p>
 
+<p>Unlike this article about yaidom, the paper <a href="http://xmllondon.com/2014/xmllondon-2014-proceedings.pdf#page=63" target="_blank">XML Processing in Scala</a> treats the standard Scala
+XML library. It is rich in examples, and gives a feeling of data processing in Scala, and of XML processing in Scala in particular.</p>
+
         <h3>
 <a name="brief-scala-introduction" class="anchor" href="#brief-scala-introduction"><span class="octicon octicon-link"></span></a>Brief introduction to Scala and Scala Collections</h3>
 
@@ -254,20 +257,25 @@ For example, yaidom wrappers around Saxon-EE <code>NodeInfo</code> trees offer t
 schema-type-awareness of Saxon-EE, and on the other hand a "Scala Collections API querying experience", using yaidom as the natural bridge between Saxon "nodes" and Scala collections processing.
 Unlike yaidom, the Scala XML library does not offer multiple tree implementations backing the same query API.</p>
 
-<p>Why not just use standards such as XSLT or XQuery? XBRL processing is a good example where yaidom shines, as will become clear below. After all, XBRL is a lot more than "just" XML,
+<p>This extensibility of yaidom goes even further than specific "XML backends". It is even possible to extend yaidom for custom "XML dialects" (or "vocabularies"). This will be explained
+and shown later in this paper. Arguably this could be the best reason to prefer yaidom to Scala's own XML library.</p>
+
+<p>Why not just use <em>standards</em> such as XPath, XSLT or XQuery? XBRL processing is a good example where yaidom shines, as will become clear below. After all, XBRL is a lot more than "just" XML,
 so XBRL processing is a lot more than "just" XML processing. Performing most or all of this processing in Scala using yaidom offers the following advantages:</p>
 <ul>
-<li>The maturity and performance of the <em>Java virtual machine</em>, backed by a formal specification. This can be an advantage of programming languages such as Java and Scala
-over XML standard languages, which have no (specified) native or near native runtime (but do have database support).</li>
-<li>The <em>expressive power</em> of Scala and its Collections API, with yaidom bringing some of that power to XML processing. Scala's expressive power also makes it easy to build XBRL
-"model layers" on top of a lower level "XML layer".</li>
-<li>The <em>ease of use</em> of programming languages, such as Scala, for such mundane tasks as defining variables (typically for immutable data), calling functions, etc. While XSLT and
-XQuery enforce a <em>functional programming</em> style, Scala strongly encourages such a programming style, yet without sacrificing ease of use.</li>
-<li>A large <em>ecosystem</em> around Scala (and Java), offering many high quality libraries.</li>
-<li>Familiar <em>semantics</em> of "equality" (as an equivalence relation) and collection processing. The XPath Data Model does not distinguish between individual items (nodes and atomic values)
-on the one hand, and singleton sequences of items on the other hand, but this can be quite confusing. By contrast, in Scala's Collections API (and yaidom) an object is not the same as a singleton
-collection containing that object.</li>
-<li>Yaidom does not sacrifice any XML processing power. Not only are "XML backends" pluggable, but they also remain accessible, and are not hidden behind any "broken abstractions".</li>
+<li>No Scala syntax is spent on <em>processing sequences</em> (or node sets) resulting from XPath/XQuery evaluation</li>
+<li>In a programming language (such as Scala) it is quite natural and easy to store <em>intermediate results</em> in variables</li>
+<li>As a rich (functional) OO programming language, Scala has a lot of <em>expressive power</em>, which makes it easy to build layered models on top of DOM-like element trees (as will be shown below)</li>
+<li>Yaidom leverages the <em>Scala Collections API</em>, which enables the user to achieve a lot using only a small vocabulary</li>
+<li>There is a large <em>ecosystem</em> around Scala (and Java), offering many high quality libraries</li>
+<li>Yaidom offers (and enables) element implementations optimized for fast querying (although no benchmarks are provided in this paper)</li>
+<li>For programmers on the JVM, Scala and yaidom have more familiar <em>semantics</em> than XPath and the XQuery and XPath Data Model (XDM):
+  <ul>
+    <li>In XDM there is no difference between an item (node or atomic value) and a singleton sequence containing that item</li>
+    <li>Sequences in XDM cannot be nested so are always flattened</li>
+    <li>In Scala (as in Java), "equality" is expected to be an equivalence relation (unlike "equality" in XPath, which is not transitive)</li>
+  </ul>
+</li>
 </ul>
 <p>Surely yaidom can be used with XQuery when using an XML(-enabled) database, where XQuery joins and filters database XML data into "raw result sets", which are further processed using yaidom
 queries. Still, it makes sense to keep the number of boundaries between XQuery and yaidom/Scala relatively low, for each such boundary has some (syntactic and semantical) costs.
