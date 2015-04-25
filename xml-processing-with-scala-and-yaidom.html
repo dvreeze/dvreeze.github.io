@@ -275,13 +275,13 @@ so XBRL processing is a lot more than "just" XML processing. Performing most or 
 <li>For programmers on the JVM, Scala and yaidom have more familiar <em>semantics</em> than XPath and the XQuery and XPath Data Model (XDM):
   <ul>
     <li>In XDM there is no difference between an item (node or atomic value) and a singleton sequence containing that item</li>
-    <li>Sequences in XDM cannot be nested so are always flattened</li>
-    <li>In Scala (as in Java), "equality" is expected to be an equivalence relation (unlike "equality" in XPath, which is not transitive)</li>
+    <li>Sequences in XDM cannot be nested, so are always flattened</li>
+    <li>In Scala (as in Java), "equality" is expected to be an equivalence relation (unlike the general comparison "equality" operator in XPath, which is not transitive)</li>
   </ul>
 </li>
 </ul>
 <p>Surely yaidom can be used with XQuery when using an XML(-enabled) database, where XQuery joins and filters database XML data into "raw result sets", which are further processed using yaidom
-queries. Still, it makes sense to keep the number of boundaries between XQuery and yaidom/Scala relatively low, for each such boundary has some (syntactic and semantical) costs.
+queries. Still, it makes sense to keep the number of boundaries between XQuery and yaidom/Scala relatively low, for each such boundary has some (syntactic and semantic) costs.
 In summary, the more some XML processing task can benefit from the use of Scala, the more attractive the use of yaidom becomes.</p>
 
 <h3>
