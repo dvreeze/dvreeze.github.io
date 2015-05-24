@@ -112,32 +112,101 @@
 				</section>
 
 				<section>
-					<h3>Introducing Scala for-comprehensions</h3>
-						<p>First a minimal "introduction to Scala":
+					<section>
+						<h3>Introducing Scala Collections</h3>
+						<p>Consider the following extremely trivial XBRL instance model:
 							<pre><code data-trim class="scala">
-val someNumbers = (0 until 10)
+trait Fact {
+  def ename: EName
+}
 
-val evenNumbers = someNumbers.filter(i => i % 2 == 0)
+final class ItemFact(
+  val ename: EName, val contextRef: String, val unitRefOption: Option[String], val factValue: String) extends Fact
 
-// As for-comprehension, we get the same result
+final class TupleFact(val ename: EName, childFacts: immutable.IndexedSeq[Fact]) extends Fact {
 
-val evenNumbers2 =
-  for {
-    i <- someNumbers
-    if i % 2 == 0
-  } yield i
-							</code></pre>
-							<pre><code data-trim class="scala">
-val powers = someNumbers.map(i => i * i)
+  def childItemFacts: immutable.IndexedSeq[ItemFact] =
+    childFacts collect { case item: ItemFact => item }
 
-// As for-comprehension, we get the same result
+  def childTupleFacts: immutable.IndexedSeq[TupleFact] =
+    childFacts collect { case tuple: TupleFact => tuple }
+}
 
-val powers2 =
-  for {
-    i <- someNumbers
-  } yield i * i
+final class XbrlInstance(val topLevelFacts: immutable.IndexedSeq[Fact]) {
+
+  def topLevelItemFacts: immutable.IndexedSeq[ItemFact] =
+    topLevelFacts collect { case item: ItemFact => item }
+
+  def topLevelTupleFacts: immutable.IndexedSeq[TupleFact] =
+    topLevelFacts collect { case tuple: TupleFact => tuple }
+}
 							</code></pre>
 						</p>
+					</section>
+
+					<section>
+						<p>The example instance data in this model looks as follows:
+							<pre><code data-trim class="scala">
+val instance =
+  new XbrlInstance(
+    Vector(
+      new ItemFact(EName("cc2-i", "Equity"), "FY14d", Some("EUR"), "95000"),
+      new TupleFact(
+        EName("cc-t", "EntityAddressPresentation"),
+        Vector(
+          new ItemFact(
+            EName("nlcd", "POBoxNumber"), "FY14d", None, "2312"),
+          new ItemFact(
+            EName("nlcd", "PostalCodeNL"), "FY14d", None, "2501CD"),
+          new ItemFact(
+            EName("nlcd", "PlaceOfResidenceNL"), "FY14d", None, "Den Haag"),
+          new ItemFact(
+            EName("nlcd", "CountryName"), "FY14d", None, "Nederland")))))
+							</code></pre>
+						</p>
+					</section>
+
+					<section>
+						<p>Showing higher-order function "filter":
+							<pre><code data-trim class="scala">
+val topLevelEuroFacts =
+  instance.topLevelItemFacts.filter(fact => fact.unitRefOption == Some("EUR"))
+
+require(topLevelEuroFacts.size == 1)
+
+// Using a for-comprehension
+
+val topLevelEuroFacts2 =
+  for {
+    itemFact <- instance.topLevelItemFacts
+    if itemFact.unitRefOption == Some("EUR")
+  } yield itemFact
+
+require(topLevelEuroFacts2 == topLevelEuroFacts)
+							</code></pre>
+						</p>
+					</section>
+
+					<section>
+						<p>Showing higher-order function "map":
+							<pre><code data-trim class="scala">
+val address = instance.topLevelTupleFacts.head
+
+val addressContextRefs = address.childItemFacts.map(fact => fact.contextRef).toSet
+
+require(addressContextRefs == Set("FY14d"))
+
+// Using a for-comprehension
+
+val addressContextRefs2 =
+  (for {
+    childItem <- address.childItemFacts
+  } yield childItem.contextRef).toSet
+
+require(addressContextRefs2 == addressContextRefs)
+							</code></pre>
+						</p>
+					<section>
 				</section>
 
 				<section> 
