@@ -114,7 +114,7 @@
 
 				<section>
 					<section>
-						<h3>Introducing Scala Collections</h3>
+						<h3>Introducing Scala and Scala Collections</h3>
 						<p>Consider the following trivial XBRL instance model:
 							<pre><code data-trim class="scala">
 trait Fact { def ename: EName }
@@ -220,8 +220,8 @@ require(addressContextRefs2 == addressContextRefs)
 							<li>We can always query the instance at a low level, as XML</li>
 							<li>Using higher-order functions returning element collections</li>
 							<li>Using HOF <em>filterChildElems</em> to get contexts, units and top-level facts</li>
-							<li>Using HOF <em>filterElems</em> (from top-level facts) to get nested facts</li>
-							<li>Using HOF <em>filterElemsOrSelf</em> (from top-level facts) to get all facts</li>
+							<li>Using HOF <em>filterElems</em> (from top-level facts) to get nested facts ("filter descendant elements")</li>
+							<li>Using HOF <em>filterElemsOrSelf</em> (from top-level facts) to get all facts ("filter descendant-or-self elements")</li>
 						</ul>
 					</section>
 					<section>
@@ -254,7 +254,7 @@ require(addressContextRefs2 == addressContextRefs)
 						</pre>
 					</section>
 					<section>
-						<p>Finding facts, contexts and units (as plain XML elements):
+						<p>Finding facts, contexts and units (as plain XML elements), regardless of the element implementation:
 							<pre><code data-trim class="scala">
 val ns = "http://www.xbrl.org/2003/instance"
 val linkNs = "http://www.xbrl.org/2003/linkbase"
