@@ -266,7 +266,6 @@ def hasCustomNs(e: Elem): Boolean = {
 
 val contexts = xbrlInstance.filterChildElems(withEName(ns, "context"))
 val units = xbrlInstance.filterChildElems(withEName(ns, "unit"))
-
 val topLevelFacts =
   xbrlInstance.filterChildElems(e => hasCustomNs(e))
 val nestedFacts =
@@ -275,7 +274,7 @@ val allFacts =
   topLevelFacts.flatMap(_.filterElemsOrSelf(e => hasCustomNs(e)))
 							</code></pre>
 						</p>
-						<p>Non-trivial queries combine facts with their contexts and units (Scala with yaidom makes this easy)</p>
+						<p><br/>Non-trivial queries combine facts with their contexts and units (Scala with yaidom makes this easy)</p>
 					</section>
 				</section>
 
