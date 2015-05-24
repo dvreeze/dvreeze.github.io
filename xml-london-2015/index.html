@@ -114,7 +114,7 @@
 				<section>
 					<section>
 						<h3>Introducing Scala Collections</h3>
-						<p>Consider the following extremely trivial XBRL instance model:
+						<p>Consider the following very trivial XBRL instance model:
 							<pre><code data-trim class="scala">
 trait Fact {
   def ename: EName
@@ -123,7 +123,8 @@ trait Fact {
 final class ItemFact(
   val ename: EName, val contextRef: String, val unitRefOption: Option[String], val factValue: String) extends Fact
 
-final class TupleFact(val ename: EName, childFacts: immutable.IndexedSeq[Fact]) extends Fact {
+final class TupleFact(
+  val ename: EName, childFacts: immutable.IndexedSeq[Fact]) extends Fact {
 
   def childItemFacts: immutable.IndexedSeq[ItemFact] =
     childFacts collect { case item: ItemFact => item }
@@ -131,8 +132,10 @@ final class TupleFact(val ename: EName, childFacts: immutable.IndexedSeq[Fact]) 
   def childTupleFacts: immutable.IndexedSeq[TupleFact] =
     childFacts collect { case tuple: TupleFact => tuple }
 }
-
-final class XbrlInstance(val topLevelFacts: immutable.IndexedSeq[Fact]) {
+							</code></pre>
+							<pre><code data-trim class="scala">
+final class XbrlInstance(
+  val topLevelFacts: immutable.IndexedSeq[Fact]) {
 
   def topLevelItemFacts: immutable.IndexedSeq[ItemFact] =
     topLevelFacts collect { case item: ItemFact => item }
@@ -150,7 +153,8 @@ final class XbrlInstance(val topLevelFacts: immutable.IndexedSeq[Fact]) {
 val instance =
   new XbrlInstance(
     Vector(
-      new ItemFact(EName("cc2-i", "Equity"), "FY14d", Some("EUR"), "95000"),
+      new ItemFact(
+        EName("cc2-i", "Equity"), "FY14d", Some("EUR"), "95000"),
       new TupleFact(
         EName("cc-t", "EntityAddressPresentation"),
         Vector(
@@ -170,7 +174,8 @@ val instance =
 						<p>Showing higher-order function "filter":
 							<pre><code data-trim class="scala">
 val topLevelEuroFacts =
-  instance.topLevelItemFacts.filter(fact => fact.unitRefOption == Some("EUR"))
+  instance.topLevelItemFacts.filter(
+    fact => fact.unitRefOption == Some("EUR"))
 
 require(topLevelEuroFacts.size == 1)
 
@@ -192,7 +197,8 @@ require(topLevelEuroFacts2 == topLevelEuroFacts)
 							<pre><code data-trim class="scala">
 val address = instance.topLevelTupleFacts.head
 
-val addressContextRefs = address.childItemFacts.map(fact => fact.contextRef).toSet
+val addressContextRefs =
+  address.childItemFacts.map(fact => fact.contextRef).toSet
 
 require(addressContextRefs == Set("FY14d"))
 
