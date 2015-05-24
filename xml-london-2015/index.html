@@ -125,10 +125,8 @@ final class ItemFact(
 
 final class TupleFact(
   val ename: EName, childFacts: immutable.IndexedSeq[Fact]) extends Fact {
-
   def childItemFacts: immutable.IndexedSeq[ItemFact] =
     childFacts collect { case item: ItemFact => item }
-
   def childTupleFacts: immutable.IndexedSeq[TupleFact] =
     childFacts collect { case tuple: TupleFact => tuple }
 }
@@ -139,7 +137,6 @@ final class XbrlInstance(
 
   def topLevelItemFacts: immutable.IndexedSeq[ItemFact] =
     topLevelFacts collect { case item: ItemFact => item }
-
   def topLevelTupleFacts: immutable.IndexedSeq[TupleFact] =
     topLevelFacts collect { case tuple: TupleFact => tuple }
 }
