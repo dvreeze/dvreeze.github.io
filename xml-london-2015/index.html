@@ -59,12 +59,13 @@
  					<ul>
 						<li class="fragment" data-fragment-index="1">An <em>XML query</em> and transformation API</li>
 						<li class="fragment" data-fragment-index="2">Leverages <em>Scala</em> and the Scala Collections API</li>
-						<li class="fragment" data-fragment-index="3">The XML query API is small and uniform</li>
-						<li class="fragment" data-fragment-index="4">It is offered by multiple element implementations</li>
-						<li class="fragment" data-fragment-index="5">Including your own custom ones</li>
-						<li class="fragment" data-fragment-index="6">Very precise XML namespace support</li>
-						<li class="fragment" data-fragment-index="7">Full control over XML parsing and serialization</li>
-						<li class="fragment" data-fragment-index="8">In short, a useful XML library when using Scala to write complex (XML) <em>validations</em></li>
+						<li class="fragment" data-fragment-index="3">The XML query API is small, precise and clear</li>
+						<li class="fragment" data-fragment-index="4">It is offered by <em>multiple</em> element implementations</li>
+						<li class="fragment" data-fragment-index="5">Including your own custom ones (easy to add)</li>
+						<li class="fragment" data-fragment-index="6">Including type-safe custom ones for an XML dialect (e.g. XBRL)</li>
+						<li class="fragment" data-fragment-index="7">Very precise XML namespace support</li>
+						<li class="fragment" data-fragment-index="8">Full control over XML parsing and serialization</li>
+						<li class="fragment" data-fragment-index="9">In short, a useful XML library when using Scala to write complex (XML) <em>validations</em></li>
 					</ul>
 				</section>
 
@@ -72,7 +73,7 @@
 					<section>
 						<h3>XBRL example used to show yaidom</h3>
 						<ul>
-							<li>Let's now turn to an XBRL example</li>
+							<li>Yaidom is shown using the XBRL example below</li>
 							<li>XBRL is a (financial) reporting standard</li>
 							<li>A business report in XBRL is called an <em>XBRL instance</em></li>
 							<li>It reports <em>facts</em></li>
@@ -114,17 +115,16 @@
 				<section>
 					<section>
 						<h3>Introducing Scala Collections</h3>
-						<p>
+						<p>Consider the following trivial XBRL instance model:
 							<pre><code data-trim class="scala">
-trait Fact {
-  def ename: EName
-}
+trait Fact { def ename: EName }
 
 final class ItemFact(
   val ename: EName, val contextRef: String, val unitRefOption: Option[String], val factValue: String) extends Fact
 
 final class TupleFact(
-  val ename: EName, childFacts: immutable.IndexedSeq[Fact]) extends Fact {
+  val ename: EName, val childFacts: immutable.IndexedSeq[Fact]) extends Fact {
+
   def childItemFacts: immutable.IndexedSeq[ItemFact] =
     childFacts collect { case item: ItemFact => item }
   def childTupleFacts: immutable.IndexedSeq[TupleFact] =
@@ -132,9 +132,7 @@ final class TupleFact(
 }
 							</code></pre>
 							<pre><code data-trim class="scala">
-final class XbrlInstance(
-  val topLevelFacts: immutable.IndexedSeq[Fact]) {
-
+final class XbrlInstance(val topLevelFacts: immutable.IndexedSeq[Fact]) {
   def topLevelItemFacts: immutable.IndexedSeq[ItemFact] =
     topLevelFacts collect { case item: ItemFact => item }
   def topLevelTupleFacts: immutable.IndexedSeq[TupleFact] =
@@ -216,12 +214,14 @@ require(addressContextRefs2 == addressContextRefs)
 					<section>
 						<h3>Yaidom XBRL example</h3>
 						<ul>
+							<li>Let's now turn to yaidom</li>
 							<li>Suppose we want to perform some (instance) validations</li>
-							<li>Then we need to query (at least) the XBRL instance</li>
-							<li>We can query the instance at a low level, as XML</li>
-							<li>Using <em>filterChildElems</em> to get contexts, units and top-level facts</li>
-							<li>Using <em>filterElems</em> (from top-level facts) to get nested facts</li>
-							<li>Using <em>filterElemsOrSelf</em> (from top-level facts) to get all facts</li>
+							<li>Then we need to be able to query the XBRL instance</li>
+							<li>We can always query the instance at a low level, as XML</li>
+							<li>Using higher-order functions returning element collections</li>
+							<li>Using HOF <em>filterChildElems</em> to get contexts, units and top-level facts</li>
+							<li>Using HOF <em>filterElems</em> (from top-level facts) to get nested facts</li>
+							<li>Using HOF <em>filterElemsOrSelf</em> (from top-level facts) to get all facts</li>
 						</ul>
 					</section>
 					<section>
@@ -254,7 +254,7 @@ require(addressContextRefs2 == addressContextRefs)
 						</pre>
 					</section>
 					<section>
-						<p>Finding facts, contexts and units (as plain elements):
+						<p>Finding facts, contexts and units (as plain XML elements):
 							<pre><code data-trim class="scala">
 val ns = "http://www.xbrl.org/2003/instance"
 val linkNs = "http://www.xbrl.org/2003/linkbase"
@@ -275,7 +275,7 @@ val allFacts =
   topLevelFacts.flatMap(_.filterElemsOrSelf(e => hasCustomNs(e)))
 							</code></pre>
 						</p>
-						<p><br/>Non-trivial queries combine facts with their contexts and units (here yaidom and Scala really shine)</p>
+						<p><br/>Non-trivial queries combine facts with their contexts and units (Scala with yaidom makes this easy)</p>
 					</section>
 				</section>
 
