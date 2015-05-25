@@ -58,12 +58,12 @@
 					<h3>Overview of the presentation</h3>
  					<ul>
 						<li class="fragment" data-fragment-index="1">What is yaidom?</li>
-						<li class="fragment" data-fragment-index="2">XBRL example used to show yaidom</li>
+						<li class="fragment" data-fragment-index="2">XBRL sample data used to show yaidom</li>
 						<li class="fragment" data-fragment-index="3">Introducing Scala and Scala Collections</li>
 						<li class="fragment" data-fragment-index="4">Introducing yaidom</li>
-						<li class="fragment" data-fragment-index="5">Simple namespace validation</li>
-						<li class="fragment" data-fragment-index="6">Simple XBRL context validation</li>
-						<li class="fragment" data-fragment-index="7">Simple XBRL context validation, revisited</li>
+						<li class="fragment" data-fragment-index="5">Namespace validation example</li>
+						<li class="fragment" data-fragment-index="6">XBRL context validation example</li>
+						<li class="fragment" data-fragment-index="7">XBRL context validation example, revisited</li>
 						<li class="fragment" data-fragment-index="8">Takeaway points about yaidom</li>
 					</ul>
 				</section>
@@ -85,7 +85,7 @@
 
 				<section> 
 					<section>
-						<h3>XBRL example used to show yaidom</h3>
+						<h3>XBRL sample data used to show yaidom</h3>
 						<ul>
 							<li>Yaidom is shown using the XBRL example below</li>
 							<li>XBRL is a (financial) reporting standard</li>
@@ -313,7 +313,7 @@ val allFacts =
 
 				<section> 
 					<section>
-						<h3>Simple namespace validation</h3>
+						<h3>Namespace validation example</h3>
 						<ul>
 							<li>To illustrate (low level) validations, let's check the use of "standard" namespaces</li>
 							<li>In particular, let's validate rule 2.1.5 of the international FRIS standard</li>
@@ -323,10 +323,9 @@ val allFacts =
 					</section>
 					<section>
 						<pre style="font-size:17px;line-height:12px;padding:15px;">
-&lt;xbrli:xbrl xmlns:xbrli="http://www.xbrl.org/2003/instance"<br/>
-  xmlns:cc2-i="cc2i" xmlns:cc-t="cct" xmlns:cd="nlcd" xmlns:iso4217="iso4217"<br/>
-  <span style="background-color:red;padding:2px;">xmlns:unused="unused"</span>&gt;<br/>
-  <span style="background-color:gold;padding:2px;">&lt;xbrli</span>:context id="FY14d"&gt; <br/> 
+&lt;xbrli:xbrl xmlns:<span style="background-color:gold;padding:2px;">xbrli</span>="http://www.xbrl.org/2003/instance"<br/>
+  xmlns:cc2-i="cc2i" xmlns:cc-t="cct" xmlns:cd="nlcd" xmlns:<span style="background-color:gold;padding:2px;">iso4217</span>="iso4217"&gt;<br/>
+  &lt;xbrli:context id="FY14d"&gt; <br/>
     &lt;xbrli:entity&gt;<br/>
       &lt;xbrli:identifier scheme="http://www.cc.eu/cc-id"&gt;30267975<br/>
       &lt;/xbrli:identifier&gt;<br/>
@@ -337,12 +336,12 @@ val allFacts =
     &lt;/xbrli:period&gt;<br/>
   &lt;/xbrli:context&gt;<br/>
   &lt;xbrli:unit id="EUR"&gt;<br/>
-    &lt;xbrli:measure&gt;<span style="background-color:orange;padding:2px;">iso4217</span>:EUR&lt;/xbrli:measure&gt;<br/>
+    &lt;xbrli:measure&gt;iso4217:EUR&lt;/xbrli:measure&gt;<br/>
   &lt;/xbrli:unit&gt;<br/>
-  <span style="background-color:gold;padding:2px;">&lt;cc2-i</span>:Equity contextRef="FY14d" unitRef="EUR"<br/>
+  &lt;cc2-i:Equity contextRef="FY14d" unitRef="EUR"<br/>
     decimals="INF"&gt;95000&lt;/cc2-i:Equity&gt;<br/>
-  <span style="background-color:gold;padding:2px;">&lt;cc-t</span>:EntityAddressPresentation&gt;<br/>
-    <span style="background-color:gold;padding:2px;">&lt;cd</span>:POBoxNumber contextRef="FY14d"&gt;2312&lt;/cd:POBoxNumber&gt;<br/>
+  &lt;cc-t:EntityAddressPresentation&gt;<br/>
+    &lt;cd:POBoxNumber contextRef="FY14d"&gt;2312&lt;/cd:POBoxNumber&gt;<br/>
     &lt;cd:PostalCodeNL contextRef="FY14d"&gt;2501CD&lt;/cd:PostalCodeNL&gt;<br/>
     &lt;cd:PlaceOfResidenceNL contextRef="FY14d"&gt;Den Haag<br/>
     &lt;/cd:PlaceOfResidenceNL&gt;<br/>
@@ -353,6 +352,11 @@ val allFacts =
 					</section>
 					<section>
 						<p>
+							<pre><code data-trim class="scala">
+// All namespace declarations must be in the root element
+
+require(xbrlInstance.findAllElems.forall(_.scope == xbrlInstance.scope))
+							</code></pre>
 							<pre><code data-trim class="scala">
 val standardScope = Scope.from(
   "xbrli" -> "http://www.xbrl.org/2003/instance",
@@ -378,7 +382,7 @@ require(subscope.subScopeOf(standardScope))
 
 				<section>
 					<section>
-						<h3>Simple XBRL context validation</h3>
+						<h3>XBRL context validation example</h3>
 						<ul>
 							<li>Let's now validate rule 2.4.2 of the international FRIS standard</li>
 							<li>The rule states that all contexts must be used</li>
@@ -420,7 +424,7 @@ require(contextIds.subsetOf(usedContextIds))
 
 				<section>
 					<section>
-						<h3>Simple XBRL context validation, revisited</h3>
+						<h3>XBRL context validation example, revisited</h3>
 						<ul>
 							<li>Let's implement the same rule at a higher level of abstraction</li>
 							<li>Yaidom makes it easy to create class hierarchies for specific XML dialects that are yaidom elements themselves</li>
