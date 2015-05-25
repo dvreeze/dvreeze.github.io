@@ -355,7 +355,8 @@ val allFacts =
 							<pre><code data-trim class="scala">
 // All namespace declarations must be in the root element
 
-require(xbrlInstance.findAllElems.forall(_.scope == xbrlInstance.scope))
+require(
+  xbrlInstance.findAllElems.forall(_.scope == xbrlInstance.scope))
 							</code></pre>
 							<pre><code data-trim class="scala">
 val standardScope = Scope.from(
@@ -374,7 +375,7 @@ val subscope = xbrlInstance.scope.withoutDefaultNamespace filter {
     standardPrefixes.contains(pref) ||
       standardNamespaceUris.contains(ns)
 }
-require(subscope.subScopeOf(standardScope))
+require(subscope.subScopeOf(standardScope)) // fails on iso4217
 							</code></pre>
 						</p>
 					</section>
@@ -434,7 +435,7 @@ require(contextIds.subsetOf(usedContextIds))
 						</ul>
 					</section>
 					<section>
-						<p>Clear and type-safe validation code, using a yaidom extension for XBRL instances:
+						<p>Clear and type-safe validation code, using an imaginary yaidom extension for XBRL instances:
 							<pre><code data-trim class="scala">
 val contextIds = xbrlInstance.allContextsById.keySet
 
@@ -451,11 +452,13 @@ require(contextIds.subsetOf(usedContextIds))
 				<section>
 					<h3>Takeaway points about yaidom</h3>
 					<ul>
-						<li>Scala and yaidom are a powerful "XML stack"</li>
-						<li>With pluggable element implementations</li>
-						<li>Yaidom is also extensible to specific "XML dialects"</li>
+						<li>Like the standard Scala XML library, yaidom leverages Scala and its Collections API</li>
+						<li>Yet yaidom offers <em>multiple</em> element implementations behind the <em>same query API</em></li>
+						<li>Including James Clark's minimal element trees, as "resolved" elements</li>
+						<li>Or custom ones, such as Saxon NodeInfo wrappers</li>
+						<li>Even custom XML dialect element implementations are easy to add using yaidom</li>
 						<li>In short, yaidom and Scala are a foundation for (complex) XML validations</li>
-						<li>Thus achieving data quality, and a quick time to market</li>
+						<li>At EBPI, yaidom is one tool through which we achieve high data quality, and a quick time to market</li>
 					</ul>
 				</section>
 
