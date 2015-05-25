@@ -250,11 +250,11 @@ require(addressContextRefs2 == addressContextRefs)
 							<li>Let's now turn to yaidom</li>
 							<li>Suppose we want to perform some (instance) validations</li>
 							<li>Then we need to be able to query the XBRL instance</li>
-							<li>We can always query the instance at a low level, as XML</li>
-							<li>Using higher-order functions returning element collections</li>
-							<li>Using HOF <em>filterChildElems</em> to get contexts, units and top-level facts</li>
-							<li>Using HOF <em>filterElems</em> (from top-level facts) to get nested facts ("filter descendant elements")</li>
-							<li>Using HOF <em>filterElemsOrSelf</em> (from top-level facts) to get all facts ("filter descendant-or-self elements")</li>
+							<li>Let's query the instance at the low abstraction level of XML</li>
+							<li>Using higher-order yaidom functions returning element collections</li>
+							<li>E.g., using HOF <em>filterChildElems</em> to get contexts, units and top-level facts</li>
+							<li>Or HOF <em>filterElems</em> (from top-level facts) to get nested facts ("filter descendant elements")</li>
+							<li>Or HOF <em>filterElemsOrSelf</em> (from top-level facts) to get all facts ("filter descendant-or-self elements")</li>
 						</ul>
 					</section>
 					<section>
