@@ -55,6 +55,20 @@
 				</section>
 
 				<section>
+					<h3>Overview of the presentation</h3>
+ 					<ul>
+						<li class="fragment" data-fragment-index="1">What is yaidom?</li>
+						<li class="fragment" data-fragment-index="2">XBRL example used to show yaidom</li>
+						<li class="fragment" data-fragment-index="3">Introducing Scala and Scala Collections</li>
+						<li class="fragment" data-fragment-index="4">Introducing yaidom</li>
+						<li class="fragment" data-fragment-index="5">Simple namespace validation</li>
+						<li class="fragment" data-fragment-index="6">Simple XBRL context validation</li>
+						<li class="fragment" data-fragment-index="7">Simple XBRL context validation, revisited</li>
+						<li class="fragment" data-fragment-index="8">Takeaway points about yaidom</li>
+					</ul>
+				</section>
+
+				<section>
 					<h3>What is yaidom?</h3>
  					<ul>
 						<li class="fragment" data-fragment-index="1">An <em>XML query</em> and transformation API</li>
@@ -299,13 +313,12 @@ val allFacts =
 
 				<section> 
 					<section>
-						<h3>Introducing yaidom</h3>
+						<h3>Simple namespace validation</h3>
 						<ul>
-							<li>To illustrate (low level) validations, let's find unused namespaces</li>
-							<li>This is very hard in general, if namespaces occur in element content or attribute values</li>
-							<li>Yaidom does not make this harder than needed</li>
-							<li>You provide a <em>DocumentENameExtractor</em></li>
-							<li>And yaidom finds the unused namespaces</li>
+							<li>To illustrate (low level) validations, let's check the use of "standard" namespaces</li>
+							<li>In particular, let's validate rule 2.1.5 of the international FRIS standard</li>
+							<li>The rule states that some commonly used namespaces should use their "preferred" prefixes in XBRL instances</li>
+							<li>For simplicity, assume that all namespace declarations are only in the root element</li>
 						</ul>
 					</section>
 					<section>
@@ -339,40 +352,100 @@ val allFacts =
 						</pre>
 					</section>
 					<section>
-						<p>Finding unused namespaces:
+						<p>
 							<pre><code data-trim class="scala">
-import NamespaceUtils._
+val standardScope = Scope.from(
+  "xbrli" -> "http://www.xbrl.org/2003/instance",
+  "xlink" -> "http://www.w3.org/1999/xlink",
+  "link" -> "http://www.xbrl.org/2003/linkbase",
+  "xsi" -> "http://www.w3.org/2001/XMLSchema-instance",
+  "iso4217" -> "http://www.xbrl.org/2003/iso4217")
 
-// docENameExtractor must be coded in such a way that it recognizes
-// the namespace in the content of the measure element
-
-val usedNamespaces =
-  findAllNamespaces(indexed.Elem(xbrlInstance), docENameExtractor)
-
-// Knowing that all namespace declarations are in the document element
-
-val allNamespaces =
-  xbrlInstance.scope.prefixNamespaceMap.values.toSet
-
-val unusedNamespaces =
-  allNamespaces.diff(usedNamespaces)
-
-// This returns the namespace "unused"
+val standardPrefixes = standardScope.keySet
+val standardNamespaceUris = standardScope.inverse.keySet
+							</code></pre>
+							<pre><code data-trim class="scala">
+val subscope = xbrlInstance.scope.withoutDefaultNamespace filter {
+  case (pref, ns) =>
+    standardPrefixes.contains(pref) ||
+      standardNamespaceUris.contains(ns)
+}
+require(subscope.subScopeOf(standardScope))
 							</code></pre>
 						</p>
 					</section>
 				</section>
 
 				<section>
-					<h3>There is a lot more to yaidom</h3>
-					<ul>
-						<li>For example, extensibility w.r.t. element implementations</li>
-						<li>For example, extensibility w.r.t. XML dialect support</li>
-					</ul>
+					<section>
+						<h3>Simple XBRL context validation</h3>
+						<ul>
+							<li>Let's now validate rule 2.4.2 of the international FRIS standard</li>
+							<li>The rule states that all contexts must be used</li>
+							<li>We also check the reverse, that all context references indeed refer to existing contexts</li>
+							<li>N.B. The latter check belongs to XBRL instance validation, not to FRIS validation for XBRL-valid instances</li>
+						</ul>
+					</section>
+					<section>
+						<p>
+							<pre><code data-trim class="scala">
+val ns = "http://www.xbrl.org/2003/instance"
+val linkNs = "http://www.xbrl.org/2003/linkbase"
+
+def hasCustomNs(e: Elem): Boolean = {
+  !Set(Option(ns), Option(linkNs)).contains(
+    e.resolvedName.namespaceUriOption)
+}
+
+val contexts = xbrlInstance.filterChildElems(withEName(ns, "context"))
+val units = xbrlInstance.filterChildElems(withEName(ns, "unit"))
+val topLevelFacts =
+  xbrlInstance.filterChildElems(e => hasCustomNs(e))
+val allFacts =
+  topLevelFacts.flatMap(_.filterElemsOrSelf(e => hasCustomNs(e)))
+							</code></pre>
+							<pre><code data-trim class="scala">
+val contextIds =
+  contexts.map(_.attribute(EName("id"))).toSet
+
+val usedContextIds =
+  allFacts.flatMap(_.attributeOption(EName("contextRef"))).toSet
+
+require(usedContextIds.subsetOf(contextIds))
+require(contextIds.subsetOf(usedContextIds))
+							</code></pre>
+						</p>
+					</section>
 				</section>
 
 				<section>
-					<h3>Conclusion</h3>
+					<section>
+						<h3>Simple XBRL context validation, revisited</h3>
+						<ul>
+							<li>Let's implement the same rule at a higher level of abstraction</li>
+							<li>Yaidom makes it easy to create class hierarchies for specific XML dialects that are yaidom elements themselves</li>
+							<li>So these custom yaidom elements offer the same yaidom qiery API, plus more</li>
+							<li>For example, assume such a class hierarchy for XBRL instances and their components</li>
+							<li>Then the validation code above could be reduced to something like the code shown below</li>
+						</ul>
+					</section>
+					<section>
+						<p>Clear and type-safe validation code, using a yaidom extension for XBRL instances:
+							<pre><code data-trim class="scala">
+val contextIds = xbrlInstance.allContextsById.keySet
+
+val usedContextIds =
+  xbrlInstance.findAllItems.map(_.contextRef).toSet
+
+require(usedContextIds.subsetOf(contextIds))
+require(contextIds.subsetOf(usedContextIds))
+							</code></pre>
+						</p>
+					</section>
+				</section>
+
+				<section>
+					<h3>Takeaway points about yaidom</h3>
 					<ul>
 						<li>Scala and yaidom are a powerful "XML stack"</li>
 						<li>With pluggable element implementations</li>
