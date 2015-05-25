@@ -231,7 +231,7 @@ require(addressContextRefs2 == addressContextRefs)
 
 				<section> 
 					<section>
-						<h3>Yaidom XBRL example</h3>
+						<h3>Introducing yaidom</h3>
 						<ul>
 							<li>Let's now turn to yaidom</li>
 							<li>Suppose we want to perform some (instance) validations</li>
@@ -293,13 +293,13 @@ val allFacts =
   topLevelFacts.flatMap(_.filterElemsOrSelf(e => hasCustomNs(e)))
 							</code></pre>
 						</p>
-						<p><br/>Non-trivial queries combine facts with their contexts and units (Scala with yaidom makes this easy)</p>
+						<p>Non-trivial queries combine facts with their contexts and units: just store contexts and units in Maps</p>
 					</section>
 				</section>
 
 				<section> 
 					<section>
-						<h3>Yaidom XBRL example</h3>
+						<h3>Introducing yaidom</h3>
 						<ul>
 							<li>To illustrate (low level) validations, let's find unused namespaces</li>
 							<li>This is very hard in general, if namespaces occur in element content or attribute values</li>
