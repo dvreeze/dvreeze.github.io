@@ -129,7 +129,7 @@
 				<section>
 					<section>
 						<h3>Introducing Scala and Scala Collections</h3>
-						<p>Consider the following trivial XBRL instance model:
+						<p>Consider the following trivial (non-XML) XBRL instance model:
 							<pre><code data-trim class="scala">
 trait Fact { def ename: EName }
 							</code></pre>
@@ -156,7 +156,7 @@ final class TupleFact(
 					</section>
 
 					<section>
-						<p>The instance model itself:
+						<p>The trivial (non-XML) instance model itself:
 							<pre><code data-trim class="scala">
 final class XbrlInstance(
   val topLevelFacts: immutable.IndexedSeq[Fact]) {
@@ -247,14 +247,14 @@ require(addressContextRefs2 == addressContextRefs)
 					<section>
 						<h3>Introducing yaidom</h3>
 						<ul>
-							<li>Let's now turn to yaidom</li>
-							<li>Suppose we want to perform some (instance) validations</li>
+							<li>Let's now return to XML, and let's introduce yaidom</li>
+							<li>Suppose we want to perform some (XBRL instance) validations</li>
 							<li>Then we need to be able to query the XBRL instance</li>
 							<li>Let's query the instance at the low abstraction level of XML</li>
 							<li>Using higher-order yaidom functions returning element collections</li>
 							<li>E.g., using HOF <em>filterChildElems</em> to get contexts, units and top-level facts</li>
-							<li>E.g., using HOF <em>filterElems</em> (from top-level facts) to get nested facts ("filter descendant elements")</li>
-							<li>E.g., using HOF <em>filterElemsOrSelf</em> (from top-level facts) to get all facts ("filter descendant-or-self elements")</li>
+							<li>And using HOF <em>filterElems</em> (from top-level facts) to get nested facts ("filter descendant elements")</li>
+							<li>And using HOF <em>filterElemsOrSelf</em> (from top-level facts) to get all facts ("filter descendant-or-self elements")</li>
 						</ul>
 					</section>
 					<section>
@@ -427,7 +427,7 @@ require(contextIds.subsetOf(usedContextIds))
 					<section>
 						<h3>XBRL context validation example, revisited</h3>
 						<ul>
-							<li>Let's implement the same rule at a higher level of abstraction</li>
+							<li>Let's hint at how to implement the same rule at a higher level of abstraction</li>
 							<li>Yaidom makes it easy to create class hierarchies for specific XML dialects that are yaidom elements themselves</li>
 							<li>So these custom yaidom elements offer the same yaidom query API, plus more</li>
 							<li>For example, assume such a class hierarchy for XBRL instances and their components</li>
@@ -445,6 +445,8 @@ val usedContextIds =
 require(usedContextIds.subsetOf(contextIds))
 require(contextIds.subsetOf(usedContextIds))
 							</code></pre>
+						</p>
+						<p>The code looks a lot more like client code of the non-XML instance model shown earlier, but here we can treat the instance like (type-safe) XML.
 						</p>
 					</section>
 				</section>
