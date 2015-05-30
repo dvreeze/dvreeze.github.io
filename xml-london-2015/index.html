@@ -129,7 +129,7 @@
 				<section>
 					<section>
 						<h3>Introducing Scala and Scala Collections</h3>
-						<p>Consider the following trivial (non-XML) XBRL instance model:
+						<p>Consider the following trivial (non-XML) instance model:
 							<pre><code data-trim class="scala">
 trait Fact { def ename: EName }
 							</code></pre>
@@ -248,7 +248,7 @@ require(addressContextRefs2 == addressContextRefs)
 						<h3>Introducing yaidom</h3>
 						<ul>
 							<li>Let's now return to XML, and let's introduce yaidom</li>
-							<li>Suppose we want to perform some (XBRL instance) validations</li>
+							<li>Suppose we want to perform some (instance) validations</li>
 							<li>Then we need to be able to query the XBRL instance</li>
 							<li>Let's query the instance at the low abstraction level of XML</li>
 							<li>Using higher-order yaidom functions returning element collections</li>
@@ -446,7 +446,9 @@ require(usedContextIds.subsetOf(contextIds))
 require(contextIds.subsetOf(usedContextIds))
 							</code></pre>
 						</p>
-						<p>The code looks a lot more like client code of the non-XML instance model shown earlier, but here we can treat the instance like (type-safe) XML.
+						<p>The code looks a lot more like client code of the non-XML instance model shown earlier.
+						</p>
+						<p>Yet here we can treat the instance like (type-safe) XML.
 						</p>
 					</section>
 				</section>
