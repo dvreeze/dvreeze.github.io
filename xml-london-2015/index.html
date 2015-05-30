@@ -74,7 +74,7 @@
 						<li class="fragment" data-fragment-index="1">An <em>XML query</em> and transformation API</li>
 						<li class="fragment" data-fragment-index="2">Leverages <em>Scala</em> and the Scala Collections API</li>
 						<li class="fragment" data-fragment-index="3">The XML query API is small, precise and clear</li>
-						<li class="fragment" data-fragment-index="4">It is offered by <em>multiple</em> element implementations</li>
+						<li class="fragment" data-fragment-index="4">It is offered by <em>multiple</em> element implementations (why? e.g. XML diff vs. XML editing)</li>
 						<li class="fragment" data-fragment-index="5">Including your own custom ones (easy to add)</li>
 						<li class="fragment" data-fragment-index="6">Including type-safe ones for an XML dialect (e.g. XBRL)</li>
 						<li class="fragment" data-fragment-index="7">Very precise XML namespace support</li>
@@ -252,9 +252,9 @@ require(addressContextRefs2 == addressContextRefs)
 							<li>Then we need to be able to query the XBRL instance</li>
 							<li>Let's query the instance at the low abstraction level of XML</li>
 							<li>Using higher-order yaidom functions returning element collections</li>
-							<li>E.g., using HOF <em>filterChildElems</em> to get contexts, units and top-level facts</li>
-							<li>And using HOF <em>filterElems</em> (from top-level facts) to get nested facts ("filter descendant elements")</li>
-							<li>And using HOF <em>filterElemsOrSelf</em> (from top-level facts) to get all facts ("filter descendant-or-self elements")</li>
+							<li>E.g., HOF <em>filterChildElems</em> filters child elements obeying some element predicate</li>
+							<li>HOF <em>filterElems</em> filters descendant elements obeying some element predicate</li>
+							<li>And HOF <em>filterElemsOrSelf</em> filters descendant-or-self elements obeying some element predicate</li>
 						</ul>
 					</section>
 					<section>
