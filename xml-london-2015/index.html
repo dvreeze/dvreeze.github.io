@@ -206,21 +206,8 @@ val topLevelEuroFacts =
     fact => fact.unitRefOption == Some("EUR"))
 
 require(topLevelEuroFacts.size == 1)
-
-// Using a for-comprehension
-
-val topLevelEuroFacts2 =
-  for {
-    itemFact <- instance.topLevelItemFacts
-    if itemFact.unitRefOption == Some("EUR")
-  } yield itemFact
-
-require(topLevelEuroFacts2 == topLevelEuroFacts)
 							</code></pre>
 						</p>
-					</section>
-
-					<section>
 						<p>Showing higher-order function "map":
 							<pre><code data-trim class="scala">
 val address = instance.topLevelTupleFacts.head
@@ -229,15 +216,6 @@ val addressContextRefs =
   address.childItemFacts.map(fact => fact.contextRef).toSet
 
 require(addressContextRefs == Set("FY14d"))
-
-// Using a for-comprehension
-
-val addressContextRefs2 =
-  (for {
-    childItem <- address.childItemFacts
-  } yield childItem.contextRef).toSet
-
-require(addressContextRefs2 == addressContextRefs)
 							</code></pre>
 						</p>
 					</section>
