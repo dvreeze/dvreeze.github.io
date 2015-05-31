@@ -176,7 +176,7 @@ final class XbrlInstance(
 					</section>
 
 					<section>
-						<p>The example instance data in this model looks as follows:
+						<p>The example instance data in this model is as follows:
 							<pre><code data-trim class="scala">
 val instance =
   new XbrlInstance(Vector(
@@ -248,13 +248,12 @@ require(addressContextRefs2 == addressContextRefs)
 						<h3>Introducing yaidom</h3>
 						<ul>
 							<li>Let's now return to XML, and let's introduce yaidom</li>
-							<li>Suppose we want to perform some (instance) validations</li>
-							<li>Then we need to be able to query the XBRL instance</li>
-							<li>Let's query the instance at the low abstraction level of XML</li>
-							<li>Using higher-order yaidom functions returning element collections</li>
+							<li>Yaidom's query API offers many higher-order element methods that take an element predicate as parameter</li>
+							<li>Many of these functions return a collection of elements</li>
 							<li>E.g., HOF <em>filterChildElems</em> filters child elements obeying some element predicate</li>
 							<li>HOF <em>filterElems</em> filters descendant elements obeying some element predicate</li>
 							<li>And HOF <em>filterElemsOrSelf</em> filters descendant-or-self elements obeying some element predicate</li>
+							<li>Let's use these functions to query the sample XBRL instance for contexts, units and facts</li>
 						</ul>
 					</section>
 					<section>
