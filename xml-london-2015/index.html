@@ -59,8 +59,8 @@
  					<ul>
 						<li class="fragment" data-fragment-index="1">What is yaidom?</li>
 						<li class="fragment" data-fragment-index="2">Use case: XBRL</li>
-						<li class="fragment" data-fragment-index="3">Introducing Scala Collections</li>
-						<li class="fragment" data-fragment-index="4">Introducing yaidom</li>
+						<li class="fragment" data-fragment-index="3">Introducing higher-order functions</li>
+						<li class="fragment" data-fragment-index="4">Introducing yaidom higher-order functions</li>
 						<li class="fragment" data-fragment-index="5">Namespace validation example</li>
 						<li class="fragment" data-fragment-index="6">XBRL context validation example</li>
 						<li class="fragment" data-fragment-index="7">XBRL context validation example, revisited</li>
@@ -128,7 +128,7 @@
 
 				<section>
 					<section>
-						<h3>Introducing Scala Collections</h3>
+						<h3>Introducing higher-order functions</h3>
 						<ul>
 							<li>Scala has a rich Collections API</li>
 							<li>The most commonly used collections are immutable</li>
@@ -145,7 +145,8 @@
 val xbrliNs = "http://www.xbrl.org/2003/instance"
 
 val contexts =
-  instance.findAllChildElems.filter(e => e.resolvedName == EName(xbrliNs, "context"))
+  instance.findAllChildElems.filter(e =>
+    e.resolvedName == EName(xbrliNs, "context"))
 							</code></pre>
 						</p>
 						<p>Showing higher-order function "map":
@@ -159,9 +160,8 @@ val contextIds =
 
 				<section> 
 					<section>
-						<h3>Introducing yaidom</h3>
+						<h3>Introducing yaidom higher-order functions</h3>
 						<ul>
-							<li>Let's now introduce yaidom</li>
 							<li>Yaidom's query API offers many higher-order element methods that take an element predicate as parameter</li>
 							<li>Most of these functions return a collection of elements</li>
 							<li>E.g., HOF <em>filterChildElems</em> filters child elements obeying some element predicate</li>
