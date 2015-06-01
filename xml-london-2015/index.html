@@ -79,7 +79,7 @@
 						<li class="fragment" data-fragment-index="6">Including type-safe ones for an XML dialect (e.g. XBRL)</li>
 						<li class="fragment" data-fragment-index="7">Very precise XML namespace support</li>
 						<li class="fragment" data-fragment-index="8">Full control over XML parsing and serialization</li>
-						<li class="fragment" data-fragment-index="9">In short, a useful XML library when using Scala to write complex (XML) <em>validations</em></li>
+						<li class="fragment" data-fragment-index="9">In short, Scala with yaidom can be used to write complex XML <em>validations</em></li>
 					</ul>
 				</section>
 
@@ -89,6 +89,7 @@
 						<ul>
 							<li>Yaidom is shown using the XBRL example below</li>
 							<li>XBRL is an XML-based (financial) reporting standard</li>
+							<li>It is very XML-intensive</li>
 							<li>A business report in XBRL is called an <em>XBRL instance</em></li>
 							<li>It reports <em>facts</em></li>
 							<li>Having <em>contexts</em> ("who", "when" etc.)</li>
@@ -361,10 +362,6 @@ val usedContextIds =
 require(usedContextIds.subsetOf(contextIds))
 require(contextIds.subsetOf(usedContextIds))
 							</code></pre>
-						</p>
-						<p>The code looks a lot more like client code of the non-XML instance model shown earlier.
-						</p>
-						<p>Yet here we can treat the instance like (type-safe) XML.
 						</p>
 					</section>
 				</section>
