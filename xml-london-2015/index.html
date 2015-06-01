@@ -47,7 +47,7 @@
 						<small>Showing yaidom by examples using XBRL</a></small>
 					</p>
 					<p>
-						<br/><small>Created by <a href="http://dvreeze.github.io/">Chris de Vreeze @ EBPI</a></small>
+						<br/><small>Created by <a href="http://dvreeze.github.io/">chris.de.vreeze@ebpi.nl</a></small>
 					</p>
 					<p>
 						<br/><br/><small>Powered by <a href="http://lab.hakim.se/reveal-js">reveal.js</a></small>
@@ -58,8 +58,8 @@
 					<h3>Overview of the presentation</h3>
  					<ul>
 						<li class="fragment" data-fragment-index="1">What is yaidom?</li>
-						<li class="fragment" data-fragment-index="2">XBRL sample data used to show yaidom</li>
-						<li class="fragment" data-fragment-index="3">Introducing Scala and Scala Collections</li>
+						<li class="fragment" data-fragment-index="2">Use case: XBRL</li>
+						<li class="fragment" data-fragment-index="3">Introducing Scala Collections</li>
 						<li class="fragment" data-fragment-index="4">Introducing yaidom</li>
 						<li class="fragment" data-fragment-index="5">Namespace validation example</li>
 						<li class="fragment" data-fragment-index="6">XBRL context validation example</li>
@@ -85,10 +85,10 @@
 
 				<section> 
 					<section>
-						<h3>XBRL sample data used to show yaidom</h3>
+						<h3>Use case: XBRL</h3>
 						<ul>
 							<li>Yaidom is shown using the XBRL example below</li>
-							<li>XBRL is a (financial) reporting standard</li>
+							<li>XBRL is an XML-based (financial) reporting standard</li>
 							<li>A business report in XBRL is called an <em>XBRL instance</em></li>
 							<li>It reports <em>facts</em></li>
 							<li>Having <em>contexts</em> ("who", "when" etc.)</li>
@@ -128,94 +128,30 @@
 
 				<section>
 					<section>
-						<h3>Introducing Scala and Scala Collections</h3>
-						<p>Consider the following trivial (non-XML) instance model:
-							<pre><code data-trim class="scala">
-trait Fact { def ename: EName }
-							</code></pre>
-							<pre><code data-trim class="scala">
-final class ItemFact(
-  val ename: EName,
-  val contextRef: String,
-  val unitRefOption: Option[String],
-  val factValue: String) extends Fact
-							</code></pre>
-							<pre><code data-trim class="scala">
-final class TupleFact(
-  val ename: EName,
-  val childFacts: immutable.IndexedSeq[Fact]) extends Fact {
-
-  def childItemFacts: immutable.IndexedSeq[ItemFact] =
-    childFacts collect { case item: ItemFact => item }
-
-  def childTupleFacts: immutable.IndexedSeq[TupleFact] =
-    childFacts collect { case tuple: TupleFact => tuple }
-}
-							</code></pre>
-						</p>
+						<h3>Introducing Scala Collections</h3>
+						<ul>
+							<li>Scala has a rich Collections API</li>
+							<li>The most commonly used collections are immutable</li>
+							<li>Typically, collections are created from other collections by applying higher-order functions</li>
+							<li>For example, HOF <em>filter</em> takes an element predicate as argument</li>
+							<li>And HOF <em>map</em> takes an "element transforming" function as argument</li>
+						</ul>
 					</section>
 
 					<section>
-						<p>The trivial (non-XML) instance model itself:
-							<pre><code data-trim class="scala">
-final class XbrlInstance(
-  val topLevelFacts: immutable.IndexedSeq[Fact]) {
-
-  // Contexts, units etc. ...
-
-  def topLevelItemFacts: immutable.IndexedSeq[ItemFact] =
-    topLevelFacts collect { case item: ItemFact => item }
-
-  def topLevelTupleFacts: immutable.IndexedSeq[TupleFact] =
-    topLevelFacts collect { case tuple: TupleFact => tuple }
-}
-							</code></pre>
-						</p>
-						<p><br/>Higher-order function "collect" acts as a combination of "filter" and "map", explained below.
-						</p>
-					</section>
-
-					<section>
-						<p>The example instance data in this model is as follows:
-							<pre><code data-trim class="scala">
-val instance =
-  new XbrlInstance(Vector(
-      new ItemFact(
-        EName("cc2-i", "Equity"), "FY14d", Some("EUR"), "95000"),
-      new TupleFact(
-        EName("cc-t", "EntityAddressPresentation"), Vector(
-          new ItemFact(
-            EName("nlcd", "POBoxNumber"), "FY14d", None, "2312"),
-          new ItemFact(
-            EName("nlcd", "PostalCodeNL"), "FY14d", None, "2501CD"),
-          new ItemFact(
-            EName("nlcd", "PlaceOfResidenceNL"), "FY14d", None,
-              "Den Haag"),
-          new ItemFact(
-            EName("nlcd", "CountryName"), "FY14d", None,
-              "Nederland")))))
-							</code></pre>
-						</p>
-					</section>
-
-					<section>
+						<p>First note that in yaidom <em>findAllChildElems</em> finds all child elements</p>
 						<p>Showing higher-order function "filter":
 							<pre><code data-trim class="scala">
-val topLevelEuroFacts =
-  instance.topLevelItemFacts.filter(
-    fact => fact.unitRefOption == Some("EUR"))
+val xbrliNs = "http://www.xbrl.org/2003/instance"
 
-require(topLevelEuroFacts.size == 1)
+val contexts =
+  instance.findAllChildElems.filter(e => e.resolvedName == EName(xbrliNs, "context"))
 							</code></pre>
 						</p>
 						<p>Showing higher-order function "map":
 							<pre><code data-trim class="scala">
-val address = instance.topLevelTupleFacts.head
-
-val addressContextRefs =
-  address.childItemFacts.map(fact => fact.contextRef).toSet
-
-require(addressContextRefs == Set("FY14d"))
+val contextIds =
+  contexts.map(e => e.attribute(EName("id")))
 							</code></pre>
 						</p>
 					</section>
@@ -225,7 +161,7 @@ require(addressContextRefs == Set("FY14d"))
 					<section>
 						<h3>Introducing yaidom</h3>
 						<ul>
-							<li>Let's now return to XML, and let's introduce yaidom</li>
+							<li>Let's now introduce yaidom</li>
 							<li>Yaidom's query API offers many higher-order element methods that take an element predicate as parameter</li>
 							<li>Most of these functions return a collection of elements</li>
 							<li>E.g., HOF <em>filterChildElems</em> filters child elements obeying some element predicate</li>
@@ -447,7 +383,7 @@ require(contextIds.subsetOf(usedContextIds))
 
 				<section>
 					<p>
-						<br/><a href="http://dvreeze.github.io/">Chris de Vreeze @ EBPI</a>
+						<br/><a href="http://dvreeze.github.io/">chris.de.vreeze@ebpi.nl</a>
 					</p>
 					<p>
 						<br/><br/><br/>
