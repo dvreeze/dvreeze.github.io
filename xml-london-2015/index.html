@@ -229,7 +229,19 @@ val allFacts =
   topLevelFacts.flatMap(_.filterElemsOrSelf(e => hasCustomNs(e)))
 							</code></pre>
 						</p>
-						<p>Non-trivial queries combine facts with their contexts and units: just store contexts and units in Maps</p>
+					</section>
+					<section>
+						<p>Non-trivial queries combine facts with their contexts and units:
+							<pre><code data-trim class="scala">
+val contextsById =
+  contexts.groupBy(_.attribute(EName("id")))
+val unitsById =
+  units.groupBy(_.attribute(EName("id")))
+
+// Use these Maps to look up contexts and units from
+// (item) facts, with predictable performance ...
+							</code></pre>
+						</p>
 					</section>
 				</section>
 
