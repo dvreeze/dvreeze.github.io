@@ -85,7 +85,8 @@
 						<li class="fragment" data-fragment-index="3">Defines some core concepts (ENames, QNames, Scope etc.)</li>
 						<li class="fragment" data-fragment-index="4">Its namespace support is built on these concepts</li>
 						<li class="fragment" data-fragment-index="5">Its XML query API is built on its namespace support</li>
-						<li class="fragment" data-fragment-index="6">It is offered by <em>multiple</em> element implementations (why? e.g. XML diff vs. XML editing)</li>
+						<li class="fragment" data-fragment-index="6">The <em>same</em> query API is offered by <em>multiple</em> element implementations
+                                                  (why? e.g. XML diff vs. XML editor)</li>
 						<li class="fragment" data-fragment-index="7">Including your own custom ones (easy to add)</li>
 						<li class="fragment" data-fragment-index="8">Including type-safe ones for specific XML dialects (e.g. XBRL)</li>
 					</ul>
@@ -153,7 +154,7 @@
 							<li>Method <em>findAllChildElems</em> finds all child elements</li>
 							<li><em>EName</em> stands for "expanded name"</li>
 						</ul>
-						<p><br/>Below higher-order functions "filter" and "map" are shown:
+						<p><br/>Below methods "filter" and "map" are shown:
 							<pre><code data-trim class="scala">
 val xbrliNs = "http://www.xbrl.org/2003/instance"
 
@@ -366,9 +367,10 @@ require(contextIds.subsetOf(usedContextIds))
 						<h3>XBRL context validation example, revisited</h3>
 						<ul>
 							<li>Let's hint at how to implement the same rule at a higher level of abstraction</li>
-							<li>Yaidom makes it easy to create class hierarchies for specific XML dialects that are yaidom elements themselves</li>
+							<li>Yaidom makes it easy to support XML dialects by gradually adding types to XML elements</li>
 							<li>So these custom yaidom elements offer the same yaidom query API, plus more</li>
-							<li>For example, assume such a class hierarchy for XBRL instances and their components</li>
+							<li>This is different from O-X mappers, such as JAXB</li>
+							<li>Let's assume such custom elements modeling XBRL instances and their components</li>
 							<li>Then the validation code shown earlier could be reduced to something like the code shown below</li>
 						</ul>
 					</section>
@@ -392,9 +394,9 @@ require(contextIds.subsetOf(usedContextIds))
 					<ul>
 						<li class="fragment" data-fragment-index="1">Like the standard Scala XML library, yaidom leverages Scala and its Collections API</li>
 						<li class="fragment" data-fragment-index="2">Yet yaidom offers <em>multiple</em> element implementations behind the <em>same query API</em></li>
-						<li class="fragment" data-fragment-index="3">Including James Clark's labelled element tree abstraction</li>
+						<li class="fragment" data-fragment-index="3">Including James Clark's labeled element tree abstraction</li>
 						<li class="fragment" data-fragment-index="4">Or custom elements, such as Saxon NodeInfo wrappers</li>
-						<li class="fragment" data-fragment-index="5">Even custom XML dialect element implementations are easy to add using yaidom</li>
+						<li class="fragment" data-fragment-index="5">Even custom XML dialect element implementations</li>
 						<li class="fragment" data-fragment-index="6">In short, yaidom and Scala are a foundation for (complex) XML validations</li>
 						<li class="fragment" data-fragment-index="7">At EBPI, yaidom is one tool through which we achieve high data quality and a quick time to market</li>
 					</ul>
