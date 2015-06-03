@@ -56,7 +56,7 @@
 						<img src="logo_EBPI.jpg" alt="EBPI" width="207" height="132" style="border: none">
 					</p>
 					<p>
-						<br/><br/><small>Powered by <a href="http://lab.hakim.se/reveal-js">reveal.js</a></small>
+						<br/><small>Powered by <a href="http://lab.hakim.se/reveal-js">reveal.js</a></small>
 					</p>
 				</section>
 
@@ -82,13 +82,12 @@
  					<ul>
 						<li class="fragment" data-fragment-index="1">An (open source) <em>XML query</em> and transformation API</li>
 						<li class="fragment" data-fragment-index="2">Leverages <em>Scala</em> and the Scala Collections API</li>
-						<li class="fragment" data-fragment-index="3">The XML query API is small, precise and clear</li>
-						<li class="fragment" data-fragment-index="4">It is offered by <em>multiple</em> element implementations (why? e.g. XML diff vs. XML editing)</li>
-						<li class="fragment" data-fragment-index="5">Including your own custom ones (easy to add)</li>
-						<li class="fragment" data-fragment-index="6">Including type-safe ones for an XML dialect (e.g. XBRL)</li>
-						<li class="fragment" data-fragment-index="7">Very precise XML namespace support</li>
-						<li class="fragment" data-fragment-index="8">Full control over XML parsing and serialization</li>
-						<li class="fragment" data-fragment-index="9">In short, Scala with yaidom can be used to write complex XML <em>validations</em></li>
+						<li class="fragment" data-fragment-index="3">Defines some core concepts (ENames, QNames, Scope etc.)</li>
+						<li class="fragment" data-fragment-index="4">Its namespace support is built on these concepts</li>
+						<li class="fragment" data-fragment-index="5">Its XML query API is built on its namespace support</li>
+						<li class="fragment" data-fragment-index="6">It is offered by <em>multiple</em> element implementations (why? e.g. XML diff vs. XML editing)</li>
+						<li class="fragment" data-fragment-index="7">Including your own custom ones (easy to add)</li>
+						<li class="fragment" data-fragment-index="8">Including type-safe ones for specific XML dialects (e.g. XBRL)</li>
 					</ul>
 				</section>
 
@@ -142,9 +141,9 @@
 						<ul>
 							<li>Scala has a rich Collections API</li>
 							<li>The most commonly used collections are immutable</li>
-							<li>Typically, collections are created from other collections by applying higher-order functions</li>
-							<li>For example, HOF <em>filter</em> takes an element predicate as argument</li>
-							<li>And HOF <em>map</em> takes an "element transforming" function as argument</li>
+							<li>Typically, collections are created from other collections by applying ("for-each-like") higher-order functions</li>
+							<li>For example, function <em>filter</em> takes an element predicate, and keeps only those elements for which the predicate holds</li>
+							<li>And method <em>map</em> takes a function, and replaces all elements by the result of applying the function</li>
 						</ul>
 					</section>
 
@@ -173,12 +172,13 @@ val contextIds =
 					<section>
 						<h3>Introducing yaidom higher-order functions</h3>
 						<ul>
-							<li>Yaidom's query API offers many higher-order element methods that take an element predicate as parameter</li>
+							<li>Yaidom's query API offers many higher-order element methods that take an element predicate</li>
 							<li>Most of these functions return a collection of elements</li>
-							<li>E.g., HOF <em>filterChildElems</em> filters child elements obeying some element predicate</li>
-							<li>HOF <em>filterElems</em> filters descendant elements obeying some element predicate</li>
-							<li>And HOF <em>filterElemsOrSelf</em> filters descendant-or-self elements obeying some element predicate</li>
-							<li>They remind of XPath axes, but return only elements</li>
+							<li>E.g., method <em>filterChildElems</em> filters child elements</li>
+							<li>Method <em>filterElems</em> filters descendant elements</li>
+							<li>And method <em>filterElemsOrSelf</em> filters descendant-or-self elements</li>
+							<li>They are somewhat similar to XPath axes, but return only elements</li>
+							<li>If you understand these filtering methods, you understand them all</li>
 							<li>Let's use them to find contexts, units and facts</li>
 						</ul>
 					</section>
@@ -262,7 +262,7 @@ val unitsById =
 					<section>
 						<pre style="font-size:17px;line-height:12px;padding:15px;">
 &lt;xbrli:xbrl xmlns:<span style="background-color:gold;padding:2px;">xbrli</span>="http://www.xbrl.org/2003/instance"<br/>
-  xmlns:cc2-i="cc2i" xmlns:cc-t="cct" xmlns:cd="nlcd" xmlns:<span style="background-color:gold;padding:2px;">iso4217</span>="iso4217"&gt;<br/>
+  xmlns:cc2-i="cc2i" xmlns:cc-t="cct" xmlns:cd="nlcd" xmlns:<span style="background-color:gold;padding:2px;">iso4217</span>="<span style="background-color:red;padding:2px;">iso4217</span>"&gt;<br/>
   &lt;xbrli:context id="FY14d"&gt; <br/>
     &lt;xbrli:entity&gt;<br/>
       &lt;xbrli:identifier scheme="http://www.cc.eu/cc-id"&gt;30267975<br/>
@@ -369,7 +369,7 @@ require(contextIds.subsetOf(usedContextIds))
 							<li>Yaidom makes it easy to create class hierarchies for specific XML dialects that are yaidom elements themselves</li>
 							<li>So these custom yaidom elements offer the same yaidom query API, plus more</li>
 							<li>For example, assume such a class hierarchy for XBRL instances and their components</li>
-							<li>Then the validation code above could be reduced to something like the code shown below</li>
+							<li>Then the validation code shown earlier could be reduced to something like the code shown below</li>
 						</ul>
 					</section>
 					<section>
@@ -392,8 +392,8 @@ require(contextIds.subsetOf(usedContextIds))
 					<ul>
 						<li class="fragment" data-fragment-index="1">Like the standard Scala XML library, yaidom leverages Scala and its Collections API</li>
 						<li class="fragment" data-fragment-index="2">Yet yaidom offers <em>multiple</em> element implementations behind the <em>same query API</em></li>
-						<li class="fragment" data-fragment-index="3">Including James Clark's minimal "resolved" element trees</li>
-						<li class="fragment" data-fragment-index="4">Or custom ones, such as Saxon NodeInfo wrappers</li>
+						<li class="fragment" data-fragment-index="3">Including James Clark's labelled element tree abstraction</li>
+						<li class="fragment" data-fragment-index="4">Or custom elements, such as Saxon NodeInfo wrappers</li>
 						<li class="fragment" data-fragment-index="5">Even custom XML dialect element implementations are easy to add using yaidom</li>
 						<li class="fragment" data-fragment-index="6">In short, yaidom and Scala are a foundation for (complex) XML validations</li>
 						<li class="fragment" data-fragment-index="7">At EBPI, yaidom is one tool through which we achieve high data quality and a quick time to market</li>
