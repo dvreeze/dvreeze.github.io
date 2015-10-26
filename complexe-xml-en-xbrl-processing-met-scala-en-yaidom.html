@@ -1,0 +1,409 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Complexe XML en XBRL processing vereenvoudigd, door inzet van Scala en yaidom</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Complexe XML en XBRL processing vereenvoudigd, door inzet van Scala en yaidom</h1>
+        <p>Yaidom is een uniforme XML query/transformatie API, geschreven in Scala, die gebruik maakt van en goed aansluit op Scala's Collections API. Daarnaast biedt yaidom diverse specifieke DOM-achtige implementaties die deze XML query API aanbieden.</p>
+        <p>In dit artikel wordt de yaidom library geintroduceerd, gebruik maken van voorbeelden uit XBRL (eXtensible Business Reporting Language).</p>
+
+        <!-- <p class="view"><a href="https://github.com/dvreeze">Zie mijn GitHub Profiel</a></p> -->
+      </header>
+      <section>
+        <h3>
+<a name="introductie" class="anchor" href="#introductie"><span class="octicon octicon-link"></span></a>Introductie</h3>
+
+<p>EBPI maakt vooral bedrijfskritische keteninformatiesystemen. Daardoor heeft EBPI de nodige ervaring opgedaan met complexe data-processing. Veel van de aangeleverde en verwerkte data is
+in <em>XML</em> formaat ("Rumors of its demise have been greatly exaggerated."). Daarvan is een groot deel in <em>XBRL</em> formaat. XBRL is een belangrijke standaard voor bedrijfsrapportages (zoals
+jaarrekeningen en belastingaangiften). Zie <a href="https://www.xbrl.org/the-standard/how/getting-started-for-developers/" target="_blank">deze link</a> voor een beknopte heldere uitleg over de basis van XBRL.
+In deze blog gebruiken we XBRL als voorbeeld voor complexe XML processing.</p>
+
+<p>XML processing wordt typisch gedaan door inzet van standaarden als XPath, XSLT, XQuery etc. Het fundament daarvan is het <a href="http://www.w3.org/TR/xpath-datamodel-3/" target="_blank">XPath Data Model</a>,
+met o.a. de <a href="http://www.w3.org/TR/xpath-functions-3/" target="_blank">standaard functie library</a>. Dit zijn complexe standaarden met een fikse leercurve. Ontwikkelen in Scala en Java rust op een heel ander
+fundament, namelijk de JVM, de Java en Scala programmeertalen, en talloze Java en Scala libraries. Bij gebruik van Scala is de <em>Scala Collections API</em> vermoedelijk de belangrijkste ingezette Scala API.</p>
+
+<p>Wat nu als we die basis van Scala en Java development expertise en Scala's Collections API zouden inzetten voor XML processing, zonder gebruik te maken van XPath, XSLT en/of XQuery? Zouden we op die basis
+nog maar een kleine brug nodig hebben om hiervan een krachtige XML processing stack te maken? Zo'n brug is inderdaad mogelijk, en is door EBPI ontwikkeld. Deze library heet <em>yaidom</em>, en is een XML query
+en transformatie API. Yaidom is een alternatief voor Scala's eigen XML library, gekenmerkt door uitstekende interoperabiliteit met JAXP, Saxon(-EE) en andere XML "backends".
+Zie <a href="https://github.com/dvreeze/yaidom" target="_blank">hier</a> en <a href="http://dvreeze.github.io/" target="_blank">hier</a> voor yaidom. De library zal spoedig overgebracht worden naar
+het <a href="https://github.com/EBPI/yaidom" target="_blank">EBPI github account</a>, met behoud van de open source Apache 2.0 licentie.</p>
+
+<p>In deze blog wordt XML processing met Scala en yaidom gedemonstreerd, aan de hand van een XBRL voorbeeld. Dit voorbeeld is afkomstig van Charles Hoffman, die bekend staat als de "vader van XBRL".
+De bestanden van het voorbeeld zijn te vinden op de <a href="http://www.xbrlsite.com/DigitalFinancialReporting/ComprehensiveExample/2011-07-15/" target="_blank">xbrlsite</a>. In het vervolg van het artikel wordt getoond
+hoe Scala en yaidom kunnen helpen om XBRL processing eenvoudiger te maken. Er wordt vervolgens toegewerkt naar een voorbeeld van een validatie op het XBRL voorbeeld-rapport. Deze validatie is een zogenaamde
+"value assertion". Deze wordt gesimuleerd door Scala code, met gebruik van yaidom. Hoewel het doorgronden van "value assertions" in XBRL moeilijk is zonder voldoende basiskennis van XBRL, is de simulatie
+daarvan in Scala code eenvoudig te begrijpen voor Scala ontwikkelaars. Dat is dan ook het punt van deze blog: Scala en yaidom (met eventueel een "XML backend" als Saxon-EE voor type-informatie) kunnen
+complexe XML processing eenvoudiger maken (met name voor Scala ontwikkelaars).</p>
+
+<p>Het vervolg van het artikel is als volgt georganiseerd:</p>
+<ol>
+<li>Een korte introductie tot "XBRL instanties".</li>
+<li>Enkele yaidom queries op de XBRL instantie.</li>
+<li>Enkele yaidom "aspect-queries" op de XBRL instantie.</li>
+<li>Een "value assertion" gesimuleerd in Scala.</li>
+<li>Conclusie.</li>
+</ol>
+
+<h3>
+<a name="korte-xbrl-introductie" class="anchor" href="#korte-xbrl-introductie"><span class="octicon octicon-link"></span></a>Korte inleiding tot XBRL instanties</h3>
+
+<p>XBRL (eXtensible Business Reporting Language) is een standaard voor bedrijfsrapportages. Typische XBRL rapportages zijn financieel van aard. XBRL rapporten ("XBRL instanties") zijn XML
+documenten, die een gespecificeerde structuur volgen.</p>
+
+<p>Stel dat we willen rapporteren dat voor een gegeven organisatie ("CIK") het gemiddelde aantal werknemers in 2003 220 bedroeg, en dat de corresponderende aantallen in 2004 en 2005 respectievelijk 240
+en 250 waren. Preciezer gezegd in XBRL terminologie, <em>concept</em> <code>gaap:AverageNumberEmployees</code> (beschreven door de zogenaamde US-GAAP <em>taxonomie</em>) heeft de <em>waarde</em>
+<code>220</code> in de gegeven <em>context</em> (organisatie "CIK", jaar 2003). Dan kunnen we bovenstaande 3 <em>facts</em> als volgt representeren in "XBRL instantie"-formaat:</p>
+
+<pre><code>&lt;xbrl xmlns="http://www.xbrl.org/2003/instance" xmlns:gaap="http://xasb.org/gaap"&gt;
+
+   &lt;context id="D-2003"&gt;
+      &lt;entity&gt;
+         &lt;identifier scheme="http://www.sec.gov/CIK"&gt;1234567890&lt;/identifier&gt;
+      &lt;/entity&gt;
+      &lt;period&gt;
+         &lt;startDate&gt;2003-01-01&lt;/startDate&gt;
+         &lt;endDate&gt;2003-12-31&lt;/endDate&gt;
+      &lt;/period&gt;
+   &lt;/context&gt;
+
+   &lt;context id="D-2004"&gt;
+      &lt;entity&gt;
+         &lt;identifier scheme="http://www.sec.gov/CIK"&gt;1234567890&lt;/identifier&gt;
+      &lt;/entity&gt;
+      &lt;period&gt;
+         &lt;startDate&gt;2004-01-01&lt;/startDate&gt;
+         &lt;endDate&gt;2004-12-31&lt;/endDate&gt;
+      &lt;/period&gt;
+   &lt;/context&gt;
+
+   &lt;context id="D-2005"&gt;
+      &lt;entity&gt;
+         &lt;identifier scheme="http://www.sec.gov/CIK"&gt;1234567890&lt;/identifier&gt;
+      &lt;/entity&gt;
+      &lt;period&gt;
+         &lt;startDate&gt;2005-01-01&lt;/startDate&gt;
+         &lt;endDate&gt;2005-12-31&lt;/endDate&gt;
+      &lt;/period&gt;
+   &lt;/context&gt;
+
+   &lt;unit id="U-Pure"&gt;
+     &lt;measure&gt;pure&lt;/measure&gt;
+   &lt;/unit&gt;
+
+  &lt;gaap:AverageNumberEmployees contextRef="D-2003" unitRef="U-Pure" decimals="INF"&gt;220&lt;/gaap:AverageNumberEmployees&gt;
+  &lt;gaap:AverageNumberEmployees contextRef="D-2004" unitRef="U-Pure" decimals="INF"&gt;240&lt;/gaap:AverageNumberEmployees&gt;
+  &lt;gaap:AverageNumberEmployees contextRef="D-2005" unitRef="U-Pure" decimals="INF"&gt;250&lt;/gaap:AverageNumberEmployees&gt;
+
+&lt;/xbrl&gt;
+</code></pre>
+
+<p>Dit voorbeeld, geschreven door Charles Hoffman, komt van eerdergenoemde site. De rest van dit artikel werkt met
+<a href="http://www.xbrlsite.com/DigitalFinancialReporting/ComprehensiveExample/2011-07-15/company-instance.xml" target="_blank">deze voorbeeld XBRL instantie</a>, die sterk lijkt op een uitgebreidere
+versie van bovenstaand voorbeeld. Yaidom wordt geintroduceerd aan de hand van dit uitgebreide XBRL voorbeeld, ook al is yaidom een algemene XML library. Hoewel yaidom niet gebonden is aan het domein
+van XBRL, is XBRL wel een goed domein voor het tonen van de kracht van Scala en yaidom voor XML processing.</p>
+
+<h3>
+<a name="eenvoudige-xbrl-queries-met-yaidom" class="anchor" href="#eenvoudige-xbrl-queries-met-yaidom"><span class="octicon octicon-link"></span></a>Eenvoudige XBRL queries met yaidom</h3>
+
+<p>Yaidom wordt nu geintroduceerd door enkele eenvoudige queries op onze XBRL voorbeeld-instantie.</p>
+
+<p>Voordat deze queries worden getoond, volgt nu eerst een korte introductie tot de basis van yaidom XML querying. We hoeven slechts 3 centrale yaidom query API functies te noemen, want de overige functies
+zijn daarna snel aan te leren. Deze 3 functies zijn <code>filterChildElems</code>, <code>filterElems</code> en <code>filterElemsOrSelf</code>.</p>
+
+<p>Het volgende geldt voor deze 3 functies:</p>
+<ol>
+<li>Zij zijn functies die opereren op een XML element, en die Scala Collections van elementen retourneren.</li>
+<li>Zij filteren elementen uit respectievelijk de collecties van <em>child</em> elementen, <em>descendant</em> elementen, en <em>descendant-or-self</em> elementen.</li>
+<li>Het woord "descendant" is consequent weggelaten uit de functienamen. Dit wetende zijn de functies eenvoudig te onthouden.</li>
+<li>Zij zijn <em>higher-order functions</em>, die voor het filteren een element predicaat (dus een boolean functie op elementen) als parameter meekrijgen.</li>
+<li>Zij lijken sterk op respectievelijk de XPath assen <em>child</em>, <em>descendant</em> en <em>descendant-or-self</em>, maar retourneren collecties van element nodes, en niet van willekeurige XML nodes.</li>
+<li>Functies <code>filterElems</code> en <code>filterElemsOrSelf</code> hebben beknopte en zeer precieze definities in termen van functie <code>filterChildElems</code>.</li>
+<li>Goede interoperabiliteit met Scala Collections zit niet alleen in de geretourneerde Scala collecties, maar ook in het gebruik van Scala collecties in de implementaties van de functies.</li>
+<li>De yaidom XML element query API (en dus ook deze 3 functies) ondersteunt pluggable XML "backends". Dezelfde query API werkt voor native yaidom element-implementaties, maar bijvoorbeeld ook voor wrappers om Saxon tiny trees, W3C DOM trees en Scala XML trees.</li>
+</ol>
+
+<p>Voor functies <code>filterChildElems</code> en <code>filterElemsOrSelf</code> bestaan respectievelijk de afkortingen <code>\</code> en <code>\\</code>.
+Functie <code>attributeOption</code> heeft afkorting <code>\@</code>. Daarnaast hebben enkele element-predicaten namen, zoals <code>withLocalName</code> en <code>withEName</code>.
+Het begrip <code>EName</code> staat daarbij voor "expanded name". Yaidom heeft precieze XML namespace ondersteuning, en maakt een scherp onderscheid tussen "expanded names" enerzijds
+en "qualified names" anderzijds. Zie <a href="http://www.lenzconsulting.com/namespaces/" target="_blank">Understanding XML Namespaces</a> voor de basis van yaidom's ondersteuning van XML namespaces.
+Qualified names zijn de syntactische namen, en expanded names zijn datgene dat wordt gerepresenteerd door die syntactische namen. Slechts weinig XML libraries maken dit scherpe onderscheid. Dat yaidom dat
+wel doet heeft yaidom's namespace support aantoonbaar geholpen.</p>
+
+<p>Sommige yaidom queries op de voorbeeld XBRL-instantie zijn als volgt, ongeacht de "element tree"-implementatie:</p>
+
+<pre><code>// Let's first parse the XBRL instance document
+
+val docParser = DocumentParserUsingSax.newInstance
+
+val doc = docParser.parse(sampleXbrlInstanceFile)
+
+// Check that all gaap:AverageNumberEmployees facts have unit U-Pure.
+
+val xmlNs = "http://www.w3.org/XML/1998/namespace"
+val xbrliNs = "http://www.xbrl.org/2003/instance"
+val gaapNs = "http://xasb.org/gaap"
+
+val avgNumEmployeesFacts =
+  doc.documentElement.filterChildElems(withEName(gaapNs, "AverageNumberEmployees"))
+
+println(avgNumEmployeesFacts.size) // prints 10
+
+val onlyUPure =
+  avgNumEmployeesFacts.forall(fact => fact.attributeOption(EName("unitRef")) == Some("U-Pure"))
+println(onlyUPure) // prints true
+
+// Check the unit itself, minding the default namespace
+
+val uPureUnit =
+  doc.documentElement.getChildElem(e =>
+    e.resolvedName == EName(xbrliNs, "unit") && (e \@ EName("id")) == Some("U-Pure"))
+
+println(uPureUnit.getChildElem(withEName(xbrliNs, "measure")).text) // prints "pure"
+
+// Now we get the measure element text, as QName, resolving it to an EName (expanded name)
+println(uPureUnit.getChildElem(withEName(xbrliNs, "measure")).textAsResolvedQName)
+// prints EName(xbrliNs, "pure")
+
+// Knowing the units are the same, the gaap:AverageNumberEmployees facts are uniquely identified by contexts.
+
+val avgNumEmployeesFactsByContext: Map[String, simple.Elem] =
+  avgNumEmployeesFacts.groupBy(_.attribute(EName("contextRef"))).mapValues(_.head)
+
+println(avgNumEmployeesFactsByContext.keySet)
+// prints Set("D-2006", "D-2007", "D-2008", "D-2009", "D-2010", "D-2010-BS1", "D-2010-BS2", "D-2010-CON", "D-2010-E", "D-2010-ALL")
+
+println(avgNumEmployeesFactsByContext("D-2006").text) // prints 220
+</code></pre>
+
+<p>Yaidom is minder beknopt in het gebruik dan Scala's XML library. Het voordeel is meer precisie. Elke yaidom query API functie heeft een kraakheldere definitie, meestal in termen van een "basis"-functie
+zoals <code>filterChildElems</code>. Ook "chaining" van query functies is in yaidom niet mogelijk, terwijl Scala XML dit wel toelaat. Ook dit komt de precisie ten goede, omdat yaidom het onderscheid tussen
+individuele elementen enerzijds en collecties van elementen anderzijds niet onder tafel veegt.</p>
+
+<h3>
+<a name="eenvoudige-xbrl-aspect-queries-met-yaidom" class="anchor" href="#eenvoudige-xbrl-aspect-queries-met-yaidom"><span class="octicon octicon-link"></span></a>Eenvoudige XBRL aspect queries met yaidom</h3>
+
+<p>In een XBRL instantie (als XML document) zien facts met hun contexts en eventuele units er nogal "syntactisch" en weinig "semantisch" uit. De essentie van een fact is verspreid over meerdere XML elementen
+die mogelijk ver uit elkaar staan (facts versus contexts en units). Meer semantisch heeft een fact in een instantie naast een waarde een aantal <em>aspects</em>. Denk bijvoorbeeld aan:</p>
+<ol>
+<li>Het <em>concept aspect</em>. Dit is de expanded name van het fact element, en duidt het unieke concept aan met die expanded name. Het fact is dus een "instance" van dat concept.</li>
+<li>Het <em>location aspect</em>, dus het parent element van het fact. Dit is alleen interessant voor geneste facts.</li>
+<li>Het <em>entity identifier aspect</em>. Deze entity identifier vinden we terug in de XBRL context van dat fact.</li>
+<li>Het <em>period aspect</em>. Ook deze vinden we terug in de XBRL context van dat fact.</li>
+<li>Voor elke dimensie die we tegenkomen in de XBRL context van het fact, een <em>dimension aspect</em>. XBRL dimensions kunnen verder in dit artikel worden genegeerd, omdat we dit niet hebben uitgelegd.</li>
+<li>Voor numerieke concepten, het <em>unit aspect</em>. Dit is de XBRL unit van het fact.</li>
+</ol>
+
+<p>Deze (en andere) <em>aspects</em> vormen de basis voor moderne XBRL specificaties rond validaties ("formulas"). Daar zit ook de link met het laatste deel van dit artikel. Nu gaan we fact aspects opvragen
+met Scala en yaidom, zodat we daarna aspecten kunnen gebruiken om validaties op XBRL instanties te coderen.</p>
+
+<p>Hier volgt code om (sterk vereenvoudigd) fact aspects op te vragen. Variabele <code>idoc</code> bevat de XBRL instantie als zogenaamd "indexed" document. "Indexed" elementen kennen hun parent elementen,
+maar bieden dezelfde yaidom query API, en meer, wat we benutten voor het location aspect. De code, die wellicht zonder uitleg iets moeilijker is te begrijpen, is als volgt:</p>
+
+<pre><code>val contextsById: Map[String, indexed.Elem] =
+  idoc.documentElement.filterChildElems(withEName(XbrliNs, "context")).
+    groupBy(_.attribute(EName("id"))).mapValues(_.head)
+
+val unitsById: Map[String, indexed.Elem] =
+  idoc.documentElement.filterChildElems(withEName(XbrliNs, "unit")).
+    groupBy(_.attribute(EName("id"))).mapValues(_.head)
+
+// See http://www.xbrl.org/Specification/variables/REC-2009-06-22/variables-REC-2009-06-22.html#sec-aspects.
+
+def conceptAspect(fact: indexed.Elem): EName = fact.resolvedName
+
+def locationAspect(fact: indexed.Elem): Path =
+  fact.path.parentPathOption.getOrElse(Path.Root)
+
+def entityIdentifierAspectOption(fact: indexed.Elem): Option[(String, String)] = {
+  val contextOption = fact.attributeOption(EName("contextRef")).map(id => contextsById(id))
+
+  val identifierOption = contextOption.flatMap(_.findElem(withEName(XbrliNs, "identifier")))
+  val schemeOption = identifierOption.flatMap(_.attributeOption(EName("scheme")))
+  val identifierValueOption = identifierOption.map(_.text)
+
+  for {
+    scheme <- schemeOption
+    identifierValue <- identifierValueOption
+  } yield (scheme, identifierValue)
+}
+
+def periodAspectOption(fact: indexed.Elem): Option[simple.Elem] = {
+  val contextOption = fact.attributeOption(EName("contextRef")).map(id => contextsById(id))
+
+  val periodOption = contextOption.flatMap(_.findElem(withEName(XbrliNs, "period")))
+  periodOption.map(_.elem)
+}
+
+// Forgetting about complete segment, non-XDT segment, complete scenario and non-XDT scenario for now
+// Also ignoring typed dimensions
+
+def explicitDimensionAspects(fact: indexed.Elem): Map[EName, EName] = {
+  val contextOption = fact.attributeOption(EName("contextRef")).map(id => contextsById(id))
+
+  val memberElems = contextOption.toVector.flatMap(_.filterElems(withEName(XbrldiNs, "explicitMember")))
+  memberElems.map(e => (e.attributeAsResolvedQName(EName("dimension")) -> e.textAsResolvedQName)).toMap
+}
+
+// Convenience method
+
+def explicitDimensionAspectOption(fact: indexed.Elem, dimension: EName): Option[EName] = {
+  explicitDimensionAspects(fact).filterKeys(Set(dimension)).headOption.map(_._2)
+}
+
+def unitAspectOption(fact: indexed.Elem): Option[simple.Elem] = {
+  val unitOption = fact.attributeOption(EName("unitRef")).map(id => unitsById(id))
+  unitOption.map(_.elem)
+}
+
+// Compare aspects, naively, and without knowledge about XML Schema types. Use equality on the results of the functions below for (period and unit) aspect comparisons.
+
+def comparablePeriodAspectOption(fact: indexed.Elem): Option[Set[resolved.Elem]] = {
+  periodAspectOption(fact).map(e => e.findAllChildElems.map(che => resolved.Elem(che).removeAllInterElementWhitespace).toSet)
+}
+
+def comparableUnitAspectOption(fact: indexed.Elem): Option[Set[resolved.Elem]] = {
+  unitAspectOption(fact).map(e => e.findAllChildElems.map(che => resolved.Elem(che).removeAllInterElementWhitespace).toSet)
+}
+</code></pre>
+
+<p>Onopvallend is hier nog een element-implementatie gebruikt, namelijk "resolved" elements. Terwijl "indexed" elements iets toevoegen, namelijk de ancestry als element context, laten "resolved"
+elements iets weg, namelijk namespace prefixes (de namespace URI's blijven behouden). Dat maakt deze element-implementatie een goede basis voor namespace-aware XML equality-vergelijkingen. Weer geldt
+dat de kern van de yaidom XML query API hetzelfde is, ook voor "resolved" elements.</p>
+
+<p>Ook als deze code wat moeilijker is te volgen, dan valt in ieder geval op dat we met weinig Scala/yaidom code redelijk ver komen in de ondersteuning van fact aspects. Het was in dit geval beduidend
+minder natuurlijk geweest om in plaats hiervan XSLT of XQuery in te zetten. Dit illustreert het nut van Scala en yaidom voor XML processing, als mogelijk alternatief voor standaarden zoals XSLT.
+Hoe meer we Scala (en Java) API's willen inzetten, hoe aantrekkelijker deze alternatieve aanpak wordt.</p>
+
+<h3>
+<a name="value-assertion-als-scala-code" class="anchor" href="#value-assertion-als-scala-code"><span class="octicon octicon-link"></span></a>Een value assertion, gesimuleerd in Scala code</h3>
+
+<p>Nu komen we bij een validatie terecht, die we op de XBRL instance kunnen loslaten. De validatieregel bevindt zich samen met andere validatieregels in
+<a href="http://www.xbrlsite.com/DigitalFinancialReporting/ComprehensiveExample/2011-07-15/gaap-formula.xml" target="_blank">US-GAAP formulas</a>. Zonder verdere XBRL kennis zijn deze formulas niet of zeer
+moeilijk te doorgronden. Dat is geen probleem. We nemen 1 van deze formulas (een zogenaamde "value assertion"), en simuleren deze validatieregel in Scala code. Er wordt dus een validatieregel uitgelegd
+zonder dat we het origineel hoeven te begrijpen. Weer wordt getoond hoe Scala en yaidom (al dan niet met een Saxon "backend") een aantrekkelijke XML stack kunnen vormen.</p>
+
+<p>Let wel: dit is een alternatieve representatie van een validatieregel voor educatieve doeleinden. In werkelijkheid worden XBRL formulas (waaronder value assertions) op een geheel andere manier
+verwerkt, al worden ook daar Scala en yaidom ingezet.</p>
+
+<p>De value assertion voert het equivalent van XPath expressie <code>$v:VARIABLE_BalanceStart + $v:VARIABLE_Change = $v:VARIABLE_BalanceEnd</code> uit.
+Daarbij wordt binnen de XBRL instantie geitereerd over combinaties van 3 bij elkaar horende facts: een "start balance", en "change" en een "end balance". Voor elk van die combinaties
+wordt het equivalent van de XPath expressie uitgevoerd als validatie-check. Alleen, welke facts worden ingevuld voor de 3 variabelen, en welke combinaties van die facts worden beschouwd?
+Dat is te zien in onderstaande code, en is gebaseerd op aspecten. Hier volgt de code:</p>
+
+<pre><code>final case class EvaluationResult(val facts: Map[String, indexed.Elem], val result: Boolean) {
+
+  override def toString: String = {
+    s"EvaluationResult(result: $result, facts: ${facts.mapValues(_.elem)})"
+  }
+}
+  
+val topLevelFacts =
+  idoc.documentElement.filterChildElems(e => !Set(XbrliNs, LinkNs).contains(e.resolvedName.namespaceUriOption.getOrElse("")))
+val facts = topLevelFacts.flatMap(_.findAllElemsOrSelf)
+
+val balanceFacts = facts.filter(withEName(GaapNs, "CashAndCashEquivalentsPerCashFlowStatement"))
+
+val changeFacts = facts.filter(withEName(GaapNs, "CashFlowNet"))
+
+// Implicit filtering, to filter the cartesian product of 3 fact value spaces
+
+def mustBeEvaluated(balanceStartFact: indexed.Elem, changeFact: indexed.Elem, balanceEndFact: indexed.Elem): Boolean = {
+  // Compare on uncovered aspects, so on all aspects except concept and period
+
+  val currFacts = List(balanceStartFact, changeFact, balanceEndFact)
+
+  val dimensions = currFacts.flatMap(e => explicitDimensionAspects(e).keySet).toSet
+
+  currFacts.map(e => locationAspect(e)).distinct.size == 1 &&
+    currFacts.map(e => entityIdentifierAspectOption(e)).distinct.size == 1 &&
+    dimensions.forall(dim => currFacts.map(e => explicitDimensionAspectOption(e, dim)).distinct.size == 1) &&
+    currFacts.map(e => unitAspectOption(e)).distinct.size == 1 && {
+      // Instant-duration
+      val balanceStartInstantOption = periodAspectOption(balanceStartFact).flatMap(_.findElem(withEName(XbrliNs, "instant"))).map(e => LocalDate.parse(e.text))
+      val balanceEndInstantOption = periodAspectOption(balanceEndFact).flatMap(_.findElem(withEName(XbrliNs, "instant"))).map(e => LocalDate.parse(e.text))
+      val changeStartOption = periodAspectOption(changeFact).flatMap(_.findElem(withEName(XbrliNs, "startDate"))).map(e => LocalDate.parse(e.text))
+      val changeEndOption = periodAspectOption(changeFact).flatMap(_.findElem(withEName(XbrliNs, "endDate"))).map(e => LocalDate.parse(e.text))
+
+      balanceStartInstantOption.isDefined && balanceEndInstantOption.isDefined && changeStartOption.isDefined && changeEndOption.isDefined && {
+        val balanceStart = balanceStartInstantOption.get
+        val balanceEnd = balanceEndInstantOption.get
+        val changeStart = changeStartOption.get
+        val changeEnd = changeEndOption.get
+
+        ((balanceStart == changeStart) || (balanceStart.plusDays(1) == changeStart)) &&
+          (balanceEnd == changeEnd)
+      }
+    }
+}
+
+// The assertion test itself
+
+def performAssertionTest(balanceStartFact: indexed.Elem, changeFact: indexed.Elem, balanceEndFact: indexed.Elem): EvaluationResult = {
+  val result = balanceStartFact.text.toInt + changeFact.text.toInt == balanceEndFact.text.toInt
+
+  EvaluationResult(Map("startBalance" -> balanceStartFact, "change" -> changeFact, "endBalance" -> balanceEndFact), result)
+}
+
+// Executing the assertion
+
+val evalResults =
+  for {
+    startBalance <- balanceFacts
+    change <- changeFacts
+    endBalance <- balanceFacts
+    if mustBeEvaluated(startBalance, change, endBalance)
+  } yield {
+    performAssertionTest(startBalance, change, endBalance)
+  }
+
+assertResult(2) {
+  evalResults.size
+}
+assertResult(true) {
+  evalResults.forall(_.result)
+}
+assertResult(Set(
+  Map("startBalance" -> 1000, "change" -> -1000, "endBalance" -> 0),
+  Map("startBalance" -> -3000, "change" -> 4000, "endBalance" -> 1000))) {
+
+  evalResults.map(_.facts.mapValues(_.text.toInt)).toSet
+}
+</code></pre>
+
+<p>De uitdrukkingskracht van (eenvoudig gebruik van) Scala en de waarde van de yaidom library zijn duidelijk in dit voorbeeld. Yaidom is zelf in dit voorbeeld nauwelijks te zien, maar is achter
+de schermen aanwezig, in de implementatie van de verschillende aspect-functies.</p>
+
+<h3>
+<a name="conclusie" class="anchor" href="#conclusie"><span class="octicon octicon-link"></span></a>Conclusie</h3>
+
+<p>Concluderend kan gezegd worden: als je niet-triviale XML processing wilt doen, en daarbij (zonder omwegen) profiteren van Scala en Java libraries, overweeg dan het gebruik van Scala plus de yaidom
+library als "XML stack", als alternatief voor standaarden als XSLT en XQuery. Yaidom in combinatie met Saxon-EE is een nog krachtiger XML stack, door Saxon's kennis van XML Schema types.</p>
+
+<p>Scala's eigen XML library mag beknoptere code opleveren, maar het heeft niet de precisie van yaidom, met name met betrekking tot XML namespaces. Bovendien ondersteunt Scala XML geen wrappers rond bestaande
+volwassen Java XML libraries, en ook ondersteunt het niet meerdere "native" element-implementaties met verschillende doeleinden. Yaidom gaat zelfs nog verder in "extensibility". Het is zelfs mogelijk om
+type-safe XML dialecten te ondersteunen, zoals het dialect voor XBRL instanties. Dat is in dit artikel niet aan bod gekomen, maar dat maakt yaidom nog veel krachtiger dan hier getoond.</p>
+
+<p>Yaidom is gepresenteerd bij XML London 2015. De library wordt bij EBPI intensief ingezet in productiecode. Daarnaast helpt yaidom bij snelle XML scripting taken. Yaidom helpt ons bij EBPI vooral
+om gelaagde modellen te bouwen waarmee we bijvoorbeeld XBRL processing robuust maar met een korte time-to-market kunnen realiseren.</p>
+      </section>
+      <footer>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
+
