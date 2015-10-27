@@ -251,9 +251,9 @@ In summary, the more some XML processing task can benefit from the use of Scala,
 <p>XBRL (eXtensible Business Reporting Language) is a standard for business reporting. Many (but not all) XBRL reports are financial statements. XBRL reports ("XBRL instances") are
 XML documents, following a specified structure.</p>
 
-<p>Suppose we want to report that for a given organization ("CIK") the average number of employees in 2003 was 220, and that the corresponding numbers for 2004 and 2005 were 240 and 250, respectively.
+<p>Suppose we want to report that for a given organization (CIK-number 1234567890) the average number of employees in 2003 was 220, and that the corresponding numbers for 2004 and 2005 were 240 and 250, respectively.
 More precisely, <em>concept</em> <code>gaap:AverageNumberEmployees</code> (described by the so-called US-GAAP XBRL <em>taxonomy</em>) has the <em>value</em> <code>220</code> in the given
-<em>context</em> (organization "CIK", year 2003). Then we can report the 3 <em>facts</em> above in XBRL format as follows:</p>
+<em>context</em> (CIK-number 1234567890, year 2003). Then we can report the 3 <em>facts</em> above in XBRL format as follows:</p>
 
 <pre><code>&lt;xbrl xmlns="http://www.xbrl.org/2003/instance" xmlns:gaap="http://xasb.org/gaap"&gt;
 

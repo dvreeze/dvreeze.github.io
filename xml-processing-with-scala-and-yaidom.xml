@@ -363,9 +363,9 @@ XBRL (eXtensible Business Reporting Language) is a standard for business reporti
 XML documents, following a specified structure.
 		</para>
     <para>
-Suppose we want to report that for a given organization ("CIK") the average number of employees in 2003 was 220, and that the corresponding numbers for 2004 and 2005 were 240 and 250, respectively.
+Suppose we want to report that for a given organization (CIK-number 1234567890) the average number of employees in 2003 was 220, and that the corresponding numbers for 2004 and 2005 were 240 and 250, respectively.
 More precisely, <emphasis>concept</emphasis> <code>gaap:AverageNumberEmployees</code> (described by the so-called US-GAAP XBRL <emphasis>taxonomy</emphasis>) has the <emphasis>value</emphasis> <code>220</code>
-in the given <emphasis>context</emphasis> (organization "CIK", year 2003). Then we can report the 3 <emphasis>facts</emphasis> above in XBRL format as follows:
+in the given <emphasis>context</emphasis> (CIK-number 1234567890, year 2003). Then we can report the 3 <emphasis>facts</emphasis> above in XBRL format as follows:
 			<programlisting language="xml"><![CDATA[
 <xbrl xmlns="http://www.xbrl.org/2003/instance"
       xmlns:gaap="http://xasb.org/gaap">
