@@ -16,7 +16,8 @@
     <div class="wrapper">
       <header>
         <h1>XML en XBRL processing vereenvoudigd, door inzet van Scala en yaidom</h1>
-        <p>Yaidom is een uniforme XML query/transformatie API, geschreven in Scala, die gebruik maakt van en goed aansluit op Scala's Collections API. Daarnaast biedt yaidom diverse specifieke DOM-achtige implementaties die deze XML query API aanbieden.</p>
+        <p>Yaidom is een uniforme XML query/transformatie API, geschreven in Scala. De API maakt gebruik van Scala's Collections API en sluit er goed op aan.
+        Daarnaast biedt yaidom diverse specifieke DOM-achtige implementaties achter dezelfde uniforme XML query API.</p>
         <p>In dit artikel wordt de yaidom library ge&#239;ntroduceerd, gebruik maken van voorbeelden uit XBRL (eXtensible Business Reporting Language).</p>
 
         <!-- <p class="view"><a href="https://github.com/dvreeze">Zie mijn GitHub Profiel</a></p> -->
@@ -28,7 +29,7 @@
 <p>De ontwikkelaars bij EBPI maken vooral bedrijfskritische keteninformatiesystemen. Complexe gegevensverwerking is dan ook bekend terrein voor EBPI. Veel van de verwerkte data is in <em>XML</em> formaat
 (meestal conformerend aan een XML Schema). Een groot deel van deze XML data is in <em>XBRL</em> formaat. XBRL is een belangrijke standaard voor bedrijfsrapportages (zoals jaarrekeningen en belastingaangiften).
 Zie <a href="https://www.xbrl.org/the-standard/how/getting-started-for-developers/" target="_blank">Getting Started for Developers</a> voor een beknopte heldere uitleg over de basis van XBRL.
-In deze blog gebruiken we XBRL als voorbeeld voor complexe XML processing. Voorkennis over XBRL wordt niet verondersteld.</p>
+In deze blog gebruiken we XBRL als voorbeeld voor complexe XML processing. Voorkennis over XBRL wordt niet verondersteld. Kennis van XML wordt wel verwacht.</p>
 
 <p>XML processing wordt typisch gedaan door inzet van standaarden als XPath, XSLT en XQuery. Het fundament daarvan is het <a href="http://www.w3.org/TR/xpath-datamodel-3/" target="_blank">XPath Data Model</a>,
 samen met o.a. de <a href="http://www.w3.org/TR/xpath-functions-3/" target="_blank">standaard functie library</a>. XSLT en XQuery zijn complexe standaarden met een fikse leercurve.</p>
@@ -65,9 +66,9 @@ complexe XML processing eenvoudiger maken (met name voor Scala ontwikkelaars).</
 <p>XBRL (eXtensible Business Reporting Language) is een standaard voor bedrijfsrapportages. Typische XBRL rapportages zijn financieel van aard. XBRL rapporten ("XBRL instanties") zijn XML
 documenten, die een gespecificeerde structuur volgen.</p>
 
-<p>Stel dat we willen rapporteren dat voor een gegeven organisatie ("CIK") het gemiddelde aantal werknemers in 2003 220 bedroeg, en dat de corresponderende aantallen in 2004 en 2005 respectievelijk 240
-en 250 waren. Preciezer gezegd in XBRL terminologie, <em>concept</em> <code>gaap:AverageNumberEmployees</code> (beschreven door de zogenaamde US-GAAP <em>taxonomie</em>) heeft de <em>waarde</em>
-<code>220</code> in de gegeven <em>context</em> (organisatie "CIK", jaar 2003). Dan kunnen we bovenstaande 3 <em>facts</em> als volgt representeren in "XBRL instantie"-formaat:</p>
+<p>Stel dat we willen rapporteren dat voor een gegeven organisatie (CIK-nummer: 1234567890) het gemiddelde aantal werknemers in 2003 220 bedroeg, en dat de corresponderende aantallen in 2004 en 2005
+respectievelijk 240 en 250 waren. Preciezer gezegd in XBRL terminologie, <em>concept</em> <code>gaap:AverageNumberEmployees</code> (beschreven door de zogenaamde US-GAAP <em>taxonomie</em>) heeft de
+<em>waarde</em> <code>220</code> in de gegeven <em>context</em> (CIK-nummer 1234567890, jaar 2003). Dan kunnen we bovenstaande 3 <em>facts</em> als volgt representeren in "XBRL instantie"-formaat:</p>
 
 <pre><code>&lt;xbrl xmlns="http://www.xbrl.org/2003/instance" xmlns:gaap="http://xasb.org/gaap"&gt;
 
