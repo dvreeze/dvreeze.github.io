@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Complexe XML en XBRL processing vereenvoudigd, door inzet van Scala en yaidom</title>
+    <title>XML en XBRL processing vereenvoudigd, door inzet van Scala en yaidom</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -15,9 +15,9 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1>Complexe XML en XBRL processing vereenvoudigd, door inzet van Scala en yaidom</h1>
+        <h1>XML en XBRL processing vereenvoudigd, door inzet van Scala en yaidom</h1>
         <p>Yaidom is een uniforme XML query/transformatie API, geschreven in Scala, die gebruik maakt van en goed aansluit op Scala's Collections API. Daarnaast biedt yaidom diverse specifieke DOM-achtige implementaties die deze XML query API aanbieden.</p>
-        <p>In dit artikel wordt de yaidom library geintroduceerd, gebruik maken van voorbeelden uit XBRL (eXtensible Business Reporting Language).</p>
+        <p>In dit artikel wordt de yaidom library ge&#239;ntroduceerd, gebruik maken van voorbeelden uit XBRL (eXtensible Business Reporting Language).</p>
 
         <!-- <p class="view"><a href="https://github.com/dvreeze">Zie mijn GitHub Profiel</a></p> -->
       </header>
@@ -25,35 +25,38 @@
         <h3>
 <a name="introductie" class="anchor" href="#introductie"><span class="octicon octicon-link"></span></a>Introductie</h3>
 
-<p>EBPI maakt vooral bedrijfskritische keteninformatiesystemen. Daardoor heeft EBPI de nodige ervaring opgedaan met complexe data-processing. Veel van de aangeleverde en verwerkte data is
-in <em>XML</em> formaat ("Rumors of its demise have been greatly exaggerated."). Daarvan is een groot deel in <em>XBRL</em> formaat. XBRL is een belangrijke standaard voor bedrijfsrapportages (zoals
-jaarrekeningen en belastingaangiften). Zie <a href="https://www.xbrl.org/the-standard/how/getting-started-for-developers/" target="_blank">deze link</a> voor een beknopte heldere uitleg over de basis van XBRL.
-In deze blog gebruiken we XBRL als voorbeeld voor complexe XML processing.</p>
+<p>De ontwikkelaars bij EBPI maken vooral bedrijfskritische keteninformatiesystemen. Complexe gegevensverwerking is dan ook bekend terrein voor EBPI. Veel van de verwerkte data is in <em>XML</em> formaat
+(meestal conformerend aan een XML Schema). Een groot deel van deze XML data is in <em>XBRL</em> formaat. XBRL is een belangrijke standaard voor bedrijfsrapportages (zoals jaarrekeningen en belastingaangiften).
+Zie <a href="https://www.xbrl.org/the-standard/how/getting-started-for-developers/" target="_blank">Getting Started for Developers</a> voor een beknopte heldere uitleg over de basis van XBRL.
+In deze blog gebruiken we XBRL als voorbeeld voor complexe XML processing. Voorkennis over XBRL wordt niet verondersteld.</p>
 
-<p>XML processing wordt typisch gedaan door inzet van standaarden als XPath, XSLT, XQuery etc. Het fundament daarvan is het <a href="http://www.w3.org/TR/xpath-datamodel-3/" target="_blank">XPath Data Model</a>,
-met o.a. de <a href="http://www.w3.org/TR/xpath-functions-3/" target="_blank">standaard functie library</a>. Dit zijn complexe standaarden met een fikse leercurve. Ontwikkelen in Scala en Java rust op een heel ander
-fundament, namelijk de JVM, de Java en Scala programmeertalen, en talloze Java en Scala libraries. Bij gebruik van Scala is de <em>Scala Collections API</em> vermoedelijk de belangrijkste ingezette Scala API.</p>
+<p>XML processing wordt typisch gedaan door inzet van standaarden als XPath, XSLT en XQuery. Het fundament daarvan is het <a href="http://www.w3.org/TR/xpath-datamodel-3/" target="_blank">XPath Data Model</a>,
+samen met o.a. de <a href="http://www.w3.org/TR/xpath-functions-3/" target="_blank">standaard functie library</a>. XSLT en XQuery zijn complexe standaarden met een fikse leercurve.</p>
 
-<p>Wat nu als we die basis van Scala en Java development expertise en Scala's Collections API zouden inzetten voor XML processing, zonder gebruik te maken van XPath, XSLT en/of XQuery? Zouden we op die basis
-nog maar een kleine brug nodig hebben om hiervan een krachtige XML processing stack te maken? Zo'n brug is inderdaad mogelijk, en is door EBPI ontwikkeld. Deze library heet <em>yaidom</em>, en is een XML query
-en transformatie API. Yaidom is een alternatief voor Scala's eigen XML library, gekenmerkt door uitstekende interoperabiliteit met JAXP, Saxon(-EE) en andere XML "backends".
-Zie <a href="https://github.com/dvreeze/yaidom" target="_blank">hier</a> en <a href="http://dvreeze.github.io/" target="_blank">hier</a> voor yaidom. De library zal spoedig overgebracht worden naar
-het <a href="https://github.com/EBPI/yaidom" target="_blank">EBPI github account</a>, met behoud van de open source Apache 2.0 licentie.</p>
+<p>Ontwikkelen in Scala (en Java) rust daarentegen op een heel ander fundament, namelijk de JVM, de Scala (of Java) programmeertaal, en talloze Java en Scala libraries. Bij gebruik van Scala is de
+<em>Scala Collections API</em> vermoedelijk de belangrijkste van de ingezette Scala API's. Als we non-triviale XML processing doen op de JVM, hebben we dus typisch 2 expertise-sets nodig: JVM ontwikkelexpertise
+en (standaard) XML processing expertise, zoals aangegeven in de vorige alinea.</p>
 
-<p>In deze blog wordt XML processing met Scala en yaidom gedemonstreerd, aan de hand van een XBRL voorbeeld. Dit voorbeeld is afkomstig van Charles Hoffman, die bekend staat als de "vader van XBRL".
-De bestanden van het voorbeeld zijn te vinden op de <a href="http://www.xbrlsite.com/DigitalFinancialReporting/ComprehensiveExample/2011-07-15/" target="_blank">xbrlsite</a>. In het vervolg van het artikel wordt getoond
-hoe Scala en yaidom kunnen helpen om XBRL processing eenvoudiger te maken. Er wordt vervolgens toegewerkt naar een voorbeeld van een validatie op het XBRL voorbeeld-rapport. Deze validatie is een zogenaamde
-"value assertion". Deze wordt gesimuleerd door Scala code, met gebruik van yaidom. Hoewel het doorgronden van "value assertions" in XBRL moeilijk is zonder voldoende basiskennis van XBRL, is de simulatie
-daarvan in Scala code eenvoudig te begrijpen voor Scala ontwikkelaars. Dat is dan ook het punt van deze blog: Scala en yaidom (met eventueel een "XML backend" als Saxon-EE voor type-informatie) kunnen
+<p>Wat nu als we een basis van Scala (en Java) development expertise zouden inzetten voor XML processing, zonder gebruik te maken van XPath, XSLT en/of XQuery? Zouden we op die basis nog maar een
+kleine brug nodig hebben om hiervan een krachtige XML processing stack te maken? Zo'n brug is inderdaad mogelijk, en is door EBPI ontwikkeld. De library heet <em>yaidom</em>. Yaidom is een XML query
+en transformatie API. Het is een alternatief voor Scala's eigen XML library, gekenmerkt door uitstekende interoperabiliteit met JAXP, Saxon(-EE) en andere XML "backends".
+Zie <a href="https://github.com/dvreeze/yaidom" target="_blank">yaidom op github</a> en <a href="http://dvreeze.github.io/" target="_blank">yaidom op github pages</a> voor yaidom. De library zal spoedig
+overgebracht worden naar het <a href="https://github.com/EBPI/yaidom" target="_blank">EBPI github account</a>, met behoud van de open source Apache 2.0 licentie.</p>
+
+<p>In deze blog wordt XML processing met Scala en yaidom gedemonstreerd aan de hand van een XBRL voorbeeld. Dit voorbeeld is afkomstig van Charles Hoffman, ook wel bekend als de "vader van XBRL".
+De bestanden van het voorbeeld zijn te vinden op <a href="http://www.xbrlsite.com/DigitalFinancialReporting/ComprehensiveExample/2011-07-15/" target="_blank">zijn site</a>. In het vervolg van het artikel wordt
+getoond hoe Scala en yaidom kunnen helpen om XBRL processing eenvoudiger te maken. Er wordt vervolgens toegewerkt naar een voorbeeld van een validatie op het XBRL voorbeeld-rapport. Deze validatie is een
+zogenaamde "value assertion". Deze wordt gesimuleerd door Scala code, met gebruik van yaidom. Hoewel het doorgronden van "value assertions" in XBRL moeilijk is zonder voldoende basiskennis van XBRL, is de
+simulatie daarvan in Scala code eenvoudig te begrijpen voor Scala ontwikkelaars. Dat is dan ook het punt van deze blog: Scala en yaidom (met eventueel een "XML backend" als Saxon-EE voor type-informatie) kunnen
 complexe XML processing eenvoudiger maken (met name voor Scala ontwikkelaars).</p>
 
 <p>Het vervolg van het artikel is als volgt georganiseerd:</p>
 <ol>
-<li>Een korte introductie tot "XBRL instanties".</li>
-<li>Enkele yaidom queries op de XBRL instantie.</li>
-<li>Enkele yaidom "aspect-queries" op de XBRL instantie.</li>
-<li>Een "value assertion" gesimuleerd in Scala.</li>
-<li>Conclusie.</li>
+<li>Een korte introductie tot "XBRL instanties"</li>
+<li>Enkele yaidom queries op de XBRL instantie</li>
+<li>Enkele yaidom "aspect-queries" op de XBRL instantie</li>
+<li>Een "value assertion" gesimuleerd in Scala</li>
+<li>Conclusie</li>
 </ol>
 
 <h3>
@@ -111,13 +114,13 @@ en 250 waren. Preciezer gezegd in XBRL terminologie, <em>concept</em> <code>gaap
 
 <p>Dit voorbeeld, geschreven door Charles Hoffman, komt van eerdergenoemde site. De rest van dit artikel werkt met
 <a href="http://www.xbrlsite.com/DigitalFinancialReporting/ComprehensiveExample/2011-07-15/company-instance.xml" target="_blank">deze voorbeeld XBRL instantie</a>, die sterk lijkt op een uitgebreidere
-versie van bovenstaand voorbeeld. Yaidom wordt geintroduceerd aan de hand van dit uitgebreide XBRL voorbeeld, ook al is yaidom een algemene XML library. Hoewel yaidom niet gebonden is aan het domein
+versie van bovenstaand voorbeeld. Yaidom wordt ge&#239;ntroduceerd aan de hand van dit uitgebreide XBRL voorbeeld, ook al is yaidom een algemene XML library. Hoewel yaidom niet gebonden is aan het domein
 van XBRL, is XBRL wel een goed domein voor het tonen van de kracht van Scala en yaidom voor XML processing.</p>
 
 <h3>
 <a name="eenvoudige-xbrl-queries-met-yaidom" class="anchor" href="#eenvoudige-xbrl-queries-met-yaidom"><span class="octicon octicon-link"></span></a>Eenvoudige XBRL queries met yaidom</h3>
 
-<p>Yaidom wordt nu geintroduceerd door enkele eenvoudige queries op onze XBRL voorbeeld-instantie.</p>
+<p>Yaidom wordt nu ge&#239;ntroduceerd door enkele eenvoudige queries op onze XBRL voorbeeld-instantie.</p>
 
 <p>Voordat deze queries worden getoond, volgt nu eerst een korte introductie tot de basis van yaidom XML querying. We hoeven slechts 3 centrale yaidom query API functies te noemen, want de overige functies
 zijn daarna snel aan te leren. Deze 3 functies zijn <code>filterChildElems</code>, <code>filterElems</code> en <code>filterElemsOrSelf</code>.</p>
