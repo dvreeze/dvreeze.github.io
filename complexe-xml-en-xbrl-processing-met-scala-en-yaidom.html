@@ -141,21 +141,18 @@ Dezelfde <em>uniforme</em> query API werkt voor native yaidom element-implementa
 
 <p>Om de precisie van yaidom's query API te tonen, volgen hier de definities van <code>filterElemsOrSelf</code> en <code>filterElems</code>:</p>
 
-<pre><code>// The definitions of filterElemsOrSelf and filterElems.
-// The actual implementations may differ for efficiency reasons, but that should not be observable from the outside.
-
-final def filterElemsOrSelf(p: E => Boolean): immutable.IndexedSeq[E] = {
+<pre><code>def filterElemsOrSelf(p: E => Boolean): immutable.IndexedSeq[E] = {
   val selfResult = immutable.IndexedSeq(this).filter(p)
 
   // Recursive calls
   selfResult ++ findAllChildElems.flatMap(che => che.filterElemsOrSelf(p))
 }
 
-final def filterElems(p: E => Boolean): immutable.IndexedSeq[E] = {
+def filterElems(p: E => Boolean): immutable.IndexedSeq[E] = {
   findAllChildElems.flatMap(che => che.filterElemsOrSelf(p))
 }
 
-// Above, function findAllChildElems is defined as filterChildElems(_ => true)
+def findAllChildElems: immutable.IndexedSeq[E] = filterChildElems(_ => true)
 </code></pre>
 
 <p>Voor functies <code>filterChildElems</code> en <code>filterElemsOrSelf</code> bestaan respectievelijk de afkortingen <code>\</code> en <code>\\</code>.
@@ -209,8 +206,8 @@ println(avgNumEmployeesFactsByContext.keySet)
 println(avgNumEmployeesFactsByContext("D-2006").text) // prints 220
 </code></pre>
 
-<p>Yaidom is minder beknopt in het gebruik dan Scala's XML library. Het voordeel is meer precisie. Elke yaidom query API functie heeft een kraakheldere definitie, meestal in termen van een "basis"-functie
-zoals <code>filterChildElems</code>. Ook "chaining" van query functies is in yaidom niet mogelijk, terwijl Scala XML dit wel toelaat. Ook dit komt de precisie ten goede, omdat yaidom het onderscheid tussen
+<p>Yaidom is minder beknopt in het gebruik dan Scala's XML library. Het voordeel van yaidom is meer precisie. Elke yaidom query API functie heeft een kraakheldere definitie, meestal in termen van een "basis"-functie
+zoals <code>filterChildElems</code>, zoals we eerder zagen. Ook "chaining" van query functies is in yaidom niet mogelijk, terwijl Scala XML dit wel toelaat. Ook dit komt de precisie ten goede, omdat yaidom het onderscheid tussen
 individuele elementen enerzijds en collecties van elementen anderzijds niet onder tafel veegt.</p>
 
 <h3>
