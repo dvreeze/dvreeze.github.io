@@ -316,8 +316,11 @@ zonder dat we het origineel hoeven te begrijpen. Weer wordt getoond hoe Scala en
 <p>Let wel: dit is een alternatieve representatie van een validatieregel voor educatieve doeleinden. In werkelijkheid worden XBRL formulas (waaronder value assertions) op een geheel andere manier
 verwerkt, al worden ook daar Scala en yaidom ingezet.</p>
 
-<p>De value assertion voert het equivalent van XPath expressie <code>$v:VARIABLE_BalanceStart + $v:VARIABLE_Change = $v:VARIABLE_BalanceEnd</code> uit.
-Daarbij wordt binnen de XBRL instantie geitereerd over combinaties van 3 bij elkaar horende facts: een "start balance", en "change" en een "end balance". Voor elk van die combinaties
+<p>De value assertion voert het equivalent uit van XPath expressie:</p>
+
+<pre><code>$v:VARIABLE_BalanceStart + $v:VARIABLE_Change = $v:VARIABLE_BalanceEnd</code></pre>
+
+<p>Daarbij wordt binnen de XBRL instantie geitereerd over combinaties van 3 bij elkaar horende facts: een "start balance", en "change" en een "end balance". Voor elk van die combinaties
 wordt het equivalent van de XPath expressie uitgevoerd als validatie-check. Alleen, welke facts worden ingevuld voor de 3 variabelen, en welke combinaties van die facts worden beschouwd?
 Dat is te zien in onderstaande code, en is gebaseerd op aspecten. Hier volgt de code:</p>
 
@@ -350,10 +353,14 @@ def mustBeEvaluated(balanceStartFact: indexed.Elem, changeFact: indexed.Elem, ba
     dimensions.forall(dim => currFacts.map(e => explicitDimensionAspectOption(e, dim)).distinct.size == 1) &&
     currFacts.map(e => unitAspectOption(e)).distinct.size == 1 && {
       // Instant-duration
-      val balanceStartInstantOption = periodAspectOption(balanceStartFact).flatMap(_.findElem(withEName(XbrliNs, "instant"))).map(e => LocalDate.parse(e.text))
-      val balanceEndInstantOption = periodAspectOption(balanceEndFact).flatMap(_.findElem(withEName(XbrliNs, "instant"))).map(e => LocalDate.parse(e.text))
-      val changeStartOption = periodAspectOption(changeFact).flatMap(_.findElem(withEName(XbrliNs, "startDate"))).map(e => LocalDate.parse(e.text))
-      val changeEndOption = periodAspectOption(changeFact).flatMap(_.findElem(withEName(XbrliNs, "endDate"))).map(e => LocalDate.parse(e.text))
+      val balanceStartInstantOption =
+        periodAspectOption(balanceStartFact).flatMap(_.findElem(withEName(XbrliNs, "instant"))).map(e => LocalDate.parse(e.text))
+      val balanceEndInstantOption =
+        periodAspectOption(balanceEndFact).flatMap(_.findElem(withEName(XbrliNs, "instant"))).map(e => LocalDate.parse(e.text))
+      val changeStartOption =
+        periodAspectOption(changeFact).flatMap(_.findElem(withEName(XbrliNs, "startDate"))).map(e => LocalDate.parse(e.text))
+      val changeEndOption =
+        periodAspectOption(changeFact).flatMap(_.findElem(withEName(XbrliNs, "endDate"))).map(e => LocalDate.parse(e.text))
 
       balanceStartInstantOption.isDefined && balanceEndInstantOption.isDefined && changeStartOption.isDefined && changeEndOption.isDefined && {
         val balanceStart = balanceStartInstantOption.get
