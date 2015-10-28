@@ -128,15 +128,35 @@ zijn daarna snel aan te leren. Deze 3 functies zijn <code>filterChildElems</code
 
 <p>Het volgende geldt voor deze 3 functies:</p>
 <ol>
-<li>Zij zijn functies die opereren op een XML element, en die Scala Collections van elementen retourneren.</li>
+<li>Zij zijn functies die opereren op een XML element, en die een Scala Collection van elementen retourneren.</li>
 <li>Zij filteren elementen uit respectievelijk de collecties van <em>child</em> elementen, <em>descendant</em> elementen, en <em>descendant-or-self</em> elementen.</li>
-<li>Het woord "descendant" is consequent weggelaten uit de functienamen. Dit wetende zijn de functies eenvoudig te onthouden.</li>
-<li>Zij zijn <em>higher-order functions</em>, die voor het filteren een element predicaat (dus een boolean functie op elementen) als parameter meekrijgen.</li>
-<li>Zij lijken sterk op respectievelijk de XPath assen <em>child</em>, <em>descendant</em> en <em>descendant-or-self</em>, maar retourneren collecties van element nodes, en niet van willekeurige XML nodes.</li>
+<li>Het woord "descendant" is consequent weggelaten uit de functienamen. Met dit in het achterhoofd zijn de functies eenvoudig te onthouden.</li>
+<li>Zij zijn <em>higher-order functions</em>, die voor het filteren een <em>element-predicaat</em> (dus een boolean functie op elementen) als parameter meekrijgen.</li>
+<li>Zij lijken sterk op respectievelijk de XPath assen <em>child</em>, <em>descendant</em> en <em>descendant-or-self</em>, maar retourneren collecties van <em>element nodes</em>, en niet van willekeurige XML nodes.</li>
 <li>Functies <code>filterElems</code> en <code>filterElemsOrSelf</code> hebben beknopte en zeer precieze definities in termen van functie <code>filterChildElems</code>.</li>
-<li>Goede interoperabiliteit met Scala Collections zit niet alleen in de geretourneerde Scala collecties, maar ook in het gebruik van Scala collecties in de implementaties van de functies.</li>
-<li>De yaidom XML element query API (en dus ook deze 3 functies) ondersteunt pluggable XML "backends". Dezelfde query API werkt voor native yaidom element-implementaties, maar bijvoorbeeld ook voor wrappers om Saxon tiny trees, W3C DOM trees en Scala XML trees.</li>
+<li>Goede interoperabiliteit met Scala Collections zit niet alleen in de geretourneerde Scala collecties, maar ook in het gebruik van Scala collecties binnen de implementaties van de functies.</li>
+<li>De yaidom XML element query API (waar deze 3 functies toe behoren) ondersteunt pluggable XML "backends".
+Dezelfde <em>uniforme</em> query API werkt voor native yaidom element-implementaties, maar bijvoorbeeld ook voor wrappers om Saxon tiny trees, W3C DOM trees en Scala XML trees.</li>
 </ol>
+
+<p>Om de precisie van yaidom's query API te tonen, volgen hier de definities van <code>filterElemsOrSelf</code> en <code>filterElems</code>:</p>
+
+<pre><code>// The definitions of filterElemsOrSelf and filterElems.
+// The actual implementations may differ for efficiency reasons, but that should not be observable from the outside.
+
+final def filterElemsOrSelf(p: E => Boolean): immutable.IndexedSeq[E] = {
+  val selfResult = immutable.IndexedSeq(this).filter(p)
+
+  // Recursive calls
+  selfResult ++ findAllChildElems.flatMap(che => che.filterElemsOrSelf(p))
+}
+
+final def filterElems(p: E => Boolean): immutable.IndexedSeq[E] = {
+  findAllChildElems.flatMap(che => che.filterElemsOrSelf(p))
+}
+
+// Above, function findAllChildElems is defined as filterChildElems(_ => true)
+</code></pre>
 
 <p>Voor functies <code>filterChildElems</code> en <code>filterElemsOrSelf</code> bestaan respectievelijk de afkortingen <code>\</code> en <code>\\</code>.
 Functie <code>attributeOption</code> heeft afkorting <code>\@</code>. Daarnaast hebben enkele element-predicaten namen, zoals <code>withLocalName</code> en <code>withEName</code>.
@@ -147,11 +167,9 @@ wel doet heeft yaidom's namespace support aantoonbaar geholpen.</p>
 
 <p>Sommige yaidom queries op de voorbeeld XBRL-instantie zijn als volgt, ongeacht de "element tree"-implementatie:</p>
 
-<pre><code>// Let's first parse the XBRL instance document
+<pre><code>// Let variable "doc" be a document of any yaidom document type
 
-val docParser = DocumentParserUsingSax.newInstance
-
-val doc = docParser.parse(sampleXbrlInstanceFile)
+val docElem = doc.documentElement
 
 // Check that all gaap:AverageNumberEmployees facts have unit U-Pure.
 
@@ -160,7 +178,7 @@ val xbrliNs = "http://www.xbrl.org/2003/instance"
 val gaapNs = "http://xasb.org/gaap"
 
 val avgNumEmployeesFacts =
-  doc.documentElement.filterChildElems(withEName(gaapNs, "AverageNumberEmployees"))
+  docElem.filterChildElems(withEName(gaapNs, "AverageNumberEmployees"))
 
 println(avgNumEmployeesFacts.size) // prints 10
 
@@ -171,7 +189,7 @@ println(onlyUPure) // prints true
 // Check the unit itself, minding the default namespace
 
 val uPureUnit =
-  doc.documentElement.getChildElem(e =>
+  docElem.getChildElem(e =>
     e.resolvedName == EName(xbrliNs, "unit") && (e \@ EName("id")) == Some("U-Pure"))
 
 println(uPureUnit.getChildElem(withEName(xbrliNs, "measure")).text) // prints "pure"
