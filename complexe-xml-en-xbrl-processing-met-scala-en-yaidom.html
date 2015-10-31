@@ -135,8 +135,8 @@ zijn daarna snel aan te leren. Deze 3 functies zijn <code>filterChildElems</code
 <li>Zij lijken sterk op respectievelijk de XPath assen <em>child</em>, <em>descendant</em> en <em>descendant-or-self</em>, maar retourneren collecties van <em>element nodes</em>,
 en niet van willekeurige XML nodes. Uiteraard kunnen die geretourneerde element nodes zelf weer andere soorten nodes bevatten, zoals text nodes.</li>
 <li>Functies <code>filterElems</code> en <code>filterElemsOrSelf</code> hebben beknopte en zeer precieze definities in termen van functie <code>filterChildElems</code>.</li>
-<li>De element nodes worden in document order teruggegeven. Merk op dat functies <code>filterElems</code> en <code>filterElemsOrSelf</code>
-typisch een aantal element nodes meerdere malen retourneert: hetzij direct, hetzij indirect als geneste elementen binnen andere elementen.</li>
+<li>De element nodes worden in document order teruggegeven. Merk op dat resultaten van functies <code>filterElems</code> en <code>filterElemsOrSelf</code>
+typisch een aantal element nodes meerdere keren direct of indirect (genest binnen direct geretourneerde elementen) bevat.</li>
 <li>Goede interoperabiliteit met Scala Collections zit niet alleen in de geretourneerde Scala collecties, maar ook in het gebruik van Scala collecties binnen de implementaties van de functies.</li>
 <li>De yaidom XML element query API (waar deze 3 functies toe behoren) ondersteunt pluggable XML "backends".
 Dezelfde <em>uniforme</em> query API werkt voor native yaidom element-implementaties, maar bijvoorbeeld ook voor wrappers om Saxon tiny trees, W3C DOM trees en Scala XML trees.</li>
@@ -184,35 +184,39 @@ val avgNumEmployeesFacts =
 println(avgNumEmployeesFacts.size) // prints 10
 
 val onlyUPure =
-  avgNumEmployeesFacts.forall(fact => fact.attributeOption(EName("unitRef")) == Some("U-Pure"))
+  avgNumEmployeesFacts.forall(_.attributeOption(EName("unitRef")) == Some("U-Pure"))
 println(onlyUPure) // prints true
 
 // Check the unit itself, minding the default namespace
 
 val uPureUnit =
   docElem.getChildElem(e =>
-    e.resolvedName == EName(xbrliNs, "unit") && (e \@ EName("id")) == Some("U-Pure"))
+    e.resolvedName == EName(xbrliNs, "unit") &&
+      (e \@ EName("id")) == Some("U-Pure"))
 
 println(uPureUnit.getChildElem(withEName(xbrliNs, "measure")).text) // prints "pure"
 
 // Now we get the measure element text, as QName, resolving it to an EName (expanded name)
-println(uPureUnit.getChildElem(withEName(xbrliNs, "measure")).textAsResolvedQName)
+println(
+  uPureUnit.getChildElem(withEName(xbrliNs, "measure")).textAsResolvedQName)
 // prints EName(xbrliNs, "pure")
 
-// Knowing the units are the same, the gaap:AverageNumberEmployees facts are uniquely identified by contexts.
+// Having the same unit, the gaap:AverageNumberEmployees facts are uniquely identified by contexts.
 
-val avgNumEmployeesFactsByContext: Map[String, simple.Elem] =
+val avgNumEmployeesFactsByContext =
   avgNumEmployeesFacts.groupBy(_.attribute(EName("contextRef"))).mapValues(_.head)
 
 println(avgNumEmployeesFactsByContext.keySet)
-// prints Set("D-2006", "D-2007", "D-2008", "D-2009", "D-2010", "D-2010-BS1", "D-2010-BS2", "D-2010-CON", "D-2010-E", "D-2010-ALL")
+// prints:
+// Set("D-2006", "D-2007", "D-2008", "D-2009", "D-2010", "D-2010-BS1", "D-2010-BS2",
+//   "D-2010-CON", "D-2010-E", "D-2010-ALL")
 
 println(avgNumEmployeesFactsByContext("D-2006").text) // prints 220
 </code></pre>
 
 <p>Yaidom is minder beknopt in het gebruik dan Scala's XML library. Het voordeel van yaidom is meer precisie. Elke yaidom query API functie heeft een kraakheldere definitie, meestal in termen van een "basis"-functie
-zoals <code>filterChildElems</code>, zoals we eerder zagen. Ook "chaining" van query functies is in yaidom niet mogelijk, terwijl Scala XML dit wel toelaat. Ook dit komt de precisie ten goede, omdat yaidom het onderscheid tussen
-individuele elementen enerzijds en collecties van elementen anderzijds niet onder tafel veegt.</p>
+zoals <code>filterChildElems</code>, zoals we eerder zagen. Ook is "chaining" van query functies in yaidom niet mogelijk, terwijl Scala XML dit wel toelaat. Ook dit maakt yaidom preciezer dan Scala XML, omdat yaidom
+het onderscheid tussen individuele elementen enerzijds en collecties van elementen anderzijds niet onder tafel veegt.</p>
 
 <h3>
 <a name="eenvoudige-xbrl-aspect-queries-met-yaidom" class="anchor" href="#eenvoudige-xbrl-aspect-queries-met-yaidom"><span class="octicon octicon-link"></span></a>Eenvoudige XBRL aspect queries met yaidom</h3>
