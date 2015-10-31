@@ -135,8 +135,8 @@ zijn daarna snel aan te leren. Deze 3 functies zijn <code>filterChildElems</code
 <li>Zij lijken sterk op respectievelijk de XPath assen <em>child</em>, <em>descendant</em> en <em>descendant-or-self</em>, maar retourneren collecties van <em>element nodes</em>,
 en niet van willekeurige XML nodes. Uiteraard kunnen die geretourneerde element nodes zelf weer andere soorten nodes bevatten, zoals text nodes.</li>
 <li>Functies <code>filterElems</code> en <code>filterElemsOrSelf</code> hebben beknopte en zeer precieze definities in termen van functie <code>filterChildElems</code>.</li>
-<li>De element nodes worden in document order teruggegeven. Merk op dat resultaten van functies <code>filterElems</code> en <code>filterElemsOrSelf</code>
-typisch een aantal element nodes meerdere keren direct of indirect (genest binnen direct geretourneerde elementen) bevat.</li>
+<li>De element nodes worden in document order teruggegeven. Merk op dat functies <code>filterElems</code> en <code>filterElemsOrSelf</code> typisch een aantal elementen retourneert
+die descendants zijn van andere geretourneerde elementen. Indien dit niet gewenst is, kunnen functies als <code>findTopmostElems</code> en <code>findTopmostElemsOrSelf</code> gebruikt worden.</li>
 <li>Goede interoperabiliteit met Scala Collections zit niet alleen in de geretourneerde Scala collecties, maar ook in het gebruik van Scala collecties binnen de implementaties van de functies.</li>
 <li>De yaidom XML element query API (waar deze 3 functies toe behoren) ondersteunt pluggable XML "backends".
 Dezelfde <em>uniforme</em> query API werkt voor native yaidom element-implementaties, maar bijvoorbeeld ook voor wrappers om Saxon tiny trees, W3C DOM trees en Scala XML trees.</li>
