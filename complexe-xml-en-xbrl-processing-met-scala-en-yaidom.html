@@ -258,6 +258,8 @@ val unitsById: Map[String, indexed.Elem] =
 
 def conceptAspect(fact: indexed.Elem): EName = fact.resolvedName
 
+// Yaidom Paths wijzen een element binnen een element tree aan.
+
 def locationAspect(fact: indexed.Elem): Path =
   fact.path.parentPathOption.getOrElse(Path.Root)
 
@@ -326,13 +328,15 @@ def comparableUnitAspectOption(fact: indexed.Elem): Option[Set[resolved.Elem]] =
 }
 </code></pre>
 
-<p>Enigszins onopvallend is hier nog een element-implementatie gebruikt, namelijk "resolved" elements. Terwijl "indexed" elements iets toevoegen (aan "simple" elements), namelijk de ancestry als element context,
-laten "resolved" elements iets weg, namelijk namespace prefixes (de namespace URI's blijven behouden). Dat maakt deze element-implementatie een goede basis voor namespace-aware XML equality-vergelijkingen.
-Weer geldt dat de kern van de yaidom XML query API hetzelfde is, ook voor "resolved" elements.</p>
+<p>Enigszins onopvallend zijn hier nog 2 element-implementatie gebruikt, namelijk "simple" en "resolved" elements. Simple elements zijn de default native (immutable) element-implementatie van yaidom.
+Terwijl "indexed" elements iets toevoegen (aan "simple" elements), namelijk de ancestry als element context, laten "resolved" elements iets weg, namelijk namespace prefixes (de namespace URI's blijven behouden).
+Dat maakt deze element-implementatie een goede basis voor namespace-aware XML equality-vergelijkingen. Weer geldt dat de kern van de yaidom XML query API hetzelfde is, ook voor "resolved" elements.</p>
 
 <p>Het valt op dat we met weinig Scala/yaidom code redelijk ver komen in de ondersteuning van fact aspects. Het was in dit geval beduidend minder natuurlijk geweest om in plaats hiervan XSLT of XQuery in te
 zetten. Dit illustreert het nut van Scala en yaidom voor XML processing, als mogelijk alternatief voor standaarden zoals XSLT. Hoe meer we Scala (en Java) API's willen inzetten voor een groot deel van de
-code, hoe aantrekkelijker deze alternatieve aanpak wordt.</p>
+code, hoe aantrekkelijker deze alternatieve aanpak wordt. Dit voorkomt dat we in de code steeds moeten schakelen tussen 2 sterk verschillende paradigma's: Scala/Java enerzijds en het XPath Data Model
+anderzijds. De <em>semantiek</em> verschilt ook sterk tussen deze paradigma's. Zo zijn bijvoorbeeld XDM sequences totaal verschillend van Scala of Java collecties (een item is hetzelfde als een singleton
+sequence met dat item, en sequences kunnen niet genest worden). Equality in XPath verschilt ook sterk van equality in Scala of Java.</p>
 
 <h3>
 <a name="value-assertion-als-scala-code" class="anchor" href="#value-assertion-als-scala-code"><span class="octicon octicon-link"></span></a>Een value assertion, gesimuleerd in Scala code</h3>
