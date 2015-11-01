@@ -109,9 +109,12 @@ respectievelijk 240 en 250 waren. Preciezer gezegd in XBRL terminologie, <em>con
      &lt;measure&gt;pure&lt;/measure&gt;
    &lt;/unit&gt;
 
-  &lt;gaap:AverageNumberEmployees contextRef="D-2003" unitRef="U-Pure" decimals="INF"&gt;220&lt;/gaap:AverageNumberEmployees&gt;
-  &lt;gaap:AverageNumberEmployees contextRef="D-2004" unitRef="U-Pure" decimals="INF"&gt;240&lt;/gaap:AverageNumberEmployees&gt;
-  &lt;gaap:AverageNumberEmployees contextRef="D-2005" unitRef="U-Pure" decimals="INF"&gt;250&lt;/gaap:AverageNumberEmployees&gt;
+  &lt;gaap:AverageNumberEmployees
+    contextRef="D-2003" unitRef="U-Pure" decimals="INF"&gt;220&lt;/gaap:AverageNumberEmployees&gt;
+  &lt;gaap:AverageNumberEmployees
+    contextRef="D-2004" unitRef="U-Pure" decimals="INF"&gt;240&lt;/gaap:AverageNumberEmployees&gt;
+  &lt;gaap:AverageNumberEmployees
+    contextRef="D-2005" unitRef="U-Pure" decimals="INF"&gt;250&lt;/gaap:AverageNumberEmployees&gt;
 
 &lt;/xbrl&gt;
 </code></pre>
@@ -187,7 +190,8 @@ val avgNumEmployeesFacts =
 println(avgNumEmployeesFacts.size) // prints 10
 
 val onlyUPure =
-  avgNumEmployeesFacts.forall(_.attributeOption(EName("unitRef")) == Some("U-Pure"))
+  avgNumEmployeesFacts.forall(
+    _.attributeOption(EName("unitRef")) == Some("U-Pure"))
 println(onlyUPure) // prints true
 
 // Check the unit itself, minding the default namespace
@@ -207,7 +211,8 @@ println(
 // Having the same unit, the gaap:AverageNumberEmployees facts are uniquely identified by contexts.
 
 val avgNumEmployeesFactsByContext =
-  avgNumEmployeesFacts.groupBy(_.attribute(EName("contextRef"))).mapValues(_.head)
+  avgNumEmployeesFacts.groupBy(
+    _.attribute(EName("contextRef"))).mapValues(_.head)
 
 println(avgNumEmployeesFactsByContext.keySet)
 // prints:
@@ -315,6 +320,7 @@ def unitAspectOption(fact: indexed.Elem): Option[simple.Elem] = {
 }
 
 // Compare aspects, naively, and without knowledge about XML Schema types.
+// In particular period aspect comparisons are more tricky than this naive implementation.
 // Use equality on the results of the functions below for (period and unit) aspect comparisons.
 
 def comparablePeriodAspectOption(fact: indexed.Elem): Option[Set[resolved.Elem]] = {
@@ -344,10 +350,11 @@ sequence met dat item, en sequences kunnen niet genest worden). Equality in XPat
 <p>Nu komen we bij een validatie terecht, die we op de XBRL instance kunnen loslaten. De validatieregel bevindt zich samen met andere validatieregels in
 <a href="http://www.xbrlsite.com/DigitalFinancialReporting/ComprehensiveExample/2011-07-15/gaap-formula.xml" target="_blank">US-GAAP formulas</a>. Zonder verdere XBRL kennis zijn deze formulas niet of zeer
 moeilijk te doorgronden. Dat is geen probleem. We nemen 1 van deze formulas (een zogenaamde "value assertion"), en simuleren deze validatieregel in Scala code. Er wordt dus een validatieregel uitgelegd
-zonder dat we het origineel hoeven te begrijpen. Weer wordt getoond hoe Scala en yaidom (al dan niet met een Saxon "backend") een aantrekkelijke XML stack kunnen vormen.</p>
+zonder dat we het origineel hoeven te begrijpen (of zelfs hoeven kunnen aan te wijzen in deze zogenaamde "formula linkbase"). Weer wordt getoond hoe Scala en yaidom (al dan niet met een Saxon "backend") een
+aantrekkelijke XML stack kunnen vormen.</p>
 
 <p>Let wel: dit is een alternatieve representatie van een validatieregel voor educatieve doeleinden. In werkelijkheid worden XBRL formulas (waaronder value assertions) op een geheel andere manier
-verwerkt, al worden ook daar Scala en yaidom ingezet.</p>
+verwerkt, al worden ook daar mogelijk Scala en yaidom als onderdeel van de oplossing ingezet.</p>
 
 <p>De value assertion voert het equivalent uit van XPath expressie:</p>
 
@@ -355,9 +362,29 @@ verwerkt, al worden ook daar Scala en yaidom ingezet.</p>
 
 <p>Daarbij wordt binnen de XBRL instantie geitereerd over combinaties van 3 bij elkaar horende facts: een "start balance", en "change" en een "end balance". Voor elk van die combinaties
 wordt het equivalent van de XPath expressie uitgevoerd als validatie-check. Alleen, welke facts worden ingevuld voor de 3 variabelen, en welke combinaties van die facts worden beschouwd?
-Dat is te zien in onderstaande code, en is gebaseerd op aspecten. Hier volgt de code:</p>
+Dat is te zien in onderstaande code, en is gebaseerd op gelijkheid van zogenaamde "uncovered" aspecten. Dit zijn alle aspecten behalve de "covered" concept en period aspecten. (Deze 2 laatste aspecten
+zijn "covered" want zij zijn expliciet gebruikt om facts te filteren.) Hier volgt eerst een skelet van de code:</p>
 
-<pre><code>final case class EvaluationResult(val facts: Map[String, indexed.Elem], val result: Boolean) {
+<pre><code>// Function mustBeEvaluated filters a combination of start balance, change and end balance,
+// based on equality of so-called uncovered aspects.
+
+// Function performAssertionTest evaluates one such combination of 3 facts.
+
+val evalResults =
+  for {
+    startBalance <- balanceFacts
+    change <- changeFacts
+    endBalance <- balanceFacts
+    if mustBeEvaluated(startBalance, change, endBalance)
+  } yield {
+    performAssertionTest(startBalance, change, endBalance)
+  }
+</code></pre>
+
+<p>De meer complete code is als volgt:</p>
+
+<pre><code>final case class EvaluationResult(
+  val facts: Map[String, indexed.Elem], val result: Boolean) {
 
   override def toString: String = {
     s"EvaluationResult(result: $result, facts: ${facts.mapValues(_.elem)})"
@@ -374,8 +401,10 @@ val changeFacts = facts.filter(withEName(GaapNs, "CashFlowNet"))
 
 // Implicit filtering, to filter the cartesian product of 3 fact value spaces
 
-def mustBeEvaluated(balanceStartFact: indexed.Elem, changeFact: indexed.Elem, balanceEndFact: indexed.Elem): Boolean = {
-  // Compare on uncovered aspects, so on all aspects except concept and period
+def mustBeEvaluated(
+  balanceStartFact: indexed.Elem, changeFact: indexed.Elem, balanceEndFact: indexed.Elem): Boolean = {
+
+  // Compare on so-called uncovered aspects, so on all aspects except concept and period
 
   val currFacts = List(balanceStartFact, changeFact, balanceEndFact)
 
@@ -386,16 +415,24 @@ def mustBeEvaluated(balanceStartFact: indexed.Elem, changeFact: indexed.Elem, ba
     dimensions.forall(dim => currFacts.map(e => explicitDimensionAspectOption(e, dim)).distinct.size == 1) &&
     currFacts.map(e => unitAspectOption(e)).distinct.size == 1 && {
       // Instant-duration
-      val balanceStartInstantOption =
-        periodAspectOption(balanceStartFact).flatMap(_.findElem(withEName(XbrliNs, "instant"))).map(e => LocalDate.parse(e.text))
-      val balanceEndInstantOption =
-        periodAspectOption(balanceEndFact).flatMap(_.findElem(withEName(XbrliNs, "instant"))).map(e => LocalDate.parse(e.text))
-      val changeStartOption =
-        periodAspectOption(changeFact).flatMap(_.findElem(withEName(XbrliNs, "startDate"))).map(e => LocalDate.parse(e.text))
-      val changeEndOption =
-        periodAspectOption(changeFact).flatMap(_.findElem(withEName(XbrliNs, "endDate"))).map(e => LocalDate.parse(e.text))
+      // The comparison is naive, but still verbose
 
-      balanceStartInstantOption.isDefined && balanceEndInstantOption.isDefined && changeStartOption.isDefined && changeEndOption.isDefined && {
+      val balanceStartInstantOption =
+        periodAspectOption(balanceStartFact).flatMap(
+          _.findElem(withEName(XbrliNs, "instant"))).map(e => LocalDate.parse(e.text))
+      val balanceEndInstantOption =
+        periodAspectOption(balanceEndFact).flatMap(
+          _.findElem(withEName(XbrliNs, "instant"))).map(e => LocalDate.parse(e.text))
+      val changeStartOption =
+        periodAspectOption(changeFact).flatMap(
+          _.findElem(withEName(XbrliNs, "startDate"))).map(e => LocalDate.parse(e.text))
+      val changeEndOption =
+        periodAspectOption(changeFact).flatMap(
+          _.findElem(withEName(XbrliNs, "endDate"))).map(e => LocalDate.parse(e.text))
+
+      balanceStartInstantOption.isDefined && balanceEndInstantOption.isDefined &&
+        changeStartOption.isDefined && changeEndOption.isDefined && {
+
         val balanceStart = balanceStartInstantOption.get
         val balanceEnd = balanceEndInstantOption.get
         val changeStart = changeStartOption.get
@@ -409,10 +446,14 @@ def mustBeEvaluated(balanceStartFact: indexed.Elem, changeFact: indexed.Elem, ba
 
 // The assertion test itself
 
-def performAssertionTest(balanceStartFact: indexed.Elem, changeFact: indexed.Elem, balanceEndFact: indexed.Elem): EvaluationResult = {
+def performAssertionTest(
+  balanceStartFact: indexed.Elem, changeFact: indexed.Elem, balanceEndFact: indexed.Elem): EvaluationResult = {
+
+  // Here we recognize the XPath expression shown earlier
   val result = balanceStartFact.text.toInt + changeFact.text.toInt == balanceEndFact.text.toInt
 
-  EvaluationResult(Map("startBalance" -> balanceStartFact, "change" -> changeFact, "endBalance" -> balanceEndFact), result)
+  EvaluationResult(
+    Map("startBalance" -> balanceStartFact, "change" -> changeFact, "endBalance" -> balanceEndFact), result)
 }
 
 // Executing the assertion
@@ -441,21 +482,22 @@ assertResult(Set(
 }
 </code></pre>
 
-<p>De uitdrukkingskracht van (eenvoudig gebruik van) Scala en de waarde van de yaidom library zijn duidelijk in dit voorbeeld. Yaidom is zelf in dit voorbeeld nauwelijks te zien, maar is achter
+<p>De uitdrukkingskracht van (eenvoudig gebruik van) Scala en de waarde van de yaidom library zijn duidelijk in dit voorbeeld. Yaidom is zelf in dit voorbeeld wat minder te zien, maar is vooral achter
 de schermen aanwezig, in de implementatie van de verschillende aspect-functies.</p>
 
 <h3>
 <a name="conclusie" class="anchor" href="#conclusie"><span class="octicon octicon-link"></span></a>Conclusie</h3>
 
-<p>Concluderend kan gezegd worden: als je niet-triviale XML processing wilt doen, en daarbij (zonder omwegen) profiteren van Scala en Java libraries, overweeg dan het gebruik van Scala plus de yaidom
-library als "XML stack", als alternatief voor standaarden als XSLT en XQuery. Yaidom in combinatie met Saxon-EE is een nog krachtiger XML stack, door Saxon's kennis van XML Schema types.</p>
+<p>Concluderend kan gezegd worden: als je niet-triviale XML processing wilt doen, en daarbij (zonder omwegen) wilt profiteren van Scala en Java libraries, overweeg dan het gebruik van Scala plus de yaidom
+library als "XML stack", als alternatief voor standaarden als XSLT en XQuery. Yaidom in combinatie met Saxon-EE is een nog krachtiger XML stack, o.a. door Saxon's kennis van XML Schema types.</p>
 
 <p>Scala's eigen XML library mag beknoptere code opleveren, maar het heeft niet de precisie van yaidom, met name met betrekking tot XML namespaces. Bovendien ondersteunt Scala XML geen wrappers rond bestaande
-volwassen Java XML libraries, en ook ondersteunt het niet meerdere "native" element-implementaties met verschillende doeleinden. Yaidom gaat zelfs nog verder in "extensibility". Het is zelfs mogelijk om
-type-safe XML dialecten te ondersteunen, zoals het dialect voor XBRL instanties. Dat is in dit artikel niet aan bod gekomen, maar dat maakt yaidom nog veel krachtiger dan hier getoond.</p>
+volwassen Java XML libraries, en ook ondersteunt het niet meerdere "native" element-implementaties met verschillende sterke punten. Yaidom gaat zelfs nog verder in "extensibility". Het is zelfs mogelijk om
+type-safe XML dialecten te ondersteunen, zoals het dialect voor XBRL instanties. Dat is in dit artikel niet aan bod gekomen, maar dat maakt yaidom nog veel krachtiger en eleganter in het gebruik dan hier is
+getoond.</p>
 
-<p>Yaidom is gepresenteerd bij XML London 2015. De library wordt bij EBPI intensief ingezet in productiecode. Daarnaast helpt yaidom bij snelle XML scripting taken. Yaidom helpt ons bij EBPI vooral
-om gelaagde modellen te bouwen waarmee we bijvoorbeeld XBRL processing robuust maar met een korte time-to-market kunnen realiseren.</p>
+<p>Yaidom is gepresenteerd bij <a href="http://xmllondon.com/" target="_blank">XML London 2015</a>. De library wordt bij EBPI intensief ingezet in productiecode. Daarnaast helpt yaidom bij snelle XML
+scripting taken. Yaidom helpt ons bij EBPI vooral om gelaagde modellen te bouwen waarmee we bijvoorbeeld XBRL processing robuust maar met een korte time-to-market kunnen realiseren.</p>
       </section>
       <footer>
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
