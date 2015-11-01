@@ -341,7 +341,7 @@ Dat maakt deze element-implementatie een goede basis voor namespace-aware XML eq
 <p>Het valt op dat we met weinig Scala/yaidom code redelijk ver komen in de ondersteuning van fact aspects. Het was in dit geval beduidend minder natuurlijk geweest om in plaats hiervan XSLT of XQuery in te
 zetten. Dit illustreert het nut van Scala en yaidom voor XML processing, als mogelijk alternatief voor standaarden zoals XSLT. Hoe meer we Scala (en Java) API's willen inzetten voor een groot deel van de
 code, hoe aantrekkelijker deze alternatieve aanpak wordt. Dit voorkomt dat we in de code steeds moeten schakelen tussen 2 sterk verschillende paradigma's: Scala/Java enerzijds en het XPath Data Model
-anderzijds. De <em>semantiek</em> verschilt ook sterk tussen deze paradigma's. Zo zijn bijvoorbeeld XDM sequences totaal verschillend van Scala of Java collecties (een item is hetzelfde als een singleton
+anderzijds. De <em>semantiek</em> verschilt ook sterk tussen deze paradigma's. Zo zijn bijvoorbeeld XDM sequences totaal verschillend van Scala of Java collecties (een XDM item is hetzelfde als een singleton
 sequence met dat item, en sequences kunnen niet genest worden). Equality in XPath verschilt ook sterk van equality in Scala of Java.</p>
 
 <h3>
@@ -361,11 +361,17 @@ verwerkt, al worden ook daar mogelijk Scala en yaidom als onderdeel van de oplos
 <pre><code>$v:VARIABLE_BalanceStart + $v:VARIABLE_Change = $v:VARIABLE_BalanceEnd</code></pre>
 
 <p>Daarbij wordt binnen de XBRL instantie geitereerd over combinaties van 3 bij elkaar horende facts: een "start balance", en "change" en een "end balance". Voor elk van die combinaties
-wordt het equivalent van de XPath expressie uitgevoerd als validatie-check. Alleen, welke facts worden ingevuld voor de 3 variabelen, en welke combinaties van die facts worden beschouwd?
-Dat is te zien in onderstaande code, en is gebaseerd op gelijkheid van zogenaamde "uncovered" aspecten. Dit zijn alle aspecten behalve de "covered" concept en period aspecten. (Deze 2 laatste aspecten
-zijn "covered" want zij zijn expliciet gebruikt om facts te filteren.) Hier volgt eerst een skelet van de code:</p>
+wordt het equivalent van de XPath expressie uitgevoerd als validatie-check. Alleen, welke facts worden ingevuld voor de 3 variabelen ("explicit filtering"), en welke combinaties van die facts worden beschouwd
+("implicit filtering")? Dat is te zien in onderstaande code. "Implicit filtering" is gebaseerd op gelijkheid van zogenaamde "uncovered" aspecten. Dit zijn alle aspecten behalve de "covered" concept en
+period aspecten. (Deze 2 laatste aspecten zijn "covered" want zij zijn expliciet gebruikt om facts te filteren.) Hier volgt eerst een skelet van de code:</p>
 
-<pre><code>// Function mustBeEvaluated filters a combination of start balance, change and end balance,
+<pre><code>val balanceFacts =
+  facts.filter(withEName(GaapNs, "CashAndCashEquivalentsPerCashFlowStatement"))
+
+val changeFacts =
+  facts.filter(withEName(GaapNs, "CashFlowNet"))
+
+// Function mustBeEvaluated filters a combination of start balance, change and end balance,
 // based on equality of so-called uncovered aspects.
 
 // Function performAssertionTest evaluates one such combination of 3 facts.
@@ -381,7 +387,7 @@ val evalResults =
   }
 </code></pre>
 
-<p>De meer complete code is als volgt:</p>
+<p>De meer complete code (voor educatieve doeleinden) is als volgt:</p>
 
 <pre><code>final case class EvaluationResult(
   val facts: Map[String, indexed.Elem], val result: Boolean) {
@@ -395,9 +401,11 @@ val topLevelFacts =
   idocElem.filterChildElems(e => !Set(XbrliNs, LinkNs).contains(e.resolvedName.namespaceUriOption.getOrElse("")))
 val facts = topLevelFacts.flatMap(_.findAllElemsOrSelf)
 
-val balanceFacts = facts.filter(withEName(GaapNs, "CashAndCashEquivalentsPerCashFlowStatement"))
+val balanceFacts =
+  facts.filter(withEName(GaapNs, "CashAndCashEquivalentsPerCashFlowStatement"))
 
-val changeFacts = facts.filter(withEName(GaapNs, "CashFlowNet"))
+val changeFacts =
+  facts.filter(withEName(GaapNs, "CashFlowNet"))
 
 // Implicit filtering, to filter the cartesian product of 3 fact value spaces
 
