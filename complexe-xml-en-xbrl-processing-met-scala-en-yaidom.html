@@ -224,29 +224,34 @@ het onderscheid tussen individuele elementen enerzijds en collecties van element
 <h3>
 <a name="eenvoudige-xbrl-aspect-queries-met-yaidom" class="anchor" href="#eenvoudige-xbrl-aspect-queries-met-yaidom"><span class="octicon octicon-link"></span></a>Eenvoudige XBRL aspect queries met yaidom</h3>
 
-<p>In een XBRL instantie (als XML document) zien facts met hun contexts en eventuele units er nogal "syntactisch" en weinig "semantisch" uit. De essentie van een fact is verspreid over meerdere XML elementen
-die mogelijk ver uit elkaar staan (facts versus contexts en units). Meer semantisch heeft een fact in een instantie naast een waarde een aantal <em>aspects</em>. Denk bijvoorbeeld aan:</p>
+<p>In een XBRL instantie (als XML document) zien facts met hun contexts en eventuele units er nogal "syntactisch" en weinig "semantisch" uit. De essentie van een fact is immers verspreid over meerdere XML elementen
+die mogelijk ver uit elkaar staan (facts en hun contexts en eventuele units). Meer semantisch heeft een fact in een instantie naast een waarde een aantal <em>aspects</em>. Denk bijvoorbeeld aan:</p>
 <ol>
 <li>Het <em>concept aspect</em>. Dit is de expanded name van het fact element, en duidt het unieke concept aan met die expanded name. Het fact is dus een "instance" van dat concept.</li>
 <li>Het <em>location aspect</em>, dus het parent element van het fact. Dit is alleen interessant voor geneste facts.</li>
-<li>Het <em>entity identifier aspect</em>. Deze entity identifier vinden we terug in de XBRL context van dat fact.</li>
-<li>Het <em>period aspect</em>. Ook deze vinden we terug in de XBRL context van dat fact.</li>
-<li>Voor elke dimensie die we tegenkomen in de XBRL context van het fact, een <em>dimension aspect</em>. XBRL dimensions kunnen verder in dit artikel worden genegeerd, omdat we dit niet hebben uitgelegd.</li>
+<li>Het <em>entity identifier aspect</em>. Deze entity identifier vinden we terug in de XBRL context van dat fact. Het entity identifier aspect is de combinatie van het scheme attribuut en de waarde
+van het identifier element.</li>
+<li>Het <em>period aspect</em>. Ook deze vinden we terug in de XBRL context van dat fact, bijvoorbeeld als duration, dus als combinatie van startdatum en einddatum.</li>
+<li>Voor elke dimensie die we tegenkomen in de XBRL context van het fact, een <em>dimension aspect</em>. XBRL dimensions zijn een zeer belangrijk onderdeel van XBRL. Het gebruik van dimensions helpt om een explosie
+in het aantal benodigde concepten te voorkomen. Dimensions worden verder niet uitgelegd in dit artikel.</li>
 <li>Voor numerieke concepten, het <em>unit aspect</em>. Dit is de XBRL unit van het fact.</li>
 </ol>
 
-<p>Deze (en andere) <em>aspects</em> vormen de basis voor moderne XBRL specificaties rond validaties ("formulas"). Daar zit ook de link met het laatste deel van dit artikel. Nu gaan we fact aspects opvragen
-met Scala en yaidom, zodat we daarna aspecten kunnen gebruiken om validaties op XBRL instanties te coderen.</p>
+<p>Deze (en andere) <em>aspects</em> vormen de basis voor moderne XBRL specificaties rond validaties ("formulas"). Daar zit ook de link met het laatste deel van dit artikel, omdat we daar aspects gaan gebruiken
+voor validatie. In deze sectie gaan we fact aspects opvragen met Scala en yaidom, zodat we in de volgende sectie aspecten kunnen gebruiken om validaties op XBRL instanties te coderen.</p>
 
-<p>Hier volgt code om (sterk vereenvoudigd) fact aspects op te vragen. Variabele <code>idoc</code> bevat de XBRL instantie als zogenaamd "indexed" document. "Indexed" elementen kennen hun parent elementen,
-maar bieden dezelfde yaidom query API, en meer, wat we benutten voor het location aspect. De code, die wellicht zonder uitleg iets moeilijker is te begrijpen, is als volgt:</p>
+<p>Hieronder volgt code om (sterk vereenvoudigd) fact aspects op te vragen. Variabele <code>idoc</code> bevat de XBRL instantie als zogenaamd "indexed" document. "Indexed" elementen kennen hun parent elementen,
+maar bieden daarnaast dezelfde yaidom query API. De kennis van de ancestor elementen benutten we voor het location aspect. De code, die gebonden is aan het gebruik van een specifieke element-implementatie,
+maar toch grotendeels de generieke yaidom element query API gebruikt, is als volgt:</p>
 
-<pre><code>val contextsById: Map[String, indexed.Elem] =
-  idoc.documentElement.filterChildElems(withEName(XbrliNs, "context")).
+<pre><code>val idocElem = idoc.documentElement
+
+val contextsById: Map[String, indexed.Elem] =
+  idocElem.filterChildElems(withEName(XbrliNs, "context")).
     groupBy(_.attribute(EName("id"))).mapValues(_.head)
 
 val unitsById: Map[String, indexed.Elem] =
-  idoc.documentElement.filterChildElems(withEName(XbrliNs, "unit")).
+  idocElem.filterChildElems(withEName(XbrliNs, "unit")).
     groupBy(_.attribute(EName("id"))).mapValues(_.head)
 
 // See http://www.xbrl.org/Specification/variables/REC-2009-06-22/variables-REC-2009-06-22.html#sec-aspects.
@@ -257,11 +262,15 @@ def locationAspect(fact: indexed.Elem): Path =
   fact.path.parentPathOption.getOrElse(Path.Root)
 
 def entityIdentifierAspectOption(fact: indexed.Elem): Option[(String, String)] = {
-  val contextOption = fact.attributeOption(EName("contextRef")).map(id => contextsById(id))
+  val contextOption =
+    fact.attributeOption(EName("contextRef")).map(id => contextsById(id))
 
-  val identifierOption = contextOption.flatMap(_.findElem(withEName(XbrliNs, "identifier")))
-  val schemeOption = identifierOption.flatMap(_.attributeOption(EName("scheme")))
-  val identifierValueOption = identifierOption.map(_.text)
+  val identifierOption =
+    contextOption.flatMap(_.findElem(withEName(XbrliNs, "identifier")))
+  val schemeOption =
+    identifierOption.flatMap(_.attributeOption(EName("scheme")))
+  val identifierValueOption =
+    identifierOption.map(_.text)
 
   for {
     scheme <- schemeOption
@@ -270,9 +279,11 @@ def entityIdentifierAspectOption(fact: indexed.Elem): Option[(String, String)] =
 }
 
 def periodAspectOption(fact: indexed.Elem): Option[simple.Elem] = {
-  val contextOption = fact.attributeOption(EName("contextRef")).map(id => contextsById(id))
+  val contextOption =
+    fact.attributeOption(EName("contextRef")).map(id => contextsById(id))
 
-  val periodOption = contextOption.flatMap(_.findElem(withEName(XbrliNs, "period")))
+  val periodOption =
+    contextOption.flatMap(_.findElem(withEName(XbrliNs, "period")))
   periodOption.map(_.elem)
 }
 
@@ -280,10 +291,13 @@ def periodAspectOption(fact: indexed.Elem): Option[simple.Elem] = {
 // Also ignoring typed dimensions
 
 def explicitDimensionAspects(fact: indexed.Elem): Map[EName, EName] = {
-  val contextOption = fact.attributeOption(EName("contextRef")).map(id => contextsById(id))
+  val contextOption =
+    fact.attributeOption(EName("contextRef")).map(id => contextsById(id))
 
-  val memberElems = contextOption.toVector.flatMap(_.filterElems(withEName(XbrldiNs, "explicitMember")))
-  memberElems.map(e => (e.attributeAsResolvedQName(EName("dimension")) -> e.textAsResolvedQName)).toMap
+  val memberElems =
+    contextOption.toVector.flatMap(_.filterElems(withEName(XbrldiNs, "explicitMember")))
+  memberElems.map(e =>
+    (e.attributeAsResolvedQName(EName("dimension")) -> e.textAsResolvedQName)).toMap
 }
 
 // Convenience method
@@ -293,28 +307,32 @@ def explicitDimensionAspectOption(fact: indexed.Elem, dimension: EName): Option[
 }
 
 def unitAspectOption(fact: indexed.Elem): Option[simple.Elem] = {
-  val unitOption = fact.attributeOption(EName("unitRef")).map(id => unitsById(id))
+  val unitOption =
+    fact.attributeOption(EName("unitRef")).map(id => unitsById(id))
   unitOption.map(_.elem)
 }
 
-// Compare aspects, naively, and without knowledge about XML Schema types. Use equality on the results of the functions below for (period and unit) aspect comparisons.
+// Compare aspects, naively, and without knowledge about XML Schema types.
+// Use equality on the results of the functions below for (period and unit) aspect comparisons.
 
 def comparablePeriodAspectOption(fact: indexed.Elem): Option[Set[resolved.Elem]] = {
-  periodAspectOption(fact).map(e => e.findAllChildElems.map(che => resolved.Elem(che).removeAllInterElementWhitespace).toSet)
+  periodAspectOption(fact).map(e =>
+    e.findAllChildElems.map(che => resolved.Elem(che).removeAllInterElementWhitespace).toSet)
 }
 
 def comparableUnitAspectOption(fact: indexed.Elem): Option[Set[resolved.Elem]] = {
-  unitAspectOption(fact).map(e => e.findAllChildElems.map(che => resolved.Elem(che).removeAllInterElementWhitespace).toSet)
+  unitAspectOption(fact).map(e =>
+    e.findAllChildElems.map(che => resolved.Elem(che).removeAllInterElementWhitespace).toSet)
 }
 </code></pre>
 
-<p>Onopvallend is hier nog een element-implementatie gebruikt, namelijk "resolved" elements. Terwijl "indexed" elements iets toevoegen, namelijk de ancestry als element context, laten "resolved"
-elements iets weg, namelijk namespace prefixes (de namespace URI's blijven behouden). Dat maakt deze element-implementatie een goede basis voor namespace-aware XML equality-vergelijkingen. Weer geldt
-dat de kern van de yaidom XML query API hetzelfde is, ook voor "resolved" elements.</p>
+<p>Enigszins onopvallend is hier nog een element-implementatie gebruikt, namelijk "resolved" elements. Terwijl "indexed" elements iets toevoegen (aan "simple" elements), namelijk de ancestry als element context,
+laten "resolved" elements iets weg, namelijk namespace prefixes (de namespace URI's blijven behouden). Dat maakt deze element-implementatie een goede basis voor namespace-aware XML equality-vergelijkingen.
+Weer geldt dat de kern van de yaidom XML query API hetzelfde is, ook voor "resolved" elements.</p>
 
-<p>Ook als deze code wat moeilijker is te volgen, dan valt in ieder geval op dat we met weinig Scala/yaidom code redelijk ver komen in de ondersteuning van fact aspects. Het was in dit geval beduidend
-minder natuurlijk geweest om in plaats hiervan XSLT of XQuery in te zetten. Dit illustreert het nut van Scala en yaidom voor XML processing, als mogelijk alternatief voor standaarden zoals XSLT.
-Hoe meer we Scala (en Java) API's willen inzetten, hoe aantrekkelijker deze alternatieve aanpak wordt.</p>
+<p>Het valt op dat we met weinig Scala/yaidom code redelijk ver komen in de ondersteuning van fact aspects. Het was in dit geval beduidend minder natuurlijk geweest om in plaats hiervan XSLT of XQuery in te
+zetten. Dit illustreert het nut van Scala en yaidom voor XML processing, als mogelijk alternatief voor standaarden zoals XSLT. Hoe meer we Scala (en Java) API's willen inzetten voor een groot deel van de
+code, hoe aantrekkelijker deze alternatieve aanpak wordt.</p>
 
 <h3>
 <a name="value-assertion-als-scala-code" class="anchor" href="#value-assertion-als-scala-code"><span class="octicon octicon-link"></span></a>Een value assertion, gesimuleerd in Scala code</h3>
@@ -341,9 +359,9 @@ Dat is te zien in onderstaande code, en is gebaseerd op aspecten. Hier volgt de 
     s"EvaluationResult(result: $result, facts: ${facts.mapValues(_.elem)})"
   }
 }
-  
+
 val topLevelFacts =
-  idoc.documentElement.filterChildElems(e => !Set(XbrliNs, LinkNs).contains(e.resolvedName.namespaceUriOption.getOrElse("")))
+  idocElem.filterChildElems(e => !Set(XbrliNs, LinkNs).contains(e.resolvedName.namespaceUriOption.getOrElse("")))
 val facts = topLevelFacts.flatMap(_.findAllElemsOrSelf)
 
 val balanceFacts = facts.filter(withEName(GaapNs, "CashAndCashEquivalentsPerCashFlowStatement"))
