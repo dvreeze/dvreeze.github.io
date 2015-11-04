@@ -267,8 +267,7 @@ val unitsById: Map[String, indexed.Elem] =
   idocElem.filterChildElems(withEName(XbrliNs, "unit")).
     groupBy(_.attribute(EName("id"))).mapValues(_.head)
 
-// See
-// http://www.xbrl.org/Specification/variables/REC-2009-06-22/variables-REC-2009-06-22.html.
+// See http://www.xbrl.org/Specification/variables/REC-2009-06-22/.
 
 def conceptAspect(fact: indexed.Elem): EName = fact.resolvedName
 
@@ -431,7 +430,7 @@ def mustBeEvaluated(
   changeFact: indexed.Elem,
   balanceEndFact: indexed.Elem): Boolean = {
 
-  // Compare on so-called uncovered aspects, so on all ones except concept and period
+  // Compare on so-called uncovered aspects, so all ones except concept and period
 
   val currFacts = List(balanceStartFact, changeFact, balanceEndFact)
 
@@ -440,7 +439,7 @@ def mustBeEvaluated(
   currFacts.map(e => locationAspect(e)).distinct.size == 1 &&
     currFacts.map(e => entityIdentifierAspectOption(e)).distinct.size == 1 &&
     dimensions.forall(dim =>
-      currFacts.map(e => explicitDimensionAspectOption(e, dim)).distinct.size == 1) &&
+      currFacts.map(e => explicitDimensionAspectOption(e, dim)).toSet.size == 1) &&
     currFacts.map(e => unitAspectOption(e)).distinct.size == 1 && {
       // Instant-duration
       // The comparison is naive, but still verbose
