@@ -110,11 +110,17 @@ respectievelijk 240 en 250 waren. Preciezer gezegd in XBRL terminologie, <em>con
    &lt;/unit&gt;
 
   &lt;gaap:AverageNumberEmployees
-    contextRef="D-2003" unitRef="U-Pure" decimals="INF"&gt;220&lt;/gaap:AverageNumberEmployees&gt;
+    contextRef="D-2003"
+    unitRef="U-Pure"
+    decimals="INF"&gt;220&lt;/gaap:AverageNumberEmployees&gt;
   &lt;gaap:AverageNumberEmployees
-    contextRef="D-2004" unitRef="U-Pure" decimals="INF"&gt;240&lt;/gaap:AverageNumberEmployees&gt;
+    contextRef="D-2004"
+    unitRef="U-Pure"
+    decimals="INF"&gt;240&lt;/gaap:AverageNumberEmployees&gt;
   &lt;gaap:AverageNumberEmployees
-    contextRef="D-2005" unitRef="U-Pure" decimals="INF"&gt;250&lt;/gaap:AverageNumberEmployees&gt;
+    contextRef="D-2005"
+    unitRef="U-Pure"
+    decimals="INF"&gt;250&lt;/gaap:AverageNumberEmployees&gt;
 
 &lt;/xbrl&gt;
 </code></pre>
@@ -203,12 +209,14 @@ val uPureUnit =
 
 println(uPureUnit.getChildElem(withEName(xbrliNs, "measure")).text) // prints "pure"
 
-// Now we get the measure element text, as QName, resolving it to an EName (expanded name)
+// Now we get the measure element text, as QName, resolving it to an EName
+// (expanded name)
 println(
   uPureUnit.getChildElem(withEName(xbrliNs, "measure")).textAsResolvedQName)
 // prints EName(xbrliNs, "pure")
 
-// Having the same unit, the gaap:AverageNumberEmployees facts are uniquely identified by contexts.
+// Having the same unit, the gaap:AverageNumberEmployees facts are uniquely
+// identified by contexts.
 
 val avgNumEmployeesFactsByContext =
   avgNumEmployeesFacts.groupBy(
@@ -259,7 +267,8 @@ val unitsById: Map[String, indexed.Elem] =
   idocElem.filterChildElems(withEName(XbrliNs, "unit")).
     groupBy(_.attribute(EName("id"))).mapValues(_.head)
 
-// See http://www.xbrl.org/Specification/variables/REC-2009-06-22/variables-REC-2009-06-22.html#sec-aspects.
+// See
+// http://www.xbrl.org/Specification/variables/REC-2009-06-22/variables-REC-2009-06-22.html.
 
 def conceptAspect(fact: indexed.Elem): EName = fact.resolvedName
 
@@ -294,22 +303,26 @@ def periodAspectOption(fact: indexed.Elem): Option[simple.Elem] = {
   periodOption.map(_.elem)
 }
 
-// Forgetting about complete segment, non-XDT segment, complete scenario and non-XDT scenario for now
-// Also ignoring typed dimensions
+// Forgetting about complete segment, non-XDT segment, complete scenario and
+// non-XDT scenario for now. Also ignoring typed dimensions.
 
 def explicitDimensionAspects(fact: indexed.Elem): Map[EName, EName] = {
   val contextOption =
     fact.attributeOption(EName("contextRef")).map(id => contextsById(id))
 
   val memberElems =
-    contextOption.toVector.flatMap(_.filterElems(withEName(XbrldiNs, "explicitMember")))
+    contextOption.toVector.flatMap(_.filterElems(
+      withEName(XbrldiNs, "explicitMember")))
   memberElems.map(e =>
     (e.attributeAsResolvedQName(EName("dimension")) -> e.textAsResolvedQName)).toMap
 }
 
 // Convenience method
 
-def explicitDimensionAspectOption(fact: indexed.Elem, dimension: EName): Option[EName] = {
+def explicitDimensionAspectOption(
+  fact: indexed.Elem,
+  dimension: EName): Option[EName] = {
+
   explicitDimensionAspects(fact).filterKeys(Set(dimension)).headOption.map(_._2)
 }
 
@@ -320,17 +333,20 @@ def unitAspectOption(fact: indexed.Elem): Option[simple.Elem] = {
 }
 
 // Compare aspects, naively, and without knowledge about XML Schema types.
-// In particular period aspect comparisons are more tricky than this naive implementation.
-// Use equality on the results of the functions below for (period and unit) aspect comparisons.
+// Period aspect comparisons are more tricky than this naive implementation suggests.
+// Use equality on the results of the functions below for (period and unit) aspect
+// comparisons.
 
 def comparablePeriodAspectOption(fact: indexed.Elem): Option[Set[resolved.Elem]] = {
   periodAspectOption(fact).map(e =>
-    e.findAllChildElems.map(che => resolved.Elem(che).removeAllInterElementWhitespace).toSet)
+    e.findAllChildElems.map(che =>
+      resolved.Elem(che).removeAllInterElementWhitespace).toSet)
 }
 
 def comparableUnitAspectOption(fact: indexed.Elem): Option[Set[resolved.Elem]] = {
   unitAspectOption(fact).map(e =>
-    e.findAllChildElems.map(che => resolved.Elem(che).removeAllInterElementWhitespace).toSet)
+    e.findAllChildElems.map(che =>
+      resolved.Elem(che).removeAllInterElementWhitespace).toSet)
 }
 </code></pre>
 
@@ -371,8 +387,8 @@ period aspecten. (Deze 2 laatste aspecten zijn "covered" want zij zijn expliciet
 val changeFacts =
   facts.filter(withEName(GaapNs, "CashFlowNet"))
 
-// Function mustBeEvaluated filters a combination of start balance, change and end balance,
-// based on equality of so-called uncovered aspects.
+// Function mustBeEvaluated filters a combination of start balance, change and
+// end balance, based on equality of so-called uncovered aspects.
 
 // Function performAssertionTest evaluates one such combination of 3 facts.
 
@@ -398,7 +414,8 @@ val evalResults =
 }
 
 val topLevelFacts =
-  idocElem.filterChildElems(e => !Set(XbrliNs, LinkNs).contains(e.resolvedName.namespaceUriOption.getOrElse("")))
+  idocElem.filterChildElems(e =>
+    !Set(XbrliNs, LinkNs).contains(e.resolvedName.namespaceUriOption.getOrElse("")))
 val facts = topLevelFacts.flatMap(_.findAllElemsOrSelf)
 
 val balanceFacts =
@@ -410,9 +427,11 @@ val changeFacts =
 // Implicit filtering, to filter the cartesian product of 3 fact value spaces
 
 def mustBeEvaluated(
-  balanceStartFact: indexed.Elem, changeFact: indexed.Elem, balanceEndFact: indexed.Elem): Boolean = {
+  balanceStartFact: indexed.Elem,
+  changeFact: indexed.Elem,
+  balanceEndFact: indexed.Elem): Boolean = {
 
-  // Compare on so-called uncovered aspects, so on all aspects except concept and period
+  // Compare on so-called uncovered aspects, so on all ones except concept and period
 
   val currFacts = List(balanceStartFact, changeFact, balanceEndFact)
 
@@ -420,23 +439,26 @@ def mustBeEvaluated(
 
   currFacts.map(e => locationAspect(e)).distinct.size == 1 &&
     currFacts.map(e => entityIdentifierAspectOption(e)).distinct.size == 1 &&
-    dimensions.forall(dim => currFacts.map(e => explicitDimensionAspectOption(e, dim)).distinct.size == 1) &&
+    dimensions.forall(dim =>
+      currFacts.map(e => explicitDimensionAspectOption(e, dim)).distinct.size == 1) &&
     currFacts.map(e => unitAspectOption(e)).distinct.size == 1 && {
       // Instant-duration
       // The comparison is naive, but still verbose
 
+      import LocalDate.parse
+
       val balanceStartInstantOption =
         periodAspectOption(balanceStartFact).flatMap(
-          _.findElem(withEName(XbrliNs, "instant"))).map(e => LocalDate.parse(e.text))
+          _.findElem(withEName(XbrliNs, "instant"))).map(e => parse(e.text))
       val balanceEndInstantOption =
         periodAspectOption(balanceEndFact).flatMap(
-          _.findElem(withEName(XbrliNs, "instant"))).map(e => LocalDate.parse(e.text))
+          _.findElem(withEName(XbrliNs, "instant"))).map(e => parse(e.text))
       val changeStartOption =
         periodAspectOption(changeFact).flatMap(
-          _.findElem(withEName(XbrliNs, "startDate"))).map(e => LocalDate.parse(e.text))
+          _.findElem(withEName(XbrliNs, "startDate"))).map(e => parse(e.text))
       val changeEndOption =
         periodAspectOption(changeFact).flatMap(
-          _.findElem(withEName(XbrliNs, "endDate"))).map(e => LocalDate.parse(e.text))
+          _.findElem(withEName(XbrliNs, "endDate"))).map(e => parse(e.text))
 
       balanceStartInstantOption.isDefined && balanceEndInstantOption.isDefined &&
         changeStartOption.isDefined && changeEndOption.isDefined && {
@@ -446,7 +468,7 @@ def mustBeEvaluated(
         val changeStart = changeStartOption.get
         val changeEnd = changeEndOption.get
 
-        ((balanceStart == changeStart) || (balanceStart.plusDays(1) == changeStart)) &&
+        (balanceStart == changeStart || balanceStart.plusDays(1) == changeStart) &&
           (balanceEnd == changeEnd)
       }
     }
@@ -455,13 +477,19 @@ def mustBeEvaluated(
 // The assertion test itself
 
 def performAssertionTest(
-  balanceStartFact: indexed.Elem, changeFact: indexed.Elem, balanceEndFact: indexed.Elem): EvaluationResult = {
+  balanceStartFact: indexed.Elem,
+  changeFact: indexed.Elem,
+  balanceEndFact: indexed.Elem): EvaluationResult = {
 
   // Here we recognize the XPath expression shown earlier
-  val result = balanceStartFact.text.toInt + changeFact.text.toInt == balanceEndFact.text.toInt
+  val result =
+    balanceStartFact.text.toInt + changeFact.text.toInt == balanceEndFact.text.toInt
 
   EvaluationResult(
-    Map("startBalance" -> balanceStartFact, "change" -> changeFact, "endBalance" -> balanceEndFact), result)
+    Map(
+      "startBalance" -> balanceStartFact,
+      "change" -> changeFact,
+      "endBalance" -> balanceEndFact), result)
 }
 
 // Executing the assertion
