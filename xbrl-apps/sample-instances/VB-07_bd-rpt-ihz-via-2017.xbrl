@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- XBRL instance based on taxonomy report namespace http://www.nltaxonomie.nl/nt12/bd/20171213.b/entrypoints/bd-rpt-ihz-via-2017.xsd -->
+<!--Intellectual Property State of the Netherlands -->
+<!--Created on: Created on: 27-09-2017 11:00:00 -->
+<xbrli:xbrl xmlns:bd-i="http://www.nltaxonomie.nl/nt12/bd/20171213.b/dictionary/bd-data"  xmlns:bd-t="http://www.nltaxonomie.nl/nt12/bd/20171213.b/dictionary/bd-tuples" xmlns:bd-dim-dim="http://www.nltaxonomie.nl/nt12/bd/20171213.b/validation/bd-axes" xmlns:bd-dim-mem="http://www.nltaxonomie.nl/nt12/bd/20171213.b/dictionary/bd-domain-members" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="nl">
+	<link:schemaRef xlink:type="simple" xlink:href="http://www.nltaxonomie.nl/nt12/bd/20171213.b/entrypoints/bd-rpt-ihz-via-2017.xsd"/>
+	<xbrli:context id="Context_Duration">
+		<xbrli:entity>
+			<xbrli:identifier scheme="www.belastingdienst.nl/identificatie">111111274</xbrli:identifier>
+		</xbrli:entity>
+		<xbrli:period>
+			<xbrli:startDate>2017-01-01</xbrli:startDate>
+			<xbrli:endDate>2017-12-31</xbrli:endDate>
+		</xbrli:period>
+	</xbrli:context>
+	<xbrli:context id="Context_Instant_Begin">
+		<xbrli:entity>
+			<xbrli:identifier scheme="www.belastingdienst.nl/identificatie">111111274</xbrli:identifier>
+		</xbrli:entity>
+		<xbrli:period>
+			<xbrli:instant>2017-01-01</xbrli:instant>
+		</xbrli:period>
+		<xbrli:scenario>
+			<xbrldi:explicitMember dimension="bd-dim-dim:TimeDimension">bd-dim-mem:Begin</xbrldi:explicitMember>
+		</xbrli:scenario>
+	</xbrli:context>
+	<xbrli:unit id="EUR">
+		<xbrli:measure>iso4217:EUR</xbrli:measure>
+	</xbrli:unit>
+	<xbrli:unit id="PURE">
+		<xbrli:measure>xbrli:pure</xbrli:measure>
+	</xbrli:unit>
+	<bd-i:DateOfBirth contextRef="Context_Duration">1950-10-01</bd-i:DateOfBirth>
+	<bd-i:BankAccountNumber contextRef="Context_Duration">NL83ABNA042042042</bd-i:BankAccountNumber>
+	<bd-i:PrefilledTaxReturnIncomeUseWatermark contextRef="Context_Duration">10001000100010001000100010001006</bd-i:PrefilledTaxReturnIncomeUseWatermark>
+	<bd-i:TaxpayerName contextRef="Context_Duration">E. de Weerd - Hof</bd-i:TaxpayerName>
+	<bd-i:WagesPresentWorkTotal contextRef="Context_Duration" decimals="INF" unitRef="EUR">36000</bd-i:WagesPresentWorkTotal>
+	<bd-t:AssetsOnBankAccountsSpecification>
+		<bd-i:AssetsOnBankAccountsAccountHolderIdentificationNumber contextRef="Context_Duration">111111274</bd-i:AssetsOnBankAccountsAccountHolderIdentificationNumber>
+		<bd-i:AssetsOnBankAccountsBalance contextRef="Context_Instant_Begin" decimals="INF" unitRef="EUR">2833</bd-i:AssetsOnBankAccountsBalance>
+		<bd-i:AssetsOnBankAccountsBalanceBox3BankAccountSavings contextRef="Context_Instant_Begin" decimals="INF" unitRef="EUR">2833</bd-i:AssetsOnBankAccountsBalanceBox3BankAccountSavings>
+		<bd-i:AssetsOnBankAccountsBalanceType contextRef="Context_Duration">01</bd-i:AssetsOnBankAccountsBalanceType>
+		<bd-i:AssetsOnBankAccountsBankAccountNumber contextRef="Context_Duration">NL83ABNA042042042</bd-i:AssetsOnBankAccountsBankAccountNumber>
+		<bd-i:AssetsOnBankAccountsBankProductLabel contextRef="Context_Duration">Betaalrekening</bd-i:AssetsOnBankAccountsBankProductLabel>
+		<bd-i:AssetsOnBankAccountsCommonInterestIndication contextRef="Context_Duration">02</bd-i:AssetsOnBankAccountsCommonInterestIndication>
+		<bd-i:AssetsOnBankAccountsProductID contextRef="Context_Duration">ID3626152</bd-i:AssetsOnBankAccountsProductID>
+		<bd-i:AssetsOnBankAccountsRecordType contextRef="Context_Duration">05</bd-i:AssetsOnBankAccountsRecordType>
+		<bd-i:AssetsOnBankAccountsSourceBankTaxReferenceNumber contextRef="Context_Duration">781474899</bd-i:AssetsOnBankAccountsSourceBankTaxReferenceNumber>
+	</bd-t:AssetsOnBankAccountsSpecification>
+	<bd-t:AssetsOnBankAccountsSpecification>
+		<bd-i:AssetsOnBankAccountsAccountHolderIdentificationNumber contextRef="Context_Duration">111111274</bd-i:AssetsOnBankAccountsAccountHolderIdentificationNumber>
+		<bd-i:AssetsOnBankAccountsBalance contextRef="Context_Instant_Begin" decimals="INF" unitRef="EUR">210000</bd-i:AssetsOnBankAccountsBalance>
+		<bd-i:AssetsOnBankAccountsBalanceBox3BankAccountSavings contextRef="Context_Instant_Begin" decimals="INF" unitRef="EUR">210000</bd-i:AssetsOnBankAccountsBalanceBox3BankAccountSavings>
+		<bd-i:AssetsOnBankAccountsBalanceType contextRef="Context_Duration">01</bd-i:AssetsOnBankAccountsBalanceType>
+		<bd-i:AssetsOnBankAccountsBankAccountNumber contextRef="Context_Duration">NL83ABNA042042045</bd-i:AssetsOnBankAccountsBankAccountNumber>
+		<bd-i:AssetsOnBankAccountsBankProductLabel contextRef="Context_Duration">Hypotheekrekening</bd-i:AssetsOnBankAccountsBankProductLabel>
+		<bd-i:AssetsOnBankAccountsCommonInterestIndication contextRef="Context_Duration">02</bd-i:AssetsOnBankAccountsCommonInterestIndication>
+		<bd-i:AssetsOnBankAccountsProductID contextRef="Context_Duration">ID3626153</bd-i:AssetsOnBankAccountsProductID>
+		<bd-i:AssetsOnBankAccountsRecordType contextRef="Context_Duration">06</bd-i:AssetsOnBankAccountsRecordType>
+		<bd-i:AssetsOnBankAccountsSourceBankTaxReferenceNumber contextRef="Context_Duration">781474899</bd-i:AssetsOnBankAccountsSourceBankTaxReferenceNumber>
+	</bd-t:AssetsOnBankAccountsSpecification>
+	<bd-t:AssetsOnBankAccountsSpecification>
+		<bd-i:AssetsOnBankAccountsAccountHolderIdentificationNumber contextRef="Context_Duration">111111274</bd-i:AssetsOnBankAccountsAccountHolderIdentificationNumber>
+		<bd-i:AssetsOnBankAccountsBalance contextRef="Context_Instant_Begin" decimals="INF" unitRef="EUR">257924</bd-i:AssetsOnBankAccountsBalance>
+		<bd-i:AssetsOnBankAccountsBalanceType contextRef="Context_Duration">41</bd-i:AssetsOnBankAccountsBalanceType>
+		<bd-i:AssetsOnBankAccountsBankAccountNumber contextRef="Context_Duration">NL83ABNA042042048</bd-i:AssetsOnBankAccountsBankAccountNumber>
+		<bd-i:AssetsOnBankAccountsBankProductLabel contextRef="Context_Duration">Spaarlrekening</bd-i:AssetsOnBankAccountsBankProductLabel>
+		<bd-i:AssetsOnBankAccountsCommonInterestIndication contextRef="Context_Duration">02</bd-i:AssetsOnBankAccountsCommonInterestIndication>
+		<bd-i:AssetsOnBankAccountsProductID contextRef="Context_Duration">ID3626154</bd-i:AssetsOnBankAccountsProductID>
+		<bd-i:AssetsOnBankAccountsRecordType contextRef="Context_Duration">05</bd-i:AssetsOnBankAccountsRecordType>
+		<bd-i:AssetsOnBankAccountsSourceBankTaxReferenceNumber contextRef="Context_Duration">781474899</bd-i:AssetsOnBankAccountsSourceBankTaxReferenceNumber>
+	</bd-t:AssetsOnBankAccountsSpecification>
+	<bd-t:AssetsOnBankAccountsSpecification>
+		<bd-i:AssetsOnBankAccountsAccountHolderIdentificationNumber contextRef="Context_Duration">111111274</bd-i:AssetsOnBankAccountsAccountHolderIdentificationNumber>
+		<bd-i:AssetsOnBankAccountsBalance contextRef="Context_Instant_Begin" decimals="INF" unitRef="EUR">1500</bd-i:AssetsOnBankAccountsBalance>
+		<bd-i:AssetsOnBankAccountsBalanceType contextRef="Context_Duration">41</bd-i:AssetsOnBankAccountsBalanceType>
+		<bd-i:AssetsOnBankAccountsBankAccountNumber contextRef="Context_Duration">NL83ABNA042042033</bd-i:AssetsOnBankAccountsBankAccountNumber>
+		<bd-i:AssetsOnBankAccountsBankProductLabel contextRef="Context_Duration">Divid2017</bd-i:AssetsOnBankAccountsBankProductLabel>
+		<bd-i:AssetsOnBankAccountsCommonInterestIndication contextRef="Context_Duration">02</bd-i:AssetsOnBankAccountsCommonInterestIndication>
+		<bd-i:AssetsOnBankAccountsProductID contextRef="Context_Duration">ID3626154</bd-i:AssetsOnBankAccountsProductID>
+		<bd-i:AssetsOnBankAccountsRecordType contextRef="Context_Duration">05</bd-i:AssetsOnBankAccountsRecordType>
+		<bd-i:AssetsOnBankAccountsSourceBankTaxReferenceNumber contextRef="Context_Duration">781474899</bd-i:AssetsOnBankAccountsSourceBankTaxReferenceNumber>
+	</bd-t:AssetsOnBankAccountsSpecification>
+	<bd-t:DividendSpecification>
+		<bd-i:DividendAccountHolderIdentificationNumber contextRef="Context_Duration">111111274</bd-i:DividendAccountHolderIdentificationNumber>
+		<bd-i:DividendBankAccountNumber contextRef="Context_Duration">NL83ABNA042042033</bd-i:DividendBankAccountNumber>
+		<bd-i:DividendCommonInterestIndication contextRef="Context_Duration">02</bd-i:DividendCommonInterestIndication>
+		<bd-i:DividendLabel contextRef="Context_Duration">Divid2017</bd-i:DividendLabel>
+		<bd-t:DividendPerCountrySpecification>
+			<bd-i:DividendRevenues decimals="INF" contextRef="Context_Duration" unitRef="EUR">750</bd-i:DividendRevenues>
+			<bd-i:DividendTaxAmount decimals="INF" contextRef="Context_Duration" unitRef="EUR">15</bd-i:DividendTaxAmount>
+			<bd-i:DividendWithholdingTaxCountryCode contextRef="Context_Duration">NLD</bd-i:DividendWithholdingTaxCountryCode>
+		</bd-t:DividendPerCountrySpecification>
+		<bd-i:DividendProductID contextRef="Context_Duration">ID3626154</bd-i:DividendProductID>
+		<bd-i:DividendSourceBankTaxReferenceNumber contextRef="Context_Duration">781474899</bd-i:DividendSourceBankTaxReferenceNumber>
+	</bd-t:DividendSpecification>
+	<bd-t:OwnHouseSecondHomeImmovablePropertyOtherSpecification>
+		<bd-i:OwnHouseSecondHomeImmovablePropertyOtherImmovablePropertyLawAddress contextRef="Context_Duration">5237EB</bd-i:OwnHouseSecondHomeImmovablePropertyOtherImmovablePropertyLawAddress>
+		<bd-i:OwnHouseSecondHomeImmovablePropertyOtherImmovablePropertyLawAppurtenanceObjectNumber contextRef="Context_Duration" decimals="INF" unitRef="PURE">9990001118</bd-i:OwnHouseSecondHomeImmovablePropertyOtherImmovablePropertyLawAppurtenanceObjectNumber>
+		<bd-i:OwnHouseSecondHomeImmovablePropertyOtherImmovablePropertyLawMunicipalityName contextRef="Context_Duration">s-Hertogenbosch</bd-i:OwnHouseSecondHomeImmovablePropertyOtherImmovablePropertyLawMunicipalityName>
+		<bd-i:OwnHouseSecondHomeImmovablePropertyOtherImmovablePropertyLawValue contextRef="Context_Duration" decimals="INF" unitRef="EUR">325000</bd-i:OwnHouseSecondHomeImmovablePropertyOtherImmovablePropertyLawValue>
+		<bd-t:ResidenceSituationPeriodQualificationSpecification>
+			<bd-i:ResidenceSituation contextRef="Context_Duration">01</bd-i:ResidenceSituation>
+			<bd-i:ResidenceSituationEndDate contextRef="Context_Duration">2017-12-31</bd-i:ResidenceSituationEndDate>
+			<bd-i:ResidenceSituationPreQualification contextRef="Context_Duration">01</bd-i:ResidenceSituationPreQualification>
+			<bd-i:ResidenceSituationPrincipalResidenceObjectNumber contextRef="Context_Duration" decimals="INF" unitRef="PURE">9990001118</bd-i:ResidenceSituationPrincipalResidenceObjectNumber>
+			<bd-i:ResidenceSituationStartDate contextRef="Context_Duration">2017-01-01</bd-i:ResidenceSituationStartDate>
+		</bd-t:ResidenceSituationPeriodQualificationSpecification>
+	</bd-t:OwnHouseSecondHomeImmovablePropertyOtherSpecification>
+	<bd-t:PremiumsAnnuitiesSpecification>
+		<bd-i:PremiumsAnnuitiesCode contextRef="Context_Duration">INLG</bd-i:PremiumsAnnuitiesCode>
+		<bd-i:PremiumsAnnuitiesInsurerName contextRef="Context_Duration">Royal Dutch</bd-i:PremiumsAnnuitiesInsurerName>
+		<bd-i:PremiumsAnnuitiesPaidAmount contextRef="Context_Duration" decimals="INF" unitRef="EUR">7500</bd-i:PremiumsAnnuitiesPaidAmount>
+		<bd-i:PremiumsAnnuitiesPolicyNumber contextRef="Context_Duration">5654</bd-i:PremiumsAnnuitiesPolicyNumber>
+	</bd-t:PremiumsAnnuitiesSpecification>
+	<bd-t:PresentWorkSpecification>
+		<bd-i:PresentWorkEmployedPersonsTaxCreditSettled contextRef="Context_Duration" decimals="INF" unitRef="EUR">590</bd-i:PresentWorkEmployedPersonsTaxCreditSettled>
+		<bd-i:PresentWorkEmployerOrBenefitsAgencyName contextRef="Context_Duration">Belastingdienst</bd-i:PresentWorkEmployerOrBenefitsAgencyName>
+		<bd-i:PresentWorkIncomeRatioCode contextRef="Context_Duration">15</bd-i:PresentWorkIncomeRatioCode>
+		<bd-i:PresentWorkLifecycleLeaveReductionApplied contextRef="Context_Duration" decimals="INF" unitRef="EUR">0</bd-i:PresentWorkLifecycleLeaveReductionApplied>
+		<bd-i:PresentWorkWages contextRef="Context_Duration" decimals="INF" unitRef="EUR">12000</bd-i:PresentWorkWages>
+		<bd-i:PresentWorkWithheldWageLevy contextRef="Context_Duration" decimals="INF" unitRef="EUR">2000</bd-i:PresentWorkWithheldWageLevy>
+	</bd-t:PresentWorkSpecification>
+	<bd-t:PreviousWorkSpecification>
+		<bd-i:PreviousWorkBenefitsAgencyName contextRef="Context_Duration">SVB</bd-i:PreviousWorkBenefitsAgencyName>
+		<bd-i:PreviousWorkIncomeAmount contextRef="Context_Duration" decimals="INF" unitRef="EUR">7054</bd-i:PreviousWorkIncomeAmount>
+		<bd-i:PreviousWorkLifecycleLeaveReductionApplied contextRef="Context_Duration" decimals="INF" unitRef="EUR">0</bd-i:PreviousWorkLifecycleLeaveReductionApplied>
+		<bd-i:PreviousWorkWithheldWageLevy contextRef="Context_Duration" decimals="INF" unitRef="EUR">1500</bd-i:PreviousWorkWithheldWageLevy>
+	</bd-t:PreviousWorkSpecification>
+</xbrli:xbrl>
