@@ -10,9 +10,9 @@
 </head>
 <body>
 	<!-- Include Scala.js compiled code -->
-	<script type="text/javascript" src="./js/target/scala-2.12/tqa-fastopt.js"></script>
+	<script type="text/javascript" src="./js/target/scala-2.12/tqa-opt.js"></script>
 
-	<script type="text/javascript" src="./js/target/scala-2.12/tqa-jsdeps.js"></script>
+	<script type="text/javascript" src="./js/target/scala-2.12/tqa-jsdeps.min.js"></script>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
@@ -39,6 +39,22 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div id="outputDiv"></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- See https://www.tutorialrepublic.com/twitter-bootstrap-tutorial/bootstrap-modals.php -->
+
+	<div id="myModal" class="modal fade">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Fact as XBRL instance</h4>
+				</div>
+				<div id="myModal-body" class="modal-body"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
 			</div>
 		</div>
 	</div>
