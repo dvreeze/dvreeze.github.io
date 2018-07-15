@@ -2966,7 +2966,7 @@ $c_Leu_cdevreeze_xpathparser_clientapp_XPathSyntaxChecker$.prototype.clearColor_
   this.xpathTextArea__p1__Lorg_scalajs_dom_raw_HTMLTextAreaElement().style.color = "black"
 });
 $c_Leu_cdevreeze_xpathparser_clientapp_XPathSyntaxChecker$.prototype.checkSyntax__T__V = (function(xpathString) {
-  var parseResult = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().xpathExpr$1.parse__O__I__F3__Lfastparse_core_Parsed($as_T(xpathString.trim()), ($m_Leu_cdevreeze_xpathparser_parse_XPathParser$(), 0), ($m_Leu_cdevreeze_xpathparser_parse_XPathParser$(), null));
+  var parseResult = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().xpathExpr$1.parse__O__I__F3__Lfastparse_core_Parsed(xpathString, ($m_Leu_cdevreeze_xpathparser_parse_XPathParser$(), 0), ($m_Leu_cdevreeze_xpathparser_parse_XPathParser$(), null));
   if ($is_Lfastparse_core_Parsed$Success(parseResult)) {
     var x2 = $as_Lfastparse_core_Parsed$Success(parseResult);
     var t = x2.value$1;
@@ -4632,12 +4632,11 @@ function $m_Leu_cdevreeze_xpathparser_parse_Wildcards$() {
   return $n_Leu_cdevreeze_xpathparser_parse_Wildcards$
 }
 /** @constructor */
-function $c_Leu_cdevreeze_xpathparser_parse_XPathParser$() {
+function $c_Leu_cdevreeze_xpathparser_parse_XPathElemParser$() {
   $c_O.call(this);
   this.DT$1 = null;
   this.NDT$1 = null;
   this.White$1 = null;
-  this.xpathExpr$1 = null;
   this.expr$1 = null;
   this.enclosedExpr$1 = null;
   this.exprSingle$1 = null;
@@ -4767,20 +4766,21 @@ function $c_Leu_cdevreeze_xpathparser_parse_XPathParser$() {
   this.singleType$1 = null;
   this.ncName$1 = null;
   this.eqName$1 = null;
+  this.comp$1 = null;
   this.valueComp$1 = null;
   this.generalComp$1 = null;
   this.nodeComp$1 = null;
   this.ReservedFunctionNames$1 = null
 }
-$c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype = new $h_O();
-$c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.constructor = $c_Leu_cdevreeze_xpathparser_parse_XPathParser$;
+$c_Leu_cdevreeze_xpathparser_parse_XPathElemParser$.prototype = new $h_O();
+$c_Leu_cdevreeze_xpathparser_parse_XPathElemParser$.prototype.constructor = $c_Leu_cdevreeze_xpathparser_parse_XPathElemParser$;
 /** @constructor */
-function $h_Leu_cdevreeze_xpathparser_parse_XPathParser$() {
+function $h_Leu_cdevreeze_xpathparser_parse_XPathElemParser$() {
   /*<skip>*/
 }
-$h_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype = $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype;
-$c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() {
-  $n_Leu_cdevreeze_xpathparser_parse_XPathParser$ = this;
+$h_Leu_cdevreeze_xpathparser_parse_XPathElemParser$.prototype = $c_Leu_cdevreeze_xpathparser_parse_XPathElemParser$.prototype;
+$c_Leu_cdevreeze_xpathparser_parse_XPathElemParser$.prototype.init___ = (function() {
+  $n_Leu_cdevreeze_xpathparser_parse_XPathElemParser$ = this;
   this.DT$1 = $m_Leu_cdevreeze_xpathparser_parse_DelimitingTerminals$();
   this.NDT$1 = $m_Leu_cdevreeze_xpathparser_parse_NonDelimitingTerminals$();
   $m_Lfastparse_all$();
@@ -4807,113 +4807,93 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
   var this$10 = $m_Lfastparse_noApi$();
   var p$2 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$2$1) {
     return (function() {
-      var this$8 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().expr$1;
-      var jsx$2 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0, this$8.WL$1);
-      var jsx$1 = $m_Lfastparse_noApi$().End$1;
-      var this$9 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$2.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$1, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$9))
+      var this$8 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().exprSingle$1;
+      var qual$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0, this$8.WL$1);
+      var x$19 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.comma$1;
+      var this$9 = $m_Lfastparse_core_Implicits$Repeater$();
+      return qual$1.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$19, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$9))
     })
   })(this));
-  var name = new $c_Lsourcecode_Name().init___T("xpathExpr");
+  var name = new $c_Lsourcecode_Name().init___T("expr");
   var p0$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name.value$2, p$2, this$10.implicitReprOps$1);
-  this.xpathExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$1, this$11.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$3$1) {
-    return (function(e$2) {
-      var e = $as_Leu_cdevreeze_xpathparser_ast_Expr(e$2);
-      return new $c_Leu_cdevreeze_xpathparser_ast_XPathExpr().init___Leu_cdevreeze_xpathparser_ast_Expr(e)
-    })
-  })(this)));
-  var this$15 = this.White$1;
-  var this$14 = $m_Lfastparse_noApi$();
-  var p$3 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$4$1) {
-    return (function() {
-      var this$12 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$2 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().exprSingle$1;
-      var qual$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$2, this$12.WL$1);
-      var x$19 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.comma$1;
-      var this$13 = $m_Lfastparse_core_Implicits$Repeater$();
-      return qual$1.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$19, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$13))
-    })
-  })(this));
-  var name$1 = new $c_Lsourcecode_Name().init___T("expr");
-  var p0$3 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$1.value$2, p$3, this$14.implicitReprOps$1);
-  this.expr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$3, this$15.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$5$1) {
+  this.expr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$1, this$11.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$3$1) {
     return (function(x0$1$2) {
       var x0$1 = $as_sc_Seq(x0$1$2);
       return $m_Leu_cdevreeze_xpathparser_ast_Expr$().apply__sci_IndexedSeq__Leu_cdevreeze_xpathparser_ast_Expr(x0$1.toIndexedSeq__sci_IndexedSeq())
     })
   })(this)));
-  var this$22 = this.White$1;
-  var this$21 = $m_Lfastparse_noApi$();
-  var p$4 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$6$1) {
+  var this$18 = this.White$1;
+  var this$17 = $m_Lfastparse_noApi$();
+  var p$3 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$4$1) {
     return (function() {
-      var this$19 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$16 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$4 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openBrace$1;
-      var jsx$5 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$4, this$16.WL$1);
-      var this$17 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$5 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().expr$1;
-      var jsx$4 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$5, this$17.WL$1);
-      var this$18 = $m_Lfastparse_core_Implicits$Optioner$();
-      var p0$6 = jsx$5.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$4.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$18)), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$6 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$6, this$19.WL$1);
-      var jsx$3 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeBrace$1;
-      var this$20 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$6.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$3, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$20))
+      var this$15 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$12 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$2 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openBrace$1;
+      var jsx$3 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$2, this$12.WL$1);
+      var this$13 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$3 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().expr$1;
+      var jsx$2 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$3, this$13.WL$1);
+      var this$14 = $m_Lfastparse_core_Implicits$Optioner$();
+      var p0$4 = jsx$3.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$2.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$14)), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$4 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$4, this$15.WL$1);
+      var jsx$1 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeBrace$1;
+      var this$16 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$4.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$1, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$16))
     })
   })(this));
-  var name$2 = new $c_Lsourcecode_Name().init___T("enclosedExpr");
-  var p0$7 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$2.value$2, p$4, this$21.implicitReprOps$1);
-  this.enclosedExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$7, this$22.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$7$1) {
+  var name$1 = new $c_Lsourcecode_Name().init___T("enclosedExpr");
+  var p0$5 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$1.value$2, p$3, this$17.implicitReprOps$1);
+  this.enclosedExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$5, this$18.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$5$1) {
     return (function(x0$2$2) {
       var x0$2 = $as_s_Option(x0$2$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_EnclosedExpr().init___s_Option(x0$2)
     })
   })(this)));
-  var this$27 = $m_Lfastparse_noApi$();
-  var p$5 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$8$1) {
+  var this$23 = $m_Lfastparse_noApi$();
+  var p$4 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$6$1) {
     return (function() {
-      var this$26 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$25 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$24 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$23 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$8 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().forExpr$1;
-      var p0$9 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$8, this$23.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().letExpr$1);
-      var p0$10 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$9, this$24.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().quantifiedExpr$1);
-      var p0$11 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$10, this$25.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().ifExpr$1);
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$11, this$26.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().orExpr$1)
+      var this$22 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$21 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$20 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$19 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$6 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().forExpr$1;
+      var p0$7 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$6, this$19.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().letExpr$1);
+      var p0$8 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$7, this$20.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().quantifiedExpr$1);
+      var p0$9 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$8, this$21.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().ifExpr$1);
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$9, this$22.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().orExpr$1)
     })
   })(this));
-  var name$3 = new $c_Lsourcecode_Name().init___T("exprSingle");
-  this.exprSingle$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$3.value$2, p$5, this$27.implicitReprOps$1);
-  var this$36 = this.White$1;
-  var this$35 = $m_Lfastparse_noApi$();
-  var p$6 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$9$1) {
+  var name$2 = new $c_Lsourcecode_Name().init___T("exprSingle");
+  this.exprSingle$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$2.value$2, p$4, this$23.implicitReprOps$1);
+  var this$32 = this.White$1;
+  var this$31 = $m_Lfastparse_noApi$();
+  var p$5 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$7$1) {
     return (function() {
-      var this$33 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$31 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$28 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$12 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.forWord$1;
-      var jsx$9 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$12, this$28.WL$1);
-      var this$29 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$13 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().simpleForBinding$1;
-      var qual$2 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$13, this$29.WL$1);
-      var x$23 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.comma$1;
-      var this$30 = $m_Lfastparse_core_Implicits$Repeater$();
-      var p0$14 = jsx$9.$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(qual$2.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$23, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$30)), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$10 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$14, this$31.WL$1);
-      var jsx$8 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.returnWord$1;
-      var this$32 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$15 = jsx$10.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$8, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$32));
-      var jsx$11 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$15, this$33.WL$1);
-      var jsx$7 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().exprSingle$1;
-      var this$34 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$11.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$7, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$34)))
+      var this$29 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$27 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$24 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$10 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.forWord$1;
+      var jsx$7 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$10, this$24.WL$1);
+      var this$25 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$11 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().simpleForBinding$1;
+      var qual$2 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$11, this$25.WL$1);
+      var x$23 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.comma$1;
+      var this$26 = $m_Lfastparse_core_Implicits$Repeater$();
+      var p0$12 = jsx$7.$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(qual$2.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$23, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$26)), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$8 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$12, this$27.WL$1);
+      var jsx$6 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.returnWord$1;
+      var this$28 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$13 = jsx$8.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$6, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$28));
+      var jsx$9 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$13, this$29.WL$1);
+      var jsx$5 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().exprSingle$1;
+      var this$30 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$9.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$5, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$30)))
     })
   })(this));
-  var name$4 = new $c_Lsourcecode_Name().init___T("forExpr");
-  var p0$16 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$4.value$2, p$6, this$35.implicitReprOps$1);
-  this.forExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$16, this$36.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$10$1) {
+  var name$3 = new $c_Lsourcecode_Name().init___T("forExpr");
+  var p0$14 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$3.value$2, p$5, this$31.implicitReprOps$1);
+  this.forExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$14, this$32.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$8$1) {
     return (function(x0$3$2) {
       var x0$3 = $as_T2(x0$3$2);
       if ((x0$3 !== null)) {
@@ -4925,28 +4905,28 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$43 = this.White$1;
-  var this$42 = $m_Lfastparse_noApi$();
-  var p$7 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$11$1) {
+  var this$39 = this.White$1;
+  var this$38 = $m_Lfastparse_noApi$();
+  var p$6 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$9$1) {
     return (function() {
-      var this$40 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$38 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$37 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$17 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.dollar$1;
-      var p0$18 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$17, this$37.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$14 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$18, this$38.WL$1);
-      var jsx$13 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.inWord$1;
-      var this$39 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$19 = jsx$14.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$13, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$39));
-      var jsx$15 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$19, this$40.WL$1);
-      var jsx$12 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().exprSingle$1;
-      var this$41 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$15.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$12, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$41)))
+      var this$36 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$34 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$33 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$15 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.dollar$1;
+      var p0$16 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$15, this$33.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$12 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$16, this$34.WL$1);
+      var jsx$11 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.inWord$1;
+      var this$35 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$17 = jsx$12.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$11, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$35));
+      var jsx$13 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$17, this$36.WL$1);
+      var jsx$10 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().exprSingle$1;
+      var this$37 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$13.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$10, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$37)))
     })
   })(this));
-  var name$5 = new $c_Lsourcecode_Name().init___T("simpleForBinding");
-  var p0$20 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$5.value$2, p$7, this$42.implicitReprOps$1);
-  this.simpleForBinding$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$20, this$43.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$12$1) {
+  var name$4 = new $c_Lsourcecode_Name().init___T("simpleForBinding");
+  var p0$18 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$4.value$2, p$6, this$38.implicitReprOps$1);
+  this.simpleForBinding$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$18, this$39.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$10$1) {
     return (function(x0$4$2) {
       var x0$4 = $as_T2(x0$4$2);
       if ((x0$4 !== null)) {
@@ -4958,34 +4938,34 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$52 = this.White$1;
-  var this$51 = $m_Lfastparse_noApi$();
-  var p$8 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$13$1) {
+  var this$48 = this.White$1;
+  var this$47 = $m_Lfastparse_noApi$();
+  var p$7 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$11$1) {
     return (function() {
-      var this$49 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$47 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$44 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$21 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.letWord$1;
-      var jsx$18 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$21, this$44.WL$1);
-      var this$45 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$22 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().simpleLetBinding$1;
-      var qual$3 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$22, this$45.WL$1);
-      var x$27 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.comma$1;
-      var this$46 = $m_Lfastparse_core_Implicits$Repeater$();
-      var p0$23 = jsx$18.$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(qual$3.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$27, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$46)), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$19 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$23, this$47.WL$1);
-      var jsx$17 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.returnWord$1;
-      var this$48 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$24 = jsx$19.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$17, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$48));
-      var jsx$20 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$24, this$49.WL$1);
-      var jsx$16 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().exprSingle$1;
-      var this$50 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$20.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$16, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$50)))
+      var this$45 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$43 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$40 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$19 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.letWord$1;
+      var jsx$16 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$19, this$40.WL$1);
+      var this$41 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$20 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().simpleLetBinding$1;
+      var qual$3 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$20, this$41.WL$1);
+      var x$27 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.comma$1;
+      var this$42 = $m_Lfastparse_core_Implicits$Repeater$();
+      var p0$21 = jsx$16.$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(qual$3.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$27, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$42)), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$17 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$21, this$43.WL$1);
+      var jsx$15 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.returnWord$1;
+      var this$44 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$22 = jsx$17.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$15, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$44));
+      var jsx$18 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$22, this$45.WL$1);
+      var jsx$14 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().exprSingle$1;
+      var this$46 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$18.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$14, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$46)))
     })
   })(this));
-  var name$6 = new $c_Lsourcecode_Name().init___T("letExpr");
-  var p0$25 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$6.value$2, p$8, this$51.implicitReprOps$1);
-  this.letExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$25, this$52.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$14$1) {
+  var name$5 = new $c_Lsourcecode_Name().init___T("letExpr");
+  var p0$23 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$5.value$2, p$7, this$47.implicitReprOps$1);
+  this.letExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$23, this$48.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$12$1) {
     return (function(x0$5$2) {
       var x0$5 = $as_T2(x0$5$2);
       if ((x0$5 !== null)) {
@@ -4997,28 +4977,28 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$59 = this.White$1;
-  var this$58 = $m_Lfastparse_noApi$();
-  var p$9 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$15$1) {
+  var this$55 = this.White$1;
+  var this$54 = $m_Lfastparse_noApi$();
+  var p$8 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$13$1) {
     return (function() {
-      var this$56 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$54 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$53 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$26 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.dollar$1;
-      var p0$27 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$26, this$53.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$23 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$27, this$54.WL$1);
-      var jsx$22 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.assignmentSymbol$1;
-      var this$55 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$28 = jsx$23.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$22, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$55));
-      var jsx$24 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$28, this$56.WL$1);
-      var jsx$21 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().exprSingle$1;
-      var this$57 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$24.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$21, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$57)))
+      var this$52 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$50 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$49 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$24 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.dollar$1;
+      var p0$25 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$24, this$49.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$21 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$25, this$50.WL$1);
+      var jsx$20 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.assignmentSymbol$1;
+      var this$51 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$26 = jsx$21.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$20, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$51));
+      var jsx$22 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$26, this$52.WL$1);
+      var jsx$19 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().exprSingle$1;
+      var this$53 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$22.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$19, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$53)))
     })
   })(this));
-  var name$7 = new $c_Lsourcecode_Name().init___T("simpleLetBinding");
-  var p0$29 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$7.value$2, p$9, this$58.implicitReprOps$1);
-  this.simpleLetBinding$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$29, this$59.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$16$1) {
+  var name$6 = new $c_Lsourcecode_Name().init___T("simpleLetBinding");
+  var p0$27 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$6.value$2, p$8, this$54.implicitReprOps$1);
+  this.simpleLetBinding$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$27, this$55.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$14$1) {
     return (function(x0$6$2) {
       var x0$6 = $as_T2(x0$6$2);
       if ((x0$6 !== null)) {
@@ -5030,40 +5010,40 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$71 = this.White$1;
-  var this$70 = $m_Lfastparse_noApi$();
-  var p$10 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$17$1) {
+  var this$67 = this.White$1;
+  var this$66 = $m_Lfastparse_noApi$();
+  var p$9 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$15$1) {
     return (function() {
-      var this$68 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$66 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$62 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$61 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$60 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$30 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.someWord$1;
-      var p0$31 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$30, this$60.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.everyWord$1);
-      var p0$32 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$31, this$61.WL$1).$$bang__Lfastparse_core_Parser();
-      var jsx$28 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$32, this$62.WL$1);
-      var this$63 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$33 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().simpleBindingInQuantifiedExpr$1;
-      var qual$4 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$33, this$63.WL$1);
-      var x$31 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.comma$1;
-      var this$64 = $m_Lfastparse_core_Implicits$Repeater$();
-      var jsx$27 = qual$4.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$31, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$64));
+      var this$64 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$62 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$58 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$57 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$56 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$28 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.someWord$1;
+      var p0$29 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$28, this$56.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.everyWord$1);
+      var p0$30 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$29, this$57.WL$1).$$bang__Lfastparse_core_Parser();
+      var jsx$26 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$30, this$58.WL$1);
+      var this$59 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$31 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().simpleBindingInQuantifiedExpr$1;
+      var qual$4 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$31, this$59.WL$1);
+      var x$31 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.comma$1;
+      var this$60 = $m_Lfastparse_core_Implicits$Repeater$();
+      var jsx$25 = qual$4.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$31, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$60));
+      var this$61 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$32 = jsx$26.$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$25, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$61)));
+      var jsx$27 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$32, this$62.WL$1);
+      var jsx$24 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.satisfiesWord$1;
+      var this$63 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$33 = jsx$27.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$24, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$63));
+      var jsx$28 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$33, this$64.WL$1);
+      var jsx$23 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().exprSingle$1;
       var this$65 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$34 = jsx$28.$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$27, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$65)));
-      var jsx$29 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$34, this$66.WL$1);
-      var jsx$26 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.satisfiesWord$1;
-      var this$67 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$35 = jsx$29.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$26, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$67));
-      var jsx$30 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$35, this$68.WL$1);
-      var jsx$25 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().exprSingle$1;
-      var this$69 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$30.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$25, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$69)))
+      return jsx$28.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$23, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$65)))
     })
   })(this));
-  var name$8 = new $c_Lsourcecode_Name().init___T("quantifiedExpr");
-  var p0$36 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$8.value$2, p$10, this$70.implicitReprOps$1);
-  this.quantifiedExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$36, this$71.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$18$1) {
+  var name$7 = new $c_Lsourcecode_Name().init___T("quantifiedExpr");
+  var p0$34 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$7.value$2, p$9, this$66.implicitReprOps$1);
+  this.quantifiedExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$34, this$67.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$16$1) {
     return (function(x0$7$2) {
       var x0$7 = $as_T3(x0$7$2);
       if ((x0$7 !== null)) {
@@ -5076,28 +5056,28 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$78 = this.White$1;
-  var this$77 = $m_Lfastparse_noApi$();
-  var p$11 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$19$1) {
+  var this$74 = this.White$1;
+  var this$73 = $m_Lfastparse_noApi$();
+  var p$10 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$17$1) {
     return (function() {
-      var this$75 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$73 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$72 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$37 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.dollar$1;
-      var p0$38 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$37, this$72.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$33 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$38, this$73.WL$1);
-      var jsx$32 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.inWord$1;
-      var this$74 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$39 = jsx$33.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$32, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$74));
-      var jsx$34 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$39, this$75.WL$1);
-      var jsx$31 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().exprSingle$1;
-      var this$76 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$34.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$31, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$76)))
+      var this$71 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$69 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$68 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$35 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.dollar$1;
+      var p0$36 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$35, this$68.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$31 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$36, this$69.WL$1);
+      var jsx$30 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.inWord$1;
+      var this$70 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$37 = jsx$31.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$30, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$70));
+      var jsx$32 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$37, this$71.WL$1);
+      var jsx$29 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().exprSingle$1;
+      var this$72 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$32.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$29, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$72)))
     })
   })(this));
-  var name$9 = new $c_Lsourcecode_Name().init___T("simpleBindingInQuantifiedExpr");
-  var p0$40 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$9.value$2, p$11, this$77.implicitReprOps$1);
-  this.simpleBindingInQuantifiedExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$40, this$78.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$20$1) {
+  var name$8 = new $c_Lsourcecode_Name().init___T("simpleBindingInQuantifiedExpr");
+  var p0$38 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$8.value$2, p$10, this$73.implicitReprOps$1);
+  this.simpleBindingInQuantifiedExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$38, this$74.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$18$1) {
     return (function(x0$8$2) {
       var x0$8 = $as_T2(x0$8$2);
       if ((x0$8 !== null)) {
@@ -5109,45 +5089,45 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$92 = this.White$1;
-  var this$91 = $m_Lfastparse_noApi$();
-  var p$12 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$21$1) {
+  var this$88 = this.White$1;
+  var this$87 = $m_Lfastparse_noApi$();
+  var p$11 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$19$1) {
     return (function() {
-      var this$89 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$87 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$85 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$83 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$81 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$80 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$79 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$41 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.ifWord$1;
-      var p0$42 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$41, this$79.WL$1).$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$43 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$42, this$80.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().expr$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var this$85 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$83 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$81 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$79 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$77 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$76 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$75 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$39 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.ifWord$1;
+      var p0$40 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$39, this$75.WL$1).$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$41 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$40, this$76.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().expr$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$38 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$41, this$77.WL$1);
+      var jsx$37 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1;
+      var this$78 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$42 = jsx$38.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$37, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$78));
+      var jsx$39 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$42, this$79.WL$1);
+      var jsx$36 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.thenWord$1;
+      var this$80 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$43 = jsx$39.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$36, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$80));
       var jsx$40 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$43, this$81.WL$1);
-      var jsx$39 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1;
+      var jsx$35 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().exprSingle$1;
       var this$82 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$44 = jsx$40.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$39, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$82));
+      var p0$44 = jsx$40.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$35, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$82)));
       var jsx$41 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$44, this$83.WL$1);
-      var jsx$38 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.thenWord$1;
+      var jsx$34 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.elseWord$1;
       var this$84 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$45 = jsx$41.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$38, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$84));
+      var p0$45 = jsx$41.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$34, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$84));
       var jsx$42 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$45, this$85.WL$1);
-      var jsx$37 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().exprSingle$1;
+      var jsx$33 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().exprSingle$1;
       var this$86 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$46 = jsx$42.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$37, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$86)));
-      var jsx$43 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$46, this$87.WL$1);
-      var jsx$36 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.elseWord$1;
-      var this$88 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$47 = jsx$43.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$36, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$88));
-      var jsx$44 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$47, this$89.WL$1);
-      var jsx$35 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().exprSingle$1;
-      var this$90 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$44.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$35, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$90)))
+      return jsx$42.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$33, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$86)))
     })
   })(this));
-  var name$10 = new $c_Lsourcecode_Name().init___T("ifExpr");
-  var p0$48 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$10.value$2, p$12, this$91.implicitReprOps$1);
-  this.ifExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$48, this$92.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$22$1) {
+  var name$9 = new $c_Lsourcecode_Name().init___T("ifExpr");
+  var p0$46 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$9.value$2, p$11, this$87.implicitReprOps$1);
+  this.ifExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$46, this$88.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$20$1) {
     return (function(x0$9$2) {
       var x0$9 = $as_T3(x0$9$2);
       if ((x0$9 !== null)) {
@@ -5160,78 +5140,74 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$97 = this.White$1;
-  var this$96 = $m_Lfastparse_noApi$();
-  var p$13 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$23$1) {
+  var this$93 = this.White$1;
+  var this$92 = $m_Lfastparse_noApi$();
+  var p$12 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$21$1) {
     return (function() {
-      var this$93 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$49 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().andExpr$1;
-      var qual$5 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$49, this$93.WL$1);
-      var this$94 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$50 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.orWord$1;
-      var x$35 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$50, this$94.WL$1).$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Lfastparse_noApi$().Pass$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var this$95 = $m_Lfastparse_core_Implicits$Repeater$();
-      return qual$5.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$35, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$95))
+      var this$89 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$47 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().andExpr$1;
+      var qual$5 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$47, this$89.WL$1);
+      var this$90 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$48 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.orWord$1;
+      var x$35 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$48, this$90.WL$1).$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Lfastparse_noApi$().Pass$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var this$91 = $m_Lfastparse_core_Implicits$Repeater$();
+      return qual$5.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$35, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$91))
     })
   })(this));
-  var name$11 = new $c_Lsourcecode_Name().init___T("orExpr");
-  var p0$51 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$11.value$2, p$13, this$96.implicitReprOps$1);
-  this.orExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$51, this$97.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$24$1) {
+  var name$10 = new $c_Lsourcecode_Name().init___T("orExpr");
+  var p0$49 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$10.value$2, p$12, this$92.implicitReprOps$1);
+  this.orExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$49, this$93.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$22$1) {
     return (function(x0$10$2) {
       var x0$10 = $as_sc_Seq(x0$10$2);
       return $m_Leu_cdevreeze_xpathparser_ast_OrExpr$().apply__sci_IndexedSeq__Leu_cdevreeze_xpathparser_ast_OrExpr(x0$10.toIndexedSeq__sci_IndexedSeq())
     })
   })(this)));
-  var this$102 = this.White$1;
-  var this$101 = $m_Lfastparse_noApi$();
-  var p$14 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$25$1) {
+  var this$98 = this.White$1;
+  var this$97 = $m_Lfastparse_noApi$();
+  var p$13 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$23$1) {
     return (function() {
-      var this$98 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$52 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().comparisonExpr$1;
-      var qual$6 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$52, this$98.WL$1);
-      var this$99 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$53 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.andWord$1;
-      var x$39 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$53, this$99.WL$1).$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Lfastparse_noApi$().Pass$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var this$100 = $m_Lfastparse_core_Implicits$Repeater$();
-      return qual$6.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$39, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$100))
+      var this$94 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$50 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().comparisonExpr$1;
+      var qual$6 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$50, this$94.WL$1);
+      var this$95 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$51 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.andWord$1;
+      var x$39 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$51, this$95.WL$1).$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Lfastparse_noApi$().Pass$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var this$96 = $m_Lfastparse_core_Implicits$Repeater$();
+      return qual$6.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$39, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$96))
     })
   })(this));
-  var name$12 = new $c_Lsourcecode_Name().init___T("andExpr");
-  var p0$54 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$12.value$2, p$14, this$101.implicitReprOps$1);
-  this.andExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$54, this$102.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$26$1) {
+  var name$11 = new $c_Lsourcecode_Name().init___T("andExpr");
+  var p0$52 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$11.value$2, p$13, this$97.implicitReprOps$1);
+  this.andExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$52, this$98.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$24$1) {
     return (function(x0$11$2) {
       var x0$11 = $as_sc_Seq(x0$11$2);
       return $m_Leu_cdevreeze_xpathparser_ast_AndExpr$().apply__sci_IndexedSeq__Leu_cdevreeze_xpathparser_ast_AndExpr(x0$11.toIndexedSeq__sci_IndexedSeq())
     })
   })(this)));
-  var this$112 = this.White$1;
-  var this$111 = $m_Lfastparse_noApi$();
-  var p$15 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$27$1) {
+  var this$106 = this.White$1;
+  var this$105 = $m_Lfastparse_noApi$();
+  var p$14 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$25$1) {
     return (function() {
-      var this$103 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$55 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().stringConcatExpr$1;
-      var jsx$49 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$55, this$103.WL$1);
-      var this$108 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$106 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$105 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$104 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$56 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().valueComp$1;
-      var p0$57 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$56, this$104.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().generalComp$1);
-      var p0$58 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$57, this$105.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().nodeComp$1);
-      var jsx$47 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$58, this$106.WL$1);
-      var jsx$46 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().stringConcatExpr$1;
-      var this$107 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$59 = jsx$47.$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$46, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$107)));
-      var jsx$48 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$59, this$108.WL$1);
-      var this$109 = $m_Lfastparse_core_Implicits$Optioner$();
-      var jsx$45 = jsx$48.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$109));
-      var this$110 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$49.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$45, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$110)))
+      var this$99 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$53 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().stringConcatExpr$1;
+      var jsx$47 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$53, this$99.WL$1);
+      var this$102 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$100 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$54 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().comp$1;
+      var jsx$45 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$54, this$100.WL$1);
+      var jsx$44 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().stringConcatExpr$1;
+      var this$101 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$55 = jsx$45.$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$44, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$101)));
+      var jsx$46 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$55, this$102.WL$1);
+      var this$103 = $m_Lfastparse_core_Implicits$Optioner$();
+      var jsx$43 = jsx$46.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$103));
+      var this$104 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$47.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$43, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$104)))
     })
   })(this));
-  var name$13 = new $c_Lsourcecode_Name().init___T("comparisonExpr");
-  var p0$60 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$13.value$2, p$15, this$111.implicitReprOps$1);
-  this.comparisonExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$60, this$112.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$28$1) {
+  var name$12 = new $c_Lsourcecode_Name().init___T("comparisonExpr");
+  var p0$56 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$12.value$2, p$14, this$105.implicitReprOps$1);
+  this.comparisonExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$56, this$106.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$26$1) {
     return (function(x0$12$2) {
       var x0$12 = $as_T2(x0$12$2);
       if ((x0$12 !== null)) {
@@ -5258,49 +5234,49 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       throw new $c_s_MatchError().init___O(x0$12)
     })
   })(this)));
-  var this$117 = this.White$1;
-  var this$116 = $m_Lfastparse_noApi$();
-  var p$16 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$29$1) {
+  var this$111 = this.White$1;
+  var this$110 = $m_Lfastparse_noApi$();
+  var p$15 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$27$1) {
     return (function() {
-      var this$113 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$61 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().rangeExpr$1;
-      var qual$7 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$61, this$113.WL$1);
-      var this$114 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$62 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.doubleVerticalBar$1;
-      var x$43 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$62, this$114.WL$1).$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Lfastparse_noApi$().Pass$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var this$115 = $m_Lfastparse_core_Implicits$Repeater$();
-      return qual$7.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$43, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$115))
+      var this$107 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$57 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().rangeExpr$1;
+      var qual$7 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$57, this$107.WL$1);
+      var this$108 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$58 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.doubleVerticalBar$1;
+      var x$43 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$58, this$108.WL$1).$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Lfastparse_noApi$().Pass$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var this$109 = $m_Lfastparse_core_Implicits$Repeater$();
+      return qual$7.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$43, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$109))
     })
   })(this));
-  var name$14 = new $c_Lsourcecode_Name().init___T("stringConcatExpr");
-  var p0$63 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$14.value$2, p$16, this$116.implicitReprOps$1);
-  this.stringConcatExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$63, this$117.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$30$1) {
+  var name$13 = new $c_Lsourcecode_Name().init___T("stringConcatExpr");
+  var p0$59 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$13.value$2, p$15, this$110.implicitReprOps$1);
+  this.stringConcatExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$59, this$111.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$28$1) {
     return (function(x0$13$2) {
       var x0$13 = $as_sc_Seq(x0$13$2);
       return $m_Leu_cdevreeze_xpathparser_ast_StringConcatExpr$().apply__sci_IndexedSeq__Leu_cdevreeze_xpathparser_ast_StringConcatExpr(x0$13.toIndexedSeq__sci_IndexedSeq())
     })
   })(this)));
-  var this$124 = this.White$1;
-  var this$123 = $m_Lfastparse_noApi$();
-  var p$17 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$31$1) {
+  var this$118 = this.White$1;
+  var this$117 = $m_Lfastparse_noApi$();
+  var p$16 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$29$1) {
     return (function() {
-      var this$118 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$64 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().additiveExpr$1;
-      var jsx$52 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$64, this$118.WL$1);
-      var this$120 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$119 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$65 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.toWord$1;
-      var p0$66 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$65, this$119.WL$1).$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().additiveExpr$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$51 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$66, this$120.WL$1);
-      var this$121 = $m_Lfastparse_core_Implicits$Optioner$();
-      var jsx$50 = jsx$51.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$121));
-      var this$122 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$52.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$50, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$122)))
+      var this$112 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$60 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().additiveExpr$1;
+      var jsx$50 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$60, this$112.WL$1);
+      var this$114 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$113 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$61 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.toWord$1;
+      var p0$62 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$61, this$113.WL$1).$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().additiveExpr$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$49 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$62, this$114.WL$1);
+      var this$115 = $m_Lfastparse_core_Implicits$Optioner$();
+      var jsx$48 = jsx$49.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$115));
+      var this$116 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$50.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$48, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$116)))
     })
   })(this));
-  var name$15 = new $c_Lsourcecode_Name().init___T("rangeExpr");
-  var p0$67 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$15.value$2, p$17, this$123.implicitReprOps$1);
-  this.rangeExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$67, this$124.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$32$1) {
+  var name$14 = new $c_Lsourcecode_Name().init___T("rangeExpr");
+  var p0$63 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$14.value$2, p$16, this$117.implicitReprOps$1);
+  this.rangeExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$63, this$118.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$30$1) {
     return (function(x0$14$2) {
       var x0$14 = $as_T2(x0$14$2);
       if ((x0$14 !== null)) {
@@ -5323,41 +5299,41 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       throw new $c_s_MatchError().init___O(x0$14)
     })
   })(this)));
-  var this$134 = this.White$1;
-  var this$133 = $m_Lfastparse_noApi$();
-  var p$18 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$33$1) {
+  var this$128 = this.White$1;
+  var this$127 = $m_Lfastparse_noApi$();
+  var p$17 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$31$1) {
     return (function() {
-      var this$125 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$68 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().multiplicativeExpr$1;
-      var jsx$57 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$68, this$125.WL$1);
-      var this$130 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$128 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$127 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$126 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$69 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.plus$1;
-      var p0$70 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$69, this$126.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.minus$1);
-      var p0$71 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$70, this$127.WL$1).$$bang__Lfastparse_core_Parser();
-      var jsx$55 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$71, this$128.WL$1);
-      var jsx$54 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().multiplicativeExpr$1;
-      var this$129 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$72 = jsx$55.$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$54, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$129)));
-      var jsx$56 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$72, this$130.WL$1);
-      var this$131 = $m_Lfastparse_core_Implicits$Repeater$();
-      var jsx$53 = jsx$56.rep__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$131));
-      var this$132 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$57.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$53, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$132)))
+      var this$119 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$64 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().multiplicativeExpr$1;
+      var jsx$55 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$64, this$119.WL$1);
+      var this$124 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$122 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$121 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$120 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$65 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.plus$1;
+      var p0$66 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$65, this$120.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.minus$1);
+      var p0$67 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$66, this$121.WL$1).$$bang__Lfastparse_core_Parser();
+      var jsx$53 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$67, this$122.WL$1);
+      var jsx$52 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().multiplicativeExpr$1;
+      var this$123 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$68 = jsx$53.$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$52, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$123)));
+      var jsx$54 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$68, this$124.WL$1);
+      var this$125 = $m_Lfastparse_core_Implicits$Repeater$();
+      var jsx$51 = jsx$54.rep__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$125));
+      var this$126 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$55.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$51, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$126)))
     })
   })(this));
-  var name$16 = new $c_Lsourcecode_Name().init___T("additiveExpr");
-  var p0$73 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$16.value$2, p$18, this$133.implicitReprOps$1);
-  this.additiveExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$73, this$134.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$34$1) {
+  var name$15 = new $c_Lsourcecode_Name().init___T("additiveExpr");
+  var p0$69 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$15.value$2, p$17, this$127.implicitReprOps$1);
+  this.additiveExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$69, this$128.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$32$1) {
     return (function(x0$15$2) {
       var x0$15 = $as_T2(x0$15$2);
       if ((x0$15 !== null)) {
         var firstExp = $as_Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr(x0$15.$$und1__O());
         var opExpPairs = $as_sc_Seq(x0$15.$$und2__O());
-        var jsx$58 = $m_Leu_cdevreeze_xpathparser_ast_AdditiveExpr$();
-        var this$138 = opExpPairs.toIndexedSeq__sci_IndexedSeq();
+        var jsx$56 = $m_Leu_cdevreeze_xpathparser_ast_AdditiveExpr$();
+        var this$132 = opExpPairs.toIndexedSeq__sci_IndexedSeq();
         var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function($this$1) {
           return (function(kv$2) {
             var kv = $as_T2(kv$2);
@@ -5366,55 +5342,55 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
             var y = kv.$$und2__O();
             return new $c_T2().init___O__O($$this, y)
           })
-        })(this$34$1));
+        })(this$32$1));
         $m_sci_IndexedSeq$();
         var bf = $m_sc_IndexedSeq$().ReusableCBF$6;
-        return jsx$58.apply__Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr__sci_IndexedSeq__Leu_cdevreeze_xpathparser_ast_AdditiveExpr(firstExp, $as_sci_IndexedSeq($f_sc_TraversableLike__map__F1__scg_CanBuildFrom__O(this$138, f, bf)))
+        return jsx$56.apply__Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr__sci_IndexedSeq__Leu_cdevreeze_xpathparser_ast_AdditiveExpr(firstExp, $as_sci_IndexedSeq($f_sc_TraversableLike__map__F1__scg_CanBuildFrom__O(this$132, f, bf)))
       } else {
         throw new $c_s_MatchError().init___O(x0$15)
       }
     })
   })(this)));
-  var this$150 = this.White$1;
-  var this$149 = $m_Lfastparse_noApi$();
-  var p$19 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$35$1) {
+  var this$144 = this.White$1;
+  var this$143 = $m_Lfastparse_noApi$();
+  var p$18 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$33$1) {
     return (function() {
-      var this$139 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$74 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().unionExpr$1;
-      var jsx$64 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$74, this$139.WL$1);
-      var this$146 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$144 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$143 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$140 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$75 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.asterisk$1;
-      var jsx$61 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$75, this$140.WL$1);
-      var this$142 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$141 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$76 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.divWord$1;
-      var p0$77 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$76, this$141.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.idivWord$1);
-      var p0$78 = jsx$61.$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$77, this$142.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.modWord$1));
-      var p0$79 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$78, this$143.WL$1).$$bang__Lfastparse_core_Parser();
-      var jsx$62 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$79, this$144.WL$1);
-      var jsx$60 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().unionExpr$1;
-      var this$145 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$80 = jsx$62.$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$60, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$145)));
-      var jsx$63 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$80, this$146.WL$1);
-      var this$147 = $m_Lfastparse_core_Implicits$Repeater$();
-      var jsx$59 = jsx$63.rep__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$147));
-      var this$148 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$64.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$59, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$148)))
+      var this$133 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$70 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().unionExpr$1;
+      var jsx$62 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$70, this$133.WL$1);
+      var this$140 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$138 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$137 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$134 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$71 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.asterisk$1;
+      var jsx$59 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$71, this$134.WL$1);
+      var this$136 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$135 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$72 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.divWord$1;
+      var p0$73 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$72, this$135.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.idivWord$1);
+      var p0$74 = jsx$59.$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$73, this$136.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.modWord$1));
+      var p0$75 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$74, this$137.WL$1).$$bang__Lfastparse_core_Parser();
+      var jsx$60 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$75, this$138.WL$1);
+      var jsx$58 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().unionExpr$1;
+      var this$139 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$76 = jsx$60.$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$58, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$139)));
+      var jsx$61 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$76, this$140.WL$1);
+      var this$141 = $m_Lfastparse_core_Implicits$Repeater$();
+      var jsx$57 = jsx$61.rep__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$141));
+      var this$142 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$62.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$57, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$142)))
     })
   })(this));
-  var name$17 = new $c_Lsourcecode_Name().init___T("multiplicativeExpr");
-  var p0$81 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$17.value$2, p$19, this$149.implicitReprOps$1);
-  this.multiplicativeExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$81, this$150.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$36$1) {
+  var name$16 = new $c_Lsourcecode_Name().init___T("multiplicativeExpr");
+  var p0$77 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$16.value$2, p$18, this$143.implicitReprOps$1);
+  this.multiplicativeExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$77, this$144.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$34$1) {
     return (function(x0$16$2) {
       var x0$16 = $as_T2(x0$16$2);
       if ((x0$16 !== null)) {
         var firstExp$1 = $as_Leu_cdevreeze_xpathparser_ast_UnionExpr(x0$16.$$und1__O());
         var opExpPairs$1 = $as_sc_Seq(x0$16.$$und2__O());
-        var jsx$65 = $m_Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr$();
-        var this$154 = opExpPairs$1.toIndexedSeq__sci_IndexedSeq();
+        var jsx$63 = $m_Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr$();
+        var this$148 = opExpPairs$1.toIndexedSeq__sci_IndexedSeq();
         var f$1 = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function($this$2) {
           return (function(kv$2$1) {
             var kv$1 = $as_T2(kv$2$1);
@@ -5423,38 +5399,38 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
             var y$1 = kv$1.$$und2__O();
             return new $c_T2().init___O__O($$this$1, y$1)
           })
-        })(this$36$1));
+        })(this$34$1));
         $m_sci_IndexedSeq$();
         var bf$1 = $m_sc_IndexedSeq$().ReusableCBF$6;
-        return jsx$65.apply__Leu_cdevreeze_xpathparser_ast_UnionExpr__sci_IndexedSeq__Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr(firstExp$1, $as_sci_IndexedSeq($f_sc_TraversableLike__map__F1__scg_CanBuildFrom__O(this$154, f$1, bf$1)))
+        return jsx$63.apply__Leu_cdevreeze_xpathparser_ast_UnionExpr__sci_IndexedSeq__Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr(firstExp$1, $as_sci_IndexedSeq($f_sc_TraversableLike__map__F1__scg_CanBuildFrom__O(this$148, f$1, bf$1)))
       } else {
         throw new $c_s_MatchError().init___O(x0$16)
       }
     })
   })(this)));
-  var this$162 = this.White$1;
-  var this$161 = $m_Lfastparse_noApi$();
-  var p$20 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$37$1) {
+  var this$156 = this.White$1;
+  var this$155 = $m_Lfastparse_noApi$();
+  var p$19 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$35$1) {
     return (function() {
-      var this$155 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$82 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().intersectExceptExpr$1;
-      var jsx$68 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$82, this$155.WL$1);
-      var this$158 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$157 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$156 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$83 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.unionWord$1;
-      var p0$84 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$83, this$156.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.verticalBar$1);
-      var p0$85 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$84, this$157.WL$1).$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().intersectExceptExpr$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$67 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$85, this$158.WL$1);
-      var this$159 = $m_Lfastparse_core_Implicits$Repeater$();
-      var jsx$66 = jsx$67.rep__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$159));
-      var this$160 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$68.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$66, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$160)))
+      var this$149 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$78 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().intersectExceptExpr$1;
+      var jsx$66 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$78, this$149.WL$1);
+      var this$152 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$151 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$150 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$79 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.unionWord$1;
+      var p0$80 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$79, this$150.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.verticalBar$1);
+      var p0$81 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$80, this$151.WL$1).$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().intersectExceptExpr$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$65 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$81, this$152.WL$1);
+      var this$153 = $m_Lfastparse_core_Implicits$Repeater$();
+      var jsx$64 = jsx$65.rep__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$153));
+      var this$154 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$66.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$64, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$154)))
     })
   })(this));
-  var name$18 = new $c_Lsourcecode_Name().init___T("unionExpr");
-  var p0$86 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$18.value$2, p$20, this$161.implicitReprOps$1);
-  this.unionExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$86, this$162.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$38$1) {
+  var name$17 = new $c_Lsourcecode_Name().init___T("unionExpr");
+  var p0$82 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$17.value$2, p$19, this$155.implicitReprOps$1);
+  this.unionExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$82, this$156.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$36$1) {
     return (function(x0$17$2) {
       var x0$17 = $as_T2(x0$17$2);
       if ((x0$17 !== null)) {
@@ -5466,41 +5442,41 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$173 = this.White$1;
-  var this$172 = $m_Lfastparse_noApi$();
-  var p$21 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$39$1) {
+  var this$167 = this.White$1;
+  var this$166 = $m_Lfastparse_noApi$();
+  var p$20 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$37$1) {
     return (function() {
-      var this$164 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$87 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().instanceOfExpr$1;
-      var jsx$73 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$87, this$164.WL$1);
-      var this$169 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$167 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$166 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$165 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$88 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.intersectWord$1;
-      var p0$89 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$88, this$165.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.exceptWord$1);
-      var p0$90 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$89, this$166.WL$1).$$bang__Lfastparse_core_Parser();
-      var jsx$71 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$90, this$167.WL$1);
-      var jsx$70 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().instanceOfExpr$1;
-      var this$168 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$91 = jsx$71.$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$70, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$168)));
-      var jsx$72 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$91, this$169.WL$1);
-      var this$170 = $m_Lfastparse_core_Implicits$Repeater$();
-      var jsx$69 = jsx$72.rep__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$170));
-      var this$171 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$73.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$69, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$171)))
+      var this$158 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$83 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().instanceOfExpr$1;
+      var jsx$71 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$83, this$158.WL$1);
+      var this$163 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$161 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$160 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$159 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$84 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.intersectWord$1;
+      var p0$85 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$84, this$159.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.exceptWord$1);
+      var p0$86 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$85, this$160.WL$1).$$bang__Lfastparse_core_Parser();
+      var jsx$69 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$86, this$161.WL$1);
+      var jsx$68 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().instanceOfExpr$1;
+      var this$162 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$87 = jsx$69.$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$68, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$162)));
+      var jsx$70 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$87, this$163.WL$1);
+      var this$164 = $m_Lfastparse_core_Implicits$Repeater$();
+      var jsx$67 = jsx$70.rep__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$164));
+      var this$165 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$71.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$67, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$165)))
     })
   })(this));
-  var name$19 = new $c_Lsourcecode_Name().init___T("intersectExceptExpr");
-  var p0$92 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$19.value$2, p$21, this$172.implicitReprOps$1);
-  this.intersectExceptExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$92, this$173.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$40$1) {
+  var name$18 = new $c_Lsourcecode_Name().init___T("intersectExceptExpr");
+  var p0$88 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$18.value$2, p$20, this$166.implicitReprOps$1);
+  this.intersectExceptExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$88, this$167.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$38$1) {
     return (function(x0$18$2) {
       var x0$18 = $as_T2(x0$18$2);
       if ((x0$18 !== null)) {
         var firstExp$2 = $as_Leu_cdevreeze_xpathparser_ast_InstanceOfExpr(x0$18.$$und1__O());
         var opExpPairs$2 = $as_sc_Seq(x0$18.$$und2__O());
-        var jsx$74 = $m_Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr$();
-        var this$177 = opExpPairs$2.toIndexedSeq__sci_IndexedSeq();
+        var jsx$72 = $m_Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr$();
+        var this$171 = opExpPairs$2.toIndexedSeq__sci_IndexedSeq();
         var f$2 = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function($this$3) {
           return (function(kv$2$2) {
             var kv$3 = $as_T2(kv$2$2);
@@ -5509,38 +5485,38 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
             var y$2 = kv$3.$$und2__O();
             return new $c_T2().init___O__O($$this$2, y$2)
           })
-        })(this$40$1));
+        })(this$38$1));
         $m_sci_IndexedSeq$();
         var bf$2 = $m_sc_IndexedSeq$().ReusableCBF$6;
-        return jsx$74.apply__Leu_cdevreeze_xpathparser_ast_InstanceOfExpr__sci_IndexedSeq__Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr(firstExp$2, $as_sci_IndexedSeq($f_sc_TraversableLike__map__F1__scg_CanBuildFrom__O(this$177, f$2, bf$2)))
+        return jsx$72.apply__Leu_cdevreeze_xpathparser_ast_InstanceOfExpr__sci_IndexedSeq__Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr(firstExp$2, $as_sci_IndexedSeq($f_sc_TraversableLike__map__F1__scg_CanBuildFrom__O(this$171, f$2, bf$2)))
       } else {
         throw new $c_s_MatchError().init___O(x0$18)
       }
     })
   })(this)));
-  var this$185 = this.White$1;
-  var this$184 = $m_Lfastparse_noApi$();
-  var p$22 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$41$1) {
+  var this$179 = this.White$1;
+  var this$178 = $m_Lfastparse_noApi$();
+  var p$21 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$39$1) {
     return (function() {
-      var this$178 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$93 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().treatExpr$1;
-      var jsx$77 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$93, this$178.WL$1);
-      var this$181 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$180 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$179 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$94 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.instanceWord$1;
-      var p0$95 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$94, this$179.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.ofWord$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$96 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$95, this$180.WL$1).$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().sequenceType$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$76 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$96, this$181.WL$1);
-      var this$182 = $m_Lfastparse_core_Implicits$Optioner$();
-      var jsx$75 = jsx$76.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$182));
-      var this$183 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$77.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$75, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$183)))
+      var this$172 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$89 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().treatExpr$1;
+      var jsx$75 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$89, this$172.WL$1);
+      var this$175 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$174 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$173 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$90 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.instanceWord$1;
+      var p0$91 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$90, this$173.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.ofWord$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$92 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$91, this$174.WL$1).$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().sequenceType$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$74 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$92, this$175.WL$1);
+      var this$176 = $m_Lfastparse_core_Implicits$Optioner$();
+      var jsx$73 = jsx$74.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$176));
+      var this$177 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$75.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$73, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$177)))
     })
   })(this));
-  var name$20 = new $c_Lsourcecode_Name().init___T("instanceOfExpr");
-  var p0$97 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$20.value$2, p$22, this$184.implicitReprOps$1);
-  this.instanceOfExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$97, this$185.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$42$1) {
+  var name$19 = new $c_Lsourcecode_Name().init___T("instanceOfExpr");
+  var p0$93 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$19.value$2, p$21, this$178.implicitReprOps$1);
+  this.instanceOfExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$93, this$179.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$40$1) {
     return (function(x0$19$2) {
       var x0$19 = $as_T2(x0$19$2);
       if ((x0$19 !== null)) {
@@ -5552,29 +5528,29 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$193 = this.White$1;
-  var this$192 = $m_Lfastparse_noApi$();
-  var p$23 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$43$1) {
+  var this$187 = this.White$1;
+  var this$186 = $m_Lfastparse_noApi$();
+  var p$22 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$41$1) {
     return (function() {
-      var this$186 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$98 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().castableExpr$1;
-      var jsx$80 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$98, this$186.WL$1);
-      var this$189 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$188 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$187 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$99 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.treatWord$1;
-      var p0$100 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$99, this$187.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.asWord$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$101 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$100, this$188.WL$1).$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().sequenceType$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$79 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$101, this$189.WL$1);
-      var this$190 = $m_Lfastparse_core_Implicits$Optioner$();
-      var jsx$78 = jsx$79.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$190));
-      var this$191 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$80.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$78, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$191)))
+      var this$180 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$94 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().castableExpr$1;
+      var jsx$78 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$94, this$180.WL$1);
+      var this$183 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$182 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$181 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$95 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.treatWord$1;
+      var p0$96 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$95, this$181.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.asWord$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$97 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$96, this$182.WL$1).$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().sequenceType$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$77 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$97, this$183.WL$1);
+      var this$184 = $m_Lfastparse_core_Implicits$Optioner$();
+      var jsx$76 = jsx$77.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$184));
+      var this$185 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$78.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$76, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$185)))
     })
   })(this));
-  var name$21 = new $c_Lsourcecode_Name().init___T("treatExpr");
-  var p0$102 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$21.value$2, p$23, this$192.implicitReprOps$1);
-  this.treatExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$102, this$193.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$44$1) {
+  var name$20 = new $c_Lsourcecode_Name().init___T("treatExpr");
+  var p0$98 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$20.value$2, p$22, this$186.implicitReprOps$1);
+  this.treatExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$98, this$187.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$42$1) {
     return (function(x0$20$2) {
       var x0$20 = $as_T2(x0$20$2);
       if ((x0$20 !== null)) {
@@ -5586,29 +5562,29 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$201 = this.White$1;
-  var this$200 = $m_Lfastparse_noApi$();
-  var p$24 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$45$1) {
+  var this$195 = this.White$1;
+  var this$194 = $m_Lfastparse_noApi$();
+  var p$23 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$43$1) {
     return (function() {
-      var this$194 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$103 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().castExpr$1;
-      var jsx$83 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$103, this$194.WL$1);
-      var this$197 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$196 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$195 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$104 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.castableWord$1;
-      var p0$105 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$104, this$195.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.asWord$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$106 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$105, this$196.WL$1).$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().singleType$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$82 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$106, this$197.WL$1);
-      var this$198 = $m_Lfastparse_core_Implicits$Optioner$();
-      var jsx$81 = jsx$82.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$198));
-      var this$199 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$83.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$81, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$199)))
+      var this$188 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$99 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().castExpr$1;
+      var jsx$81 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$99, this$188.WL$1);
+      var this$191 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$190 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$189 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$100 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.castableWord$1;
+      var p0$101 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$100, this$189.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.asWord$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$102 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$101, this$190.WL$1).$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().singleType$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$80 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$102, this$191.WL$1);
+      var this$192 = $m_Lfastparse_core_Implicits$Optioner$();
+      var jsx$79 = jsx$80.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$192));
+      var this$193 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$81.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$79, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$193)))
     })
   })(this));
-  var name$22 = new $c_Lsourcecode_Name().init___T("castableExpr");
-  var p0$107 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$22.value$2, p$24, this$200.implicitReprOps$1);
-  this.castableExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$107, this$201.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$46$1) {
+  var name$21 = new $c_Lsourcecode_Name().init___T("castableExpr");
+  var p0$103 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$21.value$2, p$23, this$194.implicitReprOps$1);
+  this.castableExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$103, this$195.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$44$1) {
     return (function(x0$21$2) {
       var x0$21 = $as_T2(x0$21$2);
       if ((x0$21 !== null)) {
@@ -5620,29 +5596,29 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$209 = this.White$1;
-  var this$208 = $m_Lfastparse_noApi$();
-  var p$25 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$47$1) {
+  var this$203 = this.White$1;
+  var this$202 = $m_Lfastparse_noApi$();
+  var p$24 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$45$1) {
     return (function() {
-      var this$202 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$108 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().arrowExpr$1;
-      var jsx$86 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$108, this$202.WL$1);
-      var this$205 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$204 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$203 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$109 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.castWord$1;
-      var p0$110 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$109, this$203.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.asWord$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$111 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$110, this$204.WL$1).$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().singleType$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$85 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$111, this$205.WL$1);
-      var this$206 = $m_Lfastparse_core_Implicits$Optioner$();
-      var jsx$84 = jsx$85.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$206));
-      var this$207 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$86.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$84, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$207)))
+      var this$196 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$104 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().arrowExpr$1;
+      var jsx$84 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$104, this$196.WL$1);
+      var this$199 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$198 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$197 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$105 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.castWord$1;
+      var p0$106 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$105, this$197.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.asWord$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$107 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$106, this$198.WL$1).$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().singleType$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$83 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$107, this$199.WL$1);
+      var this$200 = $m_Lfastparse_core_Implicits$Optioner$();
+      var jsx$82 = jsx$83.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$200));
+      var this$201 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$84.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$82, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$201)))
     })
   })(this));
-  var name$23 = new $c_Lsourcecode_Name().init___T("castExpr");
-  var p0$112 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$23.value$2, p$25, this$208.implicitReprOps$1);
-  this.castExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$112, this$209.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$48$1) {
+  var name$22 = new $c_Lsourcecode_Name().init___T("castExpr");
+  var p0$108 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$22.value$2, p$24, this$202.implicitReprOps$1);
+  this.castExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$108, this$203.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$46$1) {
     return (function(x0$22$2) {
       var x0$22 = $as_T2(x0$22$2);
       if ((x0$22 !== null)) {
@@ -5654,25 +5630,25 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$215 = this.White$1;
-  var this$214 = $m_Lfastparse_noApi$();
-  var p$26 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$49$1) {
+  var this$209 = this.White$1;
+  var this$208 = $m_Lfastparse_noApi$();
+  var p$25 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$47$1) {
     return (function() {
-      var this$210 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$113 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().unaryExpr$1;
-      var jsx$89 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$113, this$210.WL$1);
-      var this$211 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$114 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().arrowFunctionCall$1;
-      var jsx$88 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$114, this$211.WL$1);
-      var this$212 = $m_Lfastparse_core_Implicits$Repeater$();
-      var jsx$87 = jsx$88.rep__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$212));
-      var this$213 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$89.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$87, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$213)))
+      var this$204 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$109 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().unaryExpr$1;
+      var jsx$87 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$109, this$204.WL$1);
+      var this$205 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$110 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().arrowFunctionCall$1;
+      var jsx$86 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$110, this$205.WL$1);
+      var this$206 = $m_Lfastparse_core_Implicits$Repeater$();
+      var jsx$85 = jsx$86.rep__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$206));
+      var this$207 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$87.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$85, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$207)))
     })
   })(this));
-  var name$24 = new $c_Lsourcecode_Name().init___T("arrowExpr");
-  var p0$115 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$24.value$2, p$26, this$214.implicitReprOps$1);
-  this.arrowExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$115, this$215.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$50$1) {
+  var name$23 = new $c_Lsourcecode_Name().init___T("arrowExpr");
+  var p0$111 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$23.value$2, p$25, this$208.implicitReprOps$1);
+  this.arrowExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$111, this$209.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$48$1) {
     return (function(x0$23$2) {
       var x0$23 = $as_T2(x0$23$2);
       if ((x0$23 !== null)) {
@@ -5684,23 +5660,23 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$220 = this.White$1;
-  var this$219 = $m_Lfastparse_noApi$();
-  var p$27 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$51$1) {
+  var this$214 = this.White$1;
+  var this$213 = $m_Lfastparse_noApi$();
+  var p$26 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$49$1) {
     return (function() {
-      var this$217 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$216 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$116 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.doubleArrow$1;
-      var p0$117 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$116, this$216.WL$1).$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().arrowFunctionSpecifier$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$91 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$117, this$217.WL$1);
-      var jsx$90 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().argumentList$1;
-      var this$218 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$91.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$90, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$218)))
+      var this$211 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$210 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$112 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.doubleArrow$1;
+      var p0$113 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$112, this$210.WL$1).$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().arrowFunctionSpecifier$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$89 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$113, this$211.WL$1);
+      var jsx$88 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().argumentList$1;
+      var this$212 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$89.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$88, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$212)))
     })
   })(this));
-  var name$25 = new $c_Lsourcecode_Name().init___T("arrowFunctionCall");
-  var p0$118 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$25.value$2, p$27, this$219.implicitReprOps$1);
-  this.arrowFunctionCall$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$118, this$220.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$52$1) {
+  var name$24 = new $c_Lsourcecode_Name().init___T("arrowFunctionCall");
+  var p0$114 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$24.value$2, p$26, this$213.implicitReprOps$1);
+  this.arrowFunctionCall$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$114, this$214.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$50$1) {
     return (function(x0$24$2) {
       var x0$24 = $as_T2(x0$24$2);
       if ((x0$24 !== null)) {
@@ -5712,20 +5688,20 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$224 = this.White$1;
-  var this$223 = $m_Lfastparse_noApi$();
-  var p$28 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$53$1) {
+  var this$218 = this.White$1;
+  var this$217 = $m_Lfastparse_noApi$();
+  var p$27 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$51$1) {
     return (function() {
-      var this$222 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$221 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$119 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1;
-      var p0$120 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$119, this$221.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().varRef$1);
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$120, this$222.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().parenthesizedExpr$1)
+      var this$216 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$215 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$115 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1;
+      var p0$116 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$115, this$215.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().varRef$1);
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$116, this$216.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().parenthesizedExpr$1)
     })
   })(this));
-  var name$26 = new $c_Lsourcecode_Name().init___T("arrowFunctionSpecifier");
-  var p0$121 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$26.value$2, p$28, this$223.implicitReprOps$1);
-  this.arrowFunctionSpecifier$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$121, this$224.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$54$1) {
+  var name$25 = new $c_Lsourcecode_Name().init___T("arrowFunctionSpecifier");
+  var p0$117 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$25.value$2, p$27, this$217.implicitReprOps$1);
+  this.arrowFunctionSpecifier$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$117, this$218.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$52$1) {
     return (function(x0$25$2) {
       if ($is_Leu_cdevreeze_xpathparser_ast_EQName(x0$25$2)) {
         var x6 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$25$2);
@@ -5741,250 +5717,250 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$232 = this.White$1;
-  var this$231 = $m_Lfastparse_noApi$();
-  var p$29 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$55$1) {
+  var this$226 = this.White$1;
+  var this$225 = $m_Lfastparse_noApi$();
+  var p$28 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$53$1) {
     return (function() {
-      var this$229 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$227 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$226 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$225 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$122 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.minus$1;
-      var p0$123 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$122, this$225.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.plus$1);
-      var p0$124 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$123, this$226.WL$1).$$bang__Lfastparse_core_Parser();
-      var jsx$93 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$124, this$227.WL$1);
-      var this$228 = $m_Lfastparse_core_Implicits$Repeater$();
-      var p0$125 = jsx$93.rep__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$228));
-      var jsx$94 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$125, this$229.WL$1);
-      var jsx$92 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().valueExpr$1;
-      var this$230 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$94.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$92, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$230)))
+      var this$223 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$221 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$220 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$219 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$118 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.minus$1;
+      var p0$119 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$118, this$219.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.plus$1);
+      var p0$120 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$119, this$220.WL$1).$$bang__Lfastparse_core_Parser();
+      var jsx$91 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$120, this$221.WL$1);
+      var this$222 = $m_Lfastparse_core_Implicits$Repeater$();
+      var p0$121 = jsx$91.rep__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$222));
+      var jsx$92 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$121, this$223.WL$1);
+      var jsx$90 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().valueExpr$1;
+      var this$224 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$92.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$90, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$224)))
     })
   })(this));
-  var name$27 = new $c_Lsourcecode_Name().init___T("unaryExpr");
-  var p0$126 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$27.value$2, p$29, this$231.implicitReprOps$1);
-  this.unaryExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$126, this$232.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$56$1) {
+  var name$26 = new $c_Lsourcecode_Name().init___T("unaryExpr");
+  var p0$122 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$26.value$2, p$28, this$225.implicitReprOps$1);
+  this.unaryExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$122, this$226.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$54$1) {
     return (function(x0$26$2) {
       var x0$26 = $as_T2(x0$26$2);
       if ((x0$26 !== null)) {
         var ops = $as_sc_Seq(x0$26.$$und1__O());
         var expr$6 = $as_Leu_cdevreeze_xpathparser_ast_ValueExpr(x0$26.$$und2__O());
-        var jsx$95 = $m_Leu_cdevreeze_xpathparser_ast_UnaryExpr$();
-        var this$234 = ops.toIndexedSeq__sci_IndexedSeq();
+        var jsx$93 = $m_Leu_cdevreeze_xpathparser_ast_UnaryExpr$();
+        var this$228 = ops.toIndexedSeq__sci_IndexedSeq();
         var f$3 = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function($this$4) {
           return (function(op$2) {
             var op$1 = $as_T(op$2);
             return $m_Leu_cdevreeze_xpathparser_ast_UnaryOp$().parse__T__Leu_cdevreeze_xpathparser_ast_UnaryOp(op$1)
           })
-        })(this$56$1));
+        })(this$54$1));
         $m_sci_IndexedSeq$();
         var bf$3 = $m_sc_IndexedSeq$().ReusableCBF$6;
-        return jsx$95.apply__sci_IndexedSeq__Leu_cdevreeze_xpathparser_ast_ValueExpr__Leu_cdevreeze_xpathparser_ast_UnaryExpr($as_sci_IndexedSeq($f_sc_TraversableLike__map__F1__scg_CanBuildFrom__O(this$234, f$3, bf$3)), expr$6)
+        return jsx$93.apply__sci_IndexedSeq__Leu_cdevreeze_xpathparser_ast_ValueExpr__Leu_cdevreeze_xpathparser_ast_UnaryExpr($as_sci_IndexedSeq($f_sc_TraversableLike__map__F1__scg_CanBuildFrom__O(this$228, f$3, bf$3)), expr$6)
       } else {
         throw new $c_s_MatchError().init___O(x0$26)
       }
     })
   })(this)));
-  var this$235 = $m_Lfastparse_noApi$();
-  var p$30 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$57$1) {
+  var this$229 = $m_Lfastparse_noApi$();
+  var p$29 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$55$1) {
     return (function() {
-      return $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().simpleMapExpr$1
+      return $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().simpleMapExpr$1
     })
   })(this));
-  var name$28 = new $c_Lsourcecode_Name().init___T("valueExpr");
-  this.valueExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$28.value$2, p$30, this$235.implicitReprOps$1);
-  var this$239 = this.White$1;
-  var this$238 = $m_Lfastparse_noApi$();
-  var p$31 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$58$1) {
+  var name$27 = new $c_Lsourcecode_Name().init___T("valueExpr");
+  this.valueExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$27.value$2, p$29, this$229.implicitReprOps$1);
+  var this$233 = this.White$1;
+  var this$232 = $m_Lfastparse_noApi$();
+  var p$30 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$56$1) {
     return (function() {
-      var this$236 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$127 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().pathExpr$1;
-      var qual$8 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$127, this$236.WL$1);
-      var x$47 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.exclamationMark$1;
-      var this$237 = $m_Lfastparse_core_Implicits$Repeater$();
-      return qual$8.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$47, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$237))
+      var this$230 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$123 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().pathExpr$1;
+      var qual$8 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$123, this$230.WL$1);
+      var x$47 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.exclamationMark$1;
+      var this$231 = $m_Lfastparse_core_Implicits$Repeater$();
+      return qual$8.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$47, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$231))
     })
   })(this));
-  var name$29 = new $c_Lsourcecode_Name().init___T("simpleMapExpr");
-  var p0$128 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$29.value$2, p$31, this$238.implicitReprOps$1);
-  this.simpleMapExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$128, this$239.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$59$1) {
+  var name$28 = new $c_Lsourcecode_Name().init___T("simpleMapExpr");
+  var p0$124 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$28.value$2, p$30, this$232.implicitReprOps$1);
+  this.simpleMapExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$124, this$233.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$57$1) {
     return (function(x0$27$2) {
       var x0$27 = $as_sc_Seq(x0$27$2);
       return $m_Leu_cdevreeze_xpathparser_ast_SimpleMapExpr$().apply__sci_IndexedSeq__Leu_cdevreeze_xpathparser_ast_SimpleMapExpr(x0$27.toIndexedSeq__sci_IndexedSeq())
     })
   })(this)));
-  var this$243 = $m_Lfastparse_noApi$();
-  var p$32 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$60$1) {
+  var this$237 = $m_Lfastparse_noApi$();
+  var p$31 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$58$1) {
     return (function() {
-      var this$242 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$241 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$240 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$129 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().slashOnlyPathExpr$1;
-      var p0$130 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$129, this$240.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().pathExprStartingWithSingleSlash$1);
-      var p0$131 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$130, this$241.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().pathExprStartingWithDoubleSlash$1);
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$131, this$242.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().relativePathExpr$1)
+      var this$236 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$235 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$234 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$125 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().slashOnlyPathExpr$1;
+      var p0$126 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$125, this$234.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().pathExprStartingWithSingleSlash$1);
+      var p0$127 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$126, this$235.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().pathExprStartingWithDoubleSlash$1);
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$127, this$236.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().relativePathExpr$1)
     })
   })(this));
-  var name$30 = new $c_Lsourcecode_Name().init___T("pathExpr");
-  this.pathExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$30.value$2, p$32, this$243.implicitReprOps$1);
-  var this$245 = $m_Lfastparse_noApi$();
-  var p$33 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$61$1) {
+  var name$29 = new $c_Lsourcecode_Name().init___T("pathExpr");
+  this.pathExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$29.value$2, p$31, this$237.implicitReprOps$1);
+  var this$239 = $m_Lfastparse_noApi$();
+  var p$32 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$59$1) {
     return (function() {
-      var this$244 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$132 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().canStartAxisStep$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$132, this$244.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().canStartPostfixExpr$1)
+      var this$238 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$128 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().canStartAxisStep$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$128, this$238.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().canStartPostfixExpr$1)
     })
   })(this));
-  var name$31 = new $c_Lsourcecode_Name().init___T("canStartRelativePathExpr");
-  this.canStartRelativePathExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$31.value$2, p$33, this$245.implicitReprOps$1);
-  var this$251 = this.White$1;
-  var this$250 = $m_Lfastparse_noApi$();
-  var p$34 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$62$1) {
+  var name$30 = new $c_Lsourcecode_Name().init___T("canStartRelativePathExpr");
+  this.canStartRelativePathExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$30.value$2, p$32, this$239.implicitReprOps$1);
+  var this$245 = this.White$1;
+  var this$244 = $m_Lfastparse_noApi$();
+  var p$33 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$60$1) {
     return (function() {
-      var this$249 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$248 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$247 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$246 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$133 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().forwardAxis$1;
-      var p0$134 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$133, this$246.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().reverseAxis$1);
-      var p0$135 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$134, this$247.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.at$1);
-      var p0$136 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$135, this$248.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.doubleDot$1);
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$136, this$249.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().nodeTest$1)
+      var this$243 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$242 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$241 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$240 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$129 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().forwardAxis$1;
+      var p0$130 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$129, this$240.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().reverseAxis$1);
+      var p0$131 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$130, this$241.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.at$1);
+      var p0$132 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$131, this$242.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.doubleDot$1);
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$132, this$243.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().nodeTest$1)
     })
   })(this));
-  var name$32 = new $c_Lsourcecode_Name().init___T("canStartAxisStep");
-  var p0$137 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$32.value$2, p$34, this$250.implicitReprOps$1);
-  this.canStartAxisStep$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$137, this$251.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$63$1) {
+  var name$31 = new $c_Lsourcecode_Name().init___T("canStartAxisStep");
+  var p0$133 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$31.value$2, p$33, this$244.implicitReprOps$1);
+  this.canStartAxisStep$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$133, this$245.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$61$1) {
     return (function(x$2$2) {
       return (void 0)
     })
   })(this)));
-  var this$262 = this.White$1;
-  var this$261 = $m_Lfastparse_noApi$();
-  var p$35 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$64$1) {
+  var this$256 = this.White$1;
+  var this$255 = $m_Lfastparse_noApi$();
+  var p$34 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$62$1) {
     return (function() {
-      var this$260 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$259 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$258 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$257 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$256 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$255 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$254 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$253 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$252 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$138 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().literal$1;
-      var p0$139 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$138, this$252.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().varRef$1);
-      var p0$140 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$139, this$253.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1);
-      var p0$141 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$140, this$254.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().contextItemExpr$1);
-      var p0$142 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$141, this$255.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1);
-      var p0$143 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$142, this$256.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.functionWord$1);
-      var p0$144 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$143, this$257.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.mapWord$1);
-      var p0$145 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$144, this$258.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.arrayWord$1);
-      var p0$146 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$145, this$259.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openBracket$1);
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$146, this$260.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.questionMark$1)
+      var this$254 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$253 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$252 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$251 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$250 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$249 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$248 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$247 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$246 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$134 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().literal$1;
+      var p0$135 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$134, this$246.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().varRef$1);
+      var p0$136 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$135, this$247.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1);
+      var p0$137 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$136, this$248.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().contextItemExpr$1);
+      var p0$138 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$137, this$249.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1);
+      var p0$139 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$138, this$250.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.functionWord$1);
+      var p0$140 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$139, this$251.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.mapWord$1);
+      var p0$141 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$140, this$252.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.arrayWord$1);
+      var p0$142 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$141, this$253.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openBracket$1);
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$142, this$254.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.questionMark$1)
     })
   })(this));
-  var name$33 = new $c_Lsourcecode_Name().init___T("canStartPostfixExpr");
-  var p0$147 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$33.value$2, p$35, this$261.implicitReprOps$1);
-  this.canStartPostfixExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$147, this$262.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$65$1) {
+  var name$32 = new $c_Lsourcecode_Name().init___T("canStartPostfixExpr");
+  var p0$143 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$32.value$2, p$34, this$255.implicitReprOps$1);
+  this.canStartPostfixExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$143, this$256.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$63$1) {
     return (function(x$3$2) {
       return (void 0)
     })
   })(this)));
-  var this$266 = this.White$1;
-  var this$265 = $m_Lfastparse_noApi$();
-  var p$36 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$66$1) {
+  var this$260 = this.White$1;
+  var this$259 = $m_Lfastparse_noApi$();
+  var p$35 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$64$1) {
     return (function() {
-      var this$263 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$148 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.slash$1;
-      var jsx$96 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$148, this$263.WL$1);
-      var this$264 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$149 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().canStartRelativePathExpr$1;
-      return jsx$96.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$149, this$264.WL$1).unary$und$bang__Lfastparse_core_Parser(), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
+      var this$257 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$144 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.slash$1;
+      var jsx$94 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$144, this$257.WL$1);
+      var this$258 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$145 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().canStartRelativePathExpr$1;
+      return jsx$94.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$145, this$258.WL$1).unary$und$bang__Lfastparse_core_Parser(), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
     })
   })(this));
-  var name$34 = new $c_Lsourcecode_Name().init___T("slashOnlyPathExpr");
-  var p0$150 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$34.value$2, p$36, this$265.implicitReprOps$1);
-  this.slashOnlyPathExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$150, this$266.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$67$1) {
+  var name$33 = new $c_Lsourcecode_Name().init___T("slashOnlyPathExpr");
+  var p0$146 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$33.value$2, p$35, this$259.implicitReprOps$1);
+  this.slashOnlyPathExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$146, this$260.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$65$1) {
     return (function(x0$28$2) {
       $asUnit(x0$28$2);
       return $m_Leu_cdevreeze_xpathparser_ast_SlashOnlyPathExpr$()
     })
   })(this)));
-  var this$271 = this.White$1;
-  var this$270 = $m_Lfastparse_noApi$();
-  var p$38 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$68$1) {
+  var this$265 = this.White$1;
+  var this$264 = $m_Lfastparse_noApi$();
+  var p$37 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$66$1) {
     return (function() {
-      var this$269 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$267 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$151 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.slash$1;
-      var jsx$97 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$151, this$267.WL$1);
-      var this$268 = $m_Lfastparse_noApi$();
-      var p$37 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().canStartRelativePathExpr$1;
-      var p0$152 = jsx$97.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(new $c_Lfastparse_parsers_Combinators$Lookahead().init___Lfastparse_core_Parser__Lfastparse_utils_ReprOps(p$37, this$268.implicitReprOps$1), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$152, this$269.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().relativePathExpr$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
+      var this$263 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$261 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$147 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.slash$1;
+      var jsx$95 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$147, this$261.WL$1);
+      var this$262 = $m_Lfastparse_noApi$();
+      var p$36 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().canStartRelativePathExpr$1;
+      var p0$148 = jsx$95.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(new $c_Lfastparse_parsers_Combinators$Lookahead().init___Lfastparse_core_Parser__Lfastparse_utils_ReprOps(p$36, this$262.implicitReprOps$1), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$148, this$263.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().relativePathExpr$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
     })
   })(this));
-  var name$35 = new $c_Lsourcecode_Name().init___T("pathExprStartingWithSingleSlash");
-  var p0$153 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$35.value$2, p$38, this$270.implicitReprOps$1);
-  this.pathExprStartingWithSingleSlash$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$153, this$271.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$69$1) {
+  var name$34 = new $c_Lsourcecode_Name().init___T("pathExprStartingWithSingleSlash");
+  var p0$149 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$34.value$2, p$37, this$264.implicitReprOps$1);
+  this.pathExprStartingWithSingleSlash$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$149, this$265.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$67$1) {
     return (function(x0$29$2) {
       var x0$29 = $as_Leu_cdevreeze_xpathparser_ast_RelativePathExpr(x0$29$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash().init___Leu_cdevreeze_xpathparser_ast_RelativePathExpr(x0$29)
     })
   })(this)));
-  var this$274 = this.White$1;
-  var this$273 = $m_Lfastparse_noApi$();
-  var p$39 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$70$1) {
+  var this$268 = this.White$1;
+  var this$267 = $m_Lfastparse_noApi$();
+  var p$38 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$68$1) {
     return (function() {
-      var this$272 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$154 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.doubleSlash$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$154, this$272.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().relativePathExpr$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
+      var this$266 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$150 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.doubleSlash$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$150, this$266.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().relativePathExpr$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
     })
   })(this));
-  var name$36 = new $c_Lsourcecode_Name().init___T("pathExprStartingWithDoubleSlash");
-  var p0$155 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$36.value$2, p$39, this$273.implicitReprOps$1);
-  this.pathExprStartingWithDoubleSlash$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$155, this$274.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$71$1) {
+  var name$35 = new $c_Lsourcecode_Name().init___T("pathExprStartingWithDoubleSlash");
+  var p0$151 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$35.value$2, p$38, this$267.implicitReprOps$1);
+  this.pathExprStartingWithDoubleSlash$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$151, this$268.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$69$1) {
     return (function(x0$30$2) {
       var x0$30 = $as_Leu_cdevreeze_xpathparser_ast_RelativePathExpr(x0$30$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash().init___Leu_cdevreeze_xpathparser_ast_RelativePathExpr(x0$30)
     })
   })(this)));
-  var this$284 = this.White$1;
-  var this$283 = $m_Lfastparse_noApi$();
-  var p$40 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$72$1) {
+  var this$278 = this.White$1;
+  var this$277 = $m_Lfastparse_noApi$();
+  var p$39 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$70$1) {
     return (function() {
-      var this$275 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$156 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().stepExpr$1;
-      var jsx$102 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$156, this$275.WL$1);
-      var this$280 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$278 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$277 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$276 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$157 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.slash$1;
-      var p0$158 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$157, this$276.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.doubleSlash$1);
-      var p0$159 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$158, this$277.WL$1).$$bang__Lfastparse_core_Parser();
-      var jsx$100 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$159, this$278.WL$1);
-      var jsx$99 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().stepExpr$1;
-      var this$279 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$160 = jsx$100.$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$99, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$279)));
-      var jsx$101 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$160, this$280.WL$1);
-      var this$281 = $m_Lfastparse_core_Implicits$Repeater$();
-      var jsx$98 = jsx$101.rep__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$281));
-      var this$282 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$102.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$98, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$282)))
+      var this$269 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$152 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().stepExpr$1;
+      var jsx$100 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$152, this$269.WL$1);
+      var this$274 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$272 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$271 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$270 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$153 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.slash$1;
+      var p0$154 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$153, this$270.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.doubleSlash$1);
+      var p0$155 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$154, this$271.WL$1).$$bang__Lfastparse_core_Parser();
+      var jsx$98 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$155, this$272.WL$1);
+      var jsx$97 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().stepExpr$1;
+      var this$273 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$156 = jsx$98.$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$97, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$273)));
+      var jsx$99 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$156, this$274.WL$1);
+      var this$275 = $m_Lfastparse_core_Implicits$Repeater$();
+      var jsx$96 = jsx$99.rep__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$275));
+      var this$276 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$100.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$96, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$276)))
     })
   })(this));
-  var name$37 = new $c_Lsourcecode_Name().init___T("relativePathExpr");
-  var p0$161 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$37.value$2, p$40, this$283.implicitReprOps$1);
-  this.relativePathExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$161, this$284.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$73$1) {
+  var name$36 = new $c_Lsourcecode_Name().init___T("relativePathExpr");
+  var p0$157 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$36.value$2, p$39, this$277.implicitReprOps$1);
+  this.relativePathExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$157, this$278.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$71$1) {
     return (function(x0$31$2) {
       var x0$31 = $as_T2(x0$31$2);
       if ((x0$31 !== null)) {
         var firstExp$3 = $as_Leu_cdevreeze_xpathparser_ast_StepExpr(x0$31.$$und1__O());
         var opExpPairs$3 = $as_sc_Seq(x0$31.$$und2__O());
-        var jsx$103 = $m_Leu_cdevreeze_xpathparser_ast_RelativePathExpr$();
-        var this$288 = opExpPairs$3.toIndexedSeq__sci_IndexedSeq();
+        var jsx$101 = $m_Leu_cdevreeze_xpathparser_ast_RelativePathExpr$();
+        var this$282 = opExpPairs$3.toIndexedSeq__sci_IndexedSeq();
         var f$4 = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function($this$5) {
           return (function(kv$2$3) {
             var kv$4 = $as_T2(kv$2$3);
@@ -5993,54 +5969,54 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
             var y$3 = kv$4.$$und2__O();
             return new $c_T2().init___O__O($$this$3, y$3)
           })
-        })(this$73$1));
+        })(this$71$1));
         $m_sci_IndexedSeq$();
         var bf$4 = $m_sc_IndexedSeq$().ReusableCBF$6;
-        return jsx$103.apply__Leu_cdevreeze_xpathparser_ast_StepExpr__sci_IndexedSeq__Leu_cdevreeze_xpathparser_ast_RelativePathExpr(firstExp$3, $as_sci_IndexedSeq($f_sc_TraversableLike__map__F1__scg_CanBuildFrom__O(this$288, f$4, bf$4)))
+        return jsx$101.apply__Leu_cdevreeze_xpathparser_ast_StepExpr__sci_IndexedSeq__Leu_cdevreeze_xpathparser_ast_RelativePathExpr(firstExp$3, $as_sci_IndexedSeq($f_sc_TraversableLike__map__F1__scg_CanBuildFrom__O(this$282, f$4, bf$4)))
       } else {
         throw new $c_s_MatchError().init___O(x0$31)
       }
     })
   })(this)));
-  var this$290 = $m_Lfastparse_noApi$();
-  var p$41 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$74$1) {
+  var this$284 = $m_Lfastparse_noApi$();
+  var p$40 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$72$1) {
     return (function() {
-      var this$289 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$162 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().postfixExpr$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$162, this$289.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().axisStep$1)
+      var this$283 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$158 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().postfixExpr$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$158, this$283.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().axisStep$1)
     })
   })(this));
-  var name$38 = new $c_Lsourcecode_Name().init___T("stepExpr");
-  this.stepExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$38.value$2, p$41, this$290.implicitReprOps$1);
-  var this$292 = $m_Lfastparse_noApi$();
-  var p$42 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$75$1) {
+  var name$37 = new $c_Lsourcecode_Name().init___T("stepExpr");
+  this.stepExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$37.value$2, p$40, this$284.implicitReprOps$1);
+  var this$286 = $m_Lfastparse_noApi$();
+  var p$41 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$73$1) {
     return (function() {
-      var this$291 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$163 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().reverseAxisStep$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$163, this$291.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().forwardAxisStep$1)
+      var this$285 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$159 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().reverseAxisStep$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$159, this$285.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().forwardAxisStep$1)
     })
   })(this));
-  var name$39 = new $c_Lsourcecode_Name().init___T("axisStep");
-  this.axisStep$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$39.value$2, p$42, this$292.implicitReprOps$1);
-  var this$298 = this.White$1;
-  var this$297 = $m_Lfastparse_noApi$();
-  var p$43 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$76$1) {
+  var name$38 = new $c_Lsourcecode_Name().init___T("axisStep");
+  this.axisStep$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$38.value$2, p$41, this$286.implicitReprOps$1);
+  var this$292 = this.White$1;
+  var this$291 = $m_Lfastparse_noApi$();
+  var p$42 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$74$1) {
     return (function() {
-      var this$293 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$164 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().forwardStep$1;
-      var jsx$106 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$164, this$293.WL$1);
-      var this$294 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$165 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().predicate$1;
-      var jsx$105 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$165, this$294.WL$1);
-      var this$295 = $m_Lfastparse_core_Implicits$Repeater$();
-      var jsx$104 = jsx$105.rep__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$295));
-      var this$296 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$106.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$104, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$296)))
+      var this$287 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$160 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().forwardStep$1;
+      var jsx$104 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$160, this$287.WL$1);
+      var this$288 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$161 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().predicate$1;
+      var jsx$103 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$161, this$288.WL$1);
+      var this$289 = $m_Lfastparse_core_Implicits$Repeater$();
+      var jsx$102 = jsx$103.rep__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$289));
+      var this$290 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$104.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$102, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$290)))
     })
   })(this));
-  var name$40 = new $c_Lsourcecode_Name().init___T("forwardAxisStep");
-  var p0$166 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$40.value$2, p$43, this$297.implicitReprOps$1);
-  this.forwardAxisStep$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$166, this$298.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$77$1) {
+  var name$39 = new $c_Lsourcecode_Name().init___T("forwardAxisStep");
+  var p0$162 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$39.value$2, p$42, this$291.implicitReprOps$1);
+  this.forwardAxisStep$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$162, this$292.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$75$1) {
     return (function(x0$32$2) {
       var x0$32 = $as_T2(x0$32$2);
       if ((x0$32 !== null)) {
@@ -6052,25 +6028,25 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$304 = this.White$1;
-  var this$303 = $m_Lfastparse_noApi$();
-  var p$44 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$78$1) {
+  var this$298 = this.White$1;
+  var this$297 = $m_Lfastparse_noApi$();
+  var p$43 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$76$1) {
     return (function() {
-      var this$299 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$167 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().reverseStep$1;
-      var jsx$109 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$167, this$299.WL$1);
-      var this$300 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$168 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().predicate$1;
-      var jsx$108 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$168, this$300.WL$1);
-      var this$301 = $m_Lfastparse_core_Implicits$Repeater$();
-      var jsx$107 = jsx$108.rep__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$301));
-      var this$302 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$109.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$107, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$302)))
+      var this$293 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$163 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().reverseStep$1;
+      var jsx$107 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$163, this$293.WL$1);
+      var this$294 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$164 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().predicate$1;
+      var jsx$106 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$164, this$294.WL$1);
+      var this$295 = $m_Lfastparse_core_Implicits$Repeater$();
+      var jsx$105 = jsx$106.rep__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$295));
+      var this$296 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$107.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$105, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$296)))
     })
   })(this));
-  var name$41 = new $c_Lsourcecode_Name().init___T("reverseAxisStep");
-  var p0$169 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$41.value$2, p$44, this$303.implicitReprOps$1);
-  this.reverseAxisStep$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$169, this$304.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$79$1) {
+  var name$40 = new $c_Lsourcecode_Name().init___T("reverseAxisStep");
+  var p0$165 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$40.value$2, p$43, this$297.implicitReprOps$1);
+  this.reverseAxisStep$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$165, this$298.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$77$1) {
     return (function(x0$33$2) {
       var x0$33 = $as_T2(x0$33$2);
       if ((x0$33 !== null)) {
@@ -6082,73 +6058,73 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$306 = $m_Lfastparse_noApi$();
-  var p$45 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$80$1) {
+  var this$300 = $m_Lfastparse_noApi$();
+  var p$44 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$78$1) {
     return (function() {
-      var this$305 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$170 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().nonAbbrevForwardStep$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$170, this$305.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().abbrevForwardStep$1)
+      var this$299 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$166 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().nonAbbrevForwardStep$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$166, this$299.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().abbrevForwardStep$1)
     })
   })(this));
-  var name$42 = new $c_Lsourcecode_Name().init___T("forwardStep");
-  this.forwardStep$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$42.value$2, p$45, this$306.implicitReprOps$1);
-  var this$308 = $m_Lfastparse_noApi$();
-  var p$46 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$81$1) {
+  var name$41 = new $c_Lsourcecode_Name().init___T("forwardStep");
+  this.forwardStep$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$41.value$2, p$44, this$300.implicitReprOps$1);
+  var this$302 = $m_Lfastparse_noApi$();
+  var p$45 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$79$1) {
     return (function() {
-      var this$307 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$171 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().simpleAbbrevForwardStep$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$171, this$307.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().attributeAxisAbbrevForwardStep$1)
+      var this$301 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$167 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().simpleAbbrevForwardStep$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$167, this$301.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().attributeAxisAbbrevForwardStep$1)
     })
   })(this));
-  var name$43 = new $c_Lsourcecode_Name().init___T("abbrevForwardStep");
-  this.abbrevForwardStep$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$43.value$2, p$46, this$308.implicitReprOps$1);
-  var this$310 = this.White$1;
-  var this$309 = $m_Lfastparse_noApi$();
-  var p$47 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$82$1) {
+  var name$42 = new $c_Lsourcecode_Name().init___T("abbrevForwardStep");
+  this.abbrevForwardStep$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$42.value$2, p$45, this$302.implicitReprOps$1);
+  var this$304 = this.White$1;
+  var this$303 = $m_Lfastparse_noApi$();
+  var p$46 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$80$1) {
     return (function() {
-      return $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().nodeTest$1
+      return $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().nodeTest$1
     })
   })(this));
-  var name$44 = new $c_Lsourcecode_Name().init___T("simpleAbbrevForwardStep");
-  var p0$172 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$44.value$2, p$47, this$309.implicitReprOps$1);
-  this.simpleAbbrevForwardStep$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$172, this$310.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$83$1) {
+  var name$43 = new $c_Lsourcecode_Name().init___T("simpleAbbrevForwardStep");
+  var p0$168 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$43.value$2, p$46, this$303.implicitReprOps$1);
+  this.simpleAbbrevForwardStep$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$168, this$304.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$81$1) {
     return (function(x0$34$2) {
       var x0$34 = $as_Leu_cdevreeze_xpathparser_ast_NodeTest(x0$34$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_SimpleAbbrevForwardStep().init___Leu_cdevreeze_xpathparser_ast_NodeTest(x0$34)
     })
   })(this)));
-  var this$313 = this.White$1;
-  var this$312 = $m_Lfastparse_noApi$();
-  var p$48 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$84$1) {
+  var this$307 = this.White$1;
+  var this$306 = $m_Lfastparse_noApi$();
+  var p$47 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$82$1) {
     return (function() {
-      var this$311 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$173 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.at$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$173, this$311.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().nodeTest$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
+      var this$305 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$169 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.at$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$169, this$305.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().nodeTest$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
     })
   })(this));
-  var name$45 = new $c_Lsourcecode_Name().init___T("attributeAxisAbbrevForwardStep");
-  var p0$174 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$45.value$2, p$48, this$312.implicitReprOps$1);
-  this.attributeAxisAbbrevForwardStep$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$174, this$313.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$85$1) {
+  var name$44 = new $c_Lsourcecode_Name().init___T("attributeAxisAbbrevForwardStep");
+  var p0$170 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$44.value$2, p$47, this$306.implicitReprOps$1);
+  this.attributeAxisAbbrevForwardStep$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$170, this$307.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$83$1) {
     return (function(x0$35$2) {
       var x0$35 = $as_Leu_cdevreeze_xpathparser_ast_NodeTest(x0$35$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_AttributeAxisAbbrevForwardStep().init___Leu_cdevreeze_xpathparser_ast_NodeTest(x0$35)
     })
   })(this)));
-  var this$317 = this.White$1;
-  var this$316 = $m_Lfastparse_noApi$();
-  var p$49 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$86$1) {
+  var this$311 = this.White$1;
+  var this$310 = $m_Lfastparse_noApi$();
+  var p$48 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$84$1) {
     return (function() {
-      var this$314 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$175 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().forwardAxis$1;
-      var jsx$111 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$175, this$314.WL$1);
-      var jsx$110 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().nodeTest$1;
-      var this$315 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$111.$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$110, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$315)))
+      var this$308 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$171 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().forwardAxis$1;
+      var jsx$109 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$171, this$308.WL$1);
+      var jsx$108 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().nodeTest$1;
+      var this$309 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$109.$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$108, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$309)))
     })
   })(this));
-  var name$46 = new $c_Lsourcecode_Name().init___T("nonAbbrevForwardStep");
-  var p0$176 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$46.value$2, p$49, this$316.implicitReprOps$1);
-  this.nonAbbrevForwardStep$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$176, this$317.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$87$1) {
+  var name$45 = new $c_Lsourcecode_Name().init___T("nonAbbrevForwardStep");
+  var p0$172 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$45.value$2, p$48, this$310.implicitReprOps$1);
+  this.nonAbbrevForwardStep$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$172, this$311.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$85$1) {
     return (function(x0$36$2) {
       var x0$36 = $as_T2(x0$36$2);
       if ((x0$36 !== null)) {
@@ -6160,37 +6136,37 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$329 = this.White$1;
-  var this$328 = $m_Lfastparse_noApi$();
-  var p$50 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$88$1) {
+  var this$323 = this.White$1;
+  var this$322 = $m_Lfastparse_noApi$();
+  var p$49 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$86$1) {
     return (function() {
-      var this$326 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$325 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$324 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$323 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$322 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$321 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$320 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$319 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$318 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$177 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.childWord$1;
-      var p0$178 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$177, this$318.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.descendantWord$1);
-      var p0$179 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$178, this$319.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.attributeWord$1);
-      var p0$180 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$179, this$320.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.selfWord$1);
-      var p0$181 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$180, this$321.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.descendantOrSelfWord$1);
-      var p0$182 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$181, this$322.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.followingSiblingWord$1);
-      var p0$183 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$182, this$323.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.followingWord$1);
-      var p0$184 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$183, this$324.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.namespaceWord$1);
-      var p0$185 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$184, this$325.WL$1).$$bang__Lfastparse_core_Parser();
-      var jsx$113 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$185, this$326.WL$1);
-      var jsx$112 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.doubleColon$1;
-      var this$327 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$113.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$112, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$327))
+      var this$320 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$319 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$318 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$317 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$316 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$315 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$314 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$313 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$312 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$173 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.childWord$1;
+      var p0$174 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$173, this$312.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.descendantWord$1);
+      var p0$175 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$174, this$313.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.attributeWord$1);
+      var p0$176 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$175, this$314.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.selfWord$1);
+      var p0$177 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$176, this$315.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.descendantOrSelfWord$1);
+      var p0$178 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$177, this$316.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.followingSiblingWord$1);
+      var p0$179 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$178, this$317.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.followingWord$1);
+      var p0$180 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$179, this$318.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.namespaceWord$1);
+      var p0$181 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$180, this$319.WL$1).$$bang__Lfastparse_core_Parser();
+      var jsx$111 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$181, this$320.WL$1);
+      var jsx$110 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.doubleColon$1;
+      var this$321 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$111.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$110, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$321))
     })
   })(this));
-  var name$47 = new $c_Lsourcecode_Name().init___T("forwardAxis");
-  var p0$186 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$47.value$2, p$50, this$328.implicitReprOps$1);
-  this.forwardAxis$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$186, this$329.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$89$1) {
+  var name$46 = new $c_Lsourcecode_Name().init___T("forwardAxis");
+  var p0$182 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$46.value$2, p$49, this$322.implicitReprOps$1);
+  this.forwardAxis$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$182, this$323.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$87$1) {
     return (function(x0$37$2) {
       var x0$37 = $as_T(x0$37$2);
       if ((x0$37 === "child")) {
@@ -6214,46 +6190,46 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$331 = $m_Lfastparse_noApi$();
-  var p$51 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$90$1) {
+  var this$325 = $m_Lfastparse_noApi$();
+  var p$50 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$88$1) {
     return (function() {
-      var this$330 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$187 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().nonAbbrevReverseStep$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$187, this$330.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().abbrevReverseStep$1)
+      var this$324 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$183 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().nonAbbrevReverseStep$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$183, this$324.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().abbrevReverseStep$1)
     })
   })(this));
-  var name$48 = new $c_Lsourcecode_Name().init___T("reverseStep");
-  this.reverseStep$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$48.value$2, p$51, this$331.implicitReprOps$1);
-  var this$333 = this.White$1;
-  var this$332 = $m_Lfastparse_noApi$();
-  var p$52 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$91$1) {
+  var name$47 = new $c_Lsourcecode_Name().init___T("reverseStep");
+  this.reverseStep$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$47.value$2, p$50, this$325.implicitReprOps$1);
+  var this$327 = this.White$1;
+  var this$326 = $m_Lfastparse_noApi$();
+  var p$51 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$89$1) {
     return (function() {
-      return $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.doubleDot$1
+      return $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.doubleDot$1
     })
   })(this));
-  var name$49 = new $c_Lsourcecode_Name().init___T("abbrevReverseStep");
-  var p0$188 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$49.value$2, p$52, this$332.implicitReprOps$1);
-  this.abbrevReverseStep$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$188, this$333.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$92$1) {
+  var name$48 = new $c_Lsourcecode_Name().init___T("abbrevReverseStep");
+  var p0$184 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$48.value$2, p$51, this$326.implicitReprOps$1);
+  this.abbrevReverseStep$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$184, this$327.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$90$1) {
     return (function(x$4$2) {
       $asUnit(x$4$2);
       return $m_Leu_cdevreeze_xpathparser_ast_AbbrevReverseStep$()
     })
   })(this)));
-  var this$337 = this.White$1;
-  var this$336 = $m_Lfastparse_noApi$();
-  var p$53 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$93$1) {
+  var this$331 = this.White$1;
+  var this$330 = $m_Lfastparse_noApi$();
+  var p$52 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$91$1) {
     return (function() {
-      var this$334 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$189 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().reverseAxis$1;
-      var jsx$115 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$189, this$334.WL$1);
-      var jsx$114 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().nodeTest$1;
-      var this$335 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$115.$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$114, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$335)))
+      var this$328 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$185 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().reverseAxis$1;
+      var jsx$113 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$185, this$328.WL$1);
+      var jsx$112 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().nodeTest$1;
+      var this$329 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$113.$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$112, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$329)))
     })
   })(this));
-  var name$50 = new $c_Lsourcecode_Name().init___T("nonAbbrevReverseStep");
-  var p0$190 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$50.value$2, p$53, this$336.implicitReprOps$1);
-  this.nonAbbrevReverseStep$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$190, this$337.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$94$1) {
+  var name$49 = new $c_Lsourcecode_Name().init___T("nonAbbrevReverseStep");
+  var p0$186 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$49.value$2, p$52, this$330.implicitReprOps$1);
+  this.nonAbbrevReverseStep$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$186, this$331.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$92$1) {
     return (function(x0$38$2) {
       var x0$38 = $as_T2(x0$38$2);
       if ((x0$38 !== null)) {
@@ -6265,31 +6241,31 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$346 = this.White$1;
-  var this$345 = $m_Lfastparse_noApi$();
-  var p$54 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$95$1) {
+  var this$340 = this.White$1;
+  var this$339 = $m_Lfastparse_noApi$();
+  var p$53 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$93$1) {
     return (function() {
-      var this$343 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$342 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$341 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$340 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$339 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$338 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$191 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.parentWord$1;
-      var p0$192 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$191, this$338.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.ancestorWord$1);
-      var p0$193 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$192, this$339.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.precedingSiblingWord$1);
-      var p0$194 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$193, this$340.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.precedingWord$1);
-      var p0$195 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$194, this$341.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.ancestorOrSelfWord$1);
-      var p0$196 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$195, this$342.WL$1).$$bang__Lfastparse_core_Parser();
-      var jsx$117 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$196, this$343.WL$1);
-      var jsx$116 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.doubleColon$1;
-      var this$344 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$117.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$116, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$344))
+      var this$337 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$336 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$335 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$334 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$333 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$332 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$187 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.parentWord$1;
+      var p0$188 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$187, this$332.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.ancestorWord$1);
+      var p0$189 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$188, this$333.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.precedingSiblingWord$1);
+      var p0$190 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$189, this$334.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.precedingWord$1);
+      var p0$191 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$190, this$335.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.ancestorOrSelfWord$1);
+      var p0$192 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$191, this$336.WL$1).$$bang__Lfastparse_core_Parser();
+      var jsx$115 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$192, this$337.WL$1);
+      var jsx$114 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.doubleColon$1;
+      var this$338 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$115.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$114, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$338))
     })
   })(this));
-  var name$51 = new $c_Lsourcecode_Name().init___T("reverseAxis");
-  var p0$197 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$51.value$2, p$54, this$345.implicitReprOps$1);
-  this.reverseAxis$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$197, this$346.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$96$1) {
+  var name$50 = new $c_Lsourcecode_Name().init___T("reverseAxis");
+  var p0$193 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$50.value$2, p$53, this$339.implicitReprOps$1);
+  this.reverseAxis$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$193, this$340.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$94$1) {
     return (function(x0$39$2) {
       var x0$39 = $as_T(x0$39$2);
       if ((x0$39 === "parent")) {
@@ -6307,729 +6283,729 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
+  var this$342 = $m_Lfastparse_noApi$();
+  var p$54 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$95$1) {
+    return (function() {
+      var this$341 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$194 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().kindTest$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$194, this$341.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().nameTest$1)
+    })
+  })(this));
+  var name$51 = new $c_Lsourcecode_Name().init___T("nodeTest");
+  this.nodeTest$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$51.value$2, p$54, this$342.implicitReprOps$1);
+  var this$344 = $m_Lfastparse_noApi$();
+  var p$55 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$96$1) {
+    return (function() {
+      var this$343 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$195 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().simpleNameTest$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$195, this$343.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().wildcard$1)
+    })
+  })(this));
+  var name$52 = new $c_Lsourcecode_Name().init___T("nameTest");
+  this.nameTest$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$52.value$2, p$55, this$344.implicitReprOps$1);
+  var this$349 = this.White$1;
   var this$348 = $m_Lfastparse_noApi$();
-  var p$55 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$97$1) {
+  var p$56 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$97$1) {
     return (function() {
-      var this$347 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$198 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().kindTest$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$198, this$347.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().nameTest$1)
+      var this$345 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$196 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1;
+      var jsx$117 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$196, this$345.WL$1);
+      var this$346 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$197 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.colonAsterisk$1;
+      var jsx$116 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$197, this$346.WL$1).unary$und$bang__Lfastparse_core_Parser();
+      var this$347 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$117.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$116, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$347))
     })
   })(this));
-  var name$52 = new $c_Lsourcecode_Name().init___T("nodeTest");
-  this.nodeTest$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$52.value$2, p$55, this$348.implicitReprOps$1);
-  var this$350 = $m_Lfastparse_noApi$();
-  var p$56 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$98$1) {
-    return (function() {
-      var this$349 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$199 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().simpleNameTest$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$199, this$349.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().wildcard$1)
-    })
-  })(this));
-  var name$53 = new $c_Lsourcecode_Name().init___T("nameTest");
-  this.nameTest$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$53.value$2, p$56, this$350.implicitReprOps$1);
-  var this$355 = this.White$1;
-  var this$354 = $m_Lfastparse_noApi$();
-  var p$57 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$99$1) {
-    return (function() {
-      var this$351 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$200 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1;
-      var jsx$119 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$200, this$351.WL$1);
-      var this$352 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$201 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.colonAsterisk$1;
-      var jsx$118 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$201, this$352.WL$1).unary$und$bang__Lfastparse_core_Parser();
-      var this$353 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$119.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$118, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$353))
-    })
-  })(this));
-  var name$54 = new $c_Lsourcecode_Name().init___T("simpleNameTest");
-  var p0$202 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$54.value$2, p$57, this$354.implicitReprOps$1);
-  this.simpleNameTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$202, this$355.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$100$1) {
+  var name$53 = new $c_Lsourcecode_Name().init___T("simpleNameTest");
+  var p0$198 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$53.value$2, p$56, this$348.implicitReprOps$1);
+  this.simpleNameTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$198, this$349.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$98$1) {
     return (function(x0$40$2) {
       var x0$40 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$40$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_SimpleNameTest().init___Leu_cdevreeze_xpathparser_ast_EQName(x0$40)
     })
   })(this)));
-  var this$356 = $m_Lfastparse_noApi$();
-  var p$58 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$101$1) {
+  var this$350 = $m_Lfastparse_noApi$();
+  var p$57 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$99$1) {
     return (function() {
       return $m_Leu_cdevreeze_xpathparser_parse_Wildcards$().wildcard$1
     })
   })(this));
-  var name$55 = new $c_Lsourcecode_Name().init___T("wildcard");
-  this.wildcard$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$55.value$2, p$58, this$356.implicitReprOps$1);
+  var name$54 = new $c_Lsourcecode_Name().init___T("wildcard");
+  this.wildcard$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$54.value$2, p$57, this$350.implicitReprOps$1);
+  var this$360 = $m_Lfastparse_noApi$();
+  var p$58 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$100$1) {
+    return (function() {
+      var this$359 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$358 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$357 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$356 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$355 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$354 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$353 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$352 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$351 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$199 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().documentTest$1;
+      var p0$200 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$199, this$351.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().elementTest$1);
+      var p0$201 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$200, this$352.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().attributeTest$1);
+      var p0$202 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$201, this$353.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().schemaElementTest$1);
+      var p0$203 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$202, this$354.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().schemaAttributeTest$1);
+      var p0$204 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$203, this$355.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().piTest$1);
+      var p0$205 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$204, this$356.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().commentTest$1);
+      var p0$206 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$205, this$357.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().textTest$1);
+      var p0$207 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$206, this$358.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().namespaceNodeTest$1);
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$207, this$359.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().anyKindTest$1)
+    })
+  })(this));
+  var name$55 = new $c_Lsourcecode_Name().init___T("kindTest");
+  this.kindTest$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$55.value$2, p$58, this$360.implicitReprOps$1);
+  var this$363 = $m_Lfastparse_noApi$();
+  var p$59 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$101$1) {
+    return (function() {
+      var this$362 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$361 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$208 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().simpleDocumentTest$1;
+      var p0$209 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$208, this$361.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().documentTestContainingElementTest$1);
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$209, this$362.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().documentTestContainingSchemaElementTest$1)
+    })
+  })(this));
+  var name$56 = new $c_Lsourcecode_Name().init___T("documentTest");
+  this.documentTest$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$56.value$2, p$59, this$363.implicitReprOps$1);
+  var this$367 = this.White$1;
   var this$366 = $m_Lfastparse_noApi$();
-  var p$59 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$102$1) {
+  var p$60 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$102$1) {
     return (function() {
-      var this$365 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$364 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$363 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$362 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$361 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$360 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$359 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$358 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$357 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$203 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().documentTest$1;
-      var p0$204 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$203, this$357.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().elementTest$1);
-      var p0$205 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$204, this$358.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().attributeTest$1);
-      var p0$206 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$205, this$359.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().schemaElementTest$1);
-      var p0$207 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$206, this$360.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().schemaAttributeTest$1);
-      var p0$208 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$207, this$361.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().piTest$1);
-      var p0$209 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$208, this$362.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().commentTest$1);
-      var p0$210 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$209, this$363.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().textTest$1);
-      var p0$211 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$210, this$364.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().namespaceNodeTest$1);
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$211, this$365.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().anyKindTest$1)
+      var this$365 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$364 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$210 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.documentNodeWord$1;
+      var p0$211 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$210, this$364.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$211, this$365.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
     })
   })(this));
-  var name$56 = new $c_Lsourcecode_Name().init___T("kindTest");
-  this.kindTest$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$56.value$2, p$59, this$366.implicitReprOps$1);
-  var this$369 = $m_Lfastparse_noApi$();
-  var p$60 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$103$1) {
-    return (function() {
-      var this$368 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$367 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$212 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().simpleDocumentTest$1;
-      var p0$213 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$212, this$367.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().documentTestContainingElementTest$1);
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$213, this$368.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().documentTestContainingSchemaElementTest$1)
+  var name$57 = new $c_Lsourcecode_Name().init___T("simpleDocumentTest");
+  var p0$212 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$57.value$2, p$60, this$366.implicitReprOps$1);
+  this.simpleDocumentTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$212, this$367.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$103$1) {
+    return (function(x$5$2) {
+      $asUnit(x$5$2);
+      return $m_Leu_cdevreeze_xpathparser_ast_SimpleDocumentTest$()
     })
-  })(this));
-  var name$57 = new $c_Lsourcecode_Name().init___T("documentTest");
-  this.documentTest$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$57.value$2, p$60, this$369.implicitReprOps$1);
+  })(this)));
   var this$373 = this.White$1;
   var this$372 = $m_Lfastparse_noApi$();
   var p$61 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$104$1) {
     return (function() {
-      var this$371 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$370 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$214 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.documentNodeWord$1;
-      var p0$215 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$214, this$370.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$215, this$371.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
+      var this$370 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$369 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$368 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$213 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.documentNodeWord$1;
+      var p0$214 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$213, this$368.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$215 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$214, this$369.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().elementTest$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$119 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$215, this$370.WL$1);
+      var jsx$118 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1;
+      var this$371 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$119.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$118, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$371))
     })
   })(this));
-  var name$58 = new $c_Lsourcecode_Name().init___T("simpleDocumentTest");
+  var name$58 = new $c_Lsourcecode_Name().init___T("documentTestContainingElementTest");
   var p0$216 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$58.value$2, p$61, this$372.implicitReprOps$1);
-  this.simpleDocumentTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$216, this$373.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$105$1) {
-    return (function(x$5$2) {
-      $asUnit(x$5$2);
-      return $m_Leu_cdevreeze_xpathparser_ast_SimpleDocumentTest$()
+  this.documentTestContainingElementTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$216, this$373.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$105$1) {
+    return (function(x0$41$2) {
+      var x0$41 = $as_Leu_cdevreeze_xpathparser_ast_ElementTest(x0$41$2);
+      return new $c_Leu_cdevreeze_xpathparser_ast_DocumentTestContainingElementTest().init___Leu_cdevreeze_xpathparser_ast_ElementTest(x0$41)
     })
   })(this)));
   var this$379 = this.White$1;
   var this$378 = $m_Lfastparse_noApi$();
   var p$62 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$106$1) {
     return (function() {
-      var this$376 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$375 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$374 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$217 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.documentNodeWord$1;
-      var p0$218 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$217, this$374.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$219 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$218, this$375.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().elementTest$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var this$376 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$375 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$374 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$217 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.documentNodeWord$1;
+      var p0$218 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$217, this$374.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$219 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$218, this$375.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().schemaElementTest$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
       var jsx$121 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$219, this$376.WL$1);
-      var jsx$120 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1;
+      var jsx$120 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1;
       var this$377 = $m_Lfastparse_core_Implicits$Sequencer$();
       return jsx$121.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$120, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$377))
     })
   })(this));
-  var name$59 = new $c_Lsourcecode_Name().init___T("documentTestContainingElementTest");
+  var name$59 = new $c_Lsourcecode_Name().init___T("documentTestContainingSchemaElementTest");
   var p0$220 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$59.value$2, p$62, this$378.implicitReprOps$1);
-  this.documentTestContainingElementTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$220, this$379.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$107$1) {
-    return (function(x0$41$2) {
-      var x0$41 = $as_Leu_cdevreeze_xpathparser_ast_ElementTest(x0$41$2);
-      return new $c_Leu_cdevreeze_xpathparser_ast_DocumentTestContainingElementTest().init___Leu_cdevreeze_xpathparser_ast_ElementTest(x0$41)
-    })
-  })(this)));
-  var this$385 = this.White$1;
-  var this$384 = $m_Lfastparse_noApi$();
-  var p$63 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$108$1) {
-    return (function() {
-      var this$382 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$381 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$380 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$221 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.documentNodeWord$1;
-      var p0$222 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$221, this$380.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$223 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$222, this$381.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().schemaElementTest$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$123 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$223, this$382.WL$1);
-      var jsx$122 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1;
-      var this$383 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$123.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$122, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$383))
-    })
-  })(this));
-  var name$60 = new $c_Lsourcecode_Name().init___T("documentTestContainingSchemaElementTest");
-  var p0$224 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$60.value$2, p$63, this$384.implicitReprOps$1);
-  this.documentTestContainingSchemaElementTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$224, this$385.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$109$1) {
+  this.documentTestContainingSchemaElementTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$220, this$379.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$107$1) {
     return (function(x0$42$2) {
       var x0$42 = $as_Leu_cdevreeze_xpathparser_ast_SchemaElementTest(x0$42$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_DocumentTestContainingSchemaElementTest().init___Leu_cdevreeze_xpathparser_ast_SchemaElementTest(x0$42)
     })
   })(this)));
-  var this$391 = $m_Lfastparse_noApi$();
-  var p$64 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$110$1) {
+  var this$385 = $m_Lfastparse_noApi$();
+  var p$63 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$108$1) {
     return (function() {
-      var this$390 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$389 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$388 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$387 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$386 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$225 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().anyElementTest$1;
-      var p0$226 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$225, this$386.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().elementNameTest$1);
-      var p0$227 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$226, this$387.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().elementNameAndTypeTest$1);
-      var p0$228 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$227, this$388.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().nillableElementNameAndTypeTest$1);
-      var p0$229 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$228, this$389.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().elementTypeTest$1);
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$229, this$390.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().nillableElementTypeTest$1)
+      var this$384 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$383 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$382 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$381 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$380 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$221 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().anyElementTest$1;
+      var p0$222 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$221, this$380.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().elementNameTest$1);
+      var p0$223 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$222, this$381.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().elementNameAndTypeTest$1);
+      var p0$224 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$223, this$382.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().nillableElementNameAndTypeTest$1);
+      var p0$225 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$224, this$383.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().elementTypeTest$1);
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$225, this$384.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().nillableElementTypeTest$1)
     })
   })(this));
-  var name$61 = new $c_Lsourcecode_Name().init___T("elementTest");
-  this.elementTest$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$61.value$2, p$64, this$391.implicitReprOps$1);
-  var this$397 = this.White$1;
-  var this$396 = $m_Lfastparse_noApi$();
-  var p$65 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$111$1) {
+  var name$60 = new $c_Lsourcecode_Name().init___T("elementTest");
+  this.elementTest$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$60.value$2, p$63, this$385.implicitReprOps$1);
+  var this$391 = this.White$1;
+  var this$390 = $m_Lfastparse_noApi$();
+  var p$64 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$109$1) {
     return (function() {
-      var this$395 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$393 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$392 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$230 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.elementWord$1;
-      var p0$231 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$230, this$392.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$124 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$231, this$393.WL$1);
-      var this$394 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$232 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.asterisk$1;
-      var p0$233 = jsx$124.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$232, this$394.WL$1).$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser($m_Lfastparse_core_Implicits$Optioner$UnitOptioner$()), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$233, this$395.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
+      var this$389 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$387 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$386 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$226 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.elementWord$1;
+      var p0$227 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$226, this$386.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$122 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$227, this$387.WL$1);
+      var this$388 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$228 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.asterisk$1;
+      var p0$229 = jsx$122.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$228, this$388.WL$1).$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser($m_Lfastparse_core_Implicits$Optioner$UnitOptioner$()), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$229, this$389.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
     })
   })(this));
-  var name$62 = new $c_Lsourcecode_Name().init___T("anyElementTest");
-  var p0$234 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$62.value$2, p$65, this$396.implicitReprOps$1);
-  this.anyElementTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$234, this$397.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$112$1) {
+  var name$61 = new $c_Lsourcecode_Name().init___T("anyElementTest");
+  var p0$230 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$61.value$2, p$64, this$390.implicitReprOps$1);
+  this.anyElementTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$230, this$391.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$110$1) {
     return (function(x$6$2) {
       $asUnit(x$6$2);
       return $m_Leu_cdevreeze_xpathparser_ast_AnyElementTest$()
     })
   })(this)));
-  var this$403 = this.White$1;
-  var this$402 = $m_Lfastparse_noApi$();
-  var p$66 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$113$1) {
+  var this$397 = this.White$1;
+  var this$396 = $m_Lfastparse_noApi$();
+  var p$65 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$111$1) {
     return (function() {
-      var this$400 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$399 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$398 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$235 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.elementWord$1;
-      var p0$236 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$235, this$398.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$237 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$236, this$399.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$126 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$237, this$400.WL$1);
-      var jsx$125 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1;
-      var this$401 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$126.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$125, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$401))
+      var this$394 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$393 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$392 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$231 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.elementWord$1;
+      var p0$232 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$231, this$392.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$233 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$232, this$393.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$124 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$233, this$394.WL$1);
+      var jsx$123 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1;
+      var this$395 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$124.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$123, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$395))
     })
   })(this));
-  var name$63 = new $c_Lsourcecode_Name().init___T("elementNameTest");
-  var p0$238 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$63.value$2, p$66, this$402.implicitReprOps$1);
-  this.elementNameTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$238, this$403.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$114$1) {
+  var name$62 = new $c_Lsourcecode_Name().init___T("elementNameTest");
+  var p0$234 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$62.value$2, p$65, this$396.implicitReprOps$1);
+  this.elementNameTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$234, this$397.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$112$1) {
     return (function(x0$43$2) {
       var x0$43 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$43$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_ElementNameTest().init___Leu_cdevreeze_xpathparser_ast_EQName(x0$43)
     })
   })(this)));
-  var this$413 = this.White$1;
-  var this$412 = $m_Lfastparse_noApi$();
-  var p$67 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$115$1) {
+  var this$407 = this.White$1;
+  var this$406 = $m_Lfastparse_noApi$();
+  var p$66 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$113$1) {
     return (function() {
-      var this$410 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$408 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$406 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$405 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$404 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$239 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.elementWord$1;
-      var p0$240 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$239, this$404.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$241 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$240, this$405.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$130 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$241, this$406.WL$1);
-      var jsx$129 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.comma$1;
-      var this$407 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$242 = jsx$130.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$129, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$407));
-      var jsx$131 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$242, this$408.WL$1);
-      var jsx$128 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1;
-      var this$409 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$243 = jsx$131.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$128, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$409)));
-      var jsx$132 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$243, this$410.WL$1);
-      var jsx$127 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1;
-      var this$411 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$132.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$127, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$411))
+      var this$404 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$402 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$400 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$399 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$398 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$235 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.elementWord$1;
+      var p0$236 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$235, this$398.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$237 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$236, this$399.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$128 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$237, this$400.WL$1);
+      var jsx$127 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.comma$1;
+      var this$401 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$238 = jsx$128.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$127, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$401));
+      var jsx$129 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$238, this$402.WL$1);
+      var jsx$126 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1;
+      var this$403 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$239 = jsx$129.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$126, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$403)));
+      var jsx$130 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$239, this$404.WL$1);
+      var jsx$125 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1;
+      var this$405 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$130.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$125, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$405))
     })
   })(this));
-  var name$64 = new $c_Lsourcecode_Name().init___T("elementNameAndTypeTest");
-  var p0$244 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$64.value$2, p$67, this$412.implicitReprOps$1);
-  this.elementNameAndTypeTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$244, this$413.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$116$1) {
+  var name$63 = new $c_Lsourcecode_Name().init___T("elementNameAndTypeTest");
+  var p0$240 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$63.value$2, p$66, this$406.implicitReprOps$1);
+  this.elementNameAndTypeTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$240, this$407.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$114$1) {
     return (function(x0$44$2) {
       var x0$44 = $as_T2(x0$44$2);
       if ((x0$44 !== null)) {
-        var name$65 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$44.$$und1__O());
+        var name$64 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$44.$$und1__O());
         var tpe = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$44.$$und2__O());
-        return new $c_Leu_cdevreeze_xpathparser_ast_ElementNameAndTypeTest().init___Leu_cdevreeze_xpathparser_ast_EQName__Leu_cdevreeze_xpathparser_ast_EQName(name$65, tpe)
+        return new $c_Leu_cdevreeze_xpathparser_ast_ElementNameAndTypeTest().init___Leu_cdevreeze_xpathparser_ast_EQName__Leu_cdevreeze_xpathparser_ast_EQName(name$64, tpe)
       } else {
         throw new $c_s_MatchError().init___O(x0$44)
       }
     })
   })(this)));
-  var this$425 = this.White$1;
-  var this$424 = $m_Lfastparse_noApi$();
-  var p$68 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$117$1) {
+  var this$419 = this.White$1;
+  var this$418 = $m_Lfastparse_noApi$();
+  var p$67 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$115$1) {
     return (function() {
-      var this$422 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$420 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$418 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$416 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$415 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$414 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$245 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.elementWord$1;
-      var p0$246 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$245, this$414.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$247 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$246, this$415.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$137 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$247, this$416.WL$1);
-      var jsx$136 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.comma$1;
+      var this$416 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$414 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$412 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$410 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$409 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$408 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$241 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.elementWord$1;
+      var p0$242 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$241, this$408.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$243 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$242, this$409.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$135 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$243, this$410.WL$1);
+      var jsx$134 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.comma$1;
+      var this$411 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$244 = jsx$135.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$134, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$411));
+      var jsx$136 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$244, this$412.WL$1);
+      var jsx$133 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1;
+      var this$413 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$245 = jsx$136.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$133, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$413)));
+      var jsx$137 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$245, this$414.WL$1);
+      var jsx$132 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.questionMark$1;
+      var this$415 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$246 = jsx$137.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$132, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$415));
+      var jsx$138 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$246, this$416.WL$1);
+      var jsx$131 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1;
       var this$417 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$248 = jsx$137.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$136, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$417));
-      var jsx$138 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$248, this$418.WL$1);
-      var jsx$135 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1;
-      var this$419 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$249 = jsx$138.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$135, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$419)));
-      var jsx$139 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$249, this$420.WL$1);
-      var jsx$134 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.questionMark$1;
-      var this$421 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$250 = jsx$139.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$134, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$421));
-      var jsx$140 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$250, this$422.WL$1);
-      var jsx$133 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1;
-      var this$423 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$140.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$133, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$423))
+      return jsx$138.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$131, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$417))
     })
   })(this));
-  var name$66 = new $c_Lsourcecode_Name().init___T("nillableElementNameAndTypeTest");
-  var p0$251 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$66.value$2, p$68, this$424.implicitReprOps$1);
-  this.nillableElementNameAndTypeTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$251, this$425.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$118$1) {
+  var name$65 = new $c_Lsourcecode_Name().init___T("nillableElementNameAndTypeTest");
+  var p0$247 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$65.value$2, p$67, this$418.implicitReprOps$1);
+  this.nillableElementNameAndTypeTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$247, this$419.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$116$1) {
     return (function(x0$45$2) {
       var x0$45 = $as_T2(x0$45$2);
       if ((x0$45 !== null)) {
-        var name$67 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$45.$$und1__O());
+        var name$66 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$45.$$und1__O());
         var tpe$1 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$45.$$und2__O());
-        return new $c_Leu_cdevreeze_xpathparser_ast_NillableElementNameAndTypeTest().init___Leu_cdevreeze_xpathparser_ast_EQName__Leu_cdevreeze_xpathparser_ast_EQName(name$67, tpe$1)
+        return new $c_Leu_cdevreeze_xpathparser_ast_NillableElementNameAndTypeTest().init___Leu_cdevreeze_xpathparser_ast_EQName__Leu_cdevreeze_xpathparser_ast_EQName(name$66, tpe$1)
       } else {
         throw new $c_s_MatchError().init___O(x0$45)
       }
     })
   })(this)));
-  var this$433 = this.White$1;
-  var this$432 = $m_Lfastparse_noApi$();
-  var p$69 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$119$1) {
+  var this$427 = this.White$1;
+  var this$426 = $m_Lfastparse_noApi$();
+  var p$68 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$117$1) {
     return (function() {
-      var this$430 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$429 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$428 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$427 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$426 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$252 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.elementWord$1;
-      var p0$253 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$252, this$426.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$254 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$253, this$427.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.asterisk$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$255 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$254, this$428.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.comma$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$256 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$255, this$429.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$142 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$256, this$430.WL$1);
-      var jsx$141 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1;
-      var this$431 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$142.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$141, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$431))
+      var this$424 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$423 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$422 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$421 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$420 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$248 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.elementWord$1;
+      var p0$249 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$248, this$420.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$250 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$249, this$421.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.asterisk$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$251 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$250, this$422.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.comma$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$252 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$251, this$423.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$140 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$252, this$424.WL$1);
+      var jsx$139 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1;
+      var this$425 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$140.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$139, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$425))
     })
   })(this));
-  var name$68 = new $c_Lsourcecode_Name().init___T("elementTypeTest");
-  var p0$257 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$68.value$2, p$69, this$432.implicitReprOps$1);
-  this.elementTypeTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$257, this$433.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$120$1) {
+  var name$67 = new $c_Lsourcecode_Name().init___T("elementTypeTest");
+  var p0$253 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$67.value$2, p$68, this$426.implicitReprOps$1);
+  this.elementTypeTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$253, this$427.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$118$1) {
     return (function(x0$46$2) {
       var x0$46 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$46$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_ElementTypeTest().init___Leu_cdevreeze_xpathparser_ast_EQName(x0$46)
     })
   })(this)));
-  var this$443 = this.White$1;
-  var this$442 = $m_Lfastparse_noApi$();
-  var p$70 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$121$1) {
+  var this$437 = this.White$1;
+  var this$436 = $m_Lfastparse_noApi$();
+  var p$69 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$119$1) {
     return (function() {
-      var this$440 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$438 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$437 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$436 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$435 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$434 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$258 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.elementWord$1;
-      var p0$259 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$258, this$434.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$260 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$259, this$435.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.asterisk$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$261 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$260, this$436.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.comma$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$262 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$261, this$437.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$145 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$262, this$438.WL$1);
-      var jsx$144 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.questionMark$1;
-      var this$439 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$263 = jsx$145.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$144, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$439));
-      var jsx$146 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$263, this$440.WL$1);
-      var jsx$143 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1;
-      var this$441 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$146.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$143, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$441))
+      var this$434 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$432 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$431 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$430 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$429 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$428 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$254 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.elementWord$1;
+      var p0$255 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$254, this$428.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$256 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$255, this$429.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.asterisk$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$257 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$256, this$430.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.comma$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$258 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$257, this$431.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$143 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$258, this$432.WL$1);
+      var jsx$142 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.questionMark$1;
+      var this$433 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$259 = jsx$143.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$142, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$433));
+      var jsx$144 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$259, this$434.WL$1);
+      var jsx$141 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1;
+      var this$435 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$144.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$141, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$435))
     })
   })(this));
-  var name$69 = new $c_Lsourcecode_Name().init___T("nillableElementTypeTest");
-  var p0$264 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$69.value$2, p$70, this$442.implicitReprOps$1);
-  this.nillableElementTypeTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$264, this$443.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$122$1) {
+  var name$68 = new $c_Lsourcecode_Name().init___T("nillableElementTypeTest");
+  var p0$260 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$68.value$2, p$69, this$436.implicitReprOps$1);
+  this.nillableElementTypeTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$260, this$437.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$120$1) {
     return (function(x0$47$2) {
       var x0$47 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$47$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_NillableElementTypeTest().init___Leu_cdevreeze_xpathparser_ast_EQName(x0$47)
     })
   })(this)));
-  var this$447 = $m_Lfastparse_noApi$();
-  var p$71 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$123$1) {
+  var this$441 = $m_Lfastparse_noApi$();
+  var p$70 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$121$1) {
     return (function() {
-      var this$446 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$445 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$444 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$265 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().anyAttributeTest$1;
-      var p0$266 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$265, this$444.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().attributeNameTest$1);
-      var p0$267 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$266, this$445.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().attributeNameAndTypeTest$1);
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$267, this$446.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().attributeTypeTest$1)
+      var this$440 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$439 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$438 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$261 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().anyAttributeTest$1;
+      var p0$262 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$261, this$438.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().attributeNameTest$1);
+      var p0$263 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$262, this$439.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().attributeNameAndTypeTest$1);
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$263, this$440.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().attributeTypeTest$1)
     })
   })(this));
-  var name$70 = new $c_Lsourcecode_Name().init___T("attributeTest");
-  this.attributeTest$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$70.value$2, p$71, this$447.implicitReprOps$1);
-  var this$453 = this.White$1;
-  var this$452 = $m_Lfastparse_noApi$();
-  var p$72 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$124$1) {
+  var name$69 = new $c_Lsourcecode_Name().init___T("attributeTest");
+  this.attributeTest$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$69.value$2, p$70, this$441.implicitReprOps$1);
+  var this$447 = this.White$1;
+  var this$446 = $m_Lfastparse_noApi$();
+  var p$71 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$122$1) {
     return (function() {
-      var this$451 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$449 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$448 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$268 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.attributeWord$1;
-      var p0$269 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$268, this$448.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$147 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$269, this$449.WL$1);
-      var this$450 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$270 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.asterisk$1;
-      var p0$271 = jsx$147.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$270, this$450.WL$1).$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser($m_Lfastparse_core_Implicits$Optioner$UnitOptioner$()), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$271, this$451.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
+      var this$445 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$443 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$442 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$264 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.attributeWord$1;
+      var p0$265 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$264, this$442.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$145 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$265, this$443.WL$1);
+      var this$444 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$266 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.asterisk$1;
+      var p0$267 = jsx$145.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$266, this$444.WL$1).$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser($m_Lfastparse_core_Implicits$Optioner$UnitOptioner$()), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$267, this$445.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
     })
   })(this));
-  var name$71 = new $c_Lsourcecode_Name().init___T("anyAttributeTest");
-  var p0$272 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$71.value$2, p$72, this$452.implicitReprOps$1);
-  this.anyAttributeTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$272, this$453.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$125$1) {
+  var name$70 = new $c_Lsourcecode_Name().init___T("anyAttributeTest");
+  var p0$268 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$70.value$2, p$71, this$446.implicitReprOps$1);
+  this.anyAttributeTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$268, this$447.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$123$1) {
     return (function(x$7$2) {
       $asUnit(x$7$2);
       return $m_Leu_cdevreeze_xpathparser_ast_AnyAttributeTest$()
     })
   })(this)));
-  var this$459 = this.White$1;
-  var this$458 = $m_Lfastparse_noApi$();
-  var p$73 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$126$1) {
+  var this$453 = this.White$1;
+  var this$452 = $m_Lfastparse_noApi$();
+  var p$72 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$124$1) {
     return (function() {
-      var this$456 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$455 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$454 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$273 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.attributeWord$1;
-      var p0$274 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$273, this$454.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$275 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$274, this$455.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$149 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$275, this$456.WL$1);
-      var jsx$148 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1;
-      var this$457 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$149.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$148, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$457))
+      var this$450 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$449 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$448 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$269 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.attributeWord$1;
+      var p0$270 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$269, this$448.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$271 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$270, this$449.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$147 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$271, this$450.WL$1);
+      var jsx$146 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1;
+      var this$451 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$147.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$146, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$451))
     })
   })(this));
-  var name$72 = new $c_Lsourcecode_Name().init___T("attributeNameTest");
-  var p0$276 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$72.value$2, p$73, this$458.implicitReprOps$1);
-  this.attributeNameTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$276, this$459.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$127$1) {
+  var name$71 = new $c_Lsourcecode_Name().init___T("attributeNameTest");
+  var p0$272 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$71.value$2, p$72, this$452.implicitReprOps$1);
+  this.attributeNameTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$272, this$453.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$125$1) {
     return (function(x0$48$2) {
       var x0$48 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$48$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_AttributeNameTest().init___Leu_cdevreeze_xpathparser_ast_EQName(x0$48)
     })
   })(this)));
-  var this$469 = this.White$1;
-  var this$468 = $m_Lfastparse_noApi$();
-  var p$74 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$128$1) {
+  var this$463 = this.White$1;
+  var this$462 = $m_Lfastparse_noApi$();
+  var p$73 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$126$1) {
     return (function() {
-      var this$466 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$464 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$462 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$461 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$460 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$277 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.attributeWord$1;
-      var p0$278 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$277, this$460.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$279 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$278, this$461.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$153 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$279, this$462.WL$1);
-      var jsx$152 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.comma$1;
-      var this$463 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$280 = jsx$153.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$152, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$463));
-      var jsx$154 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$280, this$464.WL$1);
-      var jsx$151 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1;
-      var this$465 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$281 = jsx$154.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$151, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$465)));
-      var jsx$155 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$281, this$466.WL$1);
-      var jsx$150 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1;
-      var this$467 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$155.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$150, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$467))
+      var this$460 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$458 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$456 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$455 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$454 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$273 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.attributeWord$1;
+      var p0$274 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$273, this$454.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$275 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$274, this$455.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$151 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$275, this$456.WL$1);
+      var jsx$150 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.comma$1;
+      var this$457 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$276 = jsx$151.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$150, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$457));
+      var jsx$152 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$276, this$458.WL$1);
+      var jsx$149 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1;
+      var this$459 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$277 = jsx$152.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$149, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$459)));
+      var jsx$153 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$277, this$460.WL$1);
+      var jsx$148 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1;
+      var this$461 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$153.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$148, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$461))
     })
   })(this));
-  var name$73 = new $c_Lsourcecode_Name().init___T("attributeNameAndTypeTest");
-  var p0$282 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$73.value$2, p$74, this$468.implicitReprOps$1);
-  this.attributeNameAndTypeTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$282, this$469.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$129$1) {
+  var name$72 = new $c_Lsourcecode_Name().init___T("attributeNameAndTypeTest");
+  var p0$278 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$72.value$2, p$73, this$462.implicitReprOps$1);
+  this.attributeNameAndTypeTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$278, this$463.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$127$1) {
     return (function(x0$49$2) {
       var x0$49 = $as_T2(x0$49$2);
       if ((x0$49 !== null)) {
-        var name$74 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$49.$$und1__O());
+        var name$73 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$49.$$und1__O());
         var tpe$2 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$49.$$und2__O());
-        return new $c_Leu_cdevreeze_xpathparser_ast_AttributeNameAndTypeTest().init___Leu_cdevreeze_xpathparser_ast_EQName__Leu_cdevreeze_xpathparser_ast_EQName(name$74, tpe$2)
+        return new $c_Leu_cdevreeze_xpathparser_ast_AttributeNameAndTypeTest().init___Leu_cdevreeze_xpathparser_ast_EQName__Leu_cdevreeze_xpathparser_ast_EQName(name$73, tpe$2)
       } else {
         throw new $c_s_MatchError().init___O(x0$49)
       }
+    })
+  })(this)));
+  var this$471 = this.White$1;
+  var this$470 = $m_Lfastparse_noApi$();
+  var p$74 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$128$1) {
+    return (function() {
+      var this$468 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$467 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$466 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$465 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$464 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$279 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.attributeWord$1;
+      var p0$280 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$279, this$464.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$281 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$280, this$465.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.asterisk$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$282 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$281, this$466.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.comma$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$283 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$282, this$467.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$155 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$283, this$468.WL$1);
+      var jsx$154 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1;
+      var this$469 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$155.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$154, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$469))
+    })
+  })(this));
+  var name$74 = new $c_Lsourcecode_Name().init___T("attributeTypeTest");
+  var p0$284 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$74.value$2, p$74, this$470.implicitReprOps$1);
+  this.attributeTypeTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$284, this$471.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$129$1) {
+    return (function(x0$50$2) {
+      var x0$50 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$50$2);
+      return new $c_Leu_cdevreeze_xpathparser_ast_AttributeTypeTest().init___Leu_cdevreeze_xpathparser_ast_EQName(x0$50)
     })
   })(this)));
   var this$477 = this.White$1;
   var this$476 = $m_Lfastparse_noApi$();
   var p$75 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$130$1) {
     return (function() {
-      var this$474 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$473 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$472 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$471 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$470 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$283 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.attributeWord$1;
-      var p0$284 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$283, this$470.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$285 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$284, this$471.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.asterisk$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$286 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$285, this$472.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.comma$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$287 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$286, this$473.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var this$474 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$473 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$472 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$285 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.schemaElementWord$1;
+      var p0$286 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$285, this$472.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$287 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$286, this$473.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
       var jsx$157 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$287, this$474.WL$1);
-      var jsx$156 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1;
+      var jsx$156 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1;
       var this$475 = $m_Lfastparse_core_Implicits$Sequencer$();
       return jsx$157.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$156, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$475))
     })
   })(this));
-  var name$75 = new $c_Lsourcecode_Name().init___T("attributeTypeTest");
+  var name$75 = new $c_Lsourcecode_Name().init___T("schemaElementTest");
   var p0$288 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$75.value$2, p$75, this$476.implicitReprOps$1);
-  this.attributeTypeTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$288, this$477.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$131$1) {
-    return (function(x0$50$2) {
-      var x0$50 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$50$2);
-      return new $c_Leu_cdevreeze_xpathparser_ast_AttributeTypeTest().init___Leu_cdevreeze_xpathparser_ast_EQName(x0$50)
+  this.schemaElementTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$288, this$477.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$131$1) {
+    return (function(x0$51$2) {
+      var x0$51 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$51$2);
+      return new $c_Leu_cdevreeze_xpathparser_ast_SchemaElementTest().init___Leu_cdevreeze_xpathparser_ast_EQName(x0$51)
     })
   })(this)));
   var this$483 = this.White$1;
   var this$482 = $m_Lfastparse_noApi$();
   var p$76 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$132$1) {
     return (function() {
-      var this$480 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$479 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$478 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$289 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.schemaElementWord$1;
-      var p0$290 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$289, this$478.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$291 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$290, this$479.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var this$480 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$479 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$478 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$289 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.schemaAttributeWord$1;
+      var p0$290 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$289, this$478.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$291 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$290, this$479.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
       var jsx$159 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$291, this$480.WL$1);
-      var jsx$158 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1;
+      var jsx$158 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1;
       var this$481 = $m_Lfastparse_core_Implicits$Sequencer$();
       return jsx$159.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$158, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$481))
     })
   })(this));
-  var name$76 = new $c_Lsourcecode_Name().init___T("schemaElementTest");
+  var name$76 = new $c_Lsourcecode_Name().init___T("schemaAttributeTest");
   var p0$292 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$76.value$2, p$76, this$482.implicitReprOps$1);
-  this.schemaElementTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$292, this$483.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$133$1) {
-    return (function(x0$51$2) {
-      var x0$51 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$51$2);
-      return new $c_Leu_cdevreeze_xpathparser_ast_SchemaElementTest().init___Leu_cdevreeze_xpathparser_ast_EQName(x0$51)
-    })
-  })(this)));
-  var this$489 = this.White$1;
-  var this$488 = $m_Lfastparse_noApi$();
-  var p$77 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$134$1) {
-    return (function() {
-      var this$486 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$485 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$484 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$293 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.schemaAttributeWord$1;
-      var p0$294 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$293, this$484.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$295 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$294, this$485.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$161 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$295, this$486.WL$1);
-      var jsx$160 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1;
-      var this$487 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$161.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$160, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$487))
-    })
-  })(this));
-  var name$77 = new $c_Lsourcecode_Name().init___T("schemaAttributeTest");
-  var p0$296 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$77.value$2, p$77, this$488.implicitReprOps$1);
-  this.schemaAttributeTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$296, this$489.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$135$1) {
+  this.schemaAttributeTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$292, this$483.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$133$1) {
     return (function(x0$52$2) {
       var x0$52 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$52$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_SchemaAttributeTest().init___Leu_cdevreeze_xpathparser_ast_EQName(x0$52)
     })
   })(this)));
-  var this$492 = $m_Lfastparse_noApi$();
-  var p$78 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$136$1) {
+  var this$486 = $m_Lfastparse_noApi$();
+  var p$77 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$134$1) {
     return (function() {
-      var this$491 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$490 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$297 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().simplePiTest$1;
-      var p0$298 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$297, this$490.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().targetPiTest$1);
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$298, this$491.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().dataPiTest$1)
+      var this$485 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$484 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$293 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().simplePiTest$1;
+      var p0$294 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$293, this$484.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().targetPiTest$1);
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$294, this$485.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().dataPiTest$1)
     })
   })(this));
-  var name$78 = new $c_Lsourcecode_Name().init___T("piTest");
-  this.piTest$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$78.value$2, p$78, this$492.implicitReprOps$1);
+  var name$77 = new $c_Lsourcecode_Name().init___T("piTest");
+  this.piTest$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$77.value$2, p$77, this$486.implicitReprOps$1);
+  var this$490 = this.White$1;
+  var this$489 = $m_Lfastparse_noApi$();
+  var p$78 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$135$1) {
+    return (function() {
+      var this$488 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$487 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$295 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.processingInstructionWord$1;
+      var p0$296 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$295, this$487.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$296, this$488.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
+    })
+  })(this));
+  var name$78 = new $c_Lsourcecode_Name().init___T("simplePiTest");
+  var p0$297 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$78.value$2, p$78, this$489.implicitReprOps$1);
+  this.simplePiTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$297, this$490.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$136$1) {
+    return (function(x$8$2) {
+      $asUnit(x$8$2);
+      return $m_Leu_cdevreeze_xpathparser_ast_SimplePITest$()
+    })
+  })(this)));
   var this$496 = this.White$1;
   var this$495 = $m_Lfastparse_noApi$();
   var p$79 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$137$1) {
     return (function() {
-      var this$494 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$493 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$299 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.processingInstructionWord$1;
-      var p0$300 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$299, this$493.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$300, this$494.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
+      var this$493 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$492 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$491 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$298 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.processingInstructionWord$1;
+      var p0$299 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$298, this$491.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$300 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$299, this$492.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().ncName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$161 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$300, this$493.WL$1);
+      var jsx$160 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1;
+      var this$494 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$161.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$160, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$494))
     })
   })(this));
-  var name$79 = new $c_Lsourcecode_Name().init___T("simplePiTest");
+  var name$79 = new $c_Lsourcecode_Name().init___T("targetPiTest");
   var p0$301 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$79.value$2, p$79, this$495.implicitReprOps$1);
-  this.simplePiTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$301, this$496.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$138$1) {
-    return (function(x$8$2) {
-      $asUnit(x$8$2);
-      return $m_Leu_cdevreeze_xpathparser_ast_SimplePITest$()
+  this.targetPiTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$301, this$496.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$138$1) {
+    return (function(x0$53$2) {
+      var x0$53 = $as_Leu_cdevreeze_xpathparser_ast_NCName(x0$53$2);
+      return new $c_Leu_cdevreeze_xpathparser_ast_TargetPITest().init___Leu_cdevreeze_xpathparser_ast_NCName(x0$53)
     })
   })(this)));
   var this$502 = this.White$1;
   var this$501 = $m_Lfastparse_noApi$();
   var p$80 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$139$1) {
     return (function() {
-      var this$499 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$498 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$497 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$302 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.processingInstructionWord$1;
-      var p0$303 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$302, this$497.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$304 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$303, this$498.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().ncName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var this$499 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$498 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$497 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$302 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.processingInstructionWord$1;
+      var p0$303 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$302, this$497.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$304 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$303, this$498.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().stringLiteral$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
       var jsx$163 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$304, this$499.WL$1);
-      var jsx$162 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1;
+      var jsx$162 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1;
       var this$500 = $m_Lfastparse_core_Implicits$Sequencer$();
       return jsx$163.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$162, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$500))
     })
   })(this));
-  var name$80 = new $c_Lsourcecode_Name().init___T("targetPiTest");
+  var name$80 = new $c_Lsourcecode_Name().init___T("dataPiTest");
   var p0$305 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$80.value$2, p$80, this$501.implicitReprOps$1);
-  this.targetPiTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$305, this$502.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$140$1) {
-    return (function(x0$53$2) {
-      var x0$53 = $as_Leu_cdevreeze_xpathparser_ast_NCName(x0$53$2);
-      return new $c_Leu_cdevreeze_xpathparser_ast_TargetPITest().init___Leu_cdevreeze_xpathparser_ast_NCName(x0$53)
-    })
-  })(this)));
-  var this$508 = this.White$1;
-  var this$507 = $m_Lfastparse_noApi$();
-  var p$81 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$141$1) {
-    return (function() {
-      var this$505 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$504 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$503 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$306 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.processingInstructionWord$1;
-      var p0$307 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$306, this$503.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$308 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$307, this$504.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().stringLiteral$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$165 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$308, this$505.WL$1);
-      var jsx$164 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1;
-      var this$506 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$165.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$164, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$506))
-    })
-  })(this));
-  var name$81 = new $c_Lsourcecode_Name().init___T("dataPiTest");
-  var p0$309 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$81.value$2, p$81, this$507.implicitReprOps$1);
-  this.dataPiTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$309, this$508.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$142$1) {
+  this.dataPiTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$305, this$502.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$140$1) {
     return (function(x0$54$2) {
       var x0$54 = $as_Leu_cdevreeze_xpathparser_ast_StringLiteral(x0$54$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_DataPITest().init___Leu_cdevreeze_xpathparser_ast_StringLiteral(x0$54)
     })
   })(this)));
-  var this$512 = this.White$1;
-  var this$511 = $m_Lfastparse_noApi$();
-  var p$82 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$143$1) {
+  var this$506 = this.White$1;
+  var this$505 = $m_Lfastparse_noApi$();
+  var p$81 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$141$1) {
     return (function() {
-      var this$510 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$509 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$310 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.commentWord$1;
-      var p0$311 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$310, this$509.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$311, this$510.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
+      var this$504 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$503 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$306 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.commentWord$1;
+      var p0$307 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$306, this$503.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$307, this$504.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
     })
   })(this));
-  var name$82 = new $c_Lsourcecode_Name().init___T("commentTest");
-  var p0$312 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$82.value$2, p$82, this$511.implicitReprOps$1);
-  this.commentTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$312, this$512.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$144$1) {
+  var name$81 = new $c_Lsourcecode_Name().init___T("commentTest");
+  var p0$308 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$81.value$2, p$81, this$505.implicitReprOps$1);
+  this.commentTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$308, this$506.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$142$1) {
     return (function(x$9$2) {
       $asUnit(x$9$2);
       return $m_Leu_cdevreeze_xpathparser_ast_CommentTest$()
     })
   })(this)));
-  var this$516 = this.White$1;
-  var this$515 = $m_Lfastparse_noApi$();
-  var p$83 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$145$1) {
+  var this$510 = this.White$1;
+  var this$509 = $m_Lfastparse_noApi$();
+  var p$82 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$143$1) {
     return (function() {
-      var this$514 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$513 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$313 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.textWord$1;
-      var p0$314 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$313, this$513.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$314, this$514.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
+      var this$508 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$507 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$309 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.textWord$1;
+      var p0$310 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$309, this$507.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$310, this$508.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
     })
   })(this));
-  var name$83 = new $c_Lsourcecode_Name().init___T("textTest");
-  var p0$315 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$83.value$2, p$83, this$515.implicitReprOps$1);
-  this.textTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$315, this$516.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$146$1) {
+  var name$82 = new $c_Lsourcecode_Name().init___T("textTest");
+  var p0$311 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$82.value$2, p$82, this$509.implicitReprOps$1);
+  this.textTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$311, this$510.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$144$1) {
     return (function(x$10$2) {
       $asUnit(x$10$2);
       return $m_Leu_cdevreeze_xpathparser_ast_TextTest$()
     })
   })(this)));
-  var this$520 = this.White$1;
-  var this$519 = $m_Lfastparse_noApi$();
-  var p$84 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$147$1) {
+  var this$514 = this.White$1;
+  var this$513 = $m_Lfastparse_noApi$();
+  var p$83 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$145$1) {
     return (function() {
-      var this$518 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$517 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$316 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.namespaceNodeWord$1;
-      var p0$317 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$316, this$517.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$317, this$518.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
+      var this$512 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$511 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$312 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.namespaceNodeWord$1;
+      var p0$313 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$312, this$511.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$313, this$512.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
     })
   })(this));
-  var name$84 = new $c_Lsourcecode_Name().init___T("namespaceNodeTest");
-  var p0$318 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$84.value$2, p$84, this$519.implicitReprOps$1);
-  this.namespaceNodeTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$318, this$520.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$148$1) {
+  var name$83 = new $c_Lsourcecode_Name().init___T("namespaceNodeTest");
+  var p0$314 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$83.value$2, p$83, this$513.implicitReprOps$1);
+  this.namespaceNodeTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$314, this$514.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$146$1) {
     return (function(x$11$2) {
       $asUnit(x$11$2);
       return $m_Leu_cdevreeze_xpathparser_ast_NamespaceNodeTest$()
     })
   })(this)));
-  var this$524 = this.White$1;
-  var this$523 = $m_Lfastparse_noApi$();
-  var p$85 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$149$1) {
+  var this$518 = this.White$1;
+  var this$517 = $m_Lfastparse_noApi$();
+  var p$84 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$147$1) {
     return (function() {
-      var this$522 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$521 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$319 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.nodeWord$1;
-      var p0$320 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$319, this$521.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$320, this$522.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
+      var this$516 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$515 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$315 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.nodeWord$1;
+      var p0$316 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$315, this$515.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$316, this$516.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
     })
   })(this));
-  var name$85 = new $c_Lsourcecode_Name().init___T("anyKindTest");
-  var p0$321 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$85.value$2, p$85, this$523.implicitReprOps$1);
-  this.anyKindTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$321, this$524.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$150$1) {
+  var name$84 = new $c_Lsourcecode_Name().init___T("anyKindTest");
+  var p0$317 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$84.value$2, p$84, this$517.implicitReprOps$1);
+  this.anyKindTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$317, this$518.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$148$1) {
     return (function(x$12$2) {
       $asUnit(x$12$2);
       return $m_Leu_cdevreeze_xpathparser_ast_AnyKindTest$()
     })
   })(this)));
-  var this$532 = this.White$1;
-  var this$531 = $m_Lfastparse_noApi$();
-  var p$86 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$151$1) {
+  var this$526 = this.White$1;
+  var this$525 = $m_Lfastparse_noApi$();
+  var p$85 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$149$1) {
     return (function() {
-      var this$525 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$322 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().primaryExpr$1;
-      var jsx$168 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$322, this$525.WL$1);
-      var this$528 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$527 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$526 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$323 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().predicate$1;
-      var p0$324 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$323, this$526.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().argumentList$1);
-      var p0$325 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$324, this$527.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().lookup$1);
-      var jsx$167 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$325, this$528.WL$1);
-      var this$529 = $m_Lfastparse_core_Implicits$Repeater$();
-      var jsx$166 = jsx$167.rep__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$529));
-      var this$530 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$168.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$166, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$530)))
+      var this$519 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$318 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().primaryExpr$1;
+      var jsx$166 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$318, this$519.WL$1);
+      var this$522 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$521 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$520 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$319 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().predicate$1;
+      var p0$320 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$319, this$520.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().argumentList$1);
+      var p0$321 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$320, this$521.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().lookup$1);
+      var jsx$165 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$321, this$522.WL$1);
+      var this$523 = $m_Lfastparse_core_Implicits$Repeater$();
+      var jsx$164 = jsx$165.rep__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$523));
+      var this$524 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$166.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$164, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$524)))
     })
   })(this));
-  var name$86 = new $c_Lsourcecode_Name().init___T("postfixExpr");
-  var p0$326 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$86.value$2, p$86, this$531.implicitReprOps$1);
-  this.postfixExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$326, this$532.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$152$1) {
+  var name$85 = new $c_Lsourcecode_Name().init___T("postfixExpr");
+  var p0$322 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$85.value$2, p$85, this$525.implicitReprOps$1);
+  this.postfixExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$322, this$526.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$150$1) {
     return (function(x0$55$2) {
       var x0$55 = $as_T2(x0$55$2);
       if ((x0$55 !== null)) {
@@ -7041,110 +7017,110 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$539 = this.White$1;
-  var this$538 = $m_Lfastparse_noApi$();
-  var p$87 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$153$1) {
+  var this$533 = this.White$1;
+  var this$532 = $m_Lfastparse_noApi$();
+  var p$86 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$151$1) {
     return (function() {
-      var this$536 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$533 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$327 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1;
-      var jsx$170 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$327, this$533.WL$1);
-      var this$534 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$328 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().argument$1;
-      var qual$9 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$328, this$534.WL$1);
-      var x$50 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.comma$1;
-      var this$535 = $m_Lfastparse_core_Implicits$Repeater$();
-      var p0$329 = jsx$170.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(qual$9.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(0, x$50, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$535)), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$171 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$329, this$536.WL$1);
-      var jsx$169 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1;
-      var this$537 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$171.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$169, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$537))
+      var this$530 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$527 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$323 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1;
+      var jsx$168 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$323, this$527.WL$1);
+      var this$528 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$324 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().argument$1;
+      var qual$9 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$324, this$528.WL$1);
+      var x$50 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.comma$1;
+      var this$529 = $m_Lfastparse_core_Implicits$Repeater$();
+      var p0$325 = jsx$168.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(qual$9.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(0, x$50, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$529)), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$169 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$325, this$530.WL$1);
+      var jsx$167 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1;
+      var this$531 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$169.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$167, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$531))
     })
   })(this));
-  var name$87 = new $c_Lsourcecode_Name().init___T("argumentList");
-  var p0$330 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$87.value$2, p$87, this$538.implicitReprOps$1);
-  this.argumentList$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$330, this$539.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$154$1) {
+  var name$86 = new $c_Lsourcecode_Name().init___T("argumentList");
+  var p0$326 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$86.value$2, p$86, this$532.implicitReprOps$1);
+  this.argumentList$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$326, this$533.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$152$1) {
     return (function(x0$56$2) {
       var x0$56 = $as_sc_Seq(x0$56$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_ArgumentList().init___sci_IndexedSeq(x0$56.toIndexedSeq__sci_IndexedSeq())
     })
   })(this)));
-  var this$541 = $m_Lfastparse_noApi$();
-  var p$88 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$155$1) {
+  var this$535 = $m_Lfastparse_noApi$();
+  var p$87 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$153$1) {
     return (function() {
-      var this$540 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$331 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().argumentPlaceholder$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$331, this$540.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().exprSingleArgument$1)
+      var this$534 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$327 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().argumentPlaceholder$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$327, this$534.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().exprSingleArgument$1)
     })
   })(this));
-  var name$88 = new $c_Lsourcecode_Name().init___T("argument");
-  this.argument$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$88.value$2, p$88, this$541.implicitReprOps$1);
-  var this$543 = this.White$1;
-  var this$542 = $m_Lfastparse_noApi$();
-  var p$89 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$156$1) {
+  var name$87 = new $c_Lsourcecode_Name().init___T("argument");
+  this.argument$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$87.value$2, p$87, this$535.implicitReprOps$1);
+  var this$537 = this.White$1;
+  var this$536 = $m_Lfastparse_noApi$();
+  var p$88 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$154$1) {
     return (function() {
-      return $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.questionMark$1
+      return $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.questionMark$1
     })
   })(this));
-  var name$89 = new $c_Lsourcecode_Name().init___T("argumentPlaceholder");
-  var p0$332 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$89.value$2, p$89, this$542.implicitReprOps$1);
-  this.argumentPlaceholder$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$332, this$543.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$157$1) {
+  var name$88 = new $c_Lsourcecode_Name().init___T("argumentPlaceholder");
+  var p0$328 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$88.value$2, p$88, this$536.implicitReprOps$1);
+  this.argumentPlaceholder$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$328, this$537.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$155$1) {
     return (function(x$13$2) {
       $asUnit(x$13$2);
       return $m_Leu_cdevreeze_xpathparser_ast_ArgumentPlaceholder$()
     })
   })(this)));
-  var this$545 = this.White$1;
-  var this$544 = $m_Lfastparse_noApi$();
-  var p$90 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$158$1) {
+  var this$539 = this.White$1;
+  var this$538 = $m_Lfastparse_noApi$();
+  var p$89 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$156$1) {
     return (function() {
-      return $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().exprSingle$1
+      return $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().exprSingle$1
     })
   })(this));
-  var name$90 = new $c_Lsourcecode_Name().init___T("exprSingleArgument");
-  var p0$333 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$90.value$2, p$90, this$544.implicitReprOps$1);
-  this.exprSingleArgument$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$333, this$545.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$159$1) {
+  var name$89 = new $c_Lsourcecode_Name().init___T("exprSingleArgument");
+  var p0$329 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$89.value$2, p$89, this$538.implicitReprOps$1);
+  this.exprSingleArgument$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$329, this$539.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$157$1) {
     return (function(x0$57$2) {
       var x0$57 = $as_Leu_cdevreeze_xpathparser_ast_ExprSingle(x0$57$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_ExprSingleArgument().init___Leu_cdevreeze_xpathparser_ast_ExprSingle(x0$57)
+    })
+  })(this)));
+  var this$542 = this.White$1;
+  var this$541 = $m_Lfastparse_noApi$();
+  var p$90 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$158$1) {
+    return (function() {
+      var this$540 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$330 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.questionMark$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$330, this$540.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().keySpecifier$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
+    })
+  })(this));
+  var name$90 = new $c_Lsourcecode_Name().init___T("lookup");
+  var p0$331 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$90.value$2, p$90, this$541.implicitReprOps$1);
+  this.lookup$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$331, this$542.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$159$1) {
+    return (function(x0$58$2) {
+      var x0$58 = $as_Leu_cdevreeze_xpathparser_ast_KeySpecifier(x0$58$2);
+      return new $c_Leu_cdevreeze_xpathparser_ast_PostfixLookup().init___Leu_cdevreeze_xpathparser_ast_KeySpecifier(x0$58)
     })
   })(this)));
   var this$548 = this.White$1;
   var this$547 = $m_Lfastparse_noApi$();
   var p$91 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$160$1) {
     return (function() {
-      var this$546 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$334 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.questionMark$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$334, this$546.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().keySpecifier$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
+      var this$546 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$544 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$543 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$332 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().ncName$1;
+      var p0$333 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$332, this$543.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().integerLiteral$1);
+      var jsx$170 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$333, this$544.WL$1);
+      var this$545 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$334 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.asterisk$1;
+      var p0$335 = jsx$170.$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$334, this$545.WL$1).$$bang__Lfastparse_core_Parser());
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$335, this$546.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().parenthesizedExpr$1)
     })
   })(this));
-  var name$91 = new $c_Lsourcecode_Name().init___T("lookup");
-  var p0$335 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$91.value$2, p$91, this$547.implicitReprOps$1);
-  this.lookup$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$335, this$548.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$161$1) {
-    return (function(x0$58$2) {
-      var x0$58 = $as_Leu_cdevreeze_xpathparser_ast_KeySpecifier(x0$58$2);
-      return new $c_Leu_cdevreeze_xpathparser_ast_PostfixLookup().init___Leu_cdevreeze_xpathparser_ast_KeySpecifier(x0$58)
-    })
-  })(this)));
-  var this$554 = this.White$1;
-  var this$553 = $m_Lfastparse_noApi$();
-  var p$92 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$162$1) {
-    return (function() {
-      var this$552 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$550 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$549 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$336 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().ncName$1;
-      var p0$337 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$336, this$549.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().integerLiteral$1);
-      var jsx$172 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$337, this$550.WL$1);
-      var this$551 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$338 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.asterisk$1;
-      var p0$339 = jsx$172.$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$338, this$551.WL$1).$$bang__Lfastparse_core_Parser());
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$339, this$552.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().parenthesizedExpr$1)
-    })
-  })(this));
-  var name$92 = new $c_Lsourcecode_Name().init___T("keySpecifier");
-  var p0$340 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$92.value$2, p$92, this$553.implicitReprOps$1);
-  this.keySpecifier$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$340, this$554.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$163$1) {
+  var name$91 = new $c_Lsourcecode_Name().init___T("keySpecifier");
+  var p0$336 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$91.value$2, p$91, this$547.implicitReprOps$1);
+  this.keySpecifier$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$336, this$548.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$161$1) {
     return (function(x0$59$2) {
       if ($is_Leu_cdevreeze_xpathparser_ast_NCName(x0$59$2)) {
         var x2$1 = $as_Leu_cdevreeze_xpathparser_ast_NCName(x0$59$2);
@@ -7162,326 +7138,326 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$558 = this.White$1;
-  var this$557 = $m_Lfastparse_noApi$();
-  var p$93 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$164$1) {
+  var this$552 = this.White$1;
+  var this$551 = $m_Lfastparse_noApi$();
+  var p$92 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$162$1) {
     return (function() {
-      var this$555 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$341 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().param$1;
-      var qual$10 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$341, this$555.WL$1);
-      var x$55 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.comma$1;
-      var this$556 = $m_Lfastparse_core_Implicits$Repeater$();
-      return qual$10.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$55, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$556))
+      var this$549 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$337 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().param$1;
+      var qual$10 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$337, this$549.WL$1);
+      var x$55 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.comma$1;
+      var this$550 = $m_Lfastparse_core_Implicits$Repeater$();
+      return qual$10.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$55, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$550))
     })
   })(this));
-  var name$93 = new $c_Lsourcecode_Name().init___T("paramList");
-  var p0$342 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$93.value$2, p$93, this$557.implicitReprOps$1);
-  this.paramList$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$342, this$558.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$165$1) {
+  var name$92 = new $c_Lsourcecode_Name().init___T("paramList");
+  var p0$338 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$92.value$2, p$92, this$551.implicitReprOps$1);
+  this.paramList$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$338, this$552.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$163$1) {
     return (function(x0$60$2) {
       var x0$60 = $as_sc_Seq(x0$60$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_ParamList().init___sci_IndexedSeq(x0$60.toIndexedSeq__sci_IndexedSeq())
     })
   })(this)));
-  var this$566 = this.White$1;
-  var this$565 = $m_Lfastparse_noApi$();
-  var p$94 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$166$1) {
+  var this$560 = this.White$1;
+  var this$559 = $m_Lfastparse_noApi$();
+  var p$93 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$164$1) {
     return (function() {
-      var this$560 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$559 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$343 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.dollar$1;
-      var p0$344 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$343, this$559.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$175 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$344, this$560.WL$1);
-      var this$562 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$561 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$345 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.asWord$1;
-      var p0$346 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$345, this$561.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().sequenceType$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$174 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$346, this$562.WL$1);
-      var this$563 = $m_Lfastparse_core_Implicits$Optioner$();
-      var jsx$173 = jsx$174.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$563));
-      var this$564 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$175.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$173, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$564)))
+      var this$554 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$553 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$339 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.dollar$1;
+      var p0$340 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$339, this$553.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$173 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$340, this$554.WL$1);
+      var this$556 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$555 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$341 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.asWord$1;
+      var p0$342 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$341, this$555.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().sequenceType$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$172 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$342, this$556.WL$1);
+      var this$557 = $m_Lfastparse_core_Implicits$Optioner$();
+      var jsx$171 = jsx$172.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$557));
+      var this$558 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$173.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$171, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$558)))
     })
   })(this));
-  var name$94 = new $c_Lsourcecode_Name().init___T("param");
-  var p0$347 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$94.value$2, p$94, this$565.implicitReprOps$1);
-  this.param$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$347, this$566.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$167$1) {
+  var name$93 = new $c_Lsourcecode_Name().init___T("param");
+  var p0$343 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$93.value$2, p$93, this$559.implicitReprOps$1);
+  this.param$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$343, this$560.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$165$1) {
     return (function(x0$61$2) {
       var x0$61 = $as_T2(x0$61$2);
       if ((x0$61 !== null)) {
-        var name$95 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$61.$$und1__O());
+        var name$94 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$61.$$und1__O());
         var tpeOption$4 = $as_s_Option(x0$61.$$und2__O());
         var f$5 = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function($this$6) {
           return (function(t$2) {
             var t = $as_Leu_cdevreeze_xpathparser_ast_SequenceType(t$2);
             return new $c_Leu_cdevreeze_xpathparser_ast_TypeDeclaration().init___Leu_cdevreeze_xpathparser_ast_SequenceType(t)
           })
-        })(this$167$1));
-        return new $c_Leu_cdevreeze_xpathparser_ast_Param().init___Leu_cdevreeze_xpathparser_ast_EQName__s_Option(name$95, (tpeOption$4.isEmpty__Z() ? $m_s_None$() : new $c_s_Some().init___O(f$5.apply__O__O(tpeOption$4.get__O()))))
+        })(this$165$1));
+        return new $c_Leu_cdevreeze_xpathparser_ast_Param().init___Leu_cdevreeze_xpathparser_ast_EQName__s_Option(name$94, (tpeOption$4.isEmpty__Z() ? $m_s_None$() : new $c_s_Some().init___O(f$5.apply__O__O(tpeOption$4.get__O()))))
       } else {
         throw new $c_s_MatchError().init___O(x0$61)
       }
     })
   })(this)));
-  var this$571 = this.White$1;
-  var this$570 = $m_Lfastparse_noApi$();
-  var p$95 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$168$1) {
+  var this$565 = this.White$1;
+  var this$564 = $m_Lfastparse_noApi$();
+  var p$94 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$166$1) {
     return (function() {
-      var this$568 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$567 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$348 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openBracket$1;
-      var p0$349 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$348, this$567.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().expr$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$177 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$349, this$568.WL$1);
-      var jsx$176 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeBracket$1;
-      var this$569 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$177.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$176, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$569))
+      var this$562 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$561 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$344 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openBracket$1;
+      var p0$345 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$344, this$561.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().expr$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$175 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$345, this$562.WL$1);
+      var jsx$174 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeBracket$1;
+      var this$563 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$175.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$174, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$563))
     })
   })(this));
-  var name$96 = new $c_Lsourcecode_Name().init___T("predicate");
-  var p0$350 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$96.value$2, p$95, this$570.implicitReprOps$1);
-  this.predicate$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$350, this$571.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$169$1) {
+  var name$95 = new $c_Lsourcecode_Name().init___T("predicate");
+  var p0$346 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$95.value$2, p$94, this$564.implicitReprOps$1);
+  this.predicate$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$346, this$565.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$167$1) {
     return (function(x0$62$2) {
       var x0$62 = $as_Leu_cdevreeze_xpathparser_ast_Expr(x0$62$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_Predicate().init___Leu_cdevreeze_xpathparser_ast_Expr(x0$62)
     })
   })(this)));
-  var this$580 = $m_Lfastparse_noApi$();
-  var p$96 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$170$1) {
+  var this$574 = $m_Lfastparse_noApi$();
+  var p$95 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$168$1) {
     return (function() {
-      var this$579 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$578 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$577 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$576 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$575 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$574 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$573 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$572 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$351 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().literal$1;
-      var p0$352 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$351, this$572.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().varRef$1);
-      var p0$353 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$352, this$573.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().parenthesizedExpr$1);
-      var p0$354 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$353, this$574.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().contextItemExpr$1);
-      var p0$355 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$354, this$575.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().functionCall$1);
-      var p0$356 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$355, this$576.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().functionItemExpr$1);
-      var p0$357 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$356, this$577.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().mapConstructor$1);
-      var p0$358 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$357, this$578.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().arrayConstructor$1);
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$358, this$579.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().unaryLookup$1)
+      var this$573 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$572 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$571 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$570 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$569 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$568 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$567 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$566 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$347 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().literal$1;
+      var p0$348 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$347, this$566.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().varRef$1);
+      var p0$349 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$348, this$567.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().parenthesizedExpr$1);
+      var p0$350 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$349, this$568.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().contextItemExpr$1);
+      var p0$351 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$350, this$569.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().functionCall$1);
+      var p0$352 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$351, this$570.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().functionItemExpr$1);
+      var p0$353 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$352, this$571.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().mapConstructor$1);
+      var p0$354 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$353, this$572.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().arrayConstructor$1);
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$354, this$573.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().unaryLookup$1)
     })
   })(this));
-  var name$97 = new $c_Lsourcecode_Name().init___T("primaryExpr");
-  this.primaryExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$97.value$2, p$96, this$580.implicitReprOps$1);
-  var this$582 = $m_Lfastparse_noApi$();
-  var p$97 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$171$1) {
+  var name$96 = new $c_Lsourcecode_Name().init___T("primaryExpr");
+  this.primaryExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$96.value$2, p$95, this$574.implicitReprOps$1);
+  var this$576 = $m_Lfastparse_noApi$();
+  var p$96 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$169$1) {
     return (function() {
-      var this$581 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$359 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().stringLiteral$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$359, this$581.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().numericLiteral$1)
+      var this$575 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$355 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().stringLiteral$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$355, this$575.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().numericLiteral$1)
     })
   })(this));
-  var name$98 = new $c_Lsourcecode_Name().init___T("literal");
-  this.literal$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$98.value$2, p$97, this$582.implicitReprOps$1);
-  var this$583 = $m_Lfastparse_noApi$();
-  var p$98 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$172$1) {
+  var name$97 = new $c_Lsourcecode_Name().init___T("literal");
+  this.literal$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$97.value$2, p$96, this$576.implicitReprOps$1);
+  var this$577 = $m_Lfastparse_noApi$();
+  var p$97 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$170$1) {
     return (function() {
-      return $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.stringLiteral$1
+      return $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.stringLiteral$1
     })
   })(this));
-  var name$99 = new $c_Lsourcecode_Name().init___T("stringLiteral");
-  this.stringLiteral$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$99.value$2, p$98, this$583.implicitReprOps$1);
-  var this$584 = $m_Lfastparse_noApi$();
-  var p$99 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$173$1) {
+  var name$98 = new $c_Lsourcecode_Name().init___T("stringLiteral");
+  this.stringLiteral$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$98.value$2, p$97, this$577.implicitReprOps$1);
+  var this$578 = $m_Lfastparse_noApi$();
+  var p$98 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$171$1) {
     return (function() {
-      return $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.numericLiteral$1
+      return $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.numericLiteral$1
     })
   })(this));
-  var name$100 = new $c_Lsourcecode_Name().init___T("numericLiteral");
-  this.numericLiteral$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$100.value$2, p$99, this$584.implicitReprOps$1);
-  var this$585 = $m_Lfastparse_noApi$();
-  var p$100 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$174$1) {
+  var name$99 = new $c_Lsourcecode_Name().init___T("numericLiteral");
+  this.numericLiteral$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$99.value$2, p$98, this$578.implicitReprOps$1);
+  var this$579 = $m_Lfastparse_noApi$();
+  var p$99 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$172$1) {
     return (function() {
-      return $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.integerLiteral$1
+      return $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.integerLiteral$1
     })
   })(this));
-  var name$101 = new $c_Lsourcecode_Name().init___T("integerLiteral");
-  this.integerLiteral$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$101.value$2, p$100, this$585.implicitReprOps$1);
-  var this$588 = this.White$1;
-  var this$587 = $m_Lfastparse_noApi$();
-  var p$101 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$175$1) {
+  var name$100 = new $c_Lsourcecode_Name().init___T("integerLiteral");
+  this.integerLiteral$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$100.value$2, p$99, this$579.implicitReprOps$1);
+  var this$582 = this.White$1;
+  var this$581 = $m_Lfastparse_noApi$();
+  var p$100 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$173$1) {
     return (function() {
-      var this$586 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$360 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.dollar$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$360, this$586.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
+      var this$580 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$356 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.dollar$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$356, this$580.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
     })
   })(this));
-  var name$102 = new $c_Lsourcecode_Name().init___T("varRef");
-  var p0$361 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$102.value$2, p$101, this$587.implicitReprOps$1);
-  this.varRef$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$361, this$588.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$176$1) {
+  var name$101 = new $c_Lsourcecode_Name().init___T("varRef");
+  var p0$357 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$101.value$2, p$100, this$581.implicitReprOps$1);
+  this.varRef$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$357, this$582.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$174$1) {
     return (function(name$2$1) {
-      var name$103 = $as_Leu_cdevreeze_xpathparser_ast_EQName(name$2$1);
-      return new $c_Leu_cdevreeze_xpathparser_ast_VarRef().init___Leu_cdevreeze_xpathparser_ast_EQName(name$103)
+      var name$102 = $as_Leu_cdevreeze_xpathparser_ast_EQName(name$2$1);
+      return new $c_Leu_cdevreeze_xpathparser_ast_VarRef().init___Leu_cdevreeze_xpathparser_ast_EQName(name$102)
     })
   })(this)));
-  var this$595 = this.White$1;
-  var this$594 = $m_Lfastparse_noApi$();
-  var p$102 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$177$1) {
+  var this$589 = this.White$1;
+  var this$588 = $m_Lfastparse_noApi$();
+  var p$101 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$175$1) {
     return (function() {
-      var this$592 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$589 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$362 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1;
-      var jsx$180 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$362, this$589.WL$1);
-      var this$590 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$363 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().expr$1;
-      var jsx$179 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$363, this$590.WL$1);
-      var this$591 = $m_Lfastparse_core_Implicits$Optioner$();
-      var p0$364 = jsx$180.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$179.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$591)), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$181 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$364, this$592.WL$1);
-      var jsx$178 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1;
-      var this$593 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$181.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$178, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$593))
+      var this$586 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$583 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$358 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1;
+      var jsx$178 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$358, this$583.WL$1);
+      var this$584 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$359 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().expr$1;
+      var jsx$177 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$359, this$584.WL$1);
+      var this$585 = $m_Lfastparse_core_Implicits$Optioner$();
+      var p0$360 = jsx$178.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$177.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$585)), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$179 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$360, this$586.WL$1);
+      var jsx$176 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1;
+      var this$587 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$179.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$176, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$587))
     })
   })(this));
-  var name$104 = new $c_Lsourcecode_Name().init___T("parenthesizedExpr");
-  var p0$365 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$104.value$2, p$102, this$594.implicitReprOps$1);
-  this.parenthesizedExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$365, this$595.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$178$1) {
+  var name$103 = new $c_Lsourcecode_Name().init___T("parenthesizedExpr");
+  var p0$361 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$103.value$2, p$101, this$588.implicitReprOps$1);
+  this.parenthesizedExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$361, this$589.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$176$1) {
     return (function(x0$63$2) {
       var x0$63 = $as_s_Option(x0$63$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_ParenthesizedExpr().init___s_Option(x0$63)
     })
   })(this)));
-  var this$597 = this.White$1;
-  var this$596 = $m_Lfastparse_noApi$();
-  var p$103 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$179$1) {
+  var this$591 = this.White$1;
+  var this$590 = $m_Lfastparse_noApi$();
+  var p$102 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$177$1) {
     return (function() {
-      return $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.dot$1
+      return $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.dot$1
     })
   })(this));
-  var name$105 = new $c_Lsourcecode_Name().init___T("contextItemExpr");
-  var p0$366 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$105.value$2, p$103, this$596.implicitReprOps$1);
-  this.contextItemExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$366, this$597.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$180$1) {
+  var name$104 = new $c_Lsourcecode_Name().init___T("contextItemExpr");
+  var p0$362 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$104.value$2, p$102, this$590.implicitReprOps$1);
+  this.contextItemExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$362, this$591.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$178$1) {
     return (function(x$14$2) {
       $asUnit(x$14$2);
       return $m_Leu_cdevreeze_xpathparser_ast_ContextItemExpr$()
     })
   })(this)));
-  var this$602 = this.White$1;
-  var this$601 = $m_Lfastparse_noApi$();
-  var p$104 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$181$1) {
+  var this$596 = this.White$1;
+  var this$595 = $m_Lfastparse_noApi$();
+  var p$103 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$179$1) {
     return (function() {
-      var this$599 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$598 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$367 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1;
-      var p0$368 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$367, this$598.WL$1).filter__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function($this$7) {
+      var this$593 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$592 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$363 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1;
+      var p0$364 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$363, this$592.WL$1).filter__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function($this$7) {
         return (function(nm$2) {
           var nm = $as_Leu_cdevreeze_xpathparser_ast_EQName(nm$2);
-          return (!$m_Leu_cdevreeze_xpathparser_parse_XPathParser$().ReservedFunctionNames$1.contains__O__Z(nm))
+          return (!$m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().ReservedFunctionNames$1.contains__O__Z(nm))
         })
-      })(this$181$1)));
-      var jsx$183 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$368, this$599.WL$1);
-      var jsx$182 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().argumentList$1;
-      var this$600 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$183.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$182, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$600)))
+      })(this$179$1)));
+      var jsx$181 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$364, this$593.WL$1);
+      var jsx$180 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().argumentList$1;
+      var this$594 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$181.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$180, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$594)))
     })
   })(this));
-  var name$106 = new $c_Lsourcecode_Name().init___T("functionCall");
-  var p0$369 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$106.value$2, p$104, this$601.implicitReprOps$1);
-  this.functionCall$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$369, this$602.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$182$1) {
+  var name$105 = new $c_Lsourcecode_Name().init___T("functionCall");
+  var p0$365 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$105.value$2, p$103, this$595.implicitReprOps$1);
+  this.functionCall$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$365, this$596.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$180$1) {
     return (function(x0$64$2) {
       var x0$64 = $as_T2(x0$64$2);
       if ((x0$64 !== null)) {
-        var name$107 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$64.$$und1__O());
+        var name$106 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$64.$$und1__O());
         var argList = $as_Leu_cdevreeze_xpathparser_ast_ArgumentList(x0$64.$$und2__O());
-        return new $c_Leu_cdevreeze_xpathparser_ast_FunctionCall().init___Leu_cdevreeze_xpathparser_ast_EQName__Leu_cdevreeze_xpathparser_ast_ArgumentList(name$107, argList)
+        return new $c_Leu_cdevreeze_xpathparser_ast_FunctionCall().init___Leu_cdevreeze_xpathparser_ast_EQName__Leu_cdevreeze_xpathparser_ast_ArgumentList(name$106, argList)
       } else {
         throw new $c_s_MatchError().init___O(x0$64)
       }
     })
   })(this)));
-  var this$604 = $m_Lfastparse_noApi$();
-  var p$105 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$183$1) {
+  var this$598 = $m_Lfastparse_noApi$();
+  var p$104 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$181$1) {
     return (function() {
-      var this$603 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$370 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().namedFunctionRef$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$370, this$603.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().inlineFunctionExpr$1)
+      var this$597 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$366 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().namedFunctionRef$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$366, this$597.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().inlineFunctionExpr$1)
     })
   })(this));
-  var name$108 = new $c_Lsourcecode_Name().init___T("functionItemExpr");
-  this.functionItemExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$108.value$2, p$105, this$604.implicitReprOps$1);
-  var this$611 = this.White$1;
-  var this$610 = $m_Lfastparse_noApi$();
-  var p$106 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$184$1) {
+  var name$107 = new $c_Lsourcecode_Name().init___T("functionItemExpr");
+  this.functionItemExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$107.value$2, p$104, this$598.implicitReprOps$1);
+  var this$605 = this.White$1;
+  var this$604 = $m_Lfastparse_noApi$();
+  var p$105 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$182$1) {
     return (function() {
-      var this$608 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$606 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$605 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$371 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1;
-      var p0$372 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$371, this$605.WL$1).filter__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function($this$8) {
+      var this$602 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$600 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$599 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$367 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1;
+      var p0$368 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$367, this$599.WL$1).filter__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function($this$8) {
         return (function(nm$2$1) {
           var nm$1 = $as_Leu_cdevreeze_xpathparser_ast_EQName(nm$2$1);
-          return (!$m_Leu_cdevreeze_xpathparser_parse_XPathParser$().ReservedFunctionNames$1.contains__O__Z(nm$1))
+          return (!$m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().ReservedFunctionNames$1.contains__O__Z(nm$1))
         })
-      })(this$184$1)));
-      var jsx$186 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$372, this$606.WL$1);
-      var jsx$185 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.hash$1;
-      var this$607 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$373 = jsx$186.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$185, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$607));
-      var jsx$187 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$373, this$608.WL$1);
-      var jsx$184 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().integerLiteral$1;
-      var this$609 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$187.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$184, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$609)))
+      })(this$182$1)));
+      var jsx$184 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$368, this$600.WL$1);
+      var jsx$183 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.hash$1;
+      var this$601 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$369 = jsx$184.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$183, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$601));
+      var jsx$185 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$369, this$602.WL$1);
+      var jsx$182 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().integerLiteral$1;
+      var this$603 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$185.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$182, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$603)))
     })
   })(this));
-  var name$109 = new $c_Lsourcecode_Name().init___T("namedFunctionRef");
-  var p0$374 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$109.value$2, p$106, this$610.implicitReprOps$1);
-  this.namedFunctionRef$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$374, this$611.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$185$1) {
+  var name$108 = new $c_Lsourcecode_Name().init___T("namedFunctionRef");
+  var p0$370 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$108.value$2, p$105, this$604.implicitReprOps$1);
+  this.namedFunctionRef$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$370, this$605.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$183$1) {
     return (function(x0$65$2) {
       var x0$65 = $as_T2(x0$65$2);
       if ((x0$65 !== null)) {
-        var name$110 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$65.$$und1__O());
+        var name$109 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$65.$$und1__O());
         var arity = $as_Leu_cdevreeze_xpathparser_ast_IntegerLiteral(x0$65.$$und2__O());
-        return new $c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef().init___Leu_cdevreeze_xpathparser_ast_EQName__s_math_BigInt(name$110, arity.value$1)
+        return new $c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef().init___Leu_cdevreeze_xpathparser_ast_EQName__s_math_BigInt(name$109, arity.value$1)
       } else {
         throw new $c_s_MatchError().init___O(x0$65)
       }
     })
   })(this)));
-  var this$626 = this.White$1;
-  var this$625 = $m_Lfastparse_noApi$();
-  var p$107 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$186$1) {
+  var this$620 = this.White$1;
+  var this$619 = $m_Lfastparse_noApi$();
+  var p$106 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$184$1) {
     return (function() {
-      var this$623 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$618 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$616 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$613 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$612 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$375 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.functionWord$1;
-      var p0$376 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$375, this$612.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$193 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$376, this$613.WL$1);
-      var this$614 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$377 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().paramList$1;
-      var jsx$192 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$377, this$614.WL$1);
+      var this$617 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$612 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$610 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$607 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$606 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$371 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.functionWord$1;
+      var p0$372 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$371, this$606.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$191 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$372, this$607.WL$1);
+      var this$608 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$373 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().paramList$1;
+      var jsx$190 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$373, this$608.WL$1);
+      var this$609 = $m_Lfastparse_core_Implicits$Optioner$();
+      var p0$374 = jsx$191.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$190.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$609)), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$192 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$374, this$610.WL$1);
+      var jsx$189 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1;
+      var this$611 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$375 = jsx$192.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$189, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$611));
+      var jsx$193 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$375, this$612.WL$1);
+      var this$614 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$613 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$376 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.asWord$1;
+      var p0$377 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$376, this$613.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().sequenceType$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$188 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$377, this$614.WL$1);
       var this$615 = $m_Lfastparse_core_Implicits$Optioner$();
-      var p0$378 = jsx$193.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$192.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$615)), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$194 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$378, this$616.WL$1);
-      var jsx$191 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1;
-      var this$617 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$379 = jsx$194.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$191, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$617));
-      var jsx$195 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$379, this$618.WL$1);
-      var this$620 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$619 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$380 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.asWord$1;
-      var p0$381 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$380, this$619.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().sequenceType$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$190 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$381, this$620.WL$1);
-      var this$621 = $m_Lfastparse_core_Implicits$Optioner$();
-      var jsx$189 = jsx$190.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$621));
-      var this$622 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$382 = jsx$195.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$189, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$622)));
-      var jsx$196 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$382, this$623.WL$1);
-      var jsx$188 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().enclosedExpr$1;
-      var this$624 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$196.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$188, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$624)))
+      var jsx$187 = jsx$188.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$615));
+      var this$616 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$378 = jsx$193.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$187, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$616)));
+      var jsx$194 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$378, this$617.WL$1);
+      var jsx$186 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().enclosedExpr$1;
+      var this$618 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$194.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$186, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$618)))
     })
   })(this));
-  var name$111 = new $c_Lsourcecode_Name().init___T("inlineFunctionExpr");
-  var p0$383 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$111.value$2, p$107, this$625.implicitReprOps$1);
-  this.inlineFunctionExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$383, this$626.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$187$1) {
+  var name$110 = new $c_Lsourcecode_Name().init___T("inlineFunctionExpr");
+  var p0$379 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$110.value$2, p$106, this$619.implicitReprOps$1);
+  this.inlineFunctionExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$379, this$620.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$185$1) {
     return (function(x0$66$2) {
       var x0$66 = $as_T3(x0$66$2);
       if ((x0$66 !== null)) {
@@ -7494,56 +7470,56 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$634 = this.White$1;
-  var this$633 = $m_Lfastparse_noApi$();
-  var p$108 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$188$1) {
+  var this$628 = this.White$1;
+  var this$627 = $m_Lfastparse_noApi$();
+  var p$107 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$186$1) {
     return (function() {
-      var this$631 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$628 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$627 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$384 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.mapWord$1;
-      var p0$385 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$384, this$627.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openBrace$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$198 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$385, this$628.WL$1);
-      var this$629 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$386 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().mapConstructorEntry$1;
-      var qual$11 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$386, this$629.WL$1);
-      var x$58 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.comma$1;
-      var this$630 = $m_Lfastparse_core_Implicits$Repeater$();
-      var p0$387 = jsx$198.$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(qual$11.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(0, x$58, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$630)), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$199 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$387, this$631.WL$1);
-      var jsx$197 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeBrace$1;
-      var this$632 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$199.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$197, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$632))
+      var this$625 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$622 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$621 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$380 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.mapWord$1;
+      var p0$381 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$380, this$621.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openBrace$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$196 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$381, this$622.WL$1);
+      var this$623 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$382 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().mapConstructorEntry$1;
+      var qual$11 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$382, this$623.WL$1);
+      var x$58 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.comma$1;
+      var this$624 = $m_Lfastparse_core_Implicits$Repeater$();
+      var p0$383 = jsx$196.$$tilde$div__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(qual$11.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(0, x$58, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$624)), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$197 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$383, this$625.WL$1);
+      var jsx$195 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeBrace$1;
+      var this$626 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$197.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$195, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$626))
     })
   })(this));
-  var name$112 = new $c_Lsourcecode_Name().init___T("mapConstructor");
-  var p0$388 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$112.value$2, p$108, this$633.implicitReprOps$1);
-  this.mapConstructor$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$388, this$634.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$189$1) {
+  var name$111 = new $c_Lsourcecode_Name().init___T("mapConstructor");
+  var p0$384 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$111.value$2, p$107, this$627.implicitReprOps$1);
+  this.mapConstructor$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$384, this$628.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$187$1) {
     return (function(x0$67$2) {
       var x0$67 = $as_sc_Seq(x0$67$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_MapConstructor().init___sci_IndexedSeq(x0$67.toIndexedSeq__sci_IndexedSeq())
     })
   })(this)));
-  var this$640 = this.White$1;
-  var this$639 = $m_Lfastparse_noApi$();
-  var p$109 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$190$1) {
+  var this$634 = this.White$1;
+  var this$633 = $m_Lfastparse_noApi$();
+  var p$108 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$188$1) {
     return (function() {
-      var this$637 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$635 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$389 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().exprSingle$1;
-      var jsx$202 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$389, this$635.WL$1);
-      var jsx$201 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.colon$1;
-      var this$636 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$390 = jsx$202.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$201, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$636));
-      var jsx$203 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$390, this$637.WL$1);
-      var jsx$200 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().exprSingle$1;
-      var this$638 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$203.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$200, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$638)))
+      var this$631 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$629 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$385 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().exprSingle$1;
+      var jsx$200 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$385, this$629.WL$1);
+      var jsx$199 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.colon$1;
+      var this$630 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$386 = jsx$200.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$199, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$630));
+      var jsx$201 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$386, this$631.WL$1);
+      var jsx$198 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().exprSingle$1;
+      var this$632 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$201.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$198, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$632)))
     })
   })(this));
-  var name$113 = new $c_Lsourcecode_Name().init___T("mapConstructorEntry");
-  var p0$391 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$113.value$2, p$109, this$639.implicitReprOps$1);
-  this.mapConstructorEntry$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$391, this$640.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$191$1) {
+  var name$112 = new $c_Lsourcecode_Name().init___T("mapConstructorEntry");
+  var p0$387 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$112.value$2, p$108, this$633.implicitReprOps$1);
+  this.mapConstructorEntry$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$387, this$634.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$189$1) {
     return (function(x0$68$2) {
       var x0$68 = $as_T2(x0$68$2);
       if ((x0$68 !== null)) {
@@ -7555,132 +7531,132 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
+  var this$636 = $m_Lfastparse_noApi$();
+  var p$109 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$190$1) {
+    return (function() {
+      var this$635 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$388 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().squareArrayConstructor$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$388, this$635.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().curlyArrayConstructor$1)
+    })
+  })(this));
+  var name$113 = new $c_Lsourcecode_Name().init___T("arrayConstructor");
+  this.arrayConstructor$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$113.value$2, p$109, this$636.implicitReprOps$1);
+  var this$643 = this.White$1;
   var this$642 = $m_Lfastparse_noApi$();
-  var p$110 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$192$1) {
+  var p$110 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$191$1) {
     return (function() {
-      var this$641 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$392 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().squareArrayConstructor$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$392, this$641.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().curlyArrayConstructor$1)
+      var this$640 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$637 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$389 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openBracket$1;
+      var jsx$203 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$389, this$637.WL$1);
+      var this$638 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$390 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().exprSingle$1;
+      var qual$12 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$390, this$638.WL$1);
+      var x$62 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.comma$1;
+      var this$639 = $m_Lfastparse_core_Implicits$Repeater$();
+      var p0$391 = jsx$203.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(qual$12.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(0, x$62, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$639)), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$204 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$391, this$640.WL$1);
+      var jsx$202 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeBracket$1;
+      var this$641 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$204.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$202, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$641))
     })
   })(this));
-  var name$114 = new $c_Lsourcecode_Name().init___T("arrayConstructor");
-  this.arrayConstructor$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$114.value$2, p$110, this$642.implicitReprOps$1);
-  var this$649 = this.White$1;
-  var this$648 = $m_Lfastparse_noApi$();
-  var p$111 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$193$1) {
-    return (function() {
-      var this$646 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$643 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$393 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openBracket$1;
-      var jsx$205 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$393, this$643.WL$1);
-      var this$644 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$394 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().exprSingle$1;
-      var qual$12 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$394, this$644.WL$1);
-      var x$62 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.comma$1;
-      var this$645 = $m_Lfastparse_core_Implicits$Repeater$();
-      var p0$395 = jsx$205.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(qual$12.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(0, x$62, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$645)), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$206 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$395, this$646.WL$1);
-      var jsx$204 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeBracket$1;
-      var this$647 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$206.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$204, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$647))
-    })
-  })(this));
-  var name$115 = new $c_Lsourcecode_Name().init___T("squareArrayConstructor");
-  var p0$396 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$115.value$2, p$111, this$648.implicitReprOps$1);
-  this.squareArrayConstructor$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$396, this$649.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$194$1) {
+  var name$114 = new $c_Lsourcecode_Name().init___T("squareArrayConstructor");
+  var p0$392 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$114.value$2, p$110, this$642.implicitReprOps$1);
+  this.squareArrayConstructor$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$392, this$643.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$192$1) {
     return (function(x0$69$2) {
       var x0$69 = $as_sc_Seq(x0$69$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_SquareArrayConstructor().init___sci_IndexedSeq(x0$69.toIndexedSeq__sci_IndexedSeq())
     })
   })(this)));
-  var this$652 = this.White$1;
-  var this$651 = $m_Lfastparse_noApi$();
-  var p$112 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$195$1) {
+  var this$646 = this.White$1;
+  var this$645 = $m_Lfastparse_noApi$();
+  var p$111 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$193$1) {
     return (function() {
-      var this$650 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$397 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.arrayWord$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$397, this$650.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().enclosedExpr$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
+      var this$644 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$393 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.arrayWord$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$393, this$644.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().enclosedExpr$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
     })
   })(this));
-  var name$116 = new $c_Lsourcecode_Name().init___T("curlyArrayConstructor");
-  var p0$398 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$116.value$2, p$112, this$651.implicitReprOps$1);
-  this.curlyArrayConstructor$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$398, this$652.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$196$1) {
+  var name$115 = new $c_Lsourcecode_Name().init___T("curlyArrayConstructor");
+  var p0$394 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$115.value$2, p$111, this$645.implicitReprOps$1);
+  this.curlyArrayConstructor$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$394, this$646.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$194$1) {
     return (function(exp$2$1) {
       var exp$4 = $as_Leu_cdevreeze_xpathparser_ast_EnclosedExpr(exp$2$1);
       return new $c_Leu_cdevreeze_xpathparser_ast_CurlyArrayConstructor().init___Leu_cdevreeze_xpathparser_ast_EnclosedExpr(exp$4)
     })
   })(this)));
-  var this$655 = this.White$1;
-  var this$654 = $m_Lfastparse_noApi$();
-  var p$113 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$197$1) {
+  var this$649 = this.White$1;
+  var this$648 = $m_Lfastparse_noApi$();
+  var p$112 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$195$1) {
     return (function() {
-      var this$653 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$399 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.questionMark$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$399, this$653.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().keySpecifier$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
+      var this$647 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$395 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.questionMark$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$395, this$647.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().keySpecifier$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
     })
   })(this));
-  var name$117 = new $c_Lsourcecode_Name().init___T("unaryLookup");
-  var p0$400 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$117.value$2, p$113, this$654.implicitReprOps$1);
-  this.unaryLookup$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$400, this$655.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$198$1) {
+  var name$116 = new $c_Lsourcecode_Name().init___T("unaryLookup");
+  var p0$396 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$116.value$2, p$112, this$648.implicitReprOps$1);
+  this.unaryLookup$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$396, this$649.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$196$1) {
     return (function(x0$70$2) {
       var x0$70 = $as_Leu_cdevreeze_xpathparser_ast_KeySpecifier(x0$70$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_UnaryLookup().init___Leu_cdevreeze_xpathparser_ast_KeySpecifier(x0$70)
     })
   })(this)));
-  var this$657 = $m_Lfastparse_noApi$();
-  var p$114 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$199$1) {
+  var this$651 = $m_Lfastparse_noApi$();
+  var p$113 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$197$1) {
     return (function() {
-      var this$656 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$401 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().emptySequenceType$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$401, this$656.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().nonEmptySequenceType$1)
+      var this$650 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$397 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().emptySequenceType$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$397, this$650.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().nonEmptySequenceType$1)
     })
   })(this));
-  var name$118 = new $c_Lsourcecode_Name().init___T("sequenceType");
-  this.sequenceType$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$118.value$2, p$114, this$657.implicitReprOps$1);
-  var this$661 = this.White$1;
-  var this$660 = $m_Lfastparse_noApi$();
-  var p$115 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$200$1) {
+  var name$117 = new $c_Lsourcecode_Name().init___T("sequenceType");
+  this.sequenceType$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$117.value$2, p$113, this$651.implicitReprOps$1);
+  var this$655 = this.White$1;
+  var this$654 = $m_Lfastparse_noApi$();
+  var p$114 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$198$1) {
     return (function() {
-      var this$659 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$658 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$402 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.emptySequenceWord$1;
-      var p0$403 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$402, this$658.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$403, this$659.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
+      var this$653 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$652 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$398 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.emptySequenceWord$1;
+      var p0$399 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$398, this$652.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$399, this$653.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
     })
   })(this));
-  var name$119 = new $c_Lsourcecode_Name().init___T("emptySequenceType");
-  var p0$404 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$119.value$2, p$115, this$660.implicitReprOps$1);
-  this.emptySequenceType$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$404, this$661.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$201$1) {
+  var name$118 = new $c_Lsourcecode_Name().init___T("emptySequenceType");
+  var p0$400 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$118.value$2, p$114, this$654.implicitReprOps$1);
+  this.emptySequenceType$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$400, this$655.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$199$1) {
     return (function(x$15$2) {
       $asUnit(x$15$2);
       return $m_Leu_cdevreeze_xpathparser_ast_EmptySequenceType$()
     })
   })(this)));
-  var this$670 = this.White$1;
-  var this$669 = $m_Lfastparse_noApi$();
-  var p$116 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$202$1) {
+  var this$664 = this.White$1;
+  var this$663 = $m_Lfastparse_noApi$();
+  var p$115 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$200$1) {
     return (function() {
-      var this$662 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$405 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().itemType$1;
-      var jsx$209 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$405, this$662.WL$1);
-      var this$666 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$665 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$664 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$663 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$406 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.questionMark$1;
-      var p0$407 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$406, this$663.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.asterisk$1);
-      var p0$408 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$407, this$664.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.plus$1);
-      var p0$409 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$408, this$665.WL$1).$$bang__Lfastparse_core_Parser();
-      var jsx$208 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$409, this$666.WL$1);
-      var this$667 = $m_Lfastparse_core_Implicits$Optioner$();
-      var jsx$207 = jsx$208.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$667));
-      var this$668 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$209.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$207, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$668)))
+      var this$656 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$401 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().itemType$1;
+      var jsx$207 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$401, this$656.WL$1);
+      var this$660 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$659 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$658 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$657 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$402 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.questionMark$1;
+      var p0$403 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$402, this$657.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.asterisk$1);
+      var p0$404 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$403, this$658.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.plus$1);
+      var p0$405 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$404, this$659.WL$1).$$bang__Lfastparse_core_Parser();
+      var jsx$206 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$405, this$660.WL$1);
+      var this$661 = $m_Lfastparse_core_Implicits$Optioner$();
+      var jsx$205 = jsx$206.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$661));
+      var this$662 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$207.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$205, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$662)))
     })
   })(this));
-  var name$120 = new $c_Lsourcecode_Name().init___T("nonEmptySequenceType");
-  var p0$410 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$120.value$2, p$116, this$669.implicitReprOps$1);
-  this.nonEmptySequenceType$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$410, this$670.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$203$1) {
+  var name$119 = new $c_Lsourcecode_Name().init___T("nonEmptySequenceType");
+  var p0$406 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$119.value$2, p$115, this$663.implicitReprOps$1);
+  this.nonEmptySequenceType$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$406, this$664.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$201$1) {
     return (function(x0$71$2) {
       var x0$71 = $as_T2(x0$71$2);
       if ((x0$71 !== null)) {
@@ -7727,118 +7703,118 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       return $m_Leu_cdevreeze_xpathparser_ast_EmptySequenceType$()
     })
   })(this)));
-  var this$678 = $m_Lfastparse_noApi$();
-  var p$117 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$204$1) {
+  var this$672 = $m_Lfastparse_noApi$();
+  var p$116 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$202$1) {
     return (function() {
-      var this$677 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$676 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$675 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$674 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$673 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$672 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$671 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$411 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().kindTestItemType$1;
-      var p0$412 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$411, this$671.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().anyItemType$1);
-      var p0$413 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$412, this$672.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().anyFunctionTest$1);
-      var p0$414 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$413, this$673.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().typedFunctionTest$1);
-      var p0$415 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$414, this$674.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().atomicOrUnionType$1);
-      var p0$416 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$415, this$675.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().parenthesizedItemType$1);
-      var p0$417 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$416, this$676.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().mapTest$1);
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$417, this$677.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().arrayTest$1)
+      var this$671 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$670 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$669 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$668 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$667 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$666 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$665 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$407 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().kindTestItemType$1;
+      var p0$408 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$407, this$665.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().anyItemType$1);
+      var p0$409 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$408, this$666.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().anyFunctionTest$1);
+      var p0$410 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$409, this$667.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().typedFunctionTest$1);
+      var p0$411 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$410, this$668.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().atomicOrUnionType$1);
+      var p0$412 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$411, this$669.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().parenthesizedItemType$1);
+      var p0$413 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$412, this$670.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().mapTest$1);
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$413, this$671.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().arrayTest$1)
     })
   })(this));
-  var name$121 = new $c_Lsourcecode_Name().init___T("itemType");
-  this.itemType$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$121.value$2, p$117, this$678.implicitReprOps$1);
-  var this$680 = this.White$1;
-  var this$679 = $m_Lfastparse_noApi$();
-  var p$118 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$205$1) {
+  var name$120 = new $c_Lsourcecode_Name().init___T("itemType");
+  this.itemType$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$120.value$2, p$116, this$672.implicitReprOps$1);
+  var this$674 = this.White$1;
+  var this$673 = $m_Lfastparse_noApi$();
+  var p$117 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$203$1) {
     return (function() {
-      return $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().kindTest$1
+      return $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().kindTest$1
     })
   })(this));
-  var name$122 = new $c_Lsourcecode_Name().init___T("kindTestItemType");
-  var p0$418 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$122.value$2, p$118, this$679.implicitReprOps$1);
-  this.kindTestItemType$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$418, this$680.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$206$1) {
+  var name$121 = new $c_Lsourcecode_Name().init___T("kindTestItemType");
+  var p0$414 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$121.value$2, p$117, this$673.implicitReprOps$1);
+  this.kindTestItemType$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$414, this$674.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$204$1) {
     return (function(x0$72$2) {
       var x0$72 = $as_Leu_cdevreeze_xpathparser_ast_KindTest(x0$72$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_KindTestItemType().init___Leu_cdevreeze_xpathparser_ast_KindTest(x0$72)
     })
   })(this)));
-  var this$684 = this.White$1;
-  var this$683 = $m_Lfastparse_noApi$();
-  var p$119 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$207$1) {
+  var this$678 = this.White$1;
+  var this$677 = $m_Lfastparse_noApi$();
+  var p$118 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$205$1) {
     return (function() {
-      var this$682 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$681 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$419 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.itemWord$1;
-      var p0$420 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$419, this$681.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$420, this$682.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
+      var this$676 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$675 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$415 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.itemWord$1;
+      var p0$416 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$415, this$675.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$416, this$676.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
     })
   })(this));
-  var name$123 = new $c_Lsourcecode_Name().init___T("anyItemType");
-  var p0$421 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$123.value$2, p$119, this$683.implicitReprOps$1);
-  this.anyItemType$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$421, this$684.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$208$1) {
+  var name$122 = new $c_Lsourcecode_Name().init___T("anyItemType");
+  var p0$417 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$122.value$2, p$118, this$677.implicitReprOps$1);
+  this.anyItemType$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$417, this$678.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$206$1) {
     return (function(x$16$2) {
       $asUnit(x$16$2);
       return $m_Leu_cdevreeze_xpathparser_ast_AnyItemType$()
     })
   })(this)));
-  var this$689 = this.White$1;
-  var this$688 = $m_Lfastparse_noApi$();
-  var p$120 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$209$1) {
+  var this$683 = this.White$1;
+  var this$682 = $m_Lfastparse_noApi$();
+  var p$119 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$207$1) {
     return (function() {
-      var this$687 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$686 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$685 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$422 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.functionWord$1;
-      var p0$423 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$422, this$685.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$424 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$423, this$686.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.asterisk$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$424, this$687.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
+      var this$681 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$680 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$679 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$418 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.functionWord$1;
+      var p0$419 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$418, this$679.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$420 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$419, this$680.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.asterisk$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$420, this$681.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
     })
   })(this));
-  var name$124 = new $c_Lsourcecode_Name().init___T("anyFunctionTest");
-  var p0$425 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$124.value$2, p$120, this$688.implicitReprOps$1);
-  this.anyFunctionTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$425, this$689.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$210$1) {
+  var name$123 = new $c_Lsourcecode_Name().init___T("anyFunctionTest");
+  var p0$421 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$123.value$2, p$119, this$682.implicitReprOps$1);
+  this.anyFunctionTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$421, this$683.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$208$1) {
     return (function(x$17$2) {
       $asUnit(x$17$2);
       return $m_Leu_cdevreeze_xpathparser_ast_AnyFunctionTest$()
     })
   })(this)));
-  var this$701 = this.White$1;
-  var this$700 = $m_Lfastparse_noApi$();
-  var p$121 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$211$1) {
+  var this$695 = this.White$1;
+  var this$694 = $m_Lfastparse_noApi$();
+  var p$120 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$209$1) {
     return (function() {
-      var this$698 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$696 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$694 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$691 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$690 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$426 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.functionWord$1;
-      var p0$427 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$426, this$690.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$213 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$427, this$691.WL$1);
-      var this$692 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$428 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().sequenceType$1;
-      var qual$13 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$428, this$692.WL$1);
-      var x$66 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.comma$1;
-      var this$693 = $m_Lfastparse_core_Implicits$Repeater$();
-      var p0$429 = jsx$213.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(qual$13.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(0, x$66, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$693)), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$214 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$429, this$694.WL$1);
-      var jsx$212 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1;
-      var this$695 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$430 = jsx$214.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$212, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$695));
-      var jsx$215 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$430, this$696.WL$1);
-      var jsx$211 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.asWord$1;
-      var this$697 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$431 = jsx$215.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$211, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$697));
-      var jsx$216 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$431, this$698.WL$1);
-      var jsx$210 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().sequenceType$1;
-      var this$699 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$216.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$210, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$699)))
+      var this$692 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$690 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$688 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$685 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$684 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$422 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.functionWord$1;
+      var p0$423 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$422, this$684.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$211 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$423, this$685.WL$1);
+      var this$686 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$424 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().sequenceType$1;
+      var qual$13 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$424, this$686.WL$1);
+      var x$66 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.comma$1;
+      var this$687 = $m_Lfastparse_core_Implicits$Repeater$();
+      var p0$425 = jsx$211.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(qual$13.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(0, x$66, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$687)), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$212 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$425, this$688.WL$1);
+      var jsx$210 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1;
+      var this$689 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$426 = jsx$212.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$210, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$689));
+      var jsx$213 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$426, this$690.WL$1);
+      var jsx$209 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.asWord$1;
+      var this$691 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$427 = jsx$213.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$209, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$691));
+      var jsx$214 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$427, this$692.WL$1);
+      var jsx$208 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().sequenceType$1;
+      var this$693 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$214.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$208, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$693)))
     })
   })(this));
-  var name$125 = new $c_Lsourcecode_Name().init___T("typedFunctionTest");
-  var p0$432 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$125.value$2, p$121, this$700.implicitReprOps$1);
-  this.typedFunctionTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$432, this$701.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$212$1) {
+  var name$124 = new $c_Lsourcecode_Name().init___T("typedFunctionTest");
+  var p0$428 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$124.value$2, p$120, this$694.implicitReprOps$1);
+  this.typedFunctionTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$428, this$695.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$210$1) {
     return (function(x0$73$2) {
       var x0$73 = $as_T2(x0$73$2);
       if ((x0$73 !== null)) {
@@ -7850,103 +7826,103 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$703 = this.White$1;
-  var this$702 = $m_Lfastparse_noApi$();
-  var p$122 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$213$1) {
+  var this$697 = this.White$1;
+  var this$696 = $m_Lfastparse_noApi$();
+  var p$121 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$211$1) {
     return (function() {
-      return $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1
+      return $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1
     })
   })(this));
-  var name$126 = new $c_Lsourcecode_Name().init___T("atomicOrUnionType");
-  var p0$433 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$126.value$2, p$122, this$702.implicitReprOps$1);
-  this.atomicOrUnionType$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$433, this$703.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$214$1) {
+  var name$125 = new $c_Lsourcecode_Name().init___T("atomicOrUnionType");
+  var p0$429 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$125.value$2, p$121, this$696.implicitReprOps$1);
+  this.atomicOrUnionType$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$429, this$697.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$212$1) {
     return (function(x0$74$2) {
       var x0$74 = $as_Leu_cdevreeze_xpathparser_ast_EQName(x0$74$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_AtomicOrUnionType().init___Leu_cdevreeze_xpathparser_ast_EQName(x0$74)
     })
   })(this)));
-  var this$708 = this.White$1;
-  var this$707 = $m_Lfastparse_noApi$();
-  var p$123 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$215$1) {
+  var this$702 = this.White$1;
+  var this$701 = $m_Lfastparse_noApi$();
+  var p$122 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$213$1) {
     return (function() {
-      var this$705 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$704 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$434 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1;
-      var p0$435 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$434, this$704.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().itemType$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$218 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$435, this$705.WL$1);
-      var jsx$217 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1;
-      var this$706 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$218.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$217, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$706))
+      var this$699 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$698 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$430 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1;
+      var p0$431 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$430, this$698.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().itemType$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$216 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$431, this$699.WL$1);
+      var jsx$215 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1;
+      var this$700 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$216.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$215, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$700))
     })
   })(this));
-  var name$127 = new $c_Lsourcecode_Name().init___T("parenthesizedItemType");
-  var p0$436 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$127.value$2, p$123, this$707.implicitReprOps$1);
-  this.parenthesizedItemType$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$436, this$708.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$216$1) {
+  var name$126 = new $c_Lsourcecode_Name().init___T("parenthesizedItemType");
+  var p0$432 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$126.value$2, p$122, this$701.implicitReprOps$1);
+  this.parenthesizedItemType$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$432, this$702.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$214$1) {
     return (function(x0$75$2) {
       var x0$75 = $as_Leu_cdevreeze_xpathparser_ast_ItemType(x0$75$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_ParenthesizedItemType().init___Leu_cdevreeze_xpathparser_ast_ItemType(x0$75)
     })
   })(this)));
-  var this$710 = $m_Lfastparse_noApi$();
-  var p$124 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$217$1) {
+  var this$704 = $m_Lfastparse_noApi$();
+  var p$123 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$215$1) {
     return (function() {
-      var this$709 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$437 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().anyMapTest$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$437, this$709.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().typedMapTest$1)
+      var this$703 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$433 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().anyMapTest$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$433, this$703.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().typedMapTest$1)
     })
   })(this));
-  var name$128 = new $c_Lsourcecode_Name().init___T("mapTest");
-  this.mapTest$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$128.value$2, p$124, this$710.implicitReprOps$1);
-  var this$715 = this.White$1;
-  var this$714 = $m_Lfastparse_noApi$();
-  var p$125 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$218$1) {
+  var name$127 = new $c_Lsourcecode_Name().init___T("mapTest");
+  this.mapTest$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$127.value$2, p$123, this$704.implicitReprOps$1);
+  var this$709 = this.White$1;
+  var this$708 = $m_Lfastparse_noApi$();
+  var p$124 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$216$1) {
     return (function() {
-      var this$713 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$712 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$711 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$438 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.mapWord$1;
-      var p0$439 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$438, this$711.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$440 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$439, this$712.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.asterisk$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$440, this$713.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
+      var this$707 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$706 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$705 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$434 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.mapWord$1;
+      var p0$435 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$434, this$705.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$436 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$435, this$706.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.asterisk$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$436, this$707.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
     })
   })(this));
-  var name$129 = new $c_Lsourcecode_Name().init___T("anyMapTest");
-  var p0$441 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$129.value$2, p$125, this$714.implicitReprOps$1);
-  this.anyMapTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$441, this$715.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$219$1) {
+  var name$128 = new $c_Lsourcecode_Name().init___T("anyMapTest");
+  var p0$437 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$128.value$2, p$124, this$708.implicitReprOps$1);
+  this.anyMapTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$437, this$709.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$217$1) {
     return (function(x0$76$2) {
       $asUnit(x0$76$2);
       return $m_Leu_cdevreeze_xpathparser_ast_AnyMapTest$()
     })
   })(this)));
-  var this$725 = this.White$1;
-  var this$724 = $m_Lfastparse_noApi$();
-  var p$126 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$220$1) {
+  var this$719 = this.White$1;
+  var this$718 = $m_Lfastparse_noApi$();
+  var p$125 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$218$1) {
     return (function() {
-      var this$722 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$720 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$718 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$717 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$716 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$442 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.mapWord$1;
-      var p0$443 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$442, this$716.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$444 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$443, this$717.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().atomicOrUnionType$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$222 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$444, this$718.WL$1);
-      var jsx$221 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.comma$1;
-      var this$719 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$445 = jsx$222.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$221, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$719));
-      var jsx$223 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$445, this$720.WL$1);
-      var jsx$220 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().sequenceType$1;
-      var this$721 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$446 = jsx$223.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$220, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$721)));
-      var jsx$224 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$446, this$722.WL$1);
-      var jsx$219 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1;
-      var this$723 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$224.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$219, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$723))
+      var this$716 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$714 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$712 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$711 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$710 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$438 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.mapWord$1;
+      var p0$439 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$438, this$710.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$440 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$439, this$711.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().atomicOrUnionType$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$220 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$440, this$712.WL$1);
+      var jsx$219 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.comma$1;
+      var this$713 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$441 = jsx$220.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$219, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$713));
+      var jsx$221 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$441, this$714.WL$1);
+      var jsx$218 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().sequenceType$1;
+      var this$715 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$442 = jsx$221.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$218, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$715)));
+      var jsx$222 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$442, this$716.WL$1);
+      var jsx$217 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1;
+      var this$717 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$222.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$217, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$717))
     })
   })(this));
-  var name$130 = new $c_Lsourcecode_Name().init___T("typedMapTest");
-  var p0$447 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$130.value$2, p$126, this$724.implicitReprOps$1);
-  this.typedMapTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$447, this$725.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$221$1) {
+  var name$129 = new $c_Lsourcecode_Name().init___T("typedMapTest");
+  var p0$443 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$129.value$2, p$125, this$718.implicitReprOps$1);
+  this.typedMapTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$443, this$719.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$219$1) {
     return (function(x0$77$2) {
       var x0$77 = $as_T2(x0$77$2);
       if ((x0$77 !== null)) {
@@ -7958,82 +7934,82 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       }
     })
   })(this)));
-  var this$727 = $m_Lfastparse_noApi$();
-  var p$127 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$222$1) {
+  var this$721 = $m_Lfastparse_noApi$();
+  var p$126 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$220$1) {
     return (function() {
-      var this$726 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$448 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().anyArrayTest$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$448, this$726.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().typedArrayTest$1)
+      var this$720 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$444 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().anyArrayTest$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$444, this$720.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().typedArrayTest$1)
     })
   })(this));
-  var name$131 = new $c_Lsourcecode_Name().init___T("arrayTest");
-  this.arrayTest$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$131.value$2, p$127, this$727.implicitReprOps$1);
-  var this$732 = this.White$1;
-  var this$731 = $m_Lfastparse_noApi$();
-  var p$128 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$223$1) {
+  var name$130 = new $c_Lsourcecode_Name().init___T("arrayTest");
+  this.arrayTest$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$130.value$2, p$126, this$721.implicitReprOps$1);
+  var this$726 = this.White$1;
+  var this$725 = $m_Lfastparse_noApi$();
+  var p$127 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$221$1) {
     return (function() {
-      var this$730 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$729 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$728 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$449 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.arrayWord$1;
-      var p0$450 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$449, this$728.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$451 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$450, this$729.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.asterisk$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$451, this$730.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
+      var this$724 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$723 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$722 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$445 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.arrayWord$1;
+      var p0$446 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$445, this$722.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$447 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$446, this$723.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.asterisk$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$447, this$724.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
     })
   })(this));
-  var name$132 = new $c_Lsourcecode_Name().init___T("anyArrayTest");
-  var p0$452 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$132.value$2, p$128, this$731.implicitReprOps$1);
-  this.anyArrayTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$452, this$732.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$224$1) {
+  var name$131 = new $c_Lsourcecode_Name().init___T("anyArrayTest");
+  var p0$448 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$131.value$2, p$127, this$725.implicitReprOps$1);
+  this.anyArrayTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$448, this$726.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$222$1) {
     return (function(x0$78$2) {
       $asUnit(x0$78$2);
       return $m_Leu_cdevreeze_xpathparser_ast_AnyArrayTest$()
     })
   })(this)));
-  var this$738 = this.White$1;
-  var this$737 = $m_Lfastparse_noApi$();
-  var p$129 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$225$1) {
+  var this$732 = this.White$1;
+  var this$731 = $m_Lfastparse_noApi$();
+  var p$128 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$223$1) {
     return (function() {
-      var this$735 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$734 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$733 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$453 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.arrayWord$1;
-      var p0$454 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$453, this$733.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var p0$455 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$454, this$734.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().sequenceType$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
-      var jsx$226 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$455, this$735.WL$1);
-      var jsx$225 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.closeParenthesis$1;
-      var this$736 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$226.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$225, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$736))
+      var this$729 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$728 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$727 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$449 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.arrayWord$1;
+      var p0$450 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$449, this$727.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.openParenthesis$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var p0$451 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$450, this$728.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().sequenceType$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$224 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$451, this$729.WL$1);
+      var jsx$223 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.closeParenthesis$1;
+      var this$730 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$224.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$223, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$730))
     })
   })(this));
-  var name$133 = new $c_Lsourcecode_Name().init___T("typedArrayTest");
-  var p0$456 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$133.value$2, p$129, this$737.implicitReprOps$1);
-  this.typedArrayTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$456, this$738.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$226$1) {
+  var name$132 = new $c_Lsourcecode_Name().init___T("typedArrayTest");
+  var p0$452 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$132.value$2, p$128, this$731.implicitReprOps$1);
+  this.typedArrayTest$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$452, this$732.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$224$1) {
     return (function(x0$79$2) {
       var x0$79 = $as_Leu_cdevreeze_xpathparser_ast_SequenceType(x0$79$2);
       return new $c_Leu_cdevreeze_xpathparser_ast_TypedArrayTest().init___Leu_cdevreeze_xpathparser_ast_SequenceType(x0$79)
     })
   })(this)));
-  var this$745 = this.White$1;
-  var this$744 = $m_Lfastparse_noApi$();
-  var p$130 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$227$1) {
+  var this$739 = this.White$1;
+  var this$738 = $m_Lfastparse_noApi$();
+  var p$129 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$225$1) {
     return (function() {
-      var this$739 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$457 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().eqName$1;
-      var jsx$229 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$457, this$739.WL$1);
-      var this$741 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$740 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$458 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.questionMark$1;
-      var p0$459 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$458, this$740.WL$1).$$bang__Lfastparse_core_Parser();
-      var jsx$228 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$459, this$741.WL$1);
-      var this$742 = $m_Lfastparse_core_Implicits$Optioner$();
-      var jsx$227 = jsx$228.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$742));
-      var this$743 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$229.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$227, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$743)))
+      var this$733 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$453 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().eqName$1;
+      var jsx$227 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$453, this$733.WL$1);
+      var this$735 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$734 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$454 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.questionMark$1;
+      var p0$455 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$454, this$734.WL$1).$$bang__Lfastparse_core_Parser();
+      var jsx$226 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$455, this$735.WL$1);
+      var this$736 = $m_Lfastparse_core_Implicits$Optioner$();
+      var jsx$225 = jsx$226.$$qmark__Lfastparse_core_Implicits$Optioner__Lfastparse_core_Parser(new $c_Lfastparse_core_Implicits$LowPriOptioner$GenericOptioner().init___Lfastparse_core_Implicits$LowPriOptioner(this$736));
+      var this$737 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$227.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$225, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$737)))
     })
   })(this));
-  var name$134 = new $c_Lsourcecode_Name().init___T("singleType");
-  var p0$460 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$134.value$2, p$130, this$744.implicitReprOps$1);
-  this.singleType$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$460, this$745.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$228$1) {
+  var name$133 = new $c_Lsourcecode_Name().init___T("singleType");
+  var p0$456 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$133.value$2, p$129, this$738.implicitReprOps$1);
+  this.singleType$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$456, this$739.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$226$1) {
     return (function(x0$80$2) {
       var x0$80 = $as_T2(x0$80$2);
       if ((x0$80 !== null)) {
@@ -8054,135 +8030,192 @@ $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() 
       throw new $c_s_MatchError().init___O(x0$80)
     })
   })(this)));
-  var this$746 = $m_Lfastparse_noApi$();
-  var p$131 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$229$1) {
+  var this$740 = $m_Lfastparse_noApi$();
+  var p$130 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$227$1) {
     return (function() {
       return $m_Leu_cdevreeze_xpathparser_parse_NCNames$().ncName$1
     })
   })(this));
-  var name$135 = new $c_Lsourcecode_Name().init___T("ncName");
-  this.ncName$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$135.value$2, p$131, this$746.implicitReprOps$1);
-  var this$747 = $m_Lfastparse_noApi$();
-  var p$132 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$230$1) {
+  var name$134 = new $c_Lsourcecode_Name().init___T("ncName");
+  this.ncName$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$134.value$2, p$130, this$740.implicitReprOps$1);
+  var this$741 = $m_Lfastparse_noApi$();
+  var p$131 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$228$1) {
     return (function() {
       return $m_Leu_cdevreeze_xpathparser_parse_EQNames$().eqName$1
     })
   })(this));
-  var name$136 = new $c_Lsourcecode_Name().init___T("eqName");
-  this.eqName$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$136.value$2, p$132, this$747.implicitReprOps$1);
-  var this$755 = this.White$1;
-  var this$754 = $m_Lfastparse_noApi$();
-  var p$133 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$231$1) {
+  var name$135 = new $c_Lsourcecode_Name().init___T("eqName");
+  this.eqName$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$135.value$2, p$131, this$741.implicitReprOps$1);
+  var this$744 = $m_Lfastparse_noApi$();
+  var p$132 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$229$1) {
     return (function() {
-      var this$753 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$752 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$751 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$750 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$749 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$748 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$461 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.eqWord$1;
-      var p0$462 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$461, this$748.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.neWord$1);
-      var p0$463 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$462, this$749.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.ltWord$1);
-      var p0$464 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$463, this$750.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.leWord$1);
-      var p0$465 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$464, this$751.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.gtWord$1);
-      var p0$466 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$465, this$752.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.geWord$1);
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$466, this$753.WL$1).$$bang__Lfastparse_core_Parser()
+      var this$743 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$742 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$457 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().valueComp$1;
+      var p0$458 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$457, this$742.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().generalComp$1);
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$458, this$743.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().nodeComp$1)
+    })
+  })(this));
+  var name$136 = new $c_Lsourcecode_Name().init___T("comp");
+  this.comp$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$136.value$2, p$132, this$744.implicitReprOps$1);
+  var this$752 = this.White$1;
+  var this$751 = $m_Lfastparse_noApi$();
+  var p$133 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$230$1) {
+    return (function() {
+      var this$750 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$749 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$748 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$747 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$746 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$745 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$459 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.eqWord$1;
+      var p0$460 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$459, this$745.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.neWord$1);
+      var p0$461 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$460, this$746.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.ltWord$1);
+      var p0$462 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$461, this$747.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.leWord$1);
+      var p0$463 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$462, this$748.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.gtWord$1);
+      var p0$464 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$463, this$749.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.geWord$1);
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$464, this$750.WL$1).$$bang__Lfastparse_core_Parser()
     })
   })(this));
   var name$137 = new $c_Lsourcecode_Name().init___T("valueComp");
-  var p0$467 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$137.value$2, p$133, this$754.implicitReprOps$1);
-  this.valueComp$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$467, this$755.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$232$1) {
+  var p0$465 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$137.value$2, p$133, this$751.implicitReprOps$1);
+  this.valueComp$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$465, this$752.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$231$1) {
     return (function(s$2) {
       var s = $as_T(s$2);
       return $m_Leu_cdevreeze_xpathparser_ast_ValueComp$().parse__T__Leu_cdevreeze_xpathparser_ast_ValueComp(s)
     })
   })(this)));
-  var this$763 = this.White$1;
-  var this$762 = $m_Lfastparse_noApi$();
-  var p$134 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$233$1) {
+  var this$760 = this.White$1;
+  var this$759 = $m_Lfastparse_noApi$();
+  var p$134 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$232$1) {
     return (function() {
-      var this$761 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$760 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$759 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$758 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$757 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$756 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$468 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.equals$1;
-      var p0$469 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$468, this$756.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.notEquals$1);
-      var p0$470 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$469, this$757.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.lessThan$1);
-      var p0$471 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$470, this$758.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.lessThanOrEqual$1);
-      var p0$472 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$471, this$759.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.greaterThan$1);
-      var p0$473 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$472, this$760.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.greaterThanOrEqual$1);
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$473, this$761.WL$1).$$bang__Lfastparse_core_Parser()
+      var this$758 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$757 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$756 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$755 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$754 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$753 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$466 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.equals$1;
+      var p0$467 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$466, this$753.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.notEquals$1);
+      var p0$468 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$467, this$754.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.lessThan$1);
+      var p0$469 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$468, this$755.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.lessThanOrEqual$1);
+      var p0$470 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$469, this$756.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.greaterThan$1);
+      var p0$471 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$470, this$757.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.greaterThanOrEqual$1);
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$471, this$758.WL$1).$$bang__Lfastparse_core_Parser()
     })
   })(this));
   var name$138 = new $c_Lsourcecode_Name().init___T("generalComp");
-  var p0$474 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$138.value$2, p$134, this$762.implicitReprOps$1);
-  this.generalComp$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$474, this$763.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$234$1) {
+  var p0$472 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$138.value$2, p$134, this$759.implicitReprOps$1);
+  this.generalComp$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$472, this$760.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$233$1) {
     return (function(s$3$2) {
       var s$3 = $as_T(s$3$2);
       return $m_Leu_cdevreeze_xpathparser_ast_GeneralComp$().parse__T__Leu_cdevreeze_xpathparser_ast_GeneralComp(s$3)
     })
   })(this)));
-  var this$768 = this.White$1;
-  var this$767 = $m_Lfastparse_noApi$();
-  var p$135 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$235$1) {
+  var this$765 = this.White$1;
+  var this$764 = $m_Lfastparse_noApi$();
+  var p$135 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$234$1) {
     return (function() {
-      var this$766 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$765 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var this$764 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().White$1;
-      var p0$475 = $m_Leu_cdevreeze_xpathparser_parse_XPathParser$().NDT$1.isWord$1;
-      var p0$476 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$475, this$764.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.precedes$1);
-      var p0$477 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$476, this$765.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathParser$().DT$1.follows$1);
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$477, this$766.WL$1).$$bang__Lfastparse_core_Parser()
+      var this$763 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$762 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$761 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0$473 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().NDT$1.isWord$1;
+      var p0$474 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$473, this$761.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.precedes$1);
+      var p0$475 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$474, this$762.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().DT$1.follows$1);
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$475, this$763.WL$1).$$bang__Lfastparse_core_Parser()
     })
   })(this));
   var name$139 = new $c_Lsourcecode_Name().init___T("nodeComp");
-  var p0$478 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$139.value$2, p$135, this$767.implicitReprOps$1);
-  this.nodeComp$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$478, this$768.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$236$1) {
+  var p0$476 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$139.value$2, p$135, this$764.implicitReprOps$1);
+  this.nodeComp$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$476, this$765.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$235$1) {
     return (function(s$4$2) {
       var s$4 = $as_T(s$4$2);
       return $m_Leu_cdevreeze_xpathparser_ast_NodeComp$().parse__T__Leu_cdevreeze_xpathparser_ast_NodeComp(s$4)
     })
   })(this)));
-  var jsx$247 = $m_s_Predef$().Set$2;
+  var jsx$245 = $m_s_Predef$().Set$2;
+  var this$766 = $m_Leu_cdevreeze_xpathparser_ast_EQName$QName$();
+  var jsx$244 = this$766.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("array");
+  var this$767 = $m_Leu_cdevreeze_xpathparser_ast_EQName$QName$();
+  var jsx$243 = this$767.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("attribute");
+  var this$768 = $m_Leu_cdevreeze_xpathparser_ast_EQName$QName$();
+  var jsx$242 = this$768.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("comment");
   var this$769 = $m_Leu_cdevreeze_xpathparser_ast_EQName$QName$();
-  var jsx$246 = this$769.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("array");
+  var jsx$241 = this$769.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("document-node");
   var this$770 = $m_Leu_cdevreeze_xpathparser_ast_EQName$QName$();
-  var jsx$245 = this$770.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("attribute");
+  var jsx$240 = this$770.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("element");
   var this$771 = $m_Leu_cdevreeze_xpathparser_ast_EQName$QName$();
-  var jsx$244 = this$771.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("comment");
+  var jsx$239 = this$771.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("empty-sequence");
   var this$772 = $m_Leu_cdevreeze_xpathparser_ast_EQName$QName$();
-  var jsx$243 = this$772.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("document-node");
+  var jsx$238 = this$772.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("function");
   var this$773 = $m_Leu_cdevreeze_xpathparser_ast_EQName$QName$();
-  var jsx$242 = this$773.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("element");
+  var jsx$237 = this$773.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("if");
   var this$774 = $m_Leu_cdevreeze_xpathparser_ast_EQName$QName$();
-  var jsx$241 = this$774.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("empty-sequence");
+  var jsx$236 = this$774.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("item");
   var this$775 = $m_Leu_cdevreeze_xpathparser_ast_EQName$QName$();
-  var jsx$240 = this$775.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("function");
+  var jsx$235 = this$775.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("map");
   var this$776 = $m_Leu_cdevreeze_xpathparser_ast_EQName$QName$();
-  var jsx$239 = this$776.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("if");
+  var jsx$234 = this$776.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("namespace-node");
   var this$777 = $m_Leu_cdevreeze_xpathparser_ast_EQName$QName$();
-  var jsx$238 = this$777.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("item");
+  var jsx$233 = this$777.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("node");
   var this$778 = $m_Leu_cdevreeze_xpathparser_ast_EQName$QName$();
-  var jsx$237 = this$778.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("map");
+  var jsx$232 = this$778.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("processing-instruction");
   var this$779 = $m_Leu_cdevreeze_xpathparser_ast_EQName$QName$();
-  var jsx$236 = this$779.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("namespace-node");
+  var jsx$231 = this$779.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("schema-attribute");
   var this$780 = $m_Leu_cdevreeze_xpathparser_ast_EQName$QName$();
-  var jsx$235 = this$780.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("node");
+  var jsx$230 = this$780.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("schema-element");
   var this$781 = $m_Leu_cdevreeze_xpathparser_ast_EQName$QName$();
-  var jsx$234 = this$781.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("processing-instruction");
+  var jsx$229 = this$781.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("switch");
   var this$782 = $m_Leu_cdevreeze_xpathparser_ast_EQName$QName$();
-  var jsx$233 = this$782.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("schema-attribute");
+  var jsx$228 = this$782.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("text");
   var this$783 = $m_Leu_cdevreeze_xpathparser_ast_EQName$QName$();
-  var jsx$232 = this$783.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("schema-element");
-  var this$784 = $m_Leu_cdevreeze_xpathparser_ast_EQName$QName$();
-  var jsx$231 = this$784.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("switch");
-  var this$785 = $m_Leu_cdevreeze_xpathparser_ast_EQName$QName$();
-  var jsx$230 = this$785.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("text");
-  var this$786 = $m_Leu_cdevreeze_xpathparser_ast_EQName$QName$();
-  var array = [jsx$246, jsx$245, jsx$244, jsx$243, jsx$242, jsx$241, jsx$240, jsx$239, jsx$238, jsx$237, jsx$236, jsx$235, jsx$234, jsx$233, jsx$232, jsx$231, jsx$230, this$786.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("typeswitch")];
-  this.ReservedFunctionNames$1 = $as_sci_Set(jsx$247.apply__sc_Seq__sc_GenTraversable(new $c_sjs_js_WrappedArray().init___sjs_js_Array(array)));
+  var array = [jsx$244, jsx$243, jsx$242, jsx$241, jsx$240, jsx$239, jsx$238, jsx$237, jsx$236, jsx$235, jsx$234, jsx$233, jsx$232, jsx$231, jsx$230, jsx$229, jsx$228, this$783.parse__T__Leu_cdevreeze_xpathparser_ast_EQName$QName("typeswitch")];
+  this.ReservedFunctionNames$1 = $as_sci_Set(jsx$245.apply__sc_Seq__sc_GenTraversable(new $c_sjs_js_WrappedArray().init___sjs_js_Array(array)));
+  return this
+});
+var $d_Leu_cdevreeze_xpathparser_parse_XPathElemParser$ = new $TypeData().initClass({
+  Leu_cdevreeze_xpathparser_parse_XPathElemParser$: 0
+}, false, "eu.cdevreeze.xpathparser.parse.XPathElemParser$", {
+  Leu_cdevreeze_xpathparser_parse_XPathElemParser$: 1,
+  O: 1
+});
+$c_Leu_cdevreeze_xpathparser_parse_XPathElemParser$.prototype.$classData = $d_Leu_cdevreeze_xpathparser_parse_XPathElemParser$;
+var $n_Leu_cdevreeze_xpathparser_parse_XPathElemParser$ = (void 0);
+function $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$() {
+  if ((!$n_Leu_cdevreeze_xpathparser_parse_XPathElemParser$)) {
+    $n_Leu_cdevreeze_xpathparser_parse_XPathElemParser$ = new $c_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().init___()
+  };
+  return $n_Leu_cdevreeze_xpathparser_parse_XPathElemParser$
+}
+/** @constructor */
+function $c_Leu_cdevreeze_xpathparser_parse_XPathParser$() {
+  $c_O.call(this);
+  this.xpathExpr$1 = null
+}
+$c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype = new $h_O();
+$c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.constructor = $c_Leu_cdevreeze_xpathparser_parse_XPathParser$;
+/** @constructor */
+function $h_Leu_cdevreeze_xpathparser_parse_XPathParser$() {
+  /*<skip>*/
+}
+$h_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype = $c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype;
+$c_Leu_cdevreeze_xpathparser_parse_XPathParser$.prototype.init___ = (function() {
+  $n_Leu_cdevreeze_xpathparser_parse_XPathParser$ = this;
+  var this$4 = $m_Lfastparse_noApi$();
+  var p = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function($this) {
+    return (function() {
+      var this$2 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var this$1 = $m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().White$1;
+      var p0 = $m_Lfastparse_noApi$().Start$1;
+      var p0$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0, this$1.WL$1).$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser($m_Leu_cdevreeze_xpathparser_parse_XPathElemParser$().expr$1, $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer());
+      var jsx$2 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$1, this$2.WL$1);
+      var jsx$1 = $m_Lfastparse_noApi$().End$1;
+      var this$3 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$2.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$1, $f_Lfastparse_core_Implicits$LowPriSequencer__UnitSequencer__Lfastparse_core_Implicits$Sequencer(this$3))
+    })
+  })(this));
+  var name = new $c_Lsourcecode_Name().init___T("xpathExpr");
+  this.xpathExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name.value$2, p, this$4.implicitReprOps$1);
   return this
 });
 var $d_Leu_cdevreeze_xpathparser_parse_XPathParser$ = new $TypeData().initClass({
@@ -18067,18 +18100,6 @@ function $m_Leu_cdevreeze_xpathparser_ast_EQName$QName$() {
   };
   return $n_Leu_cdevreeze_xpathparser_ast_EQName$QName$
 }
-function $is_Leu_cdevreeze_xpathparser_ast_Expr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_Expr)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_Expr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_Expr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.Expr"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_Expr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_Expr)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_Expr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_Expr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.Expr;", depth))
-}
 function $is_Leu_cdevreeze_xpathparser_ast_ForwardStep(obj) {
   return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_ForwardStep)))
 }
@@ -18222,6 +18243,18 @@ function $isArrayOf_Leu_cdevreeze_xpathparser_ast_VariableIntroducingExpr(obj, d
 }
 function $asArrayOf_Leu_cdevreeze_xpathparser_ast_VariableIntroducingExpr(obj, depth) {
   return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_VariableIntroducingExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.VariableIntroducingExpr;", depth))
+}
+function $is_Leu_cdevreeze_xpathparser_ast_XPathExpr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_XPathExpr)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_XPathExpr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_XPathExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.XPathExpr"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_XPathExpr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_XPathExpr)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_XPathExpr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_XPathExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.XPathExpr;", depth))
 }
 /** @constructor */
 function $c_Leu_cdevreeze_xpathparser_common_QName$() {
@@ -22113,6 +22146,18 @@ function $isArrayOf_Leu_cdevreeze_xpathparser_ast_Comp(obj, depth) {
 function $asArrayOf_Leu_cdevreeze_xpathparser_ast_Comp(obj, depth) {
   return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_Comp(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.Comp;", depth))
 }
+function $is_Leu_cdevreeze_xpathparser_ast_Expr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_Expr)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_Expr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_Expr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.Expr"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_Expr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_Expr)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_Expr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_Expr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.Expr;", depth))
+}
 function $is_Leu_cdevreeze_xpathparser_ast_ForwardAxis(obj) {
   return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_ForwardAxis)))
 }
@@ -25873,18 +25918,6 @@ function $isArrayOf_Leu_cdevreeze_xpathparser_ast_ElementTest(obj, depth) {
 function $asArrayOf_Leu_cdevreeze_xpathparser_ast_ElementTest(obj, depth) {
   return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_ElementTest(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.ElementTest;", depth))
 }
-function $is_Leu_cdevreeze_xpathparser_ast_ExprSingle(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_ExprSingle)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_ExprSingle(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_ExprSingle(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.ExprSingle"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_ExprSingle(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_ExprSingle)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_ExprSingle(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_ExprSingle(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.ExprSingle;", depth))
-}
 /** @constructor */
 function $c_Leu_cdevreeze_xpathparser_ast_NCName() {
   $c_O.call(this);
@@ -29101,17 +29134,17 @@ var $d_Leu_cdevreeze_xpathparser_ast_EQName$URIQualifiedName = new $TypeData().i
   Ljava_io_Serializable: 1
 });
 $c_Leu_cdevreeze_xpathparser_ast_EQName$URIQualifiedName.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_EQName$URIQualifiedName;
-function $is_Leu_cdevreeze_xpathparser_ast_OrExpr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_OrExpr)))
+function $is_Leu_cdevreeze_xpathparser_ast_ExprSingle(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_ExprSingle)))
 }
-function $as_Leu_cdevreeze_xpathparser_ast_OrExpr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_OrExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.OrExpr"))
+function $as_Leu_cdevreeze_xpathparser_ast_ExprSingle(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_ExprSingle(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.ExprSingle"))
 }
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_OrExpr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_OrExpr)))
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_ExprSingle(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_ExprSingle)))
 }
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_OrExpr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_OrExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.OrExpr;", depth))
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_ExprSingle(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_ExprSingle(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.ExprSingle;", depth))
 }
 /** @constructor */
 function $c_Leu_cdevreeze_xpathparser_common_EName() {
@@ -31979,6 +32012,18 @@ var $d_sjsr_UndefinedBehaviorError = new $TypeData().initClass({
   s_util_control_NoStackTrace: 1
 });
 $c_sjsr_UndefinedBehaviorError.prototype.$classData = $d_sjsr_UndefinedBehaviorError;
+function $is_Leu_cdevreeze_xpathparser_ast_OrExpr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_OrExpr)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_OrExpr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_OrExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.OrExpr"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_OrExpr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_OrExpr)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_OrExpr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_OrExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.OrExpr;", depth))
+}
 /** @constructor */
 function $c_Leu_cdevreeze_xpathparser_common_PrefixedName() {
   $c_O.call(this);
@@ -33076,18 +33121,6 @@ function $m_sjs_js_WrappedArray$() {
   };
   return $n_sjs_js_WrappedArray$
 }
-function $is_Leu_cdevreeze_xpathparser_ast_AndExpr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_AndExpr)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_AndExpr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_AndExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.AndExpr"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_AndExpr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_AndExpr)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_AndExpr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_AndExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.AndExpr;", depth))
-}
 /** @constructor */
 function $c_Leu_cdevreeze_xpathparser_ast_ArrowFunctionCall() {
   $c_O.call(this);
@@ -33690,108 +33723,6 @@ var $d_Leu_cdevreeze_xpathparser_ast_TypeDeclaration = new $TypeData().initClass
   Ljava_io_Serializable: 1
 });
 $c_Leu_cdevreeze_xpathparser_ast_TypeDeclaration.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_TypeDeclaration;
-/** @constructor */
-function $c_Leu_cdevreeze_xpathparser_ast_XPathExpr() {
-  $c_O.call(this);
-  this.expr$1 = null
-}
-$c_Leu_cdevreeze_xpathparser_ast_XPathExpr.prototype = new $h_O();
-$c_Leu_cdevreeze_xpathparser_ast_XPathExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_XPathExpr;
-/** @constructor */
-function $h_Leu_cdevreeze_xpathparser_ast_XPathExpr() {
-  /*<skip>*/
-}
-$h_Leu_cdevreeze_xpathparser_ast_XPathExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_XPathExpr.prototype;
-$c_Leu_cdevreeze_xpathparser_ast_XPathExpr.prototype.productPrefix__T = (function() {
-  return "XPathExpr"
-});
-$c_Leu_cdevreeze_xpathparser_ast_XPathExpr.prototype.productArity__I = (function() {
-  return 1
-});
-$c_Leu_cdevreeze_xpathparser_ast_XPathExpr.prototype.equals__O__Z = (function(x$1) {
-  if ((this === x$1)) {
-    return true
-  } else if ($is_Leu_cdevreeze_xpathparser_ast_XPathExpr(x$1)) {
-    var XPathExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_XPathExpr(x$1);
-    var x = this.expr$1;
-    var x$2 = XPathExpr$1.expr$1;
-    return ((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))
-  } else {
-    return false
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_XPathExpr.prototype.productElement__I__O = (function(x$1) {
-  switch (x$1) {
-    case 0: {
-      return this.expr$1;
-      break
-    }
-    default: {
-      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
-    }
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_XPathExpr.prototype.toString__T = (function() {
-  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
-});
-$c_Leu_cdevreeze_xpathparser_ast_XPathExpr.prototype.children__sci_IndexedSeq = (function() {
-  $m_sci_IndexedSeq$();
-  var array = [this.expr$1];
-  if (($uI(array.length) === 0)) {
-    $m_sci_Vector$();
-    var this$5 = new $c_sci_VectorBuilder().init___();
-    return this$5.result__sci_Vector()
-  } else {
-    $m_sci_Vector$();
-    var b = new $c_sci_VectorBuilder().init___();
-    var i = 0;
-    var len = $uI(array.length);
-    while ((i < len)) {
-      var index = i;
-      var arg1 = array[index];
-      b.$$plus$eq__O__sci_VectorBuilder(arg1);
-      i = ((1 + i) | 0)
-    };
-    return b.result__sci_Vector()
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_XPathExpr.prototype.init___Leu_cdevreeze_xpathparser_ast_Expr = (function(expr) {
-  this.expr$1 = expr;
-  return this
-});
-$c_Leu_cdevreeze_xpathparser_ast_XPathExpr.prototype.hashCode__I = (function() {
-  var this$2 = $m_s_util_hashing_MurmurHash3$();
-  return this$2.productHash__s_Product__I__I(this, (-889275714))
-});
-$c_Leu_cdevreeze_xpathparser_ast_XPathExpr.prototype.productIterator__sc_Iterator = (function() {
-  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
-});
-function $is_Leu_cdevreeze_xpathparser_ast_XPathExpr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_XPathExpr)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_XPathExpr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_XPathExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.XPathExpr"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_XPathExpr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_XPathExpr)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_XPathExpr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_XPathExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.XPathExpr;", depth))
-}
-var $d_Leu_cdevreeze_xpathparser_ast_XPathExpr = new $TypeData().initClass({
-  Leu_cdevreeze_xpathparser_ast_XPathExpr: 0
-}, false, "eu.cdevreeze.xpathparser.ast.XPathExpr", {
-  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
-  O: 1,
-  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
-  s_Product: 1,
-  s_Equals: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Leu_cdevreeze_xpathparser_ast_XPathExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_XPathExpr;
 /** @constructor */
 function $c_Lfastparse_WhitespaceApi$CustomSequence() {
   $c_Lfastparse_core_Parser.call(this);
@@ -38108,6 +38039,18 @@ function $m_Leu_cdevreeze_xpathparser_ast_AbbrevReverseStep$() {
   };
   return $n_Leu_cdevreeze_xpathparser_ast_AbbrevReverseStep$
 }
+function $is_Leu_cdevreeze_xpathparser_ast_AndExpr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_AndExpr)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_AndExpr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_AndExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.AndExpr"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_AndExpr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_AndExpr)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_AndExpr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_AndExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.AndExpr;", depth))
+}
 /** @constructor */
 function $c_Leu_cdevreeze_xpathparser_ast_ArgumentList() {
   $c_O.call(this);
@@ -38193,95 +38136,6 @@ var $d_Leu_cdevreeze_xpathparser_ast_ArgumentList = new $TypeData().initClass({
   Ljava_io_Serializable: 1
 });
 $c_Leu_cdevreeze_xpathparser_ast_ArgumentList.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_ArgumentList;
-/** @constructor */
-function $c_Leu_cdevreeze_xpathparser_ast_CompoundExpr() {
-  $c_O.call(this);
-  this.exprSingleSeq$1 = null
-}
-$c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype = new $h_O();
-$c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_CompoundExpr;
-/** @constructor */
-function $h_Leu_cdevreeze_xpathparser_ast_CompoundExpr() {
-  /*<skip>*/
-}
-$h_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype;
-$c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype.productPrefix__T = (function() {
-  return "CompoundExpr"
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype.productArity__I = (function() {
-  return 1
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype.equals__O__Z = (function(x$1) {
-  if ((this === x$1)) {
-    return true
-  } else if ($is_Leu_cdevreeze_xpathparser_ast_CompoundExpr(x$1)) {
-    var CompoundExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_CompoundExpr(x$1);
-    var x = this.exprSingleSeq$1;
-    var x$2 = CompoundExpr$1.exprSingleSeq$1;
-    return ((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))
-  } else {
-    return false
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype.productElement__I__O = (function(x$1) {
-  switch (x$1) {
-    case 0: {
-      return this.exprSingleSeq$1;
-      break
-    }
-    default: {
-      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
-    }
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype.toString__T = (function() {
-  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype.children__sci_IndexedSeq = (function() {
-  return this.exprSingleSeq$1
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype.hashCode__I = (function() {
-  var this$2 = $m_s_util_hashing_MurmurHash3$();
-  return this$2.productHash__s_Product__I__I(this, (-889275714))
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype.productIterator__sc_Iterator = (function() {
-  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype.init___sci_IndexedSeq = (function(exprSingleSeq) {
-  this.exprSingleSeq$1 = exprSingleSeq;
-  var requirement = (exprSingleSeq.size__I() >= 2);
-  if ((!requirement)) {
-    throw new $c_jl_IllegalArgumentException().init___T("requirement failed: At least 2 expression-singles must be provided but found 0 or 1 such expression")
-  };
-  return this
-});
-function $is_Leu_cdevreeze_xpathparser_ast_CompoundExpr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundExpr)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_CompoundExpr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_CompoundExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.CompoundExpr"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundExpr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundExpr)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundExpr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.CompoundExpr;", depth))
-}
-var $d_Leu_cdevreeze_xpathparser_ast_CompoundExpr = new $TypeData().initClass({
-  Leu_cdevreeze_xpathparser_ast_CompoundExpr: 0
-}, false, "eu.cdevreeze.xpathparser.ast.CompoundExpr", {
-  Leu_cdevreeze_xpathparser_ast_CompoundExpr: 1,
-  O: 1,
-  Leu_cdevreeze_xpathparser_ast_Expr: 1,
-  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
-  s_Product: 1,
-  s_Equals: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_CompoundExpr;
 /** @constructor */
 function $c_Leu_cdevreeze_xpathparser_ast_ExactlyOneSequenceType() {
   $c_O.call(this);
@@ -41729,6 +41583,96 @@ var $d_Leu_cdevreeze_xpathparser_ast_AttributeAxisAbbrevForwardStep = new $TypeD
   Ljava_io_Serializable: 1
 });
 $c_Leu_cdevreeze_xpathparser_ast_AttributeAxisAbbrevForwardStep.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_AttributeAxisAbbrevForwardStep;
+/** @constructor */
+function $c_Leu_cdevreeze_xpathparser_ast_CompoundExpr() {
+  $c_O.call(this);
+  this.exprSingleSeq$1 = null
+}
+$c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype = new $h_O();
+$c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_CompoundExpr;
+/** @constructor */
+function $h_Leu_cdevreeze_xpathparser_ast_CompoundExpr() {
+  /*<skip>*/
+}
+$h_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype;
+$c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype.productPrefix__T = (function() {
+  return "CompoundExpr"
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype.productArity__I = (function() {
+  return 1
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Leu_cdevreeze_xpathparser_ast_CompoundExpr(x$1)) {
+    var CompoundExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_CompoundExpr(x$1);
+    var x = this.exprSingleSeq$1;
+    var x$2 = CompoundExpr$1.exprSingleSeq$1;
+    return ((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))
+  } else {
+    return false
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.exprSingleSeq$1;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype.children__sci_IndexedSeq = (function() {
+  return this.exprSingleSeq$1
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype.init___sci_IndexedSeq = (function(exprSingleSeq) {
+  this.exprSingleSeq$1 = exprSingleSeq;
+  var requirement = (exprSingleSeq.size__I() >= 2);
+  if ((!requirement)) {
+    throw new $c_jl_IllegalArgumentException().init___T("requirement failed: At least 2 expression-singles must be provided but found 0 or 1 such expression")
+  };
+  return this
+});
+function $is_Leu_cdevreeze_xpathparser_ast_CompoundExpr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundExpr)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_CompoundExpr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_CompoundExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.CompoundExpr"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundExpr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundExpr)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundExpr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.CompoundExpr;", depth))
+}
+var $d_Leu_cdevreeze_xpathparser_ast_CompoundExpr = new $TypeData().initClass({
+  Leu_cdevreeze_xpathparser_ast_CompoundExpr: 0
+}, false, "eu.cdevreeze.xpathparser.ast.CompoundExpr", {
+  Leu_cdevreeze_xpathparser_ast_CompoundExpr: 1,
+  O: 1,
+  Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_CompoundExpr;
 /** @constructor */
 function $c_Leu_cdevreeze_xpathparser_ast_EQNameAsArrowFunctionSpecifier() {
   $c_O.call(this);
@@ -45661,136 +45605,6 @@ function $m_Leu_cdevreeze_xpathparser_ast_GeneralComp$Ne$() {
   return $n_Leu_cdevreeze_xpathparser_ast_GeneralComp$Ne$
 }
 /** @constructor */
-function $c_Leu_cdevreeze_xpathparser_ast_IfExpr() {
-  $c_O.call(this);
-  this.condition$1 = null;
-  this.thenExpr$1 = null;
-  this.elseExpr$1 = null
-}
-$c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype = new $h_O();
-$c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_IfExpr;
-/** @constructor */
-function $h_Leu_cdevreeze_xpathparser_ast_IfExpr() {
-  /*<skip>*/
-}
-$h_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype;
-$c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype.productPrefix__T = (function() {
-  return "IfExpr"
-});
-$c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype.productArity__I = (function() {
-  return 3
-});
-$c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype.equals__O__Z = (function(x$1) {
-  if ((this === x$1)) {
-    return true
-  } else if ($is_Leu_cdevreeze_xpathparser_ast_IfExpr(x$1)) {
-    var IfExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_IfExpr(x$1);
-    var x = this.condition$1;
-    var x$2 = IfExpr$1.condition$1;
-    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
-      var x$3 = this.thenExpr$1;
-      var x$4 = IfExpr$1.thenExpr$1;
-      var jsx$1 = ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
-    } else {
-      var jsx$1 = false
-    };
-    if (jsx$1) {
-      var x$5 = this.elseExpr$1;
-      var x$6 = IfExpr$1.elseExpr$1;
-      return ((x$5 === null) ? (x$6 === null) : x$5.equals__O__Z(x$6))
-    } else {
-      return false
-    }
-  } else {
-    return false
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype.productElement__I__O = (function(x$1) {
-  switch (x$1) {
-    case 0: {
-      return this.condition$1;
-      break
-    }
-    case 1: {
-      return this.thenExpr$1;
-      break
-    }
-    case 2: {
-      return this.elseExpr$1;
-      break
-    }
-    default: {
-      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
-    }
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype.toString__T = (function() {
-  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
-});
-$c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype.children__sci_IndexedSeq = (function() {
-  $m_sci_IndexedSeq$();
-  var array = [this.condition$1, this.thenExpr$1, this.elseExpr$1];
-  if (($uI(array.length) === 0)) {
-    $m_sci_Vector$();
-    var this$5 = new $c_sci_VectorBuilder().init___();
-    return this$5.result__sci_Vector()
-  } else {
-    $m_sci_Vector$();
-    var b = new $c_sci_VectorBuilder().init___();
-    var i = 0;
-    var len = $uI(array.length);
-    while ((i < len)) {
-      var index = i;
-      var arg1 = array[index];
-      b.$$plus$eq__O__sci_VectorBuilder(arg1);
-      i = ((1 + i) | 0)
-    };
-    return b.result__sci_Vector()
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype.init___Leu_cdevreeze_xpathparser_ast_Expr__Leu_cdevreeze_xpathparser_ast_ExprSingle__Leu_cdevreeze_xpathparser_ast_ExprSingle = (function(condition, thenExpr, elseExpr) {
-  this.condition$1 = condition;
-  this.thenExpr$1 = thenExpr;
-  this.elseExpr$1 = elseExpr;
-  return this
-});
-$c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype.hashCode__I = (function() {
-  var this$2 = $m_s_util_hashing_MurmurHash3$();
-  return this$2.productHash__s_Product__I__I(this, (-889275714))
-});
-$c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype.productIterator__sc_Iterator = (function() {
-  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
-});
-function $is_Leu_cdevreeze_xpathparser_ast_IfExpr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_IfExpr)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_IfExpr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_IfExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.IfExpr"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_IfExpr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_IfExpr)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_IfExpr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_IfExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.IfExpr;", depth))
-}
-var $d_Leu_cdevreeze_xpathparser_ast_IfExpr = new $TypeData().initClass({
-  Leu_cdevreeze_xpathparser_ast_IfExpr: 0
-}, false, "eu.cdevreeze.xpathparser.ast.IfExpr", {
-  Leu_cdevreeze_xpathparser_ast_IfExpr: 1,
-  O: 1,
-  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_Expr: 1,
-  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
-  s_Product: 1,
-  s_Equals: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_IfExpr;
-/** @constructor */
 function $c_Leu_cdevreeze_xpathparser_ast_NamespaceNodeTest$() {
   $c_O.call(this)
 }
@@ -47399,98 +47213,6 @@ var $d_Leu_cdevreeze_xpathparser_ast_AttributeTypeTest = new $TypeData().initCla
 });
 $c_Leu_cdevreeze_xpathparser_ast_AttributeTypeTest.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_AttributeTypeTest;
 /** @constructor */
-function $c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr() {
-  $c_O.call(this);
-  this.andExprs$1 = null
-}
-$c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype = new $h_O();
-$c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr;
-/** @constructor */
-function $h_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr() {
-  /*<skip>*/
-}
-$h_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype;
-$c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype.productPrefix__T = (function() {
-  return "CompoundOrExpr"
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype.productArity__I = (function() {
-  return 1
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype.equals__O__Z = (function(x$1) {
-  if ((this === x$1)) {
-    return true
-  } else if ($is_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr(x$1)) {
-    var CompoundOrExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr(x$1);
-    var x = this.andExprs$1;
-    var x$2 = CompoundOrExpr$1.andExprs$1;
-    return ((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))
-  } else {
-    return false
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype.productElement__I__O = (function(x$1) {
-  switch (x$1) {
-    case 0: {
-      return this.andExprs$1;
-      break
-    }
-    default: {
-      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
-    }
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype.toString__T = (function() {
-  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype.children__sci_IndexedSeq = (function() {
-  return this.andExprs$1
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype.hashCode__I = (function() {
-  var this$2 = $m_s_util_hashing_MurmurHash3$();
-  return this$2.productHash__s_Product__I__I(this, (-889275714))
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype.productIterator__sc_Iterator = (function() {
-  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype.init___sci_IndexedSeq = (function(andExprs) {
-  this.andExprs$1 = andExprs;
-  var requirement = (andExprs.size__I() >= 2);
-  if ((!requirement)) {
-    throw new $c_jl_IllegalArgumentException().init___T("requirement failed: At least 2 and-expressions must be provided but found 0 or 1 such expression")
-  };
-  return this
-});
-function $is_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundOrExpr)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.CompoundOrExpr"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundOrExpr)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.CompoundOrExpr;", depth))
-}
-var $d_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr = new $TypeData().initClass({
-  Leu_cdevreeze_xpathparser_ast_CompoundOrExpr: 0
-}, false, "eu.cdevreeze.xpathparser.ast.CompoundOrExpr", {
-  Leu_cdevreeze_xpathparser_ast_CompoundOrExpr: 1,
-  O: 1,
-  Leu_cdevreeze_xpathparser_ast_OrExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_Expr: 1,
-  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
-  s_Product: 1,
-  s_Equals: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr;
-/** @constructor */
 function $c_Leu_cdevreeze_xpathparser_ast_ElementNameAndTypeTest() {
   $c_O.call(this);
   this.name$1 = null;
@@ -47767,35 +47489,43 @@ var $d_Leu_cdevreeze_xpathparser_ast_ElementTypeTest = new $TypeData().initClass
 });
 $c_Leu_cdevreeze_xpathparser_ast_ElementTypeTest.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_ElementTypeTest;
 /** @constructor */
-function $c_Leu_cdevreeze_xpathparser_ast_ForExpr() {
+function $c_Leu_cdevreeze_xpathparser_ast_IfExpr() {
   $c_O.call(this);
-  this.simpleForBindings$1 = null;
-  this.returnExpr$1 = null
+  this.condition$1 = null;
+  this.thenExpr$1 = null;
+  this.elseExpr$1 = null
 }
-$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype = new $h_O();
-$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_ForExpr;
+$c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype = new $h_O();
+$c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_IfExpr;
 /** @constructor */
-function $h_Leu_cdevreeze_xpathparser_ast_ForExpr() {
+function $h_Leu_cdevreeze_xpathparser_ast_IfExpr() {
   /*<skip>*/
 }
-$h_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype;
-$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.productPrefix__T = (function() {
-  return "ForExpr"
+$h_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype;
+$c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype.productPrefix__T = (function() {
+  return "IfExpr"
 });
-$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.productArity__I = (function() {
-  return 2
+$c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype.productArity__I = (function() {
+  return 3
 });
-$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.equals__O__Z = (function(x$1) {
+$c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype.equals__O__Z = (function(x$1) {
   if ((this === x$1)) {
     return true
-  } else if ($is_Leu_cdevreeze_xpathparser_ast_ForExpr(x$1)) {
-    var ForExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_ForExpr(x$1);
-    var x = this.simpleForBindings$1;
-    var x$2 = ForExpr$1.simpleForBindings$1;
+  } else if ($is_Leu_cdevreeze_xpathparser_ast_IfExpr(x$1)) {
+    var IfExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_IfExpr(x$1);
+    var x = this.condition$1;
+    var x$2 = IfExpr$1.condition$1;
     if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
-      var x$3 = this.returnExpr$1;
-      var x$4 = ForExpr$1.returnExpr$1;
-      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+      var x$3 = this.thenExpr$1;
+      var x$4 = IfExpr$1.thenExpr$1;
+      var jsx$1 = ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      var jsx$1 = false
+    };
+    if (jsx$1) {
+      var x$5 = this.elseExpr$1;
+      var x$6 = IfExpr$1.elseExpr$1;
+      return ((x$5 === null) ? (x$6 === null) : x$5.equals__O__Z(x$6))
     } else {
       return false
     }
@@ -47803,14 +47533,18 @@ $c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.equals__O__Z = (function(x$1)
     return false
   }
 });
-$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.productElement__I__O = (function(x$1) {
+$c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype.productElement__I__O = (function(x$1) {
   switch (x$1) {
     case 0: {
-      return this.simpleForBindings$1;
+      return this.condition$1;
       break
     }
     case 1: {
-      return this.returnExpr$1;
+      return this.thenExpr$1;
+      break
+    }
+    case 2: {
+      return this.elseExpr$1;
       break
     }
     default: {
@@ -47818,166 +47552,73 @@ $c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.productElement__I__O = (funct
     }
   }
 });
-$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.variableBindings__sci_IndexedSeq = (function() {
-  return this.simpleForBindings$1
-});
-$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.toString__T = (function() {
+$c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype.toString__T = (function() {
   return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
 });
-$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.init___sci_IndexedSeq__Leu_cdevreeze_xpathparser_ast_ExprSingle = (function(simpleForBindings, returnExpr) {
-  this.simpleForBindings$1 = simpleForBindings;
-  this.returnExpr$1 = returnExpr;
-  return this
-});
-$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.children__sci_IndexedSeq = (function() {
-  return $as_sci_IndexedSeq(this.simpleForBindings$1.$$colon$plus__O__scg_CanBuildFrom__O(this.returnExpr$1, ($m_sci_IndexedSeq$(), $m_sc_IndexedSeq$().ReusableCBF$6)))
-});
-$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.returnExpr__Leu_cdevreeze_xpathparser_ast_XPathElem = (function() {
-  return this.returnExpr$1
-});
-$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.hashCode__I = (function() {
-  var this$2 = $m_s_util_hashing_MurmurHash3$();
-  return this$2.productHash__s_Product__I__I(this, (-889275714))
-});
-$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.productIterator__sc_Iterator = (function() {
-  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
-});
-function $is_Leu_cdevreeze_xpathparser_ast_ForExpr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_ForExpr)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_ForExpr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_ForExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.ForExpr"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_ForExpr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_ForExpr)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_ForExpr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_ForExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.ForExpr;", depth))
-}
-var $d_Leu_cdevreeze_xpathparser_ast_ForExpr = new $TypeData().initClass({
-  Leu_cdevreeze_xpathparser_ast_ForExpr: 0
-}, false, "eu.cdevreeze.xpathparser.ast.ForExpr", {
-  Leu_cdevreeze_xpathparser_ast_ForExpr: 1,
-  O: 1,
-  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_Expr: 1,
-  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
-  Leu_cdevreeze_xpathparser_ast_VariableIntroducingExpr: 1,
-  s_Product: 1,
-  s_Equals: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_ForExpr;
-/** @constructor */
-function $c_Leu_cdevreeze_xpathparser_ast_LetExpr() {
-  $c_O.call(this);
-  this.simpleLetBindings$1 = null;
-  this.returnExpr$1 = null
-}
-$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype = new $h_O();
-$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_LetExpr;
-/** @constructor */
-function $h_Leu_cdevreeze_xpathparser_ast_LetExpr() {
-  /*<skip>*/
-}
-$h_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype;
-$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.productPrefix__T = (function() {
-  return "LetExpr"
-});
-$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.productArity__I = (function() {
-  return 2
-});
-$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.equals__O__Z = (function(x$1) {
-  if ((this === x$1)) {
-    return true
-  } else if ($is_Leu_cdevreeze_xpathparser_ast_LetExpr(x$1)) {
-    var LetExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_LetExpr(x$1);
-    var x = this.simpleLetBindings$1;
-    var x$2 = LetExpr$1.simpleLetBindings$1;
-    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
-      var x$3 = this.returnExpr$1;
-      var x$4 = LetExpr$1.returnExpr$1;
-      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
-    } else {
-      return false
-    }
+$c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype.children__sci_IndexedSeq = (function() {
+  $m_sci_IndexedSeq$();
+  var array = [this.condition$1, this.thenExpr$1, this.elseExpr$1];
+  if (($uI(array.length) === 0)) {
+    $m_sci_Vector$();
+    var this$5 = new $c_sci_VectorBuilder().init___();
+    return this$5.result__sci_Vector()
   } else {
-    return false
+    $m_sci_Vector$();
+    var b = new $c_sci_VectorBuilder().init___();
+    var i = 0;
+    var len = $uI(array.length);
+    while ((i < len)) {
+      var index = i;
+      var arg1 = array[index];
+      b.$$plus$eq__O__sci_VectorBuilder(arg1);
+      i = ((1 + i) | 0)
+    };
+    return b.result__sci_Vector()
   }
 });
-$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.productElement__I__O = (function(x$1) {
-  switch (x$1) {
-    case 0: {
-      return this.simpleLetBindings$1;
-      break
-    }
-    case 1: {
-      return this.returnExpr$1;
-      break
-    }
-    default: {
-      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
-    }
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.variableBindings__sci_IndexedSeq = (function() {
-  return this.simpleLetBindings$1
-});
-$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.toString__T = (function() {
-  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
-});
-$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.init___sci_IndexedSeq__Leu_cdevreeze_xpathparser_ast_ExprSingle = (function(simpleLetBindings, returnExpr) {
-  this.simpleLetBindings$1 = simpleLetBindings;
-  this.returnExpr$1 = returnExpr;
+$c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype.init___Leu_cdevreeze_xpathparser_ast_Expr__Leu_cdevreeze_xpathparser_ast_ExprSingle__Leu_cdevreeze_xpathparser_ast_ExprSingle = (function(condition, thenExpr, elseExpr) {
+  this.condition$1 = condition;
+  this.thenExpr$1 = thenExpr;
+  this.elseExpr$1 = elseExpr;
   return this
 });
-$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.children__sci_IndexedSeq = (function() {
-  return $as_sci_IndexedSeq(this.simpleLetBindings$1.$$colon$plus__O__scg_CanBuildFrom__O(this.returnExpr$1, ($m_sci_IndexedSeq$(), $m_sc_IndexedSeq$().ReusableCBF$6)))
-});
-$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.returnExpr__Leu_cdevreeze_xpathparser_ast_XPathElem = (function() {
-  return this.returnExpr$1
-});
-$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.hashCode__I = (function() {
+$c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype.hashCode__I = (function() {
   var this$2 = $m_s_util_hashing_MurmurHash3$();
   return this$2.productHash__s_Product__I__I(this, (-889275714))
 });
-$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.productIterator__sc_Iterator = (function() {
+$c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype.productIterator__sc_Iterator = (function() {
   return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
 });
-function $is_Leu_cdevreeze_xpathparser_ast_LetExpr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_LetExpr)))
+function $is_Leu_cdevreeze_xpathparser_ast_IfExpr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_IfExpr)))
 }
-function $as_Leu_cdevreeze_xpathparser_ast_LetExpr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_LetExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.LetExpr"))
+function $as_Leu_cdevreeze_xpathparser_ast_IfExpr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_IfExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.IfExpr"))
 }
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_LetExpr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_LetExpr)))
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_IfExpr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_IfExpr)))
 }
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_LetExpr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_LetExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.LetExpr;", depth))
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_IfExpr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_IfExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.IfExpr;", depth))
 }
-var $d_Leu_cdevreeze_xpathparser_ast_LetExpr = new $TypeData().initClass({
-  Leu_cdevreeze_xpathparser_ast_LetExpr: 0
-}, false, "eu.cdevreeze.xpathparser.ast.LetExpr", {
-  Leu_cdevreeze_xpathparser_ast_LetExpr: 1,
+var $d_Leu_cdevreeze_xpathparser_ast_IfExpr = new $TypeData().initClass({
+  Leu_cdevreeze_xpathparser_ast_IfExpr: 0
+}, false, "eu.cdevreeze.xpathparser.ast.IfExpr", {
+  Leu_cdevreeze_xpathparser_ast_IfExpr: 1,
   O: 1,
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
-  Leu_cdevreeze_xpathparser_ast_VariableIntroducingExpr: 1,
   s_Product: 1,
   s_Equals: 1,
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
-$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_LetExpr;
+$c_Leu_cdevreeze_xpathparser_ast_IfExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_IfExpr;
 /** @constructor */
 function $c_Leu_cdevreeze_xpathparser_ast_LocalNameWildcard() {
   $c_O.call(this);
@@ -48431,126 +48072,6 @@ var $d_Leu_cdevreeze_xpathparser_ast_PrefixWildcard = new $TypeData().initClass(
 });
 $c_Leu_cdevreeze_xpathparser_ast_PrefixWildcard.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_PrefixWildcard;
 /** @constructor */
-function $c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr() {
-  $c_O.call(this);
-  this.quantifier$1 = null;
-  this.simpleBindings$1 = null;
-  this.satisfiesExpr$1 = null
-}
-$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype = new $h_O();
-$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr;
-/** @constructor */
-function $h_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr() {
-  /*<skip>*/
-}
-$h_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype;
-$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.productPrefix__T = (function() {
-  return "QuantifiedExpr"
-});
-$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.productArity__I = (function() {
-  return 3
-});
-$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.equals__O__Z = (function(x$1) {
-  if ((this === x$1)) {
-    return true
-  } else if ($is_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr(x$1)) {
-    var QuantifiedExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr(x$1);
-    var x = this.quantifier$1;
-    var x$2 = QuantifiedExpr$1.quantifier$1;
-    if ((x === x$2)) {
-      var x$3 = this.simpleBindings$1;
-      var x$4 = QuantifiedExpr$1.simpleBindings$1;
-      var jsx$1 = ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
-    } else {
-      var jsx$1 = false
-    };
-    if (jsx$1) {
-      var x$5 = this.satisfiesExpr$1;
-      var x$6 = QuantifiedExpr$1.satisfiesExpr$1;
-      return ((x$5 === null) ? (x$6 === null) : x$5.equals__O__Z(x$6))
-    } else {
-      return false
-    }
-  } else {
-    return false
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.productElement__I__O = (function(x$1) {
-  switch (x$1) {
-    case 0: {
-      return this.quantifier$1;
-      break
-    }
-    case 1: {
-      return this.simpleBindings$1;
-      break
-    }
-    case 2: {
-      return this.satisfiesExpr$1;
-      break
-    }
-    default: {
-      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
-    }
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.variableBindings__sci_IndexedSeq = (function() {
-  return this.simpleBindings$1
-});
-$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.init___Leu_cdevreeze_xpathparser_ast_Quantifier__sci_IndexedSeq__Leu_cdevreeze_xpathparser_ast_ExprSingle = (function(quantifier, simpleBindings, satisfiesExpr) {
-  this.quantifier$1 = quantifier;
-  this.simpleBindings$1 = simpleBindings;
-  this.satisfiesExpr$1 = satisfiesExpr;
-  return this
-});
-$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.toString__T = (function() {
-  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
-});
-$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.children__sci_IndexedSeq = (function() {
-  var x$2 = this.quantifier$1;
-  return $as_sci_IndexedSeq($as_sc_SeqLike(this.simpleBindings$1.$$plus$colon__O__scg_CanBuildFrom__O(x$2, ($m_sci_IndexedSeq$(), $m_sc_IndexedSeq$().ReusableCBF$6))).$$colon$plus__O__scg_CanBuildFrom__O(this.satisfiesExpr$1, ($m_sci_IndexedSeq$(), $m_sc_IndexedSeq$().ReusableCBF$6)))
-});
-$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.returnExpr__Leu_cdevreeze_xpathparser_ast_XPathElem = (function() {
-  return this.satisfiesExpr$1
-});
-$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.hashCode__I = (function() {
-  var this$2 = $m_s_util_hashing_MurmurHash3$();
-  return this$2.productHash__s_Product__I__I(this, (-889275714))
-});
-$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.productIterator__sc_Iterator = (function() {
-  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
-});
-function $is_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_QuantifiedExpr)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.QuantifiedExpr"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_QuantifiedExpr)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.QuantifiedExpr;", depth))
-}
-var $d_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr = new $TypeData().initClass({
-  Leu_cdevreeze_xpathparser_ast_QuantifiedExpr: 0
-}, false, "eu.cdevreeze.xpathparser.ast.QuantifiedExpr", {
-  Leu_cdevreeze_xpathparser_ast_QuantifiedExpr: 1,
-  O: 1,
-  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_Expr: 1,
-  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
-  Leu_cdevreeze_xpathparser_ast_VariableIntroducingExpr: 1,
-  s_Product: 1,
-  s_Equals: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr;
-/** @constructor */
 function $c_Leu_cdevreeze_xpathparser_ast_SimpleDocumentTest$() {
   $c_O.call(this)
 }
@@ -48669,18 +48190,6 @@ function $m_Leu_cdevreeze_xpathparser_ast_SimplePITest$() {
     $n_Leu_cdevreeze_xpathparser_ast_SimplePITest$ = new $c_Leu_cdevreeze_xpathparser_ast_SimplePITest$().init___()
   };
   return $n_Leu_cdevreeze_xpathparser_ast_SimplePITest$
-}
-function $is_Leu_cdevreeze_xpathparser_ast_StringConcatExpr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_StringConcatExpr)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_StringConcatExpr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_StringConcatExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.StringConcatExpr"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_StringConcatExpr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_StringConcatExpr)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_StringConcatExpr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_StringConcatExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.StringConcatExpr;", depth))
 }
 /** @constructor */
 function $c_Leu_cdevreeze_xpathparser_ast_TargetPITest() {
@@ -48811,6 +48320,446 @@ function $isArrayOf_sc_LinearSeqLike(obj, depth) {
 }
 function $asArrayOf_sc_LinearSeqLike(obj, depth) {
   return (($isArrayOf_sc_LinearSeqLike(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lscala.collection.LinearSeqLike;", depth))
+}
+/** @constructor */
+function $c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr() {
+  $c_O.call(this);
+  this.andExprs$1 = null
+}
+$c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype = new $h_O();
+$c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr;
+/** @constructor */
+function $h_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr() {
+  /*<skip>*/
+}
+$h_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype;
+$c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype.productPrefix__T = (function() {
+  return "CompoundOrExpr"
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype.productArity__I = (function() {
+  return 1
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr(x$1)) {
+    var CompoundOrExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr(x$1);
+    var x = this.andExprs$1;
+    var x$2 = CompoundOrExpr$1.andExprs$1;
+    return ((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))
+  } else {
+    return false
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.andExprs$1;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype.children__sci_IndexedSeq = (function() {
+  return this.andExprs$1
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype.init___sci_IndexedSeq = (function(andExprs) {
+  this.andExprs$1 = andExprs;
+  var requirement = (andExprs.size__I() >= 2);
+  if ((!requirement)) {
+    throw new $c_jl_IllegalArgumentException().init___T("requirement failed: At least 2 and-expressions must be provided but found 0 or 1 such expression")
+  };
+  return this
+});
+function $is_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundOrExpr)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.CompoundOrExpr"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundOrExpr)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.CompoundOrExpr;", depth))
+}
+var $d_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr = new $TypeData().initClass({
+  Leu_cdevreeze_xpathparser_ast_CompoundOrExpr: 0
+}, false, "eu.cdevreeze.xpathparser.ast.CompoundOrExpr", {
+  Leu_cdevreeze_xpathparser_ast_CompoundOrExpr: 1,
+  O: 1,
+  Leu_cdevreeze_xpathparser_ast_OrExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_CompoundOrExpr;
+/** @constructor */
+function $c_Leu_cdevreeze_xpathparser_ast_ForExpr() {
+  $c_O.call(this);
+  this.simpleForBindings$1 = null;
+  this.returnExpr$1 = null
+}
+$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype = new $h_O();
+$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_ForExpr;
+/** @constructor */
+function $h_Leu_cdevreeze_xpathparser_ast_ForExpr() {
+  /*<skip>*/
+}
+$h_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype;
+$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.productPrefix__T = (function() {
+  return "ForExpr"
+});
+$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.productArity__I = (function() {
+  return 2
+});
+$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Leu_cdevreeze_xpathparser_ast_ForExpr(x$1)) {
+    var ForExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_ForExpr(x$1);
+    var x = this.simpleForBindings$1;
+    var x$2 = ForExpr$1.simpleForBindings$1;
+    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
+      var x$3 = this.returnExpr$1;
+      var x$4 = ForExpr$1.returnExpr$1;
+      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      return false
+    }
+  } else {
+    return false
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.simpleForBindings$1;
+      break
+    }
+    case 1: {
+      return this.returnExpr$1;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.variableBindings__sci_IndexedSeq = (function() {
+  return this.simpleForBindings$1
+});
+$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.init___sci_IndexedSeq__Leu_cdevreeze_xpathparser_ast_ExprSingle = (function(simpleForBindings, returnExpr) {
+  this.simpleForBindings$1 = simpleForBindings;
+  this.returnExpr$1 = returnExpr;
+  return this
+});
+$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.children__sci_IndexedSeq = (function() {
+  return $as_sci_IndexedSeq(this.simpleForBindings$1.$$colon$plus__O__scg_CanBuildFrom__O(this.returnExpr$1, ($m_sci_IndexedSeq$(), $m_sc_IndexedSeq$().ReusableCBF$6)))
+});
+$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.returnExpr__Leu_cdevreeze_xpathparser_ast_XPathElem = (function() {
+  return this.returnExpr$1
+});
+$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+function $is_Leu_cdevreeze_xpathparser_ast_ForExpr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_ForExpr)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_ForExpr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_ForExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.ForExpr"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_ForExpr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_ForExpr)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_ForExpr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_ForExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.ForExpr;", depth))
+}
+var $d_Leu_cdevreeze_xpathparser_ast_ForExpr = new $TypeData().initClass({
+  Leu_cdevreeze_xpathparser_ast_ForExpr: 0
+}, false, "eu.cdevreeze.xpathparser.ast.ForExpr", {
+  Leu_cdevreeze_xpathparser_ast_ForExpr: 1,
+  O: 1,
+  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
+  Leu_cdevreeze_xpathparser_ast_VariableIntroducingExpr: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Leu_cdevreeze_xpathparser_ast_ForExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_ForExpr;
+/** @constructor */
+function $c_Leu_cdevreeze_xpathparser_ast_LetExpr() {
+  $c_O.call(this);
+  this.simpleLetBindings$1 = null;
+  this.returnExpr$1 = null
+}
+$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype = new $h_O();
+$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_LetExpr;
+/** @constructor */
+function $h_Leu_cdevreeze_xpathparser_ast_LetExpr() {
+  /*<skip>*/
+}
+$h_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype;
+$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.productPrefix__T = (function() {
+  return "LetExpr"
+});
+$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.productArity__I = (function() {
+  return 2
+});
+$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Leu_cdevreeze_xpathparser_ast_LetExpr(x$1)) {
+    var LetExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_LetExpr(x$1);
+    var x = this.simpleLetBindings$1;
+    var x$2 = LetExpr$1.simpleLetBindings$1;
+    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
+      var x$3 = this.returnExpr$1;
+      var x$4 = LetExpr$1.returnExpr$1;
+      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      return false
+    }
+  } else {
+    return false
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.simpleLetBindings$1;
+      break
+    }
+    case 1: {
+      return this.returnExpr$1;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.variableBindings__sci_IndexedSeq = (function() {
+  return this.simpleLetBindings$1
+});
+$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.init___sci_IndexedSeq__Leu_cdevreeze_xpathparser_ast_ExprSingle = (function(simpleLetBindings, returnExpr) {
+  this.simpleLetBindings$1 = simpleLetBindings;
+  this.returnExpr$1 = returnExpr;
+  return this
+});
+$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.children__sci_IndexedSeq = (function() {
+  return $as_sci_IndexedSeq(this.simpleLetBindings$1.$$colon$plus__O__scg_CanBuildFrom__O(this.returnExpr$1, ($m_sci_IndexedSeq$(), $m_sc_IndexedSeq$().ReusableCBF$6)))
+});
+$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.returnExpr__Leu_cdevreeze_xpathparser_ast_XPathElem = (function() {
+  return this.returnExpr$1
+});
+$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+function $is_Leu_cdevreeze_xpathparser_ast_LetExpr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_LetExpr)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_LetExpr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_LetExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.LetExpr"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_LetExpr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_LetExpr)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_LetExpr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_LetExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.LetExpr;", depth))
+}
+var $d_Leu_cdevreeze_xpathparser_ast_LetExpr = new $TypeData().initClass({
+  Leu_cdevreeze_xpathparser_ast_LetExpr: 0
+}, false, "eu.cdevreeze.xpathparser.ast.LetExpr", {
+  Leu_cdevreeze_xpathparser_ast_LetExpr: 1,
+  O: 1,
+  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
+  Leu_cdevreeze_xpathparser_ast_VariableIntroducingExpr: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Leu_cdevreeze_xpathparser_ast_LetExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_LetExpr;
+/** @constructor */
+function $c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr() {
+  $c_O.call(this);
+  this.quantifier$1 = null;
+  this.simpleBindings$1 = null;
+  this.satisfiesExpr$1 = null
+}
+$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype = new $h_O();
+$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr;
+/** @constructor */
+function $h_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr() {
+  /*<skip>*/
+}
+$h_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype;
+$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.productPrefix__T = (function() {
+  return "QuantifiedExpr"
+});
+$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.productArity__I = (function() {
+  return 3
+});
+$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr(x$1)) {
+    var QuantifiedExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr(x$1);
+    var x = this.quantifier$1;
+    var x$2 = QuantifiedExpr$1.quantifier$1;
+    if ((x === x$2)) {
+      var x$3 = this.simpleBindings$1;
+      var x$4 = QuantifiedExpr$1.simpleBindings$1;
+      var jsx$1 = ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      var jsx$1 = false
+    };
+    if (jsx$1) {
+      var x$5 = this.satisfiesExpr$1;
+      var x$6 = QuantifiedExpr$1.satisfiesExpr$1;
+      return ((x$5 === null) ? (x$6 === null) : x$5.equals__O__Z(x$6))
+    } else {
+      return false
+    }
+  } else {
+    return false
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.quantifier$1;
+      break
+    }
+    case 1: {
+      return this.simpleBindings$1;
+      break
+    }
+    case 2: {
+      return this.satisfiesExpr$1;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.variableBindings__sci_IndexedSeq = (function() {
+  return this.simpleBindings$1
+});
+$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.init___Leu_cdevreeze_xpathparser_ast_Quantifier__sci_IndexedSeq__Leu_cdevreeze_xpathparser_ast_ExprSingle = (function(quantifier, simpleBindings, satisfiesExpr) {
+  this.quantifier$1 = quantifier;
+  this.simpleBindings$1 = simpleBindings;
+  this.satisfiesExpr$1 = satisfiesExpr;
+  return this
+});
+$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.children__sci_IndexedSeq = (function() {
+  var x$2 = this.quantifier$1;
+  return $as_sci_IndexedSeq($as_sc_SeqLike(this.simpleBindings$1.$$plus$colon__O__scg_CanBuildFrom__O(x$2, ($m_sci_IndexedSeq$(), $m_sc_IndexedSeq$().ReusableCBF$6))).$$colon$plus__O__scg_CanBuildFrom__O(this.satisfiesExpr$1, ($m_sci_IndexedSeq$(), $m_sc_IndexedSeq$().ReusableCBF$6)))
+});
+$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.returnExpr__Leu_cdevreeze_xpathparser_ast_XPathElem = (function() {
+  return this.satisfiesExpr$1
+});
+$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+function $is_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_QuantifiedExpr)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.QuantifiedExpr"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_QuantifiedExpr)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.QuantifiedExpr;", depth))
+}
+var $d_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr = new $TypeData().initClass({
+  Leu_cdevreeze_xpathparser_ast_QuantifiedExpr: 0
+}, false, "eu.cdevreeze.xpathparser.ast.QuantifiedExpr", {
+  Leu_cdevreeze_xpathparser_ast_QuantifiedExpr: 1,
+  O: 1,
+  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
+  Leu_cdevreeze_xpathparser_ast_VariableIntroducingExpr: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_QuantifiedExpr;
+function $is_Leu_cdevreeze_xpathparser_ast_StringConcatExpr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_StringConcatExpr)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_StringConcatExpr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_StringConcatExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.StringConcatExpr"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_StringConcatExpr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_StringConcatExpr)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_StringConcatExpr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_StringConcatExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.StringConcatExpr;", depth))
 }
 function $f_sc_IndexedSeqOptimized__head__O($thiz) {
   return ($f_sc_IndexedSeqOptimized__isEmpty__Z($thiz) ? new $c_sc_IndexedSeqLike$Elements().init___sc_IndexedSeqLike__I__I($thiz, 0, $thiz.length__I()).next__O() : $thiz.apply__I__O(0))
@@ -49059,6 +49008,89 @@ function $f_sc_SetLike__$$plus$plus__sc_GenTraversableOnce__sc_Set($thiz, elems)
     })
   })($thiz))))
 }
+function $is_sc_Iterable(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.sc_Iterable)))
+}
+function $as_sc_Iterable(obj) {
+  return (($is_sc_Iterable(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "scala.collection.Iterable"))
+}
+function $isArrayOf_sc_Iterable(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.sc_Iterable)))
+}
+function $asArrayOf_sc_Iterable(obj, depth) {
+  return (($isArrayOf_sc_Iterable(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lscala.collection.Iterable;", depth))
+}
+function $f_sc_MapLike__apply__O__O($thiz, key) {
+  var x1 = $thiz.get__O__s_Option(key);
+  var x = $m_s_None$();
+  if ((x === x1)) {
+    return $f_sc_MapLike__$default__O__O($thiz, key)
+  } else if ($is_s_Some(x1)) {
+    var x2 = $as_s_Some(x1);
+    var value = x2.value$2;
+    return value
+  } else {
+    throw new $c_s_MatchError().init___O(x1)
+  }
+}
+function $f_sc_MapLike__isEmpty__Z($thiz) {
+  return ($thiz.size__I() === 0)
+}
+function $f_sc_MapLike__getOrElse__O__F0__O($thiz, key, $default) {
+  var x1 = $thiz.get__O__s_Option(key);
+  if ($is_s_Some(x1)) {
+    var x2 = $as_s_Some(x1);
+    var v = x2.value$2;
+    return v
+  } else {
+    var x = $m_s_None$();
+    if ((x === x1)) {
+      return $default.apply__O()
+    } else {
+      throw new $c_s_MatchError().init___O(x1)
+    }
+  }
+}
+function $f_sc_MapLike__toBuffer__scm_Buffer($thiz) {
+  var result = new $c_scm_ArrayBuffer().init___I($thiz.size__I());
+  $thiz.foreach__F1__V(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function($this, result$1) {
+    return (function(x$7$2) {
+      var x$7 = $as_T2(x$7$2);
+      return result$1.$$plus$eq__O__scm_ArrayBuffer(x$7)
+    })
+  })($thiz, result)));
+  return result
+}
+function $f_sc_MapLike__$default__O__O($thiz, key) {
+  throw new $c_ju_NoSuchElementException().init___T(("key not found: " + key))
+}
+function $f_sc_MapLike__contains__O__Z($thiz, key) {
+  return $thiz.get__O__s_Option(key).isDefined__Z()
+}
+function $f_sc_MapLike__addString__scm_StringBuilder__T__T__T__scm_StringBuilder($thiz, b, start, sep, end) {
+  var this$2 = $thiz.iterator__sc_Iterator();
+  var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function($this) {
+    return (function(x0$1$2) {
+      var x0$1 = $as_T2(x0$1$2);
+      if ((x0$1 !== null)) {
+        var k = x0$1.$$und1__O();
+        var v = x0$1.$$und2__O();
+        return (("" + $m_s_Predef$any2stringadd$().$$plus$extension__O__T__T(k, " -> ")) + v)
+      } else {
+        throw new $c_s_MatchError().init___O(x0$1)
+      }
+    })
+  })($thiz));
+  var this$3 = new $c_sc_Iterator$$anon$10().init___sc_Iterator__F1(this$2, f);
+  return $f_sc_TraversableOnce__addString__scm_StringBuilder__T__T__T__scm_StringBuilder(this$3, b, start, sep, end)
+}
+function $f_sc_MapLike__applyOrElse__O__F1__O($thiz, x, $default) {
+  return $thiz.getOrElse__O__F0__O(x, new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function($this, x$1, $default$1) {
+    return (function() {
+      return $default$1.apply__O__O(x$1)
+    })
+  })($thiz, x, $default)))
+}
 /** @constructor */
 function $c_Leu_cdevreeze_xpathparser_ast_CompoundAndExpr() {
   $c_O.call(this);
@@ -49144,6 +49176,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_CompoundAndExpr = new $TypeData().initClass
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
@@ -49153,88 +49186,81 @@ var $d_Leu_cdevreeze_xpathparser_ast_CompoundAndExpr = new $TypeData().initClass
   Ljava_io_Serializable: 1
 });
 $c_Leu_cdevreeze_xpathparser_ast_CompoundAndExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_CompoundAndExpr;
-function $is_sc_Iterable(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.sc_Iterable)))
+function $f_sci_StringLike__scala$collection$immutable$StringLike$$isLineBreak__C__Z($thiz, c) {
+  return ((c === 10) || (c === 12))
 }
-function $as_sc_Iterable(obj) {
-  return (($is_sc_Iterable(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "scala.collection.Iterable"))
-}
-function $isArrayOf_sc_Iterable(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.sc_Iterable)))
-}
-function $asArrayOf_sc_Iterable(obj, depth) {
-  return (($isArrayOf_sc_Iterable(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lscala.collection.Iterable;", depth))
-}
-function $f_sc_MapLike__apply__O__O($thiz, key) {
-  var x1 = $thiz.get__O__s_Option(key);
-  var x = $m_s_None$();
-  if ((x === x1)) {
-    return $f_sc_MapLike__$default__O__O($thiz, key)
-  } else if ($is_s_Some(x1)) {
-    var x2 = $as_s_Some(x1);
-    var value = x2.value$2;
-    return value
+function $f_sci_StringLike__unwrapArg__psci_StringLike__O__O($thiz, arg) {
+  if ($is_s_math_ScalaNumber(arg)) {
+    var x2 = $as_s_math_ScalaNumber(arg);
+    return x2.underlying__O()
   } else {
-    throw new $c_s_MatchError().init___O(x1)
+    return arg
   }
 }
-function $f_sc_MapLike__isEmpty__Z($thiz) {
-  return ($thiz.size__I() === 0)
+function $f_sci_StringLike__escape__psci_StringLike__C__T($thiz, ch) {
+  return (((((ch >= 97) && (ch <= 122)) || ((ch >= 65) && (ch <= 90))) || ((ch >= 48) && (ch <= 57))) ? $as_T($g.String.fromCharCode(ch)) : ("\\" + new $c_jl_Character().init___C(ch)))
 }
-function $f_sc_MapLike__getOrElse__O__F0__O($thiz, key, $default) {
-  var x1 = $thiz.get__O__s_Option(key);
-  if ($is_s_Some(x1)) {
-    var x2 = $as_s_Some(x1);
-    var v = x2.value$2;
-    return v
+function $f_sci_StringLike__slice__I__I__O($thiz, from, until) {
+  var start = ((from > 0) ? from : 0);
+  var that = $thiz.length__I();
+  var end = ((until < that) ? until : that);
+  if ((start >= end)) {
+    return $thiz.newBuilder__scm_Builder().result__O()
   } else {
-    var x = $m_s_None$();
-    if ((x === x1)) {
-      return $default.apply__O()
-    } else {
-      throw new $c_s_MatchError().init___O(x1)
+    var jsx$1 = $thiz.newBuilder__scm_Builder();
+    var thiz = $thiz.toString__T();
+    var x = $as_T(thiz.substring(start, end));
+    return $as_scm_Builder(jsx$1.$$plus$plus$eq__sc_TraversableOnce__scg_Growable(new $c_sci_StringOps().init___T(x))).result__O()
+  }
+}
+function $f_sci_StringLike__split__C__AT($thiz, separator) {
+  var thiz = $thiz.toString__T();
+  var regex = $f_sci_StringLike__escape__psci_StringLike__C__T($thiz, separator);
+  return $m_sjsr_RuntimeString$().split__T__T__I__AT(thiz, regex, 0)
+}
+function $f_sci_StringLike__$$times__I__T($thiz, n) {
+  var buf = new $c_scm_StringBuilder().init___();
+  var isEmpty$4 = (n <= 0);
+  var scala$collection$immutable$Range$$lastElement$4 = (((-1) + n) | 0);
+  if ((!isEmpty$4)) {
+    var i = 0;
+    while (true) {
+      var arg1 = i;
+      buf.append__T__scm_StringBuilder($thiz.toString__T());
+      if ((i === scala$collection$immutable$Range$$lastElement$4)) {
+        break
+      };
+      i = ((1 + i) | 0)
     }
-  }
+  };
+  return buf.underlying$5.java$lang$StringBuilder$$content$f
 }
-function $f_sc_MapLike__toBuffer__scm_Buffer($thiz) {
-  var result = new $c_scm_ArrayBuffer().init___I($thiz.size__I());
-  $thiz.foreach__F1__V(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function($this, result$1) {
-    return (function(x$7$2) {
-      var x$7 = $as_T2(x$7$2);
-      return result$1.$$plus$eq__O__scm_ArrayBuffer(x$7)
-    })
-  })($thiz, result)));
-  return result
-}
-function $f_sc_MapLike__$default__O__O($thiz, key) {
-  throw new $c_ju_NoSuchElementException().init___T(("key not found: " + key))
-}
-function $f_sc_MapLike__contains__O__Z($thiz, key) {
-  return $thiz.get__O__s_Option(key).isDefined__Z()
-}
-function $f_sc_MapLike__addString__scm_StringBuilder__T__T__T__scm_StringBuilder($thiz, b, start, sep, end) {
-  var this$2 = $thiz.iterator__sc_Iterator();
+function $f_sci_StringLike__lines__sc_Iterator($thiz) {
+  var this$2 = new $c_sci_StringLike$$anon$1().init___sci_StringLike($thiz);
   var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function($this) {
-    return (function(x0$1$2) {
-      var x0$1 = $as_T2(x0$1$2);
-      if ((x0$1 !== null)) {
-        var k = x0$1.$$und1__O();
-        var v = x0$1.$$und2__O();
-        return (("" + $m_s_Predef$any2stringadd$().$$plus$extension__O__T__T(k, " -> ")) + v)
-      } else {
-        throw new $c_s_MatchError().init___O(x0$1)
-      }
+    return (function(line$2) {
+      var line = $as_T(line$2);
+      var this$1 = new $c_sci_WrappedString().init___T(line);
+      return $f_sci_StringLike__stripLineEnd__T(this$1)
     })
   })($thiz));
-  var this$3 = new $c_sc_Iterator$$anon$10().init___sc_Iterator__F1(this$2, f);
-  return $f_sc_TraversableOnce__addString__scm_StringBuilder__T__T__T__scm_StringBuilder(this$3, b, start, sep, end)
+  return new $c_sc_Iterator$$anon$10().init___sc_Iterator__F1(this$2, f)
 }
-function $f_sc_MapLike__applyOrElse__O__F1__O($thiz, x, $default) {
-  return $thiz.getOrElse__O__F0__O(x, new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function($this, x$1, $default$1) {
-    return (function() {
-      return $default$1.apply__O__O(x$1)
-    })
-  })($thiz, x, $default)))
+function $f_sci_StringLike__stripLineEnd__T($thiz) {
+  var thiz = $thiz.toString__T();
+  var len = $uI(thiz.length);
+  if ((len === 0)) {
+    return $thiz.toString__T()
+  } else {
+    var last = $thiz.apply__I__C((((-1) + len) | 0));
+    if ($f_sci_StringLike__scala$collection$immutable$StringLike$$isLineBreak__C__Z($thiz, last)) {
+      var thiz$1 = $thiz.toString__T();
+      var endIndex = ((((last === 10) && (len >= 2)) && ($thiz.apply__I__C((((-2) + len) | 0)) === 13)) ? (((-2) + len) | 0) : (((-1) + len) | 0));
+      return $as_T(thiz$1.substring(0, endIndex))
+    } else {
+      return $thiz.toString__T()
+    }
+  }
 }
 function $is_Leu_cdevreeze_xpathparser_ast_AdditiveExpr(obj) {
   return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_AdditiveExpr)))
@@ -49374,6 +49400,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_CompoundComparisonExpr = new $TypeData().in
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
@@ -49383,82 +49410,6 @@ var $d_Leu_cdevreeze_xpathparser_ast_CompoundComparisonExpr = new $TypeData().in
   Ljava_io_Serializable: 1
 });
 $c_Leu_cdevreeze_xpathparser_ast_CompoundComparisonExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_CompoundComparisonExpr;
-function $f_sci_StringLike__scala$collection$immutable$StringLike$$isLineBreak__C__Z($thiz, c) {
-  return ((c === 10) || (c === 12))
-}
-function $f_sci_StringLike__unwrapArg__psci_StringLike__O__O($thiz, arg) {
-  if ($is_s_math_ScalaNumber(arg)) {
-    var x2 = $as_s_math_ScalaNumber(arg);
-    return x2.underlying__O()
-  } else {
-    return arg
-  }
-}
-function $f_sci_StringLike__escape__psci_StringLike__C__T($thiz, ch) {
-  return (((((ch >= 97) && (ch <= 122)) || ((ch >= 65) && (ch <= 90))) || ((ch >= 48) && (ch <= 57))) ? $as_T($g.String.fromCharCode(ch)) : ("\\" + new $c_jl_Character().init___C(ch)))
-}
-function $f_sci_StringLike__slice__I__I__O($thiz, from, until) {
-  var start = ((from > 0) ? from : 0);
-  var that = $thiz.length__I();
-  var end = ((until < that) ? until : that);
-  if ((start >= end)) {
-    return $thiz.newBuilder__scm_Builder().result__O()
-  } else {
-    var jsx$1 = $thiz.newBuilder__scm_Builder();
-    var thiz = $thiz.toString__T();
-    var x = $as_T(thiz.substring(start, end));
-    return $as_scm_Builder(jsx$1.$$plus$plus$eq__sc_TraversableOnce__scg_Growable(new $c_sci_StringOps().init___T(x))).result__O()
-  }
-}
-function $f_sci_StringLike__split__C__AT($thiz, separator) {
-  var thiz = $thiz.toString__T();
-  var regex = $f_sci_StringLike__escape__psci_StringLike__C__T($thiz, separator);
-  return $m_sjsr_RuntimeString$().split__T__T__I__AT(thiz, regex, 0)
-}
-function $f_sci_StringLike__$$times__I__T($thiz, n) {
-  var buf = new $c_scm_StringBuilder().init___();
-  var isEmpty$4 = (n <= 0);
-  var scala$collection$immutable$Range$$lastElement$4 = (((-1) + n) | 0);
-  if ((!isEmpty$4)) {
-    var i = 0;
-    while (true) {
-      var arg1 = i;
-      buf.append__T__scm_StringBuilder($thiz.toString__T());
-      if ((i === scala$collection$immutable$Range$$lastElement$4)) {
-        break
-      };
-      i = ((1 + i) | 0)
-    }
-  };
-  return buf.underlying$5.java$lang$StringBuilder$$content$f
-}
-function $f_sci_StringLike__lines__sc_Iterator($thiz) {
-  var this$2 = new $c_sci_StringLike$$anon$1().init___sci_StringLike($thiz);
-  var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function($this) {
-    return (function(line$2) {
-      var line = $as_T(line$2);
-      var this$1 = new $c_sci_WrappedString().init___T(line);
-      return $f_sci_StringLike__stripLineEnd__T(this$1)
-    })
-  })($thiz));
-  return new $c_sc_Iterator$$anon$10().init___sc_Iterator__F1(this$2, f)
-}
-function $f_sci_StringLike__stripLineEnd__T($thiz) {
-  var thiz = $thiz.toString__T();
-  var len = $uI(thiz.length);
-  if ((len === 0)) {
-    return $thiz.toString__T()
-  } else {
-    var last = $thiz.apply__I__C((((-1) + len) | 0));
-    if ($f_sci_StringLike__scala$collection$immutable$StringLike$$isLineBreak__C__Z($thiz, last)) {
-      var thiz$1 = $thiz.toString__T();
-      var endIndex = ((((last === 10) && (len >= 2)) && ($thiz.apply__I__C((((-2) + len) | 0)) === 13)) ? (((-2) + len) | 0) : (((-1) + len) | 0));
-      return $as_T(thiz$1.substring(0, endIndex))
-    } else {
-      return $thiz.toString__T()
-    }
-  }
-}
 /** @constructor */
 function $c_sc_AbstractIterable() {
   $c_sc_AbstractTraversable.call(this)
@@ -49534,116 +49485,6 @@ var $d_sci_Iterable = new $TypeData().initClass({
   sc_IterableLike: 1,
   s_Equals: 1
 });
-/** @constructor */
-function $c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr() {
-  $c_O.call(this);
-  this.rangeExprs$1 = null
-}
-$c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype = new $h_O();
-$c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr;
-/** @constructor */
-function $h_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr() {
-  /*<skip>*/
-}
-$h_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype;
-$c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype.productPrefix__T = (function() {
-  return "CompoundStringConcatExpr"
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype.productArity__I = (function() {
-  return 1
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype.equals__O__Z = (function(x$1) {
-  if ((this === x$1)) {
-    return true
-  } else if ($is_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr(x$1)) {
-    var CompoundStringConcatExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr(x$1);
-    var x = this.rangeExprs$1;
-    var x$2 = CompoundStringConcatExpr$1.rangeExprs$1;
-    return ((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))
-  } else {
-    return false
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype.productElement__I__O = (function(x$1) {
-  switch (x$1) {
-    case 0: {
-      return this.rangeExprs$1;
-      break
-    }
-    default: {
-      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
-    }
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype.toString__T = (function() {
-  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype.children__sci_IndexedSeq = (function() {
-  return this.rangeExprs$1
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype.hashCode__I = (function() {
-  var this$2 = $m_s_util_hashing_MurmurHash3$();
-  return this$2.productHash__s_Product__I__I(this, (-889275714))
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype.productIterator__sc_Iterator = (function() {
-  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype.init___sci_IndexedSeq = (function(rangeExprs) {
-  this.rangeExprs$1 = rangeExprs;
-  var requirement = (rangeExprs.size__I() >= 2);
-  if ((!requirement)) {
-    throw new $c_jl_IllegalArgumentException().init___T("requirement failed: At least 2 range-expressions must be provided but found 0 or 1 such expression")
-  };
-  return this
-});
-function $is_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.CompoundStringConcatExpr"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.CompoundStringConcatExpr;", depth))
-}
-var $d_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr = new $TypeData().initClass({
-  Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr: 0
-}, false, "eu.cdevreeze.xpathparser.ast.CompoundStringConcatExpr", {
-  Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr: 1,
-  O: 1,
-  Leu_cdevreeze_xpathparser_ast_StringConcatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleComparisonExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ComparisonExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleAndExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_AndExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleOrExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_OrExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_Expr: 1,
-  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
-  s_Product: 1,
-  s_Equals: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr;
-function $is_Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.MultiplicativeExpr"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.MultiplicativeExpr;", depth))
-}
 /** @constructor */
 function $c_sci_StringOps() {
   $c_O.call(this);
@@ -49911,55 +49752,39 @@ function $asArrayOf_scm_ArrayOps(obj, depth) {
   return (($isArrayOf_scm_ArrayOps(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lscala.collection.mutable.ArrayOps;", depth))
 }
 /** @constructor */
-function $c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr() {
+function $c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr() {
   $c_O.call(this);
-  this.additiveExpr1$1 = null;
-  this.additiveExpr2$1 = null
+  this.rangeExprs$1 = null
 }
-$c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype = new $h_O();
-$c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr;
+$c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype = new $h_O();
+$c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr;
 /** @constructor */
-function $h_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr() {
+function $h_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr() {
   /*<skip>*/
 }
-$h_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype;
-$c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype.productPrefix__T = (function() {
-  return "CompoundRangeExpr"
+$h_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype;
+$c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype.productPrefix__T = (function() {
+  return "CompoundStringConcatExpr"
 });
-$c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype.init___Leu_cdevreeze_xpathparser_ast_AdditiveExpr__Leu_cdevreeze_xpathparser_ast_AdditiveExpr = (function(additiveExpr1, additiveExpr2) {
-  this.additiveExpr1$1 = additiveExpr1;
-  this.additiveExpr2$1 = additiveExpr2;
-  return this
+$c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype.productArity__I = (function() {
+  return 1
 });
-$c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype.productArity__I = (function() {
-  return 2
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype.equals__O__Z = (function(x$1) {
+$c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype.equals__O__Z = (function(x$1) {
   if ((this === x$1)) {
     return true
-  } else if ($is_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr(x$1)) {
-    var CompoundRangeExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr(x$1);
-    var x = this.additiveExpr1$1;
-    var x$2 = CompoundRangeExpr$1.additiveExpr1$1;
-    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
-      var x$3 = this.additiveExpr2$1;
-      var x$4 = CompoundRangeExpr$1.additiveExpr2$1;
-      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
-    } else {
-      return false
-    }
+  } else if ($is_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr(x$1)) {
+    var CompoundStringConcatExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr(x$1);
+    var x = this.rangeExprs$1;
+    var x$2 = CompoundStringConcatExpr$1.rangeExprs$1;
+    return ((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))
   } else {
     return false
   }
 });
-$c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype.productElement__I__O = (function(x$1) {
+$c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype.productElement__I__O = (function(x$1) {
   switch (x$1) {
     case 0: {
-      return this.additiveExpr1$1;
-      break
-    }
-    case 1: {
-      return this.additiveExpr2$1;
+      return this.rangeExprs$1;
       break
     }
     default: {
@@ -49967,56 +49792,44 @@ $c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype.productElement__I__
     }
   }
 });
-$c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype.toString__T = (function() {
+$c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype.toString__T = (function() {
   return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
 });
-$c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype.children__sci_IndexedSeq = (function() {
-  $m_sci_IndexedSeq$();
-  var array = [this.additiveExpr1$1, this.additiveExpr2$1];
-  if (($uI(array.length) === 0)) {
-    $m_sci_Vector$();
-    var this$5 = new $c_sci_VectorBuilder().init___();
-    return this$5.result__sci_Vector()
-  } else {
-    $m_sci_Vector$();
-    var b = new $c_sci_VectorBuilder().init___();
-    var i = 0;
-    var len = $uI(array.length);
-    while ((i < len)) {
-      var index = i;
-      var arg1 = array[index];
-      b.$$plus$eq__O__sci_VectorBuilder(arg1);
-      i = ((1 + i) | 0)
-    };
-    return b.result__sci_Vector()
-  }
+$c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype.children__sci_IndexedSeq = (function() {
+  return this.rangeExprs$1
 });
-$c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype.hashCode__I = (function() {
+$c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype.hashCode__I = (function() {
   var this$2 = $m_s_util_hashing_MurmurHash3$();
   return this$2.productHash__s_Product__I__I(this, (-889275714))
 });
-$c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype.productIterator__sc_Iterator = (function() {
+$c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype.productIterator__sc_Iterator = (function() {
   return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
 });
-function $is_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr)))
+$c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype.init___sci_IndexedSeq = (function(rangeExprs) {
+  this.rangeExprs$1 = rangeExprs;
+  var requirement = (rangeExprs.size__I() >= 2);
+  if ((!requirement)) {
+    throw new $c_jl_IllegalArgumentException().init___T("requirement failed: At least 2 range-expressions must be provided but found 0 or 1 such expression")
+  };
+  return this
+});
+function $is_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr)))
 }
-function $as_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.CompoundRangeExpr"))
+function $as_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.CompoundStringConcatExpr"))
 }
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr)))
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr)))
 }
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.CompoundRangeExpr;", depth))
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.CompoundStringConcatExpr;", depth))
 }
-var $d_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr = new $TypeData().initClass({
-  Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr: 0
-}, false, "eu.cdevreeze.xpathparser.ast.CompoundRangeExpr", {
-  Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr: 1,
+var $d_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr = new $TypeData().initClass({
+  Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr: 0
+}, false, "eu.cdevreeze.xpathparser.ast.CompoundStringConcatExpr", {
+  Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr: 1,
   O: 1,
-  Leu_cdevreeze_xpathparser_ast_RangeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleStringConcatExpr: 1,
   Leu_cdevreeze_xpathparser_ast_StringConcatExpr: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleComparisonExpr: 1,
   Leu_cdevreeze_xpathparser_ast_ComparisonExpr: 1,
@@ -50027,6 +49840,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr = new $TypeData().initCla
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
@@ -50035,18 +49849,18 @@ var $d_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr = new $TypeData().initCla
   s_Serializable: 1,
   Ljava_io_Serializable: 1
 });
-$c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr;
-function $is_Leu_cdevreeze_xpathparser_ast_UnionExpr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_UnionExpr)))
+$c_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_CompoundStringConcatExpr;
+function $is_Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr)))
 }
-function $as_Leu_cdevreeze_xpathparser_ast_UnionExpr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_UnionExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.UnionExpr"))
+function $as_Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.MultiplicativeExpr"))
 }
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_UnionExpr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_UnionExpr)))
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr)))
 }
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_UnionExpr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_UnionExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.UnionExpr;", depth))
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.MultiplicativeExpr;", depth))
 }
 function $is_sc_Seq(obj) {
   return (!(!((obj && obj.$classData) && obj.$classData.ancestors.sc_Seq)))
@@ -52241,6 +52055,145 @@ var $d_scm_ArrayOps$ofUnit = new $TypeData().initClass({
   sc_CustomParallelizable: 1
 });
 $c_scm_ArrayOps$ofUnit.prototype.$classData = $d_scm_ArrayOps$ofUnit;
+/** @constructor */
+function $c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr() {
+  $c_O.call(this);
+  this.additiveExpr1$1 = null;
+  this.additiveExpr2$1 = null
+}
+$c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype = new $h_O();
+$c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr;
+/** @constructor */
+function $h_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr() {
+  /*<skip>*/
+}
+$h_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype;
+$c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype.productPrefix__T = (function() {
+  return "CompoundRangeExpr"
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype.init___Leu_cdevreeze_xpathparser_ast_AdditiveExpr__Leu_cdevreeze_xpathparser_ast_AdditiveExpr = (function(additiveExpr1, additiveExpr2) {
+  this.additiveExpr1$1 = additiveExpr1;
+  this.additiveExpr2$1 = additiveExpr2;
+  return this
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype.productArity__I = (function() {
+  return 2
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr(x$1)) {
+    var CompoundRangeExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr(x$1);
+    var x = this.additiveExpr1$1;
+    var x$2 = CompoundRangeExpr$1.additiveExpr1$1;
+    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
+      var x$3 = this.additiveExpr2$1;
+      var x$4 = CompoundRangeExpr$1.additiveExpr2$1;
+      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      return false
+    }
+  } else {
+    return false
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.additiveExpr1$1;
+      break
+    }
+    case 1: {
+      return this.additiveExpr2$1;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype.children__sci_IndexedSeq = (function() {
+  $m_sci_IndexedSeq$();
+  var array = [this.additiveExpr1$1, this.additiveExpr2$1];
+  if (($uI(array.length) === 0)) {
+    $m_sci_Vector$();
+    var this$5 = new $c_sci_VectorBuilder().init___();
+    return this$5.result__sci_Vector()
+  } else {
+    $m_sci_Vector$();
+    var b = new $c_sci_VectorBuilder().init___();
+    var i = 0;
+    var len = $uI(array.length);
+    while ((i < len)) {
+      var index = i;
+      var arg1 = array[index];
+      b.$$plus$eq__O__sci_VectorBuilder(arg1);
+      i = ((1 + i) | 0)
+    };
+    return b.result__sci_Vector()
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+function $is_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.CompoundRangeExpr"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.CompoundRangeExpr;", depth))
+}
+var $d_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr = new $TypeData().initClass({
+  Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr: 0
+}, false, "eu.cdevreeze.xpathparser.ast.CompoundRangeExpr", {
+  Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr: 1,
+  O: 1,
+  Leu_cdevreeze_xpathparser_ast_RangeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleStringConcatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_StringConcatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleComparisonExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ComparisonExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleAndExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_AndExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleOrExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_OrExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_CompoundRangeExpr;
+function $is_Leu_cdevreeze_xpathparser_ast_UnionExpr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_UnionExpr)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_UnionExpr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_UnionExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.UnionExpr"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_UnionExpr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_UnionExpr)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_UnionExpr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_UnionExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.UnionExpr;", depth))
+}
 function $is_sc_Map(obj) {
   return (!(!((obj && obj.$classData) && obj.$classData.ancestors.sc_Map)))
 }
@@ -52276,6 +52229,30 @@ function $h_scm_AbstractIterable() {
   /*<skip>*/
 }
 $h_scm_AbstractIterable.prototype = $c_scm_AbstractIterable.prototype;
+function $is_sc_IndexedSeq(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.sc_IndexedSeq)))
+}
+function $as_sc_IndexedSeq(obj) {
+  return (($is_sc_IndexedSeq(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "scala.collection.IndexedSeq"))
+}
+function $isArrayOf_sc_IndexedSeq(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.sc_IndexedSeq)))
+}
+function $asArrayOf_sc_IndexedSeq(obj, depth) {
+  return (($isArrayOf_sc_IndexedSeq(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lscala.collection.IndexedSeq;", depth))
+}
+function $is_sc_LinearSeq(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.sc_LinearSeq)))
+}
+function $as_sc_LinearSeq(obj) {
+  return (($is_sc_LinearSeq(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "scala.collection.LinearSeq"))
+}
+function $isArrayOf_sc_LinearSeq(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.sc_LinearSeq)))
+}
+function $asArrayOf_sc_LinearSeq(obj, depth) {
+  return (($isArrayOf_sc_LinearSeq(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lscala.collection.LinearSeq;", depth))
+}
 /** @constructor */
 function $c_Leu_cdevreeze_xpathparser_ast_CompoundAdditiveExpr() {
   $c_O.call(this);
@@ -52396,6 +52373,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_CompoundAdditiveExpr = new $TypeData().init
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
@@ -52417,29 +52395,76 @@ function $isArrayOf_Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr(obj, depth
 function $asArrayOf_Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr(obj, depth) {
   return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.IntersectExceptExpr;", depth))
 }
-function $is_sc_IndexedSeq(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.sc_IndexedSeq)))
+/** @constructor */
+function $c_sc_AbstractSeq() {
+  $c_sc_AbstractIterable.call(this)
 }
-function $as_sc_IndexedSeq(obj) {
-  return (($is_sc_IndexedSeq(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "scala.collection.IndexedSeq"))
+$c_sc_AbstractSeq.prototype = new $h_sc_AbstractIterable();
+$c_sc_AbstractSeq.prototype.constructor = $c_sc_AbstractSeq;
+/** @constructor */
+function $h_sc_AbstractSeq() {
+  /*<skip>*/
 }
-function $isArrayOf_sc_IndexedSeq(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.sc_IndexedSeq)))
+$h_sc_AbstractSeq.prototype = $c_sc_AbstractSeq.prototype;
+$c_sc_AbstractSeq.prototype.lengthCompare__I__I = (function(len) {
+  return $f_sc_SeqLike__lengthCompare__I__I(this, len)
+});
+$c_sc_AbstractSeq.prototype.runWith__F1__F1 = (function(action) {
+  return $f_s_PartialFunction__runWith__F1__F1(this, action)
+});
+$c_sc_AbstractSeq.prototype.isEmpty__Z = (function() {
+  return $f_sc_SeqLike__isEmpty__Z(this)
+});
+$c_sc_AbstractSeq.prototype.equals__O__Z = (function(that) {
+  return $f_sc_GenSeqLike__equals__O__Z(this, that)
+});
+$c_sc_AbstractSeq.prototype.toString__T = (function() {
+  return $f_sc_TraversableLike__toString__T(this)
+});
+$c_sc_AbstractSeq.prototype.$$colon$plus__O__scg_CanBuildFrom__O = (function(elem, bf) {
+  return $f_sc_SeqLike__$$colon$plus__O__scg_CanBuildFrom__O(this, elem, bf)
+});
+$c_sc_AbstractSeq.prototype.reverse__O = (function() {
+  return $f_sc_SeqLike__reverse__O(this)
+});
+$c_sc_AbstractSeq.prototype.reverseIterator__sc_Iterator = (function() {
+  return $f_sc_SeqLike__reverseIterator__sc_Iterator(this)
+});
+$c_sc_AbstractSeq.prototype.size__I = (function() {
+  return this.length__I()
+});
+$c_sc_AbstractSeq.prototype.distinct__O = (function() {
+  return $f_sc_SeqLike__distinct__O(this)
+});
+$c_sc_AbstractSeq.prototype.$$plus$colon__O__scg_CanBuildFrom__O = (function(elem, bf) {
+  return $f_sc_SeqLike__$$plus$colon__O__scg_CanBuildFrom__O(this, elem, bf)
+});
+$c_sc_AbstractSeq.prototype.thisCollection__sc_Seq = (function() {
+  return this
+});
+$c_sc_AbstractSeq.prototype.applyOrElse__O__F1__O = (function(x, $default) {
+  return $f_s_PartialFunction__applyOrElse__O__F1__O(this, x, $default)
+});
+$c_sc_AbstractSeq.prototype.hashCode__I = (function() {
+  return $m_s_util_hashing_MurmurHash3$().seqHash__sc_Seq__I(this.seq__sc_Seq())
+});
+$c_sc_AbstractSeq.prototype.lift__F1 = (function() {
+  return new $c_s_PartialFunction$Lifted().init___s_PartialFunction(this)
+});
+$c_sc_AbstractSeq.prototype.toCollection__O__sc_Seq = (function(repr) {
+  return $as_sc_Seq(repr)
+});
+function $is_sci_Seq(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.sci_Seq)))
 }
-function $asArrayOf_sc_IndexedSeq(obj, depth) {
-  return (($isArrayOf_sc_IndexedSeq(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lscala.collection.IndexedSeq;", depth))
+function $as_sci_Seq(obj) {
+  return (($is_sci_Seq(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "scala.collection.immutable.Seq"))
 }
-function $is_sc_LinearSeq(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.sc_LinearSeq)))
+function $isArrayOf_sci_Seq(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.sci_Seq)))
 }
-function $as_sc_LinearSeq(obj) {
-  return (($is_sc_LinearSeq(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "scala.collection.LinearSeq"))
-}
-function $isArrayOf_sc_LinearSeq(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.sc_LinearSeq)))
-}
-function $asArrayOf_sc_LinearSeq(obj, depth) {
-  return (($isArrayOf_sc_LinearSeq(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lscala.collection.LinearSeq;", depth))
+function $asArrayOf_sci_Seq(obj, depth) {
+  return (($isArrayOf_sci_Seq(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lscala.collection.immutable.Seq;", depth))
 }
 /** @constructor */
 function $c_Leu_cdevreeze_xpathparser_ast_CompoundMultiplicativeExpr() {
@@ -52563,6 +52588,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_CompoundMultiplicativeExpr = new $TypeData(
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
@@ -52583,77 +52609,6 @@ function $isArrayOf_Leu_cdevreeze_xpathparser_ast_InstanceOfExpr(obj, depth) {
 }
 function $asArrayOf_Leu_cdevreeze_xpathparser_ast_InstanceOfExpr(obj, depth) {
   return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_InstanceOfExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.InstanceOfExpr;", depth))
-}
-/** @constructor */
-function $c_sc_AbstractSeq() {
-  $c_sc_AbstractIterable.call(this)
-}
-$c_sc_AbstractSeq.prototype = new $h_sc_AbstractIterable();
-$c_sc_AbstractSeq.prototype.constructor = $c_sc_AbstractSeq;
-/** @constructor */
-function $h_sc_AbstractSeq() {
-  /*<skip>*/
-}
-$h_sc_AbstractSeq.prototype = $c_sc_AbstractSeq.prototype;
-$c_sc_AbstractSeq.prototype.lengthCompare__I__I = (function(len) {
-  return $f_sc_SeqLike__lengthCompare__I__I(this, len)
-});
-$c_sc_AbstractSeq.prototype.runWith__F1__F1 = (function(action) {
-  return $f_s_PartialFunction__runWith__F1__F1(this, action)
-});
-$c_sc_AbstractSeq.prototype.isEmpty__Z = (function() {
-  return $f_sc_SeqLike__isEmpty__Z(this)
-});
-$c_sc_AbstractSeq.prototype.equals__O__Z = (function(that) {
-  return $f_sc_GenSeqLike__equals__O__Z(this, that)
-});
-$c_sc_AbstractSeq.prototype.toString__T = (function() {
-  return $f_sc_TraversableLike__toString__T(this)
-});
-$c_sc_AbstractSeq.prototype.$$colon$plus__O__scg_CanBuildFrom__O = (function(elem, bf) {
-  return $f_sc_SeqLike__$$colon$plus__O__scg_CanBuildFrom__O(this, elem, bf)
-});
-$c_sc_AbstractSeq.prototype.reverse__O = (function() {
-  return $f_sc_SeqLike__reverse__O(this)
-});
-$c_sc_AbstractSeq.prototype.reverseIterator__sc_Iterator = (function() {
-  return $f_sc_SeqLike__reverseIterator__sc_Iterator(this)
-});
-$c_sc_AbstractSeq.prototype.size__I = (function() {
-  return this.length__I()
-});
-$c_sc_AbstractSeq.prototype.distinct__O = (function() {
-  return $f_sc_SeqLike__distinct__O(this)
-});
-$c_sc_AbstractSeq.prototype.$$plus$colon__O__scg_CanBuildFrom__O = (function(elem, bf) {
-  return $f_sc_SeqLike__$$plus$colon__O__scg_CanBuildFrom__O(this, elem, bf)
-});
-$c_sc_AbstractSeq.prototype.thisCollection__sc_Seq = (function() {
-  return this
-});
-$c_sc_AbstractSeq.prototype.applyOrElse__O__F1__O = (function(x, $default) {
-  return $f_s_PartialFunction__applyOrElse__O__F1__O(this, x, $default)
-});
-$c_sc_AbstractSeq.prototype.hashCode__I = (function() {
-  return $m_s_util_hashing_MurmurHash3$().seqHash__sc_Seq__I(this.seq__sc_Seq())
-});
-$c_sc_AbstractSeq.prototype.lift__F1 = (function() {
-  return new $c_s_PartialFunction$Lifted().init___s_PartialFunction(this)
-});
-$c_sc_AbstractSeq.prototype.toCollection__O__sc_Seq = (function(repr) {
-  return $as_sc_Seq(repr)
-});
-function $is_sci_Seq(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.sci_Seq)))
-}
-function $as_sci_Seq(obj) {
-  return (($is_sci_Seq(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "scala.collection.immutable.Seq"))
-}
-function $isArrayOf_sci_Seq(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.sci_Seq)))
-}
-function $asArrayOf_sci_Seq(obj, depth) {
-  return (($isArrayOf_sci_Seq(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lscala.collection.immutable.Seq;", depth))
 }
 /** @constructor */
 function $c_sc_AbstractMap() {
@@ -52770,6 +52725,18 @@ function $isArrayOf_sci_Set(obj, depth) {
 function $asArrayOf_sci_Set(obj, depth) {
   return (($isArrayOf_sci_Set(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lscala.collection.immutable.Set;", depth))
 }
+function $is_sci_Map(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.sci_Map)))
+}
+function $as_sci_Map(obj) {
+  return (($is_sci_Map(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "scala.collection.immutable.Map"))
+}
+function $isArrayOf_sci_Map(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.sci_Map)))
+}
+function $asArrayOf_sci_Map(obj, depth) {
+  return (($isArrayOf_sci_Map(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lscala.collection.immutable.Map;", depth))
+}
 /** @constructor */
 function $c_Leu_cdevreeze_xpathparser_ast_CompoundUnionExpr() {
   $c_O.call(this);
@@ -52867,6 +52834,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_CompoundUnionExpr = new $TypeData().initCla
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
@@ -52887,18 +52855,6 @@ function $isArrayOf_Leu_cdevreeze_xpathparser_ast_TreatExpr(obj, depth) {
 }
 function $asArrayOf_Leu_cdevreeze_xpathparser_ast_TreatExpr(obj, depth) {
   return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_TreatExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.TreatExpr;", depth))
-}
-function $is_sci_Map(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.sci_Map)))
-}
-function $as_sci_Map(obj) {
-  return (($is_sci_Map(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "scala.collection.immutable.Map"))
-}
-function $isArrayOf_sci_Map(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.sci_Map)))
-}
-function $asArrayOf_sci_Map(obj, depth) {
-  return (($isArrayOf_sci_Map(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lscala.collection.immutable.Map;", depth))
 }
 function $is_sci_IndexedSeq(obj) {
   return (!(!((obj && obj.$classData) && obj.$classData.ancestors.sci_IndexedSeq)))
@@ -53050,6 +53006,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_CompoundIntersectExceptExpr = new $TypeData
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
@@ -53198,6 +53155,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_CompoundInstanceOfExpr = new $TypeData().in
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
@@ -53236,156 +53194,6 @@ $c_sci_AbstractMap.prototype.empty__sci_Map = (function() {
 $c_sci_AbstractMap.prototype.seq__sc_Map = (function() {
   return this
 });
-function $is_Leu_cdevreeze_xpathparser_ast_ArrowExpr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_ArrowExpr)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_ArrowExpr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_ArrowExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.ArrowExpr"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_ArrowExpr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_ArrowExpr)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_ArrowExpr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_ArrowExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.ArrowExpr;", depth))
-}
-/** @constructor */
-function $c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr() {
-  $c_O.call(this);
-  this.castableExpr$1 = null;
-  this.sequenceType$1 = null
-}
-$c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype = new $h_O();
-$c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr;
-/** @constructor */
-function $h_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr() {
-  /*<skip>*/
-}
-$h_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype;
-$c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype.productPrefix__T = (function() {
-  return "CompoundTreatExpr"
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype.productArity__I = (function() {
-  return 2
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype.equals__O__Z = (function(x$1) {
-  if ((this === x$1)) {
-    return true
-  } else if ($is_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr(x$1)) {
-    var CompoundTreatExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr(x$1);
-    var x = this.castableExpr$1;
-    var x$2 = CompoundTreatExpr$1.castableExpr$1;
-    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
-      var x$3 = this.sequenceType$1;
-      var x$4 = CompoundTreatExpr$1.sequenceType$1;
-      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
-    } else {
-      return false
-    }
-  } else {
-    return false
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype.productElement__I__O = (function(x$1) {
-  switch (x$1) {
-    case 0: {
-      return this.castableExpr$1;
-      break
-    }
-    case 1: {
-      return this.sequenceType$1;
-      break
-    }
-    default: {
-      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
-    }
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype.toString__T = (function() {
-  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype.init___Leu_cdevreeze_xpathparser_ast_CastableExpr__Leu_cdevreeze_xpathparser_ast_SequenceType = (function(castableExpr, sequenceType) {
-  this.castableExpr$1 = castableExpr;
-  this.sequenceType$1 = sequenceType;
-  return this
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype.children__sci_IndexedSeq = (function() {
-  $m_sci_IndexedSeq$();
-  var array = [this.castableExpr$1, this.sequenceType$1];
-  if (($uI(array.length) === 0)) {
-    $m_sci_Vector$();
-    var this$5 = new $c_sci_VectorBuilder().init___();
-    return this$5.result__sci_Vector()
-  } else {
-    $m_sci_Vector$();
-    var b = new $c_sci_VectorBuilder().init___();
-    var i = 0;
-    var len = $uI(array.length);
-    while ((i < len)) {
-      var index = i;
-      var arg1 = array[index];
-      b.$$plus$eq__O__sci_VectorBuilder(arg1);
-      i = ((1 + i) | 0)
-    };
-    return b.result__sci_Vector()
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype.hashCode__I = (function() {
-  var this$2 = $m_s_util_hashing_MurmurHash3$();
-  return this$2.productHash__s_Product__I__I(this, (-889275714))
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype.productIterator__sc_Iterator = (function() {
-  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
-});
-function $is_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.CompoundTreatExpr"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.CompoundTreatExpr;", depth))
-}
-var $d_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr = new $TypeData().initClass({
-  Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr: 0
-}, false, "eu.cdevreeze.xpathparser.ast.CompoundTreatExpr", {
-  Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr: 1,
-  O: 1,
-  Leu_cdevreeze_xpathparser_ast_TreatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleInstanceOfExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_InstanceOfExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleIntersectExceptExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleUnionExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_UnionExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleMultiplicativeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleAdditiveExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_AdditiveExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleRangeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_RangeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleStringConcatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_StringConcatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleComparisonExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ComparisonExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleAndExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_AndExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleOrExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_OrExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_Expr: 1,
-  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
-  s_Product: 1,
-  s_Equals: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr;
 /** @constructor */
 function $c_sci_ListSet() {
   $c_sc_AbstractSet.call(this)
@@ -54037,6 +53845,157 @@ function $isArrayOf_scm_IndexedSeq(obj, depth) {
 function $asArrayOf_scm_IndexedSeq(obj, depth) {
   return (($isArrayOf_scm_IndexedSeq(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lscala.collection.mutable.IndexedSeq;", depth))
 }
+function $is_Leu_cdevreeze_xpathparser_ast_ArrowExpr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_ArrowExpr)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_ArrowExpr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_ArrowExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.ArrowExpr"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_ArrowExpr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_ArrowExpr)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_ArrowExpr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_ArrowExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.ArrowExpr;", depth))
+}
+/** @constructor */
+function $c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr() {
+  $c_O.call(this);
+  this.castableExpr$1 = null;
+  this.sequenceType$1 = null
+}
+$c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype = new $h_O();
+$c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr;
+/** @constructor */
+function $h_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr() {
+  /*<skip>*/
+}
+$h_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype;
+$c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype.productPrefix__T = (function() {
+  return "CompoundTreatExpr"
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype.productArity__I = (function() {
+  return 2
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr(x$1)) {
+    var CompoundTreatExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr(x$1);
+    var x = this.castableExpr$1;
+    var x$2 = CompoundTreatExpr$1.castableExpr$1;
+    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
+      var x$3 = this.sequenceType$1;
+      var x$4 = CompoundTreatExpr$1.sequenceType$1;
+      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      return false
+    }
+  } else {
+    return false
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.castableExpr$1;
+      break
+    }
+    case 1: {
+      return this.sequenceType$1;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype.init___Leu_cdevreeze_xpathparser_ast_CastableExpr__Leu_cdevreeze_xpathparser_ast_SequenceType = (function(castableExpr, sequenceType) {
+  this.castableExpr$1 = castableExpr;
+  this.sequenceType$1 = sequenceType;
+  return this
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype.children__sci_IndexedSeq = (function() {
+  $m_sci_IndexedSeq$();
+  var array = [this.castableExpr$1, this.sequenceType$1];
+  if (($uI(array.length) === 0)) {
+    $m_sci_Vector$();
+    var this$5 = new $c_sci_VectorBuilder().init___();
+    return this$5.result__sci_Vector()
+  } else {
+    $m_sci_Vector$();
+    var b = new $c_sci_VectorBuilder().init___();
+    var i = 0;
+    var len = $uI(array.length);
+    while ((i < len)) {
+      var index = i;
+      var arg1 = array[index];
+      b.$$plus$eq__O__sci_VectorBuilder(arg1);
+      i = ((1 + i) | 0)
+    };
+    return b.result__sci_Vector()
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+function $is_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.CompoundTreatExpr"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.CompoundTreatExpr;", depth))
+}
+var $d_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr = new $TypeData().initClass({
+  Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr: 0
+}, false, "eu.cdevreeze.xpathparser.ast.CompoundTreatExpr", {
+  Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr: 1,
+  O: 1,
+  Leu_cdevreeze_xpathparser_ast_TreatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleInstanceOfExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_InstanceOfExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleIntersectExceptExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleUnionExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_UnionExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleMultiplicativeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleAdditiveExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_AdditiveExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleRangeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_RangeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleStringConcatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_StringConcatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleComparisonExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ComparisonExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleAndExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_AndExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleOrExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_OrExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_CompoundTreatExpr;
 /** @constructor */
 function $c_sci_HashSet() {
   $c_sc_AbstractSet.call(this)
@@ -54432,158 +54391,6 @@ function $isArrayOf_scm_Map(obj, depth) {
 }
 function $asArrayOf_scm_Map(obj, depth) {
   return (($isArrayOf_scm_Map(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lscala.collection.mutable.Map;", depth))
-}
-/** @constructor */
-function $c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr() {
-  $c_O.call(this);
-  this.castExpr$1 = null;
-  this.singleType$1 = null
-}
-$c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype = new $h_O();
-$c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr;
-/** @constructor */
-function $h_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr() {
-  /*<skip>*/
-}
-$h_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype;
-$c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype.productPrefix__T = (function() {
-  return "CompoundCastableExpr"
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype.productArity__I = (function() {
-  return 2
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype.init___Leu_cdevreeze_xpathparser_ast_CastExpr__Leu_cdevreeze_xpathparser_ast_SingleType = (function(castExpr, singleType) {
-  this.castExpr$1 = castExpr;
-  this.singleType$1 = singleType;
-  return this
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype.equals__O__Z = (function(x$1) {
-  if ((this === x$1)) {
-    return true
-  } else if ($is_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr(x$1)) {
-    var CompoundCastableExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr(x$1);
-    var x = this.castExpr$1;
-    var x$2 = CompoundCastableExpr$1.castExpr$1;
-    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
-      var x$3 = this.singleType$1;
-      var x$4 = CompoundCastableExpr$1.singleType$1;
-      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
-    } else {
-      return false
-    }
-  } else {
-    return false
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype.productElement__I__O = (function(x$1) {
-  switch (x$1) {
-    case 0: {
-      return this.castExpr$1;
-      break
-    }
-    case 1: {
-      return this.singleType$1;
-      break
-    }
-    default: {
-      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
-    }
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype.toString__T = (function() {
-  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype.children__sci_IndexedSeq = (function() {
-  $m_sci_IndexedSeq$();
-  var array = [this.castExpr$1, this.singleType$1];
-  if (($uI(array.length) === 0)) {
-    $m_sci_Vector$();
-    var this$5 = new $c_sci_VectorBuilder().init___();
-    return this$5.result__sci_Vector()
-  } else {
-    $m_sci_Vector$();
-    var b = new $c_sci_VectorBuilder().init___();
-    var i = 0;
-    var len = $uI(array.length);
-    while ((i < len)) {
-      var index = i;
-      var arg1 = array[index];
-      b.$$plus$eq__O__sci_VectorBuilder(arg1);
-      i = ((1 + i) | 0)
-    };
-    return b.result__sci_Vector()
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype.hashCode__I = (function() {
-  var this$2 = $m_s_util_hashing_MurmurHash3$();
-  return this$2.productHash__s_Product__I__I(this, (-889275714))
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype.productIterator__sc_Iterator = (function() {
-  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
-});
-function $is_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.CompoundCastableExpr"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.CompoundCastableExpr;", depth))
-}
-var $d_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr = new $TypeData().initClass({
-  Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr: 0
-}, false, "eu.cdevreeze.xpathparser.ast.CompoundCastableExpr", {
-  Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr: 1,
-  O: 1,
-  Leu_cdevreeze_xpathparser_ast_CastableExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleTreatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_TreatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleInstanceOfExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_InstanceOfExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleIntersectExceptExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleUnionExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_UnionExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleMultiplicativeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleAdditiveExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_AdditiveExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleRangeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_RangeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleStringConcatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_StringConcatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleComparisonExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ComparisonExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleAndExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_AndExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleOrExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_OrExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_Expr: 1,
-  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
-  s_Product: 1,
-  s_Equals: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr;
-function $is_Leu_cdevreeze_xpathparser_ast_UnaryExpr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_UnaryExpr)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_UnaryExpr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_UnaryExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.UnaryExpr"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_UnaryExpr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_UnaryExpr)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_UnaryExpr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_UnaryExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.UnaryExpr;", depth))
 }
 /** @constructor */
 function $c_sci_HashSet$EmptyHashSet$() {
@@ -55535,6 +55342,159 @@ var $d_sci_Map$Map4 = new $TypeData().initClass({
   Ljava_io_Serializable: 1
 });
 $c_sci_Map$Map4.prototype.$classData = $d_sci_Map$Map4;
+/** @constructor */
+function $c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr() {
+  $c_O.call(this);
+  this.castExpr$1 = null;
+  this.singleType$1 = null
+}
+$c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype = new $h_O();
+$c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr;
+/** @constructor */
+function $h_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr() {
+  /*<skip>*/
+}
+$h_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype;
+$c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype.productPrefix__T = (function() {
+  return "CompoundCastableExpr"
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype.productArity__I = (function() {
+  return 2
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype.init___Leu_cdevreeze_xpathparser_ast_CastExpr__Leu_cdevreeze_xpathparser_ast_SingleType = (function(castExpr, singleType) {
+  this.castExpr$1 = castExpr;
+  this.singleType$1 = singleType;
+  return this
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr(x$1)) {
+    var CompoundCastableExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr(x$1);
+    var x = this.castExpr$1;
+    var x$2 = CompoundCastableExpr$1.castExpr$1;
+    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
+      var x$3 = this.singleType$1;
+      var x$4 = CompoundCastableExpr$1.singleType$1;
+      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      return false
+    }
+  } else {
+    return false
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.castExpr$1;
+      break
+    }
+    case 1: {
+      return this.singleType$1;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype.children__sci_IndexedSeq = (function() {
+  $m_sci_IndexedSeq$();
+  var array = [this.castExpr$1, this.singleType$1];
+  if (($uI(array.length) === 0)) {
+    $m_sci_Vector$();
+    var this$5 = new $c_sci_VectorBuilder().init___();
+    return this$5.result__sci_Vector()
+  } else {
+    $m_sci_Vector$();
+    var b = new $c_sci_VectorBuilder().init___();
+    var i = 0;
+    var len = $uI(array.length);
+    while ((i < len)) {
+      var index = i;
+      var arg1 = array[index];
+      b.$$plus$eq__O__sci_VectorBuilder(arg1);
+      i = ((1 + i) | 0)
+    };
+    return b.result__sci_Vector()
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+function $is_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.CompoundCastableExpr"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.CompoundCastableExpr;", depth))
+}
+var $d_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr = new $TypeData().initClass({
+  Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr: 0
+}, false, "eu.cdevreeze.xpathparser.ast.CompoundCastableExpr", {
+  Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr: 1,
+  O: 1,
+  Leu_cdevreeze_xpathparser_ast_CastableExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleTreatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_TreatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleInstanceOfExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_InstanceOfExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleIntersectExceptExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleUnionExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_UnionExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleMultiplicativeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleAdditiveExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_AdditiveExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleRangeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_RangeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleStringConcatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_StringConcatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleComparisonExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ComparisonExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleAndExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_AndExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleOrExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_OrExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_CompoundCastableExpr;
+function $is_Leu_cdevreeze_xpathparser_ast_UnaryExpr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_UnaryExpr)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_UnaryExpr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_UnaryExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.UnaryExpr"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_UnaryExpr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_UnaryExpr)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_UnaryExpr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_UnaryExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.UnaryExpr;", depth))
+}
 /** @constructor */
 function $c_sci_HashMap() {
   $c_sci_AbstractMap.call(this)
@@ -57083,160 +57043,6 @@ function $f_scm_ResizableArray__copyToArray__O__I__I__V($thiz, xs, start, len) {
   if ((len1 > 0)) {
     $m_s_Array$().copy__O__I__O__I__I__V($thiz.array$6, 0, xs, start, len1)
   }
-}
-/** @constructor */
-function $c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr() {
-  $c_O.call(this);
-  this.arrowExpr$1 = null;
-  this.singleType$1 = null
-}
-$c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype = new $h_O();
-$c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr;
-/** @constructor */
-function $h_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr() {
-  /*<skip>*/
-}
-$h_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype;
-$c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype.productPrefix__T = (function() {
-  return "CompoundCastExpr"
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype.init___Leu_cdevreeze_xpathparser_ast_ArrowExpr__Leu_cdevreeze_xpathparser_ast_SingleType = (function(arrowExpr, singleType) {
-  this.arrowExpr$1 = arrowExpr;
-  this.singleType$1 = singleType;
-  return this
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype.productArity__I = (function() {
-  return 2
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype.equals__O__Z = (function(x$1) {
-  if ((this === x$1)) {
-    return true
-  } else if ($is_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr(x$1)) {
-    var CompoundCastExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr(x$1);
-    var x = this.arrowExpr$1;
-    var x$2 = CompoundCastExpr$1.arrowExpr$1;
-    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
-      var x$3 = this.singleType$1;
-      var x$4 = CompoundCastExpr$1.singleType$1;
-      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
-    } else {
-      return false
-    }
-  } else {
-    return false
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype.productElement__I__O = (function(x$1) {
-  switch (x$1) {
-    case 0: {
-      return this.arrowExpr$1;
-      break
-    }
-    case 1: {
-      return this.singleType$1;
-      break
-    }
-    default: {
-      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
-    }
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype.toString__T = (function() {
-  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype.children__sci_IndexedSeq = (function() {
-  $m_sci_IndexedSeq$();
-  var array = [this.arrowExpr$1, this.singleType$1];
-  if (($uI(array.length) === 0)) {
-    $m_sci_Vector$();
-    var this$5 = new $c_sci_VectorBuilder().init___();
-    return this$5.result__sci_Vector()
-  } else {
-    $m_sci_Vector$();
-    var b = new $c_sci_VectorBuilder().init___();
-    var i = 0;
-    var len = $uI(array.length);
-    while ((i < len)) {
-      var index = i;
-      var arg1 = array[index];
-      b.$$plus$eq__O__sci_VectorBuilder(arg1);
-      i = ((1 + i) | 0)
-    };
-    return b.result__sci_Vector()
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype.hashCode__I = (function() {
-  var this$2 = $m_s_util_hashing_MurmurHash3$();
-  return this$2.productHash__s_Product__I__I(this, (-889275714))
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype.productIterator__sc_Iterator = (function() {
-  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
-});
-function $is_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundCastExpr)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.CompoundCastExpr"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundCastExpr)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.CompoundCastExpr;", depth))
-}
-var $d_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr = new $TypeData().initClass({
-  Leu_cdevreeze_xpathparser_ast_CompoundCastExpr: 0
-}, false, "eu.cdevreeze.xpathparser.ast.CompoundCastExpr", {
-  Leu_cdevreeze_xpathparser_ast_CompoundCastExpr: 1,
-  O: 1,
-  Leu_cdevreeze_xpathparser_ast_CastExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleCastableExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_CastableExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleTreatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_TreatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleInstanceOfExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_InstanceOfExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleIntersectExceptExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleUnionExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_UnionExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleMultiplicativeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleAdditiveExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_AdditiveExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleRangeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_RangeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleStringConcatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_StringConcatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleComparisonExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ComparisonExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleAndExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_AndExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleOrExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_OrExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_Expr: 1,
-  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
-  s_Product: 1,
-  s_Equals: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr;
-function $is_Leu_cdevreeze_xpathparser_ast_ValueExpr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_ValueExpr)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_ValueExpr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_ValueExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.ValueExpr"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_ValueExpr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_ValueExpr)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_ValueExpr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_ValueExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.ValueExpr;", depth))
 }
 /** @constructor */
 function $c_sci_HashMap$EmptyHashMap$() {
@@ -59041,17 +58847,160 @@ var $d_sci_WrappedString = new $TypeData().initClass({
   jl_Comparable: 1
 });
 $c_sci_WrappedString.prototype.$classData = $d_sci_WrappedString;
-function $is_Leu_cdevreeze_xpathparser_ast_SimpleMapExpr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_SimpleMapExpr)))
+/** @constructor */
+function $c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr() {
+  $c_O.call(this);
+  this.arrowExpr$1 = null;
+  this.singleType$1 = null
 }
-function $as_Leu_cdevreeze_xpathparser_ast_SimpleMapExpr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_SimpleMapExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.SimpleMapExpr"))
+$c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype = new $h_O();
+$c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr;
+/** @constructor */
+function $h_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr() {
+  /*<skip>*/
 }
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_SimpleMapExpr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_SimpleMapExpr)))
+$h_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype;
+$c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype.productPrefix__T = (function() {
+  return "CompoundCastExpr"
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype.init___Leu_cdevreeze_xpathparser_ast_ArrowExpr__Leu_cdevreeze_xpathparser_ast_SingleType = (function(arrowExpr, singleType) {
+  this.arrowExpr$1 = arrowExpr;
+  this.singleType$1 = singleType;
+  return this
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype.productArity__I = (function() {
+  return 2
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr(x$1)) {
+    var CompoundCastExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr(x$1);
+    var x = this.arrowExpr$1;
+    var x$2 = CompoundCastExpr$1.arrowExpr$1;
+    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
+      var x$3 = this.singleType$1;
+      var x$4 = CompoundCastExpr$1.singleType$1;
+      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      return false
+    }
+  } else {
+    return false
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.arrowExpr$1;
+      break
+    }
+    case 1: {
+      return this.singleType$1;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype.children__sci_IndexedSeq = (function() {
+  $m_sci_IndexedSeq$();
+  var array = [this.arrowExpr$1, this.singleType$1];
+  if (($uI(array.length) === 0)) {
+    $m_sci_Vector$();
+    var this$5 = new $c_sci_VectorBuilder().init___();
+    return this$5.result__sci_Vector()
+  } else {
+    $m_sci_Vector$();
+    var b = new $c_sci_VectorBuilder().init___();
+    var i = 0;
+    var len = $uI(array.length);
+    while ((i < len)) {
+      var index = i;
+      var arg1 = array[index];
+      b.$$plus$eq__O__sci_VectorBuilder(arg1);
+      i = ((1 + i) | 0)
+    };
+    return b.result__sci_Vector()
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+function $is_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundCastExpr)))
 }
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_SimpleMapExpr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_SimpleMapExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.SimpleMapExpr;", depth))
+function $as_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.CompoundCastExpr"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundCastExpr)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.CompoundCastExpr;", depth))
+}
+var $d_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr = new $TypeData().initClass({
+  Leu_cdevreeze_xpathparser_ast_CompoundCastExpr: 0
+}, false, "eu.cdevreeze.xpathparser.ast.CompoundCastExpr", {
+  Leu_cdevreeze_xpathparser_ast_CompoundCastExpr: 1,
+  O: 1,
+  Leu_cdevreeze_xpathparser_ast_CastExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleCastableExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_CastableExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleTreatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_TreatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleInstanceOfExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_InstanceOfExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleIntersectExceptExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleUnionExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_UnionExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleMultiplicativeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleAdditiveExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_AdditiveExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleRangeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_RangeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleStringConcatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_StringConcatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleComparisonExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ComparisonExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleAndExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_AndExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleOrExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_OrExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_CompoundCastExpr;
+function $is_Leu_cdevreeze_xpathparser_ast_ValueExpr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_ValueExpr)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_ValueExpr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_ValueExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.ValueExpr"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_ValueExpr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_ValueExpr)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_ValueExpr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_ValueExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.ValueExpr;", depth))
 }
 /** @constructor */
 function $c_sci_$colon$colon() {
@@ -59258,6 +59207,44 @@ function $m_sci_Nil$() {
   };
   return $n_sci_Nil$
 }
+function $is_Leu_cdevreeze_xpathparser_ast_SimpleMapExpr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_SimpleMapExpr)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_SimpleMapExpr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_SimpleMapExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.SimpleMapExpr"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_SimpleMapExpr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_SimpleMapExpr)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_SimpleMapExpr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_SimpleMapExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.SimpleMapExpr;", depth))
+}
+/** @constructor */
+function $c_scm_AbstractMap() {
+  $c_sc_AbstractMap.call(this)
+}
+$c_scm_AbstractMap.prototype = new $h_sc_AbstractMap();
+$c_scm_AbstractMap.prototype.constructor = $c_scm_AbstractMap;
+/** @constructor */
+function $h_scm_AbstractMap() {
+  /*<skip>*/
+}
+$h_scm_AbstractMap.prototype = $c_scm_AbstractMap.prototype;
+$c_scm_AbstractMap.prototype.companion__scg_GenericCompanion = (function() {
+  return $m_scm_Iterable$()
+});
+$c_scm_AbstractMap.prototype.sizeHintBounded__I__sc_TraversableLike__V = (function(size, boundingColl) {
+  $f_scm_Builder__sizeHintBounded__I__sc_TraversableLike__V(this, size, boundingColl)
+});
+$c_scm_AbstractMap.prototype.sizeHint__I__V = (function(size) {
+  /*<skip>*/
+});
+$c_scm_AbstractMap.prototype.newBuilder__scm_Builder = (function() {
+  return new $c_scm_HashMap().init___()
+});
+$c_scm_AbstractMap.prototype.$$plus$plus$eq__sc_TraversableOnce__scg_Growable = (function(xs) {
+  return $f_scg_Growable__$$plus$plus$eq__sc_TraversableOnce__scg_Growable(this, xs)
+});
 /** @constructor */
 function $c_Leu_cdevreeze_xpathparser_ast_CompoundArrowExpr() {
   $c_O.call(this);
@@ -59380,6 +59367,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_CompoundArrowExpr = new $TypeData().initCla
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
@@ -59389,32 +59377,6 @@ var $d_Leu_cdevreeze_xpathparser_ast_CompoundArrowExpr = new $TypeData().initCla
   Ljava_io_Serializable: 1
 });
 $c_Leu_cdevreeze_xpathparser_ast_CompoundArrowExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_CompoundArrowExpr;
-/** @constructor */
-function $c_scm_AbstractMap() {
-  $c_sc_AbstractMap.call(this)
-}
-$c_scm_AbstractMap.prototype = new $h_sc_AbstractMap();
-$c_scm_AbstractMap.prototype.constructor = $c_scm_AbstractMap;
-/** @constructor */
-function $h_scm_AbstractMap() {
-  /*<skip>*/
-}
-$h_scm_AbstractMap.prototype = $c_scm_AbstractMap.prototype;
-$c_scm_AbstractMap.prototype.companion__scg_GenericCompanion = (function() {
-  return $m_scm_Iterable$()
-});
-$c_scm_AbstractMap.prototype.sizeHintBounded__I__sc_TraversableLike__V = (function(size, boundingColl) {
-  $f_scm_Builder__sizeHintBounded__I__sc_TraversableLike__V(this, size, boundingColl)
-});
-$c_scm_AbstractMap.prototype.sizeHint__I__V = (function(size) {
-  /*<skip>*/
-});
-$c_scm_AbstractMap.prototype.newBuilder__scm_Builder = (function() {
-  return new $c_scm_HashMap().init___()
-});
-$c_scm_AbstractMap.prototype.$$plus$plus$eq__sc_TraversableOnce__scg_Growable = (function(xs) {
-  return $f_scg_Growable__$$plus$plus$eq__sc_TraversableOnce__scg_Growable(this, xs)
-});
 /** @constructor */
 function $c_scm_AbstractSet() {
   $c_scm_AbstractIterable.call(this)
@@ -59587,6 +59549,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_CompoundUnaryExpr = new $TypeData().initCla
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
@@ -59622,18 +59585,6 @@ $h_scm_AbstractBuffer.prototype = $c_scm_AbstractBuffer.prototype;
 $c_scm_AbstractBuffer.prototype.$$plus$plus$eq__sc_TraversableOnce__scg_Growable = (function(xs) {
   return $f_scg_Growable__$$plus$plus$eq__sc_TraversableOnce__scg_Growable(this, xs)
 });
-function $is_Leu_cdevreeze_xpathparser_ast_StepExpr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_StepExpr)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_StepExpr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_StepExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.StepExpr"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_StepExpr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_StepExpr)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_StepExpr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_StepExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.StepExpr;", depth))
-}
 /** @constructor */
 function $c_scm_WrappedArray() {
   $c_scm_AbstractSeq.call(this)
@@ -59752,6 +59703,18 @@ function $isArrayOf_scm_WrappedArray(obj, depth) {
 function $asArrayOf_scm_WrappedArray(obj, depth) {
   return (($isArrayOf_scm_WrappedArray(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lscala.collection.mutable.WrappedArray;", depth))
 }
+function $is_Leu_cdevreeze_xpathparser_ast_StepExpr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_StepExpr)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_StepExpr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_StepExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.StepExpr"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_StepExpr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_StepExpr)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_StepExpr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_StepExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.StepExpr;", depth))
+}
 /** @constructor */
 function $c_Leu_cdevreeze_xpathparser_ast_CompoundSimpleMapExpr() {
   $c_O.call(this);
@@ -59866,6 +59829,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_CompoundSimpleMapExpr = new $TypeData().ini
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
@@ -60058,296 +60022,6 @@ var $d_scm_HashMap = new $TypeData().initClass({
   Ljava_io_Serializable: 1
 });
 $c_scm_HashMap.prototype.$classData = $d_scm_HashMap;
-/** @constructor */
-function $c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash() {
-  $c_O.call(this);
-  this.relativePathExpr$1 = null
-}
-$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype = new $h_O();
-$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash;
-/** @constructor */
-function $h_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash() {
-  /*<skip>*/
-}
-$h_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype = $c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype;
-$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype.productPrefix__T = (function() {
-  return "PathExprStartingWithDoubleSlash"
-});
-$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype.productArity__I = (function() {
-  return 1
-});
-$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype.equals__O__Z = (function(x$1) {
-  if ((this === x$1)) {
-    return true
-  } else if ($is_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash(x$1)) {
-    var PathExprStartingWithDoubleSlash$1 = $as_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash(x$1);
-    var x = this.relativePathExpr$1;
-    var x$2 = PathExprStartingWithDoubleSlash$1.relativePathExpr$1;
-    return ((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))
-  } else {
-    return false
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype.productElement__I__O = (function(x$1) {
-  switch (x$1) {
-    case 0: {
-      return this.relativePathExpr$1;
-      break
-    }
-    default: {
-      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
-    }
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype.toString__T = (function() {
-  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
-});
-$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype.children__sci_IndexedSeq = (function() {
-  $m_sci_IndexedSeq$();
-  var array = [this.relativePathExpr$1];
-  if (($uI(array.length) === 0)) {
-    $m_sci_Vector$();
-    var this$5 = new $c_sci_VectorBuilder().init___();
-    return this$5.result__sci_Vector()
-  } else {
-    $m_sci_Vector$();
-    var b = new $c_sci_VectorBuilder().init___();
-    var i = 0;
-    var len = $uI(array.length);
-    while ((i < len)) {
-      var index = i;
-      var arg1 = array[index];
-      b.$$plus$eq__O__sci_VectorBuilder(arg1);
-      i = ((1 + i) | 0)
-    };
-    return b.result__sci_Vector()
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype.init___Leu_cdevreeze_xpathparser_ast_RelativePathExpr = (function(relativePathExpr) {
-  this.relativePathExpr$1 = relativePathExpr;
-  return this
-});
-$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype.hashCode__I = (function() {
-  var this$2 = $m_s_util_hashing_MurmurHash3$();
-  return this$2.productHash__s_Product__I__I(this, (-889275714))
-});
-$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype.productIterator__sc_Iterator = (function() {
-  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
-});
-function $is_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.PathExprStartingWithDoubleSlash"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.PathExprStartingWithDoubleSlash;", depth))
-}
-var $d_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash = new $TypeData().initClass({
-  Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash: 0
-}, false, "eu.cdevreeze.xpathparser.ast.PathExprStartingWithDoubleSlash", {
-  Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash: 1,
-  O: 1,
-  Leu_cdevreeze_xpathparser_ast_PathExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleSimpleMapExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleMapExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ValueExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleUnaryExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_UnaryExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleArrowExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ArrowExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleCastExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_CastExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleCastableExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_CastableExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleTreatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_TreatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleInstanceOfExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_InstanceOfExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleIntersectExceptExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleUnionExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_UnionExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleMultiplicativeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleAdditiveExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_AdditiveExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleRangeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_RangeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleStringConcatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_StringConcatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleComparisonExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ComparisonExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleAndExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_AndExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleOrExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_OrExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_Expr: 1,
-  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
-  s_Product: 1,
-  s_Equals: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash;
-/** @constructor */
-function $c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash() {
-  $c_O.call(this);
-  this.relativePathExpr$1 = null
-}
-$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype = new $h_O();
-$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash;
-/** @constructor */
-function $h_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash() {
-  /*<skip>*/
-}
-$h_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype = $c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype;
-$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype.productPrefix__T = (function() {
-  return "PathExprStartingWithSingleSlash"
-});
-$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype.productArity__I = (function() {
-  return 1
-});
-$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype.equals__O__Z = (function(x$1) {
-  if ((this === x$1)) {
-    return true
-  } else if ($is_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash(x$1)) {
-    var PathExprStartingWithSingleSlash$1 = $as_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash(x$1);
-    var x = this.relativePathExpr$1;
-    var x$2 = PathExprStartingWithSingleSlash$1.relativePathExpr$1;
-    return ((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))
-  } else {
-    return false
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype.productElement__I__O = (function(x$1) {
-  switch (x$1) {
-    case 0: {
-      return this.relativePathExpr$1;
-      break
-    }
-    default: {
-      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
-    }
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype.toString__T = (function() {
-  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
-});
-$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype.children__sci_IndexedSeq = (function() {
-  $m_sci_IndexedSeq$();
-  var array = [this.relativePathExpr$1];
-  if (($uI(array.length) === 0)) {
-    $m_sci_Vector$();
-    var this$5 = new $c_sci_VectorBuilder().init___();
-    return this$5.result__sci_Vector()
-  } else {
-    $m_sci_Vector$();
-    var b = new $c_sci_VectorBuilder().init___();
-    var i = 0;
-    var len = $uI(array.length);
-    while ((i < len)) {
-      var index = i;
-      var arg1 = array[index];
-      b.$$plus$eq__O__sci_VectorBuilder(arg1);
-      i = ((1 + i) | 0)
-    };
-    return b.result__sci_Vector()
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype.init___Leu_cdevreeze_xpathparser_ast_RelativePathExpr = (function(relativePathExpr) {
-  this.relativePathExpr$1 = relativePathExpr;
-  return this
-});
-$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype.hashCode__I = (function() {
-  var this$2 = $m_s_util_hashing_MurmurHash3$();
-  return this$2.productHash__s_Product__I__I(this, (-889275714))
-});
-$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype.productIterator__sc_Iterator = (function() {
-  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
-});
-function $is_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.PathExprStartingWithSingleSlash"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.PathExprStartingWithSingleSlash;", depth))
-}
-var $d_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash = new $TypeData().initClass({
-  Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash: 0
-}, false, "eu.cdevreeze.xpathparser.ast.PathExprStartingWithSingleSlash", {
-  Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash: 1,
-  O: 1,
-  Leu_cdevreeze_xpathparser_ast_PathExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleSimpleMapExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleMapExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ValueExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleUnaryExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_UnaryExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleArrowExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ArrowExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleCastExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_CastExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleCastableExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_CastableExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleTreatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_TreatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleInstanceOfExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_InstanceOfExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleIntersectExceptExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleUnionExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_UnionExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleMultiplicativeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleAdditiveExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_AdditiveExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleRangeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_RangeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleStringConcatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_StringConcatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleComparisonExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ComparisonExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleAndExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_AndExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleOrExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_OrExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_Expr: 1,
-  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
-  s_Product: 1,
-  s_Equals: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash;
-function $is_Leu_cdevreeze_xpathparser_ast_PrimaryExpr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_PrimaryExpr)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_PrimaryExpr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_PrimaryExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.PrimaryExpr"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_PrimaryExpr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_PrimaryExpr)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_PrimaryExpr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_PrimaryExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.PrimaryExpr;", depth))
-}
 /** @constructor */
 function $c_scm_HashSet() {
   $c_scm_AbstractSet.call(this);
@@ -61664,6 +61338,298 @@ var $d_scm_WrappedArray$ofUnit = new $TypeData().initClass({
 });
 $c_scm_WrappedArray$ofUnit.prototype.$classData = $d_scm_WrappedArray$ofUnit;
 /** @constructor */
+function $c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash() {
+  $c_O.call(this);
+  this.relativePathExpr$1 = null
+}
+$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype = new $h_O();
+$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash;
+/** @constructor */
+function $h_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash() {
+  /*<skip>*/
+}
+$h_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype = $c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype;
+$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype.productPrefix__T = (function() {
+  return "PathExprStartingWithDoubleSlash"
+});
+$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype.productArity__I = (function() {
+  return 1
+});
+$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash(x$1)) {
+    var PathExprStartingWithDoubleSlash$1 = $as_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash(x$1);
+    var x = this.relativePathExpr$1;
+    var x$2 = PathExprStartingWithDoubleSlash$1.relativePathExpr$1;
+    return ((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))
+  } else {
+    return false
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.relativePathExpr$1;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype.children__sci_IndexedSeq = (function() {
+  $m_sci_IndexedSeq$();
+  var array = [this.relativePathExpr$1];
+  if (($uI(array.length) === 0)) {
+    $m_sci_Vector$();
+    var this$5 = new $c_sci_VectorBuilder().init___();
+    return this$5.result__sci_Vector()
+  } else {
+    $m_sci_Vector$();
+    var b = new $c_sci_VectorBuilder().init___();
+    var i = 0;
+    var len = $uI(array.length);
+    while ((i < len)) {
+      var index = i;
+      var arg1 = array[index];
+      b.$$plus$eq__O__sci_VectorBuilder(arg1);
+      i = ((1 + i) | 0)
+    };
+    return b.result__sci_Vector()
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype.init___Leu_cdevreeze_xpathparser_ast_RelativePathExpr = (function(relativePathExpr) {
+  this.relativePathExpr$1 = relativePathExpr;
+  return this
+});
+$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+function $is_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.PathExprStartingWithDoubleSlash"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.PathExprStartingWithDoubleSlash;", depth))
+}
+var $d_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash = new $TypeData().initClass({
+  Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash: 0
+}, false, "eu.cdevreeze.xpathparser.ast.PathExprStartingWithDoubleSlash", {
+  Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash: 1,
+  O: 1,
+  Leu_cdevreeze_xpathparser_ast_PathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleSimpleMapExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleMapExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ValueExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleUnaryExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_UnaryExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleArrowExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ArrowExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleCastExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_CastExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleCastableExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_CastableExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleTreatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_TreatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleInstanceOfExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_InstanceOfExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleIntersectExceptExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleUnionExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_UnionExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleMultiplicativeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleAdditiveExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_AdditiveExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleRangeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_RangeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleStringConcatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_StringConcatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleComparisonExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ComparisonExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleAndExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_AndExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleOrExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_OrExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithDoubleSlash;
+/** @constructor */
+function $c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash() {
+  $c_O.call(this);
+  this.relativePathExpr$1 = null
+}
+$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype = new $h_O();
+$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash;
+/** @constructor */
+function $h_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash() {
+  /*<skip>*/
+}
+$h_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype = $c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype;
+$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype.productPrefix__T = (function() {
+  return "PathExprStartingWithSingleSlash"
+});
+$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype.productArity__I = (function() {
+  return 1
+});
+$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash(x$1)) {
+    var PathExprStartingWithSingleSlash$1 = $as_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash(x$1);
+    var x = this.relativePathExpr$1;
+    var x$2 = PathExprStartingWithSingleSlash$1.relativePathExpr$1;
+    return ((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))
+  } else {
+    return false
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.relativePathExpr$1;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype.children__sci_IndexedSeq = (function() {
+  $m_sci_IndexedSeq$();
+  var array = [this.relativePathExpr$1];
+  if (($uI(array.length) === 0)) {
+    $m_sci_Vector$();
+    var this$5 = new $c_sci_VectorBuilder().init___();
+    return this$5.result__sci_Vector()
+  } else {
+    $m_sci_Vector$();
+    var b = new $c_sci_VectorBuilder().init___();
+    var i = 0;
+    var len = $uI(array.length);
+    while ((i < len)) {
+      var index = i;
+      var arg1 = array[index];
+      b.$$plus$eq__O__sci_VectorBuilder(arg1);
+      i = ((1 + i) | 0)
+    };
+    return b.result__sci_Vector()
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype.init___Leu_cdevreeze_xpathparser_ast_RelativePathExpr = (function(relativePathExpr) {
+  this.relativePathExpr$1 = relativePathExpr;
+  return this
+});
+$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+function $is_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.PathExprStartingWithSingleSlash"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.PathExprStartingWithSingleSlash;", depth))
+}
+var $d_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash = new $TypeData().initClass({
+  Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash: 0
+}, false, "eu.cdevreeze.xpathparser.ast.PathExprStartingWithSingleSlash", {
+  Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash: 1,
+  O: 1,
+  Leu_cdevreeze_xpathparser_ast_PathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleSimpleMapExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleMapExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ValueExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleUnaryExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_UnaryExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleArrowExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ArrowExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleCastExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_CastExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleCastableExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_CastableExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleTreatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_TreatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleInstanceOfExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_InstanceOfExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleIntersectExceptExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleUnionExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_UnionExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleMultiplicativeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleAdditiveExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_AdditiveExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleRangeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_RangeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleStringConcatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_StringConcatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleComparisonExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ComparisonExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleAndExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_AndExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleOrExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_OrExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_PathExprStartingWithSingleSlash;
+function $is_Leu_cdevreeze_xpathparser_ast_PrimaryExpr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_PrimaryExpr)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_PrimaryExpr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_PrimaryExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.PrimaryExpr"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_PrimaryExpr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_PrimaryExpr)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_PrimaryExpr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_PrimaryExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.PrimaryExpr;", depth))
+}
+/** @constructor */
 function $c_Leu_cdevreeze_xpathparser_ast_CompoundRelativePathExpr() {
   $c_O.call(this);
   this.firstExpr$1 = null;
@@ -61807,6 +61773,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_CompoundRelativePathExpr = new $TypeData().
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
@@ -61893,6 +61860,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_SlashOnlyPathExpr$ = new $TypeData().initCl
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
@@ -61910,424 +61878,6 @@ function $m_Leu_cdevreeze_xpathparser_ast_SlashOnlyPathExpr$() {
   };
   return $n_Leu_cdevreeze_xpathparser_ast_SlashOnlyPathExpr$
 }
-/** @constructor */
-function $c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr() {
-  $c_O.call(this);
-  this.primaryExpr$1 = null;
-  this.postfixes$1 = null
-}
-$c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype = new $h_O();
-$c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr;
-/** @constructor */
-function $h_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr() {
-  /*<skip>*/
-}
-$h_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype;
-$c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype.productPrefix__T = (function() {
-  return "CompoundPostfixExpr"
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype.productArity__I = (function() {
-  return 2
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype.equals__O__Z = (function(x$1) {
-  if ((this === x$1)) {
-    return true
-  } else if ($is_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr(x$1)) {
-    var CompoundPostfixExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr(x$1);
-    var x = this.primaryExpr$1;
-    var x$2 = CompoundPostfixExpr$1.primaryExpr$1;
-    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
-      var x$3 = this.postfixes$1;
-      var x$4 = CompoundPostfixExpr$1.postfixes$1;
-      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
-    } else {
-      return false
-    }
-  } else {
-    return false
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype.productElement__I__O = (function(x$1) {
-  switch (x$1) {
-    case 0: {
-      return this.primaryExpr$1;
-      break
-    }
-    case 1: {
-      return this.postfixes$1;
-      break
-    }
-    default: {
-      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
-    }
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype.toString__T = (function() {
-  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype.children__sci_IndexedSeq = (function() {
-  var x$8 = this.primaryExpr$1;
-  return $as_sci_IndexedSeq(this.postfixes$1.$$plus$colon__O__scg_CanBuildFrom__O(x$8, ($m_sci_IndexedSeq$(), $m_sc_IndexedSeq$().ReusableCBF$6)))
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype.init___Leu_cdevreeze_xpathparser_ast_PrimaryExpr__sci_IndexedSeq = (function(primaryExpr, postfixes) {
-  this.primaryExpr$1 = primaryExpr;
-  this.postfixes$1 = postfixes;
-  var requirement = (postfixes.size__I() >= 1);
-  if ((!requirement)) {
-    throw new $c_jl_IllegalArgumentException().init___T("requirement failed: At least 1 postfix must be provided but found none")
-  };
-  return this
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype.hashCode__I = (function() {
-  var this$2 = $m_s_util_hashing_MurmurHash3$();
-  return this$2.productHash__s_Product__I__I(this, (-889275714))
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype.productIterator__sc_Iterator = (function() {
-  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
-});
-function $is_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.CompoundPostfixExpr"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.CompoundPostfixExpr;", depth))
-}
-var $d_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr = new $TypeData().initClass({
-  Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr: 0
-}, false, "eu.cdevreeze.xpathparser.ast.CompoundPostfixExpr", {
-  Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr: 1,
-  O: 1,
-  Leu_cdevreeze_xpathparser_ast_PostfixExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_StepExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleRelativePathExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_RelativePathExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_PathExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleSimpleMapExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleMapExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ValueExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleUnaryExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_UnaryExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleArrowExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ArrowExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleCastExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_CastExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleCastableExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_CastableExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleTreatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_TreatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleInstanceOfExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_InstanceOfExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleIntersectExceptExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleUnionExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_UnionExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleMultiplicativeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleAdditiveExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_AdditiveExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleRangeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_RangeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleStringConcatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_StringConcatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleComparisonExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ComparisonExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleAndExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_AndExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleOrExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_OrExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_Expr: 1,
-  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
-  s_Product: 1,
-  s_Equals: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr;
-/** @constructor */
-function $c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep() {
-  $c_O.call(this);
-  this.step$1 = null;
-  this.predicateList$1 = null
-}
-$c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype = new $h_O();
-$c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep;
-/** @constructor */
-function $h_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep() {
-  /*<skip>*/
-}
-$h_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype = $c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype;
-$c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype.productPrefix__T = (function() {
-  return "ForwardAxisStep"
-});
-$c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype.productArity__I = (function() {
-  return 2
-});
-$c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype.equals__O__Z = (function(x$1) {
-  if ((this === x$1)) {
-    return true
-  } else if ($is_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep(x$1)) {
-    var ForwardAxisStep$1 = $as_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep(x$1);
-    var x = this.step$1;
-    var x$2 = ForwardAxisStep$1.step$1;
-    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
-      var x$3 = this.predicateList$1;
-      var x$4 = ForwardAxisStep$1.predicateList$1;
-      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
-    } else {
-      return false
-    }
-  } else {
-    return false
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype.productElement__I__O = (function(x$1) {
-  switch (x$1) {
-    case 0: {
-      return this.step$1;
-      break
-    }
-    case 1: {
-      return this.predicateList$1;
-      break
-    }
-    default: {
-      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
-    }
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype.toString__T = (function() {
-  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
-});
-$c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype.children__sci_IndexedSeq = (function() {
-  var x$9 = this.step$1;
-  return $as_sci_IndexedSeq(this.predicateList$1.$$plus$colon__O__scg_CanBuildFrom__O(x$9, ($m_sci_IndexedSeq$(), $m_sc_IndexedSeq$().ReusableCBF$6)))
-});
-$c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype.init___Leu_cdevreeze_xpathparser_ast_ForwardStep__sci_IndexedSeq = (function(step, predicateList) {
-  this.step$1 = step;
-  this.predicateList$1 = predicateList;
-  return this
-});
-$c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype.hashCode__I = (function() {
-  var this$2 = $m_s_util_hashing_MurmurHash3$();
-  return this$2.productHash__s_Product__I__I(this, (-889275714))
-});
-$c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype.productIterator__sc_Iterator = (function() {
-  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
-});
-function $is_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_ForwardAxisStep)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.ForwardAxisStep"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_ForwardAxisStep)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.ForwardAxisStep;", depth))
-}
-var $d_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep = new $TypeData().initClass({
-  Leu_cdevreeze_xpathparser_ast_ForwardAxisStep: 0
-}, false, "eu.cdevreeze.xpathparser.ast.ForwardAxisStep", {
-  Leu_cdevreeze_xpathparser_ast_ForwardAxisStep: 1,
-  O: 1,
-  Leu_cdevreeze_xpathparser_ast_AxisStep: 1,
-  Leu_cdevreeze_xpathparser_ast_StepExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleRelativePathExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_RelativePathExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_PathExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleSimpleMapExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleMapExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ValueExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleUnaryExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_UnaryExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleArrowExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ArrowExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleCastExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_CastExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleCastableExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_CastableExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleTreatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_TreatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleInstanceOfExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_InstanceOfExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleIntersectExceptExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleUnionExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_UnionExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleMultiplicativeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleAdditiveExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_AdditiveExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleRangeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_RangeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleStringConcatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_StringConcatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleComparisonExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ComparisonExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleAndExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_AndExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleOrExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_OrExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_Expr: 1,
-  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
-  s_Product: 1,
-  s_Equals: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep;
-/** @constructor */
-function $c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep() {
-  $c_O.call(this);
-  this.step$1 = null;
-  this.predicateList$1 = null
-}
-$c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype = new $h_O();
-$c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep;
-/** @constructor */
-function $h_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep() {
-  /*<skip>*/
-}
-$h_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype = $c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype;
-$c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype.productPrefix__T = (function() {
-  return "ReverseAxisStep"
-});
-$c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype.productArity__I = (function() {
-  return 2
-});
-$c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype.equals__O__Z = (function(x$1) {
-  if ((this === x$1)) {
-    return true
-  } else if ($is_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep(x$1)) {
-    var ReverseAxisStep$1 = $as_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep(x$1);
-    var x = this.step$1;
-    var x$2 = ReverseAxisStep$1.step$1;
-    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
-      var x$3 = this.predicateList$1;
-      var x$4 = ReverseAxisStep$1.predicateList$1;
-      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
-    } else {
-      return false
-    }
-  } else {
-    return false
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype.productElement__I__O = (function(x$1) {
-  switch (x$1) {
-    case 0: {
-      return this.step$1;
-      break
-    }
-    case 1: {
-      return this.predicateList$1;
-      break
-    }
-    default: {
-      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
-    }
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype.toString__T = (function() {
-  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
-});
-$c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype.children__sci_IndexedSeq = (function() {
-  var x$10 = this.step$1;
-  return $as_sci_IndexedSeq(this.predicateList$1.$$plus$colon__O__scg_CanBuildFrom__O(x$10, ($m_sci_IndexedSeq$(), $m_sc_IndexedSeq$().ReusableCBF$6)))
-});
-$c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype.hashCode__I = (function() {
-  var this$2 = $m_s_util_hashing_MurmurHash3$();
-  return this$2.productHash__s_Product__I__I(this, (-889275714))
-});
-$c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype.productIterator__sc_Iterator = (function() {
-  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
-});
-$c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype.init___Leu_cdevreeze_xpathparser_ast_ReverseStep__sci_IndexedSeq = (function(step, predicateList) {
-  this.step$1 = step;
-  this.predicateList$1 = predicateList;
-  return this
-});
-function $is_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_ReverseAxisStep)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.ReverseAxisStep"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_ReverseAxisStep)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.ReverseAxisStep;", depth))
-}
-var $d_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep = new $TypeData().initClass({
-  Leu_cdevreeze_xpathparser_ast_ReverseAxisStep: 0
-}, false, "eu.cdevreeze.xpathparser.ast.ReverseAxisStep", {
-  Leu_cdevreeze_xpathparser_ast_ReverseAxisStep: 1,
-  O: 1,
-  Leu_cdevreeze_xpathparser_ast_AxisStep: 1,
-  Leu_cdevreeze_xpathparser_ast_StepExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleRelativePathExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_RelativePathExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_PathExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleSimpleMapExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleMapExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ValueExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleUnaryExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_UnaryExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleArrowExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ArrowExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleCastExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_CastExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleCastableExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_CastableExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleTreatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_TreatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleInstanceOfExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_InstanceOfExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleIntersectExceptExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleUnionExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_UnionExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleMultiplicativeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleAdditiveExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_AdditiveExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleRangeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_RangeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleStringConcatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_StringConcatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleComparisonExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ComparisonExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleAndExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_AndExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleOrExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_OrExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_Expr: 1,
-  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
-  s_Product: 1,
-  s_Equals: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep;
 /** @constructor */
 function $c_scm_ListBuffer() {
   $c_scm_AbstractBuffer.call(this);
@@ -62949,6 +62499,427 @@ var $d_scm_StringBuilder = new $TypeData().initClass({
 });
 $c_scm_StringBuilder.prototype.$classData = $d_scm_StringBuilder;
 /** @constructor */
+function $c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr() {
+  $c_O.call(this);
+  this.primaryExpr$1 = null;
+  this.postfixes$1 = null
+}
+$c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype = new $h_O();
+$c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr;
+/** @constructor */
+function $h_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr() {
+  /*<skip>*/
+}
+$h_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype = $c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype;
+$c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype.productPrefix__T = (function() {
+  return "CompoundPostfixExpr"
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype.productArity__I = (function() {
+  return 2
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr(x$1)) {
+    var CompoundPostfixExpr$1 = $as_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr(x$1);
+    var x = this.primaryExpr$1;
+    var x$2 = CompoundPostfixExpr$1.primaryExpr$1;
+    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
+      var x$3 = this.postfixes$1;
+      var x$4 = CompoundPostfixExpr$1.postfixes$1;
+      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      return false
+    }
+  } else {
+    return false
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.primaryExpr$1;
+      break
+    }
+    case 1: {
+      return this.postfixes$1;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype.children__sci_IndexedSeq = (function() {
+  var x$8 = this.primaryExpr$1;
+  return $as_sci_IndexedSeq(this.postfixes$1.$$plus$colon__O__scg_CanBuildFrom__O(x$8, ($m_sci_IndexedSeq$(), $m_sc_IndexedSeq$().ReusableCBF$6)))
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype.init___Leu_cdevreeze_xpathparser_ast_PrimaryExpr__sci_IndexedSeq = (function(primaryExpr, postfixes) {
+  this.primaryExpr$1 = primaryExpr;
+  this.postfixes$1 = postfixes;
+  var requirement = (postfixes.size__I() >= 1);
+  if ((!requirement)) {
+    throw new $c_jl_IllegalArgumentException().init___T("requirement failed: At least 1 postfix must be provided but found none")
+  };
+  return this
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+function $is_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.CompoundPostfixExpr"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.CompoundPostfixExpr;", depth))
+}
+var $d_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr = new $TypeData().initClass({
+  Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr: 0
+}, false, "eu.cdevreeze.xpathparser.ast.CompoundPostfixExpr", {
+  Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr: 1,
+  O: 1,
+  Leu_cdevreeze_xpathparser_ast_PostfixExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_StepExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleRelativePathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_RelativePathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_PathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleSimpleMapExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleMapExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ValueExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleUnaryExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_UnaryExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleArrowExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ArrowExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleCastExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_CastExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleCastableExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_CastableExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleTreatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_TreatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleInstanceOfExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_InstanceOfExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleIntersectExceptExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleUnionExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_UnionExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleMultiplicativeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleAdditiveExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_AdditiveExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleRangeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_RangeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleStringConcatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_StringConcatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleComparisonExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ComparisonExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleAndExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_AndExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleOrExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_OrExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_CompoundPostfixExpr;
+/** @constructor */
+function $c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep() {
+  $c_O.call(this);
+  this.step$1 = null;
+  this.predicateList$1 = null
+}
+$c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype = new $h_O();
+$c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep;
+/** @constructor */
+function $h_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep() {
+  /*<skip>*/
+}
+$h_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype = $c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype;
+$c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype.productPrefix__T = (function() {
+  return "ForwardAxisStep"
+});
+$c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype.productArity__I = (function() {
+  return 2
+});
+$c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep(x$1)) {
+    var ForwardAxisStep$1 = $as_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep(x$1);
+    var x = this.step$1;
+    var x$2 = ForwardAxisStep$1.step$1;
+    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
+      var x$3 = this.predicateList$1;
+      var x$4 = ForwardAxisStep$1.predicateList$1;
+      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      return false
+    }
+  } else {
+    return false
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.step$1;
+      break
+    }
+    case 1: {
+      return this.predicateList$1;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype.children__sci_IndexedSeq = (function() {
+  var x$9 = this.step$1;
+  return $as_sci_IndexedSeq(this.predicateList$1.$$plus$colon__O__scg_CanBuildFrom__O(x$9, ($m_sci_IndexedSeq$(), $m_sc_IndexedSeq$().ReusableCBF$6)))
+});
+$c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype.init___Leu_cdevreeze_xpathparser_ast_ForwardStep__sci_IndexedSeq = (function(step, predicateList) {
+  this.step$1 = step;
+  this.predicateList$1 = predicateList;
+  return this
+});
+$c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+function $is_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_ForwardAxisStep)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.ForwardAxisStep"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_ForwardAxisStep)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.ForwardAxisStep;", depth))
+}
+var $d_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep = new $TypeData().initClass({
+  Leu_cdevreeze_xpathparser_ast_ForwardAxisStep: 0
+}, false, "eu.cdevreeze.xpathparser.ast.ForwardAxisStep", {
+  Leu_cdevreeze_xpathparser_ast_ForwardAxisStep: 1,
+  O: 1,
+  Leu_cdevreeze_xpathparser_ast_AxisStep: 1,
+  Leu_cdevreeze_xpathparser_ast_StepExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleRelativePathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_RelativePathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_PathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleSimpleMapExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleMapExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ValueExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleUnaryExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_UnaryExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleArrowExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ArrowExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleCastExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_CastExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleCastableExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_CastableExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleTreatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_TreatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleInstanceOfExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_InstanceOfExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleIntersectExceptExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleUnionExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_UnionExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleMultiplicativeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleAdditiveExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_AdditiveExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleRangeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_RangeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleStringConcatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_StringConcatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleComparisonExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ComparisonExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleAndExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_AndExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleOrExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_OrExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_ForwardAxisStep;
+/** @constructor */
+function $c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep() {
+  $c_O.call(this);
+  this.step$1 = null;
+  this.predicateList$1 = null
+}
+$c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype = new $h_O();
+$c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep;
+/** @constructor */
+function $h_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep() {
+  /*<skip>*/
+}
+$h_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype = $c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype;
+$c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype.productPrefix__T = (function() {
+  return "ReverseAxisStep"
+});
+$c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype.productArity__I = (function() {
+  return 2
+});
+$c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep(x$1)) {
+    var ReverseAxisStep$1 = $as_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep(x$1);
+    var x = this.step$1;
+    var x$2 = ReverseAxisStep$1.step$1;
+    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
+      var x$3 = this.predicateList$1;
+      var x$4 = ReverseAxisStep$1.predicateList$1;
+      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      return false
+    }
+  } else {
+    return false
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.step$1;
+      break
+    }
+    case 1: {
+      return this.predicateList$1;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype.children__sci_IndexedSeq = (function() {
+  var x$10 = this.step$1;
+  return $as_sci_IndexedSeq(this.predicateList$1.$$plus$colon__O__scg_CanBuildFrom__O(x$10, ($m_sci_IndexedSeq$(), $m_sc_IndexedSeq$().ReusableCBF$6)))
+});
+$c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+$c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype.init___Leu_cdevreeze_xpathparser_ast_ReverseStep__sci_IndexedSeq = (function(step, predicateList) {
+  this.step$1 = step;
+  this.predicateList$1 = predicateList;
+  return this
+});
+function $is_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_ReverseAxisStep)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.ReverseAxisStep"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_ReverseAxisStep)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.ReverseAxisStep;", depth))
+}
+var $d_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep = new $TypeData().initClass({
+  Leu_cdevreeze_xpathparser_ast_ReverseAxisStep: 0
+}, false, "eu.cdevreeze.xpathparser.ast.ReverseAxisStep", {
+  Leu_cdevreeze_xpathparser_ast_ReverseAxisStep: 1,
+  O: 1,
+  Leu_cdevreeze_xpathparser_ast_AxisStep: 1,
+  Leu_cdevreeze_xpathparser_ast_StepExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleRelativePathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_RelativePathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_PathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleSimpleMapExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleMapExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ValueExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleUnaryExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_UnaryExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleArrowExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ArrowExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleCastExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_CastExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleCastableExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_CastableExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleTreatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_TreatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleInstanceOfExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_InstanceOfExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleIntersectExceptExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleUnionExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_UnionExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleMultiplicativeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleAdditiveExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_AdditiveExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleRangeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_RangeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleStringConcatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_StringConcatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleComparisonExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ComparisonExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleAndExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_AndExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleOrExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_OrExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_ReverseAxisStep;
+/** @constructor */
 function $c_sjs_js_WrappedArray() {
   $c_scm_AbstractBuffer.call(this);
   this.array$6 = null
@@ -63298,6 +63269,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_FunctionCall = new $TypeData().initClass({
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
@@ -63425,6 +63397,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_MapConstructor = new $TypeData().initClass(
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
@@ -63556,6 +63529,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_ParenthesizedExpr = new $TypeData().initCla
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
@@ -63701,6 +63675,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_UnaryLookup = new $TypeData().initClass({
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
@@ -63793,6 +63768,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_ContextItemExpr$ = new $TypeData().initClas
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
@@ -63947,6 +63923,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_CurlyArrayConstructor = new $TypeData().ini
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
@@ -64109,6 +64086,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_InlineFunctionExpr = new $TypeData().initCl
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
@@ -64237,6 +64215,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_SquareArrayConstructor = new $TypeData().in
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
@@ -64364,6 +64343,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_VarRef = new $TypeData().initClass({
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
@@ -64374,274 +64354,6 @@ var $d_Leu_cdevreeze_xpathparser_ast_VarRef = new $TypeData().initClass({
   Ljava_io_Serializable: 1
 });
 $c_Leu_cdevreeze_xpathparser_ast_VarRef.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_VarRef;
-/** @constructor */
-function $c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef() {
-  $c_O.call(this);
-  this.functionName$1 = null;
-  this.arity$1 = null
-}
-$c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype = new $h_O();
-$c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef;
-/** @constructor */
-function $h_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef() {
-  /*<skip>*/
-}
-$h_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype = $c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype;
-$c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype.productPrefix__T = (function() {
-  return "NamedFunctionRef"
-});
-$c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype.productArity__I = (function() {
-  return 2
-});
-$c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype.equals__O__Z = (function(x$1) {
-  if ((this === x$1)) {
-    return true
-  } else if ($is_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef(x$1)) {
-    var NamedFunctionRef$1 = $as_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef(x$1);
-    var x = this.functionName$1;
-    var x$2 = NamedFunctionRef$1.functionName$1;
-    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
-      var x$3 = this.arity$1;
-      var x$4 = NamedFunctionRef$1.arity$1;
-      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
-    } else {
-      return false
-    }
-  } else {
-    return false
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype.productElement__I__O = (function(x$1) {
-  switch (x$1) {
-    case 0: {
-      return this.functionName$1;
-      break
-    }
-    case 1: {
-      return this.arity$1;
-      break
-    }
-    default: {
-      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
-    }
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype.toString__T = (function() {
-  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
-});
-$c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype.init___Leu_cdevreeze_xpathparser_ast_EQName__s_math_BigInt = (function(functionName, arity) {
-  this.functionName$1 = functionName;
-  this.arity$1 = arity;
-  return this
-});
-$c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype.children__sci_IndexedSeq = (function() {
-  return $as_sci_IndexedSeq($m_sci_IndexedSeq$().apply__sc_Seq__sc_GenTraversable($m_sci_Nil$()))
-});
-$c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype.hashCode__I = (function() {
-  var this$2 = $m_s_util_hashing_MurmurHash3$();
-  return this$2.productHash__s_Product__I__I(this, (-889275714))
-});
-$c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype.productIterator__sc_Iterator = (function() {
-  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
-});
-function $is_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_NamedFunctionRef)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.NamedFunctionRef"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_NamedFunctionRef)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.NamedFunctionRef;", depth))
-}
-var $d_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef = new $TypeData().initClass({
-  Leu_cdevreeze_xpathparser_ast_NamedFunctionRef: 0
-}, false, "eu.cdevreeze.xpathparser.ast.NamedFunctionRef", {
-  Leu_cdevreeze_xpathparser_ast_NamedFunctionRef: 1,
-  O: 1,
-  Leu_cdevreeze_xpathparser_ast_FunctionItemExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_PrimaryExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimplePostfixExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_PostfixExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_StepExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleRelativePathExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_RelativePathExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_PathExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleSimpleMapExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleMapExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ValueExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleUnaryExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_UnaryExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleArrowExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ArrowExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleCastExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_CastExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleCastableExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_CastableExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleTreatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_TreatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleInstanceOfExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_InstanceOfExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleIntersectExceptExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleUnionExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_UnionExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleMultiplicativeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleAdditiveExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_AdditiveExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleRangeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_RangeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleStringConcatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_StringConcatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleComparisonExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ComparisonExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleAndExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_AndExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleOrExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_OrExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_Expr: 1,
-  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
-  Leu_cdevreeze_xpathparser_ast_LeafElem: 1,
-  s_Product: 1,
-  s_Equals: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef;
-/** @constructor */
-function $c_Leu_cdevreeze_xpathparser_ast_StringLiteral() {
-  $c_O.call(this);
-  this.value$1 = null
-}
-$c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype = new $h_O();
-$c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_StringLiteral;
-/** @constructor */
-function $h_Leu_cdevreeze_xpathparser_ast_StringLiteral() {
-  /*<skip>*/
-}
-$h_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype = $c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype;
-$c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype.productPrefix__T = (function() {
-  return "StringLiteral"
-});
-$c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype.productArity__I = (function() {
-  return 1
-});
-$c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype.equals__O__Z = (function(x$1) {
-  if ((this === x$1)) {
-    return true
-  } else if ($is_Leu_cdevreeze_xpathparser_ast_StringLiteral(x$1)) {
-    var StringLiteral$1 = $as_Leu_cdevreeze_xpathparser_ast_StringLiteral(x$1);
-    return (this.value$1 === StringLiteral$1.value$1)
-  } else {
-    return false
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype.productElement__I__O = (function(x$1) {
-  switch (x$1) {
-    case 0: {
-      return this.value$1;
-      break
-    }
-    default: {
-      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
-    }
-  }
-});
-$c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype.toString__T = (function() {
-  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
-});
-$c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype.children__sci_IndexedSeq = (function() {
-  return $as_sci_IndexedSeq($m_sci_IndexedSeq$().apply__sc_Seq__sc_GenTraversable($m_sci_Nil$()))
-});
-$c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype.hashCode__I = (function() {
-  var this$2 = $m_s_util_hashing_MurmurHash3$();
-  return this$2.productHash__s_Product__I__I(this, (-889275714))
-});
-$c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype.init___T = (function(value) {
-  this.value$1 = value;
-  return this
-});
-$c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype.productIterator__sc_Iterator = (function() {
-  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
-});
-function $is_Leu_cdevreeze_xpathparser_ast_StringLiteral(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_StringLiteral)))
-}
-function $as_Leu_cdevreeze_xpathparser_ast_StringLiteral(obj) {
-  return (($is_Leu_cdevreeze_xpathparser_ast_StringLiteral(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.StringLiteral"))
-}
-function $isArrayOf_Leu_cdevreeze_xpathparser_ast_StringLiteral(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_StringLiteral)))
-}
-function $asArrayOf_Leu_cdevreeze_xpathparser_ast_StringLiteral(obj, depth) {
-  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_StringLiteral(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.StringLiteral;", depth))
-}
-var $d_Leu_cdevreeze_xpathparser_ast_StringLiteral = new $TypeData().initClass({
-  Leu_cdevreeze_xpathparser_ast_StringLiteral: 0
-}, false, "eu.cdevreeze.xpathparser.ast.StringLiteral", {
-  Leu_cdevreeze_xpathparser_ast_StringLiteral: 1,
-  O: 1,
-  Leu_cdevreeze_xpathparser_ast_Literal: 1,
-  Leu_cdevreeze_xpathparser_ast_PrimaryExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimplePostfixExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_PostfixExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_StepExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleRelativePathExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_RelativePathExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_PathExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleSimpleMapExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleMapExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ValueExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleUnaryExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_UnaryExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleArrowExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ArrowExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleCastExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_CastExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleCastableExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_CastableExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleTreatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_TreatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleInstanceOfExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_InstanceOfExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleIntersectExceptExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleUnionExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_UnionExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleMultiplicativeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleAdditiveExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_AdditiveExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleRangeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_RangeExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleStringConcatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_StringConcatExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleComparisonExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ComparisonExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleAndExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_AndExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleOrExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_OrExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
-  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
-  Leu_cdevreeze_xpathparser_ast_Expr: 1,
-  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
-  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
-  Leu_cdevreeze_xpathparser_ast_LeafElem: 1,
-  s_Product: 1,
-  s_Equals: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_StringLiteral;
 /** @constructor */
 function $c_scm_ArrayBuffer() {
   $c_scm_AbstractBuffer.call(this);
@@ -64887,6 +64599,276 @@ var $d_scm_ArrayBuffer = new $TypeData().initClass({
 });
 $c_scm_ArrayBuffer.prototype.$classData = $d_scm_ArrayBuffer;
 /** @constructor */
+function $c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef() {
+  $c_O.call(this);
+  this.functionName$1 = null;
+  this.arity$1 = null
+}
+$c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype = new $h_O();
+$c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef;
+/** @constructor */
+function $h_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef() {
+  /*<skip>*/
+}
+$h_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype = $c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype;
+$c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype.productPrefix__T = (function() {
+  return "NamedFunctionRef"
+});
+$c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype.productArity__I = (function() {
+  return 2
+});
+$c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef(x$1)) {
+    var NamedFunctionRef$1 = $as_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef(x$1);
+    var x = this.functionName$1;
+    var x$2 = NamedFunctionRef$1.functionName$1;
+    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
+      var x$3 = this.arity$1;
+      var x$4 = NamedFunctionRef$1.arity$1;
+      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      return false
+    }
+  } else {
+    return false
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.functionName$1;
+      break
+    }
+    case 1: {
+      return this.arity$1;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype.init___Leu_cdevreeze_xpathparser_ast_EQName__s_math_BigInt = (function(functionName, arity) {
+  this.functionName$1 = functionName;
+  this.arity$1 = arity;
+  return this
+});
+$c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype.children__sci_IndexedSeq = (function() {
+  return $as_sci_IndexedSeq($m_sci_IndexedSeq$().apply__sc_Seq__sc_GenTraversable($m_sci_Nil$()))
+});
+$c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+function $is_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_NamedFunctionRef)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.NamedFunctionRef"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_NamedFunctionRef)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.NamedFunctionRef;", depth))
+}
+var $d_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef = new $TypeData().initClass({
+  Leu_cdevreeze_xpathparser_ast_NamedFunctionRef: 0
+}, false, "eu.cdevreeze.xpathparser.ast.NamedFunctionRef", {
+  Leu_cdevreeze_xpathparser_ast_NamedFunctionRef: 1,
+  O: 1,
+  Leu_cdevreeze_xpathparser_ast_FunctionItemExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_PrimaryExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimplePostfixExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_PostfixExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_StepExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleRelativePathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_RelativePathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_PathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleSimpleMapExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleMapExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ValueExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleUnaryExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_UnaryExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleArrowExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ArrowExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleCastExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_CastExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleCastableExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_CastableExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleTreatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_TreatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleInstanceOfExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_InstanceOfExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleIntersectExceptExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleUnionExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_UnionExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleMultiplicativeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleAdditiveExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_AdditiveExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleRangeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_RangeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleStringConcatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_StringConcatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleComparisonExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ComparisonExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleAndExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_AndExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleOrExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_OrExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
+  Leu_cdevreeze_xpathparser_ast_LeafElem: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_NamedFunctionRef;
+/** @constructor */
+function $c_Leu_cdevreeze_xpathparser_ast_StringLiteral() {
+  $c_O.call(this);
+  this.value$1 = null
+}
+$c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype = new $h_O();
+$c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype.constructor = $c_Leu_cdevreeze_xpathparser_ast_StringLiteral;
+/** @constructor */
+function $h_Leu_cdevreeze_xpathparser_ast_StringLiteral() {
+  /*<skip>*/
+}
+$h_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype = $c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype;
+$c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype.productPrefix__T = (function() {
+  return "StringLiteral"
+});
+$c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype.productArity__I = (function() {
+  return 1
+});
+$c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Leu_cdevreeze_xpathparser_ast_StringLiteral(x$1)) {
+    var StringLiteral$1 = $as_Leu_cdevreeze_xpathparser_ast_StringLiteral(x$1);
+    return (this.value$1 === StringLiteral$1.value$1)
+  } else {
+    return false
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.value$1;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype.children__sci_IndexedSeq = (function() {
+  return $as_sci_IndexedSeq($m_sci_IndexedSeq$().apply__sc_Seq__sc_GenTraversable($m_sci_Nil$()))
+});
+$c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype.init___T = (function(value) {
+  this.value$1 = value;
+  return this
+});
+$c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+function $is_Leu_cdevreeze_xpathparser_ast_StringLiteral(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Leu_cdevreeze_xpathparser_ast_StringLiteral)))
+}
+function $as_Leu_cdevreeze_xpathparser_ast_StringLiteral(obj) {
+  return (($is_Leu_cdevreeze_xpathparser_ast_StringLiteral(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "eu.cdevreeze.xpathparser.ast.StringLiteral"))
+}
+function $isArrayOf_Leu_cdevreeze_xpathparser_ast_StringLiteral(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Leu_cdevreeze_xpathparser_ast_StringLiteral)))
+}
+function $asArrayOf_Leu_cdevreeze_xpathparser_ast_StringLiteral(obj, depth) {
+  return (($isArrayOf_Leu_cdevreeze_xpathparser_ast_StringLiteral(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Leu.cdevreeze.xpathparser.ast.StringLiteral;", depth))
+}
+var $d_Leu_cdevreeze_xpathparser_ast_StringLiteral = new $TypeData().initClass({
+  Leu_cdevreeze_xpathparser_ast_StringLiteral: 0
+}, false, "eu.cdevreeze.xpathparser.ast.StringLiteral", {
+  Leu_cdevreeze_xpathparser_ast_StringLiteral: 1,
+  O: 1,
+  Leu_cdevreeze_xpathparser_ast_Literal: 1,
+  Leu_cdevreeze_xpathparser_ast_PrimaryExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimplePostfixExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_PostfixExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_StepExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleRelativePathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_RelativePathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_PathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleSimpleMapExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleMapExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ValueExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleUnaryExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_UnaryExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleArrowExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ArrowExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleCastExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_CastExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleCastableExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_CastableExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleTreatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_TreatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleInstanceOfExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_InstanceOfExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleIntersectExceptExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_IntersectExceptExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleUnionExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_UnionExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleMultiplicativeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_MultiplicativeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleAdditiveExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_AdditiveExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleRangeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_RangeExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleStringConcatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_StringConcatExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleComparisonExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ComparisonExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleAndExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_AndExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleOrExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_OrExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
+  Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
+  Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
+  Leu_cdevreeze_xpathparser_ast_LeafElem: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Leu_cdevreeze_xpathparser_ast_StringLiteral.prototype.$classData = $d_Leu_cdevreeze_xpathparser_ast_StringLiteral;
+/** @constructor */
 function $c_Leu_cdevreeze_xpathparser_ast_DecimalLiteral() {
   $c_O.call(this);
   this.value$1 = null
@@ -65006,6 +64988,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_DecimalLiteral = new $TypeData().initClass(
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
@@ -65135,6 +65118,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_DoubleLiteral = new $TypeData().initClass({
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
@@ -65265,6 +65249,7 @@ var $d_Leu_cdevreeze_xpathparser_ast_IntegerLiteral = new $TypeData().initClass(
   Leu_cdevreeze_xpathparser_ast_ExprSingle: 1,
   Leu_cdevreeze_xpathparser_ast_SimpleExpr: 1,
   Leu_cdevreeze_xpathparser_ast_Expr: 1,
+  Leu_cdevreeze_xpathparser_ast_XPathExpr: 1,
   Leu_cdevreeze_xpathparser_ast_XPathElem: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemLike: 1,
   Leu_cdevreeze_xpathparser_queryapi_ElemApi: 1,
