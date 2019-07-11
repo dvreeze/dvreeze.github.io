@@ -3553,7 +3553,10 @@ $c_Leu_cdevreeze_yaidom_jsdemoapp_FlowerOfLife$.prototype.drawFlowerOfLife__Lorg
   renderer.fillStyle = "#FAFAFA";
   renderer.fillRect(0.0, 0.0, $uI(canvas.width), $uI(canvas.height));
   var center = new $c_Leu_cdevreeze_yaidom_jsdemoapp_FlowerOfLife$Point().init___D__D(($uI(canvas.width) / 2), ($uI(canvas.height) / 2));
-  var arcs = this.findAllFlowerOfLifeArcs__Leu_cdevreeze_yaidom_jsdemoapp_FlowerOfLife$Point__D__sc_Seq(center, radius);
+  var jsx$2 = this.findAllFlowerOfLifeArcs__Leu_cdevreeze_yaidom_jsdemoapp_FlowerOfLife$Point__D__sc_Seq(center, radius);
+  var jsx$1 = new $c_Leu_cdevreeze_yaidom_jsdemoapp_FlowerOfLife$Circle().init___Leu_cdevreeze_yaidom_jsdemoapp_FlowerOfLife$Point__D(center, (3 * radius));
+  var this$3 = $m_sc_Seq$();
+  var arcs = $as_sc_Seq(jsx$2.$$colon$plus__O__scg_CanBuildFrom__O(jsx$1, this$3.ReusableCBFInstance$2));
   arcs.foreach__F1__V(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function($this, renderer$1, colour$1) {
     return (function(arc$2) {
       var arc = $as_Leu_cdevreeze_yaidom_jsdemoapp_FlowerOfLife$Arc(arc$2);
